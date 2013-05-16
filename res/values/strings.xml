@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Team Eule</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="title_section1">Hallo</string>
+    <string name="title_section2">Eulen</string>
+    <string name="title_section3">Welt!</string>
+
+</resources>
