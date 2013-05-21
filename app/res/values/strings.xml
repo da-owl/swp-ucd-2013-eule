@@ -6,5 +6,7 @@
     <string name="title_section1">Hallo</string>
     <string name="title_section2">Eulen</string>
     <string name="title_section3">Welt!</string>
+    <string name="MenuIconString_DriveView">Drive</string>
+    <string name="MenuIconString_ForrestView">Forrest</string>
 
 </resources>
