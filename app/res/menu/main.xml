@@ -17,5 +17,12 @@
         android:orderInCategory="99"
         android:showAsAction="always"
         android:title="@string/MenuIconString_DriveView"/>
+        
+        <item android:id="@+id/MarketView" 
+        android:title="@string/MenuIconString_MarketView"
+        android:titleCondensed="M"
+        android:showAsAction="always"
+        android:orderInCategory="97"/>
+            
             
 </menu>
