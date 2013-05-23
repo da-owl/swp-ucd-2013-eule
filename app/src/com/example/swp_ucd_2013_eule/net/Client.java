@@ -33,7 +33,9 @@ import android.net.Uri;
  * 		protected String doInBackground(URL... params) {
  * 			Response r = null;
  * 			try {
- * 				r = Client.getInstance().get(MainActivity.this, params[0]);
+ * 				Client c = Client.getInstance();
+ * 				c.init(&quot;MKay&quot;, &quot;topSecret&quot;);
+ * 				r = c.get(MainActivity.this, params[0]);
  * 			} catch (ClientProtocolException e) {
  * 				return e.getLocalizedMessage();
  * 			} catch (IOException e) {
@@ -49,7 +51,7 @@ import android.net.Uri;
  * 					Toast.LENGTH_LONG).show();
  * 		}
  * 
- * 	}.execute(new URL(&quot;http://10.0.2.2/&quot;));
+ * 	}.execute(new URL(&quot;http://10.0.2.2/?q=test&quot;));
  * } catch (MalformedURLException e) {
  * }
  * </pre>
