@@ -7,8 +7,14 @@
     <string name="fragment_drive_title_section2">Verbrauch-Richtwerte</string>
     <string name="fragment_forrest_title_section1">Mein Wald</string>
     <string name="fragment_forrest_title_section2">Anderer Tab</string>
+    <string name="fragment_social_title_section1">Bestenliste</string>
+    <string name="fragment_social_title_section2">Freunde</string>
+    <string name="fragment_market_title_section1">Pflanzen</string>
+    <string name="fragment_market_title_section2">Tiere</string>
+    <string name="fragment_market_title_section3">Kleidung</string>
     <string name="MenuIconString_DriveView">Drive</string>
     <string name="MenuIconString_ForrestView">Forrest</string>
+    <string name="MenuIconString_SocialView">Social</string>
     <string name="MenuIconString_MarketView">Market</string>
 
 </resources>

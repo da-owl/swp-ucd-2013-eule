@@ -39,16 +39,16 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_main);
 
 		changeFragment(mSectionsPagerAdapter = new FragmentDriveSectionsPagerAdapter(
-					getSupportFragmentManager()));
+				getSupportFragmentManager()));
 	}
-	
-	public void changeFragment(FragmentPagerAdapter Adapter){
+
+	public void changeFragment(FragmentPagerAdapter Adapter) {
 		mSectionsPagerAdapter = Adapter;
 
 		// Set up the action bar.
-				final ActionBar actionBar = getActionBar();
-				actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
+		final ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -77,26 +77,38 @@ public class MainActivity extends FragmentActivity implements
 					.setTabListener(this));
 		}
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		
+
 		return true;
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
-		case R.id.DrivingView : changeFragment(new FragmentDriveSectionsPagerAdapter(
-				getSupportFragmentManager())); break;
-		case R.id.ForestView :	changeFragment(new FragmentForrestSectionsPagerAdapter(
-				getSupportFragmentManager())); break;
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.DrivingView:
+			changeFragment(new FragmentDriveSectionsPagerAdapter(
+					getSupportFragmentManager()));
+			break;
+		case R.id.ForestView:
+			changeFragment(new FragmentForrestSectionsPagerAdapter(
+					getSupportFragmentManager()));
+			break;
+		case R.id.SocialView:
+			changeFragment(new FragmentSocialSectionsPagerAdapter(
+					getSupportFragmentManager()));
+			break;
+		case R.id.MarketView:
+			changeFragment(new FragmentMarketSectionsPagerAdapter(
+					getSupportFragmentManager()));
+			break;
 		}
+
 		return true;
 	}
-	
+
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
@@ -161,7 +173,51 @@ public class MainActivity extends FragmentActivity implements
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
-	public class FragmentForrestSectionsPagerAdapter extends FragmentPagerAdapter {
+	public class FragmentSocialSectionsPagerAdapter extends
+			FragmentPagerAdapter {
+
+		public FragmentSocialSectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			// getItem is called to instantiate the fragment for the given page.
+			// Return a DummySectionFragment (defined as a static inner class
+			// below) with the page number as its lone argument.
+			Fragment fragment = new DummySectionFragment();
+			Bundle args = new Bundle();
+			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		@Override
+		public int getCount() {
+			// Show 2 total pages.
+			return 2;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			// Locale l = Locale.getDefault();
+			switch (position) {
+			case 0:
+				return getString(R.string.fragment_social_title_section1);
+			case 1:
+				return getString(R.string.fragment_social_title_section2);
+
+			}
+			return null;
+		}
+	}
+
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class FragmentForrestSectionsPagerAdapter extends
+			FragmentPagerAdapter {
 
 		public FragmentForrestSectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -199,7 +255,50 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class FragmentMarketSectionsPagerAdapter extends
+			FragmentPagerAdapter {
+
+		public FragmentMarketSectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			// getItem is called to instantiate the fragment for the given page.
+			// Return a DummySectionFragment (defined as a static inner class
+			// below) with the page number as its lone argument.
+			Fragment fragment = new DummySectionFragment();
+			Bundle args = new Bundle();
+			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		@Override
+		public int getCount() {
+			// Show 2 total pages.
+			return 3;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			// Locale l = Locale.getDefault();
+			switch (position) {
+			case 0:
+				return getString(R.string.fragment_market_title_section1);
+			case 1:
+				return getString(R.string.fragment_market_title_section2);
+			case 2:
+				return getString(R.string.fragment_market_title_section3);
+			}
+			return null;
+		}
+	}
+
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
@@ -217,7 +316,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_drive,
+			View rootView = inflater.inflate(R.layout.fragment_market,
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
