@@ -10,23 +10,26 @@
         android:id="@+id/ForestView"
         android:orderInCategory="96"
         android:showAsAction="always"
+        android:icon="@drawable/forest"
         android:title="@string/MenuIconString_ForrestView"/>
             
         <item
         android:id="@+id/DrivingView"
         android:orderInCategory="97"
         android:showAsAction="always"
+        android:icon="@drawable/drive"
         android:title="@string/MenuIconString_DriveView"/>
         
         <item android:id="@+id/SocialView" 
         android:title="@string/MenuIconString_SocialView"
         android:showAsAction="always"
+        android:icon="@drawable/social"
         android:orderInCategory="98"/>
         
         <item android:id="@+id/MarketView" 
         android:title="@string/MenuIconString_MarketView"
         android:showAsAction="always"
+        android:icon="@drawable/market"
         android:orderInCategory="99"/>
-            
-            
+        
 </menu>

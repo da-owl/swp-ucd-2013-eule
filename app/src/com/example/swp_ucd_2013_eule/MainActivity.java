@@ -82,7 +82,6 @@ public class MainActivity extends FragmentActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-
 		return true;
 	}
 
@@ -163,7 +162,6 @@ public class MainActivity extends FragmentActivity implements
 				return getString(R.string.fragment_drive_title_section1);
 			case 1:
 				return getString(R.string.fragment_drive_title_section2);
-
 			}
 			return null;
 		}
@@ -206,7 +204,6 @@ public class MainActivity extends FragmentActivity implements
 				return getString(R.string.fragment_social_title_section1);
 			case 1:
 				return getString(R.string.fragment_social_title_section2);
-
 			}
 			return null;
 		}
@@ -249,7 +246,6 @@ public class MainActivity extends FragmentActivity implements
 				return getString(R.string.fragment_forrest_title_section1);
 			case 1:
 				return getString(R.string.fragment_forrest_title_section2);
-
 			}
 			return null;
 		}
@@ -325,5 +321,4 @@ public class MainActivity extends FragmentActivity implements
 			return rootView;
 		}
 	}
-
 }
