@@ -1,9 +1,9 @@
 # Create your views here.
-from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt                                          
+from django.views.decorators.csrf import csrf_exempt
+from api.helpers import json_response                                          
 
 
 
@@ -15,8 +15,9 @@ def register(request):
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password']
+    # Create user
     user = User.objects.create_user(username=username, email=email, password=password)
-    return HttpResponse(username)
+    return json_response(request, 201, 'Created')
 
 @csrf_exempt
 def login(request):
@@ -27,11 +28,11 @@ def login(request):
         if user.is_active:
             auth_login(request, user)
             # Redirect to a success page.
-            return HttpResponse("Welcome! Log in successful!")
+            return json_response(request, 200, 'Login successful')
         else:
             # Return a 'disabled account' error message
-            return HttpResponse("Error! Your account is disabled!")
+            return json_response(request, 500, 'Account disabled')
     else:
         # Return an 'invalid login' error message.
-        return HttpResponse("Error! Username not found!")
+        return json_response(request, 500, 'Username not found')
 
