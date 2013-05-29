@@ -1,6 +1,7 @@
 from django.http import HttpResponse
+import json
 
 def json_response(request, status_code, message='', error=''):
-	# json = '{ status: "' + str(status_code) + ' ' + status_msg + '", message: "' + message + '", error: "' + error + '" }'
-	json = '{ message: "' + message + '" session: "' + str(request.session.session_key) + '"}'
-	return HttpResponse(json, 'text/json', status_code)
+	session = str(request.session.session_key);
+	response = json.dumps({'detail': message, 'session': session}, sort_keys=True, indent=4, separators=(',', ': '))
+	return HttpResponse(response, 'application/json', status_code)

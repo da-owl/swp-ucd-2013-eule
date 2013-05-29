@@ -1,1 +1,4 @@
-{ message: "Login successful" session: "jfo1ailj3e3z9pvvtpbcsz59pry0b6jz"}
+{
+    "detail": "Username already exits!",
+    "session": "None"
+}
