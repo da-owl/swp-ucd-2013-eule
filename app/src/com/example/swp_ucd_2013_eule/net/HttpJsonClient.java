@@ -2,8 +2,8 @@ package com.example.swp_ucd_2013_eule.net;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,134 +20,71 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 
 /**
  * 
- * Example for making a POST-request from an Activity (in this case
- * MainActivity):
- * 
- * <pre>
- * URL url = null;
- * try {
- * 	url = new URL(&quot;http://10.0.2.2/?q=test&quot;);
- * } catch (MalformedURLException e) {
- * }
- * 
- * new AsyncTask&lt;URL, Void, String&gt;() {
- * 
- * 	&#064;Override
- * 	protected String doInBackground(URL... params) {
- * 		Response r = null;
- * 		try {
- * 			Client c = Client.getInstance();
- * 			c.init(&quot;MKay&quot;, &quot;topSecret&quot;);
- * 			// sending a JSON-object using a POST-request
- * 			r = c.post(MainActivity.this, params[0], new JSONObject(
- * 					&quot;{forest:123, action:\&quot;updateLevel\&quot;, newLevel:2}&quot;));
- * 		} catch (IOException e) {
- * 			return e.getLocalizedMessage();
- * 		} catch (JSONException e) {
- * 			return e.getLocalizedMessage();
- * 		}
- * 		if (!r.wasConnectionAvailable()) {
- * 			return &quot;No connection available!&quot;;
- * 		} else {
- * 			// instead you may use r.getJsonResponse() !
- * 			String body = r.getResponseBody();
- * 			return body == null ? &quot;NULL&quot; : body.toString();
- * 		}
- * 	}
- * 
- * 	protected void onPostExecute(String result) {
- * 		Toast.makeText(MainActivity.this, &quot;Result: &quot; + result,
- * 				Toast.LENGTH_LONG).show();
- * 	}
- * 
- * }.execute(url);
- * </pre>
  * 
  * @author MKay
  * 
  */
-public class Client {
-	private static final Client INSTANCE = new Client();
+public class HttpJsonClient {
 	private static final int RETRY_COUNT = 5;
 
-	private String mUsername = "";
-	private String mPassword = "";
+	private Header[] mHeaders;
 
 	/**
-	 * Singleton-Constructor
-	 */
-	private Client() {
-	}
-
-	/**
-	 * Returns the singleton-instance.
+	 * Set the headers which will be included in the request.
 	 * 
-	 * @return
+	 * @param headers
 	 */
-	public static Client getInstance() {
-		return INSTANCE;
+	public void setHeaders(Header[] headers) {
+		mHeaders = headers;
 	}
 
 	/**
-	 * Set the user name and password which will be used for every request.
-	 * 
-	 * @param username
-	 * @param password
-	 */
-	public void init(String username, String password) {
-		mUsername = username;
-		mPassword = password;
-	}
-
-	/**
-	 * Send a HTTP-GET-request to the specified url.
+	 * Send a HTTP-GET-request to the specified uri.
 	 * 
 	 * @param ctx
-	 * @param url
+	 * @param uri
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public Response get(Context ctx, URL url) throws ClientProtocolException,
+	public Response get(Context ctx, URI uri) throws ClientProtocolException,
 			IOException {
 		HttpGet getReq = new HttpGet();
-		return request(ctx, getReq, url);
+		return request(ctx, getReq, uri);
 	}
 
 	/**
-	 * Send a HTTP-POST-request to the specified url containing the json-object
+	 * Send a HTTP-POST-request to the specified uri containing the json-object
 	 * as HTTP-payload.
 	 * 
 	 * @param ctx
-	 * @param url
+	 * @param uri
 	 * @param json
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public Response post(Context ctx, URL url, JSONObject json)
+	public Response post(Context ctx, URI uri, JSONObject json)
 			throws ClientProtocolException, IOException {
 		HttpPost postReq = new HttpPost();
 		postReq.setEntity(new StringEntity(json.toString()));
-		return request(ctx, postReq, url);
+		return request(ctx, postReq, uri);
 	}
 
 	/**
-	 * Execute the specified request for the URL which will be extended with
-	 * user-credentials automatically.
+	 * Send a request to the specified uri.
 	 * 
 	 * @param ctx
 	 * @param req
-	 * @param url
+	 * @param uri
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	private Response request(Context ctx, HttpRequestBase req, URL url)
+	private Response request(Context ctx, HttpRequestBase req, URI uri)
 			throws ClientProtocolException, IOException {
 
 		// check connection availability
@@ -158,7 +95,10 @@ public class Client {
 			return new Response(); // no connection available
 		}
 
-		req.setURI(URI.create(decorateUrl(url)));
+		req.setURI(uri);
+		if (mHeaders != null) {
+			req.setHeaders(mHeaders);
+		}
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(
 				RETRY_COUNT, false));
@@ -168,20 +108,6 @@ public class Client {
 		String body = entity == null ? null : EntityUtils.toString(entity);
 
 		return new Response(res, body);
-	}
-
-	/**
-	 * Add additional information to the request-URL. For example
-	 * user-credentials.
-	 * 
-	 * @param url
-	 * @return
-	 */
-	private String decorateUrl(URL url) {
-		Uri.Builder ub = Uri.parse(url.toString()).buildUpon();
-		ub.appendQueryParameter("u", mUsername);
-		ub.appendQueryParameter("p", mPassword);
-		return ub.build().toString();
 	}
 
 	/**

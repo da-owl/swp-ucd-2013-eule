@@ -2,6 +2,7 @@ package com.example.swp_ucd_2013_eule;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.swp_ucd_2013_eule.net.ApiClient;
+import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -87,6 +92,9 @@ public class MainActivity extends FragmentActivity implements
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.action_comm_test:
+			testCommunication();
+			break;
 		case R.id.DrivingView:
 			changeFragment(new FragmentDriveSectionsPagerAdapter(
 					getSupportFragmentManager()));
@@ -124,6 +132,43 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
+	}
+
+	/**
+	 * Just a simple example.
+	 */
+	private void testCommunication() {
+		// API-endpoint to send the request to
+		String apiEndpoint = "/hello";
+
+		new AsyncTask<String, Void, String>() {
+			@Override
+			protected String doInBackground(String... apiEndpoint) {
+				Response r = null;
+				try {
+					ApiClient c = ApiClient.getInstance();
+					// required only once!
+					c.setServer("10.0.2.2:8080");
+					c.setAuthToken("4208b520528611010299d5135d46c7c3c6979a5b");
+					// GET-request to the specified API-endpoint
+					r = c.get(MainActivity.this, apiEndpoint[0]);
+				} catch (Exception e) {
+					return e.getLocalizedMessage();
+				}
+				if (!r.wasConnectionAvailable()) {
+					return "No connection available!";
+				} else {
+					// instead you may use r.getJsonResponse() !
+					String body = r.getResponseBody();
+					return body == null ? "NULL" : body.toString();
+				}
+			}
+
+			protected void onPostExecute(String result) {
+				Toast.makeText(MainActivity.this, "Result: " + result,
+						Toast.LENGTH_LONG).show();
+			}
+		}.execute(apiEndpoint);
 	}
 
 	/**
