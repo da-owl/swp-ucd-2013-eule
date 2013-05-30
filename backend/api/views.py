@@ -15,7 +15,8 @@ from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 
 from api.helpers import json_response 
-from api.serializers import UserSerializer
+from api.serializers import UserSerializer, ForestSerializer
+from api.models import Forest
 
 
 
@@ -106,3 +107,10 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class ForestViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows Forests to be viewed or edited.
+    """
+    queryset = Forest.objects.all()
+    serializer_class = ForestSerializer

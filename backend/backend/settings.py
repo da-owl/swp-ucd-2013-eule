@@ -125,7 +125,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'api',
 )
 
 # A sample logging configuration. The only tangible logging
