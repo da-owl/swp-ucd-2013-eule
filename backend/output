@@ -1,1 +1,4 @@
-{"count": 2, "next": null, "previous": null, "results": [{"url": "http://127.0.0.1:8080/users/1/", "username": "eule", "email": "", "groups": []}, {"url": "http://127.0.0.1:8080/users/2/", "username": "tester1", "email": "tester@test.de", "groups": []}]}
+{
+    "detail": "SWP-UCD Eule API 1.0",
+    "token": null
+}

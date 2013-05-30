@@ -1,5 +1,6 @@
 # Create your views here.
 import json
+import string
 
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
@@ -12,7 +13,6 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 
-
 from api.helpers import json_response 
 from api.serializers import UserSerializer
 
@@ -23,15 +23,32 @@ def index(request):
 
 
 def hello(request):
+    # auth = request.META['HTTP_AUTHORIZATION']
+    # # if type(auth) == type(''):
+    # #     # Work around django test client oddness
+    # #     auth = auth.encode(HTTP_HEADER_ENCODING)
+    # if auth is None:
+    #     return json_response(None, 403, 'Authentication credentials were not provided.')
+    # else:
+    #     # auth_str = auth.encode('utf-8')
+    #     if auth.find('Token') is -1:
+    #         return json_response(None, 403, 'Authentication credentials were not provided.')
+    #     else:
+    #         token = auth.split(' ')[1]
+    #         db_token = Token.objects.filter(key=token)
+    #         if db_token is not []:
+    #             return json_response(None, 200, str(db_token))
+    #         else:
+    #             json_response(None, 200, 'Invalid Token.')
     return json_response(None, 200, 'SWP-UCD Eule API 1.0')
-
-# ***************************************************************************
+    
+# """
 # rest-like register using token-authentification
 # json structure defined to match the framework structure
 # expects a json document like this:
 # { "username": "tester9", "password": "test", "email": "tester@test.de" }
 # cross-site request forgery disabled
-# ***************************************************************************
+# """
 @csrf_exempt
 def register(request):    
     try:
@@ -58,10 +75,10 @@ def register(request):
         return json_response(None, 500, 'Username already exits!')
     return json_response(token, 201, 'Created')
 
-# ***************************************************************************
+# """
 # rest-like register
 # login no longer required, because credentials are passed in the request
-# ***************************************************************************
+# """
 # @csrf_exempt
 # def login(request):
 #     username = request.POST['username']
@@ -79,9 +96,9 @@ def register(request):
 #         # Return an 'invalid login' error message.
 #         return json_response(request, 500, 'Username not found')
 
-# ***************************************************************************
+# """
 # restful
-# ***************************************************************************
+# """
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
