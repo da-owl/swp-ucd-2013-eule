@@ -27,20 +27,19 @@ def hello(request):
     # # if type(auth) == type(''):
     # #     # Work around django test client oddness
     # #     auth = auth.encode(HTTP_HEADER_ENCODING)
-    # if auth is None:
-    #     return json_response(None, 403, 'Authentication credentials were not provided.')
-    # else:
-    #     # auth_str = auth.encode('utf-8')
-    #     if auth.find('Token') is -1:
-    #         return json_response(None, 403, 'Authentication credentials were not provided.')
-    #     else:
-    #         token = auth.split(' ')[1]
-    #         db_token = Token.objects.filter(key=token)
-    #         if db_token is not []:
-    #             return json_response(None, 200, str(db_token))
-    #         else:
-    #             json_response(None, 200, 'Invalid Token.')
-    return json_response(None, 200, 'SWP-UCD Eule API 1.0')
+    if auth is None:
+        return json_response(None, 403, 'Authentication credentials were not provided.')
+    else:
+        # auth_str = auth.encode('utf-8')
+        if auth.find('Token') is -1:
+            return json_response(None, 403, 'Authentication credentials were not provided.')
+        else:
+            token = auth.split(' ')[1]
+            db_token = Token.objects.filter(key=token)
+            if db_token is not []:
+                return json_response(None, 200, str(db_token))
+            else:
+                json_response(None, 200, 'Invalid Token.')
     
 # """
 # rest-like register using token-authentification
