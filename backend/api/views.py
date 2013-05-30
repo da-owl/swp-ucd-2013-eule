@@ -23,8 +23,6 @@ def index(request):
 
 
 def hello(request):
-    for user in User.objects.all():
-        Token.objects.get_or_create(user=user)
     return json_response(None, 200, 'SWP-UCD Eule API 1.0')
 
 # ***************************************************************************
