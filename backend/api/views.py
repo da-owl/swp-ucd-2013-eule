@@ -1,6 +1,7 @@
 # Create your views here.
 import json
 import string
+import pprint
 
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
@@ -23,7 +24,7 @@ def index(request):
 
 
 def hello(request):
-    # auth = request.META['HTTP_AUTHORIZATION']
+    auth = request.META['HTTP_AUTHORIZATION']
     # # if type(auth) == type(''):
     # #     # Work around django test client oddness
     # #     auth = auth.encode(HTTP_HEADER_ENCODING)
@@ -36,10 +37,11 @@ def hello(request):
         else:
             token = auth.split(' ')[1]
             db_token = Token.objects.filter(key=token)
-            if db_token is not []:
-                return json_response(None, 200, str(db_token))
+            if not db_token:
+                return json_response(None, 403, 'Invalid Token.')
             else:
-                json_response(None, 200, 'Invalid Token.')
+                return json_response(None, 200, 'SWP-UCD Eule API 1.0')
+                
     
 # """
 # rest-like register using token-authentification

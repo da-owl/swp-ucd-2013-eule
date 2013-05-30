@@ -1,4 +1,2113 @@
-{
-    "detail": "SWP-UCD Eule API 1.0",
-    "token": null
-}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <title>SyntaxError at /hello</title>
+  <style type="text/css">
+    html * { padding:0; margin:0; }
+    body * { padding:10px 20px; }
+    body * * { padding:0; }
+    body { font:small sans-serif; }
+    body>div { border-bottom:1px solid #ddd; }
+    h1 { font-weight:normal; }
+    h2 { margin-bottom:.8em; }
+    h2 span { font-size:80%; color:#666; font-weight:normal; }
+    h3 { margin:1em 0 .5em 0; }
+    h4 { margin:0 0 .5em 0; font-weight: normal; }
+    code, pre { font-size: 100%; white-space: pre-wrap; }
+    table { border:1px solid #ccc; border-collapse: collapse; width:100%; background:white; }
+    tbody td, tbody th { vertical-align:top; padding:2px 3px; }
+    thead th { padding:1px 6px 1px 3px; background:#fefefe; text-align:left; font-weight:normal; font-size:11px; border:1px solid #ddd; }
+    tbody th { width:12em; text-align:right; color:#666; padding-right:.5em; }
+    table.vars { margin:5px 0 2px 40px; }
+    table.vars td, table.req td { font-family:monospace; }
+    table td.code { width:100%; }
+    table td.code pre { overflow:hidden; }
+    table.source th { color:#666; }
+    table.source td { font-family:monospace; white-space:pre; border-bottom:1px solid #eee; }
+    ul.traceback { list-style-type:none; color: #222; }
+    ul.traceback li.frame { padding-bottom:1em; color:#666; }
+    ul.traceback li.user { background-color:#e0e0e0; color:#000 }
+    div.context { padding:10px 0; overflow:hidden; }
+    div.context ol { padding-left:30px; margin:0 10px; list-style-position: inside; }
+    div.context ol li { font-family:monospace; white-space:pre; color:#777; cursor:pointer; }
+    div.context ol li pre { display:inline; }
+    div.context ol.context-line li { color:#505050; background-color:#dfdfdf; }
+    div.context ol.context-line li span { position:absolute; right:32px; }
+    .user div.context ol.context-line li { background-color:#bbb; color:#000; }
+    .user div.context ol li { color:#666; }
+    div.commands { margin-left: 40px; }
+    div.commands a { color:#555; text-decoration:none; }
+    .user div.commands a { color: black; }
+    #summary { background: #ffc; }
+    #summary h2 { font-weight: normal; color: #666; }
+    #explanation { background:#eee; }
+    #template, #template-not-exist { background:#f6f6f6; }
+    #template-not-exist ul { margin: 0 0 0 20px; }
+    #unicode-hint { background:#eee; }
+    #traceback { background:#eee; }
+    #requestinfo { background:#f6f6f6; padding-left:120px; }
+    #summary table { border:none; background:transparent; }
+    #requestinfo h2, #requestinfo h3 { position:relative; margin-left:-100px; }
+    #requestinfo h3 { margin-bottom:-1em; }
+    .error { background: #ffc; }
+    .specific { color:#cc3300; font-weight:bold; }
+    h2 span.commands { font-size:.7em;}
+    span.commands a:link {color:#5E5694;}
+    pre.exception_value { font-family: sans-serif; color: #666; font-size: 1.5em; margin: 10px 0 10px 0; }
+  </style>
+  
+  <script type="text/javascript">
+  //<!--
+    function getElementsByClassName(oElm, strTagName, strClassName){
+        // Written by Jonathan Snook, http://www.snook.ca/jon; Add-ons by Robert Nyman, http://www.robertnyman.com
+        var arrElements = (strTagName == "*" && document.all)? document.all :
+        oElm.getElementsByTagName(strTagName);
+        var arrReturnElements = new Array();
+        strClassName = strClassName.replace(/\-/g, "\-");
+        var oRegExp = new RegExp("(^|\s)" + strClassName + "(\s|$)");
+        var oElement;
+        for(var i=0; i<arrElements.length; i++){
+            oElement = arrElements[i];
+            if(oRegExp.test(oElement.className)){
+                arrReturnElements.push(oElement);
+            }
+        }
+        return (arrReturnElements)
+    }
+    function hideAll(elems) {
+      for (var e = 0; e < elems.length; e++) {
+        elems[e].style.display = 'none';
+      }
+    }
+    window.onload = function() {
+      hideAll(getElementsByClassName(document, 'table', 'vars'));
+      hideAll(getElementsByClassName(document, 'ol', 'pre-context'));
+      hideAll(getElementsByClassName(document, 'ol', 'post-context'));
+      hideAll(getElementsByClassName(document, 'div', 'pastebin'));
+    }
+    function toggle() {
+      for (var i = 0; i < arguments.length; i++) {
+        var e = document.getElementById(arguments[i]);
+        if (e) {
+          e.style.display = e.style.display == 'none' ? 'block' : 'none';
+        }
+      }
+      return false;
+    }
+    function varToggle(link, id) {
+      toggle('v' + id);
+      var s = link.getElementsByTagName('span')[0];
+      var uarr = String.fromCharCode(0x25b6);
+      var darr = String.fromCharCode(0x25bc);
+      s.innerHTML = s.innerHTML == uarr ? darr : uarr;
+      return false;
+    }
+    function switchPastebinFriendly(link) {
+      s1 = "Switch to copy-and-paste view";
+      s2 = "Switch back to interactive view";
+      link.innerHTML = link.innerHTML == s1 ? s2 : s1;
+      toggle('browserTraceback', 'pastebinTraceback');
+      return false;
+    }
+    //-->
+  </script>
+  
+</head>
+<body>
+<div id="summary">
+  <h1>SyntaxError at /hello</h1>
+  <pre class="exception_value">invalid syntax (views.py, line 43)</pre>
+  <table class="meta">
+
+    <tr>
+      <th>Request Method:</th>
+      <td>GET</td>
+    </tr>
+    <tr>
+      <th>Request URL:</th>
+      <td>http://localhost:8080/hello</td>
+    </tr>
+
+    <tr>
+      <th>Django Version:</th>
+      <td>1.5.1</td>
+    </tr>
+
+    <tr>
+      <th>Exception Type:</th>
+      <td>SyntaxError</td>
+    </tr>
+
+
+    <tr>
+      <th>Exception Value:</th>
+      <td><pre>invalid syntax (views.py, line 43)</pre></td>
+    </tr>
+
+
+    <tr>
+      <th>Exception Location:</th>
+      <td>/home/erak/dev/uni/swp-ucd-2013-eule/backend/backend/urls.py in &lt;module&gt;, line 7</td>
+    </tr>
+
+    <tr>
+      <th>Python Executable:</th>
+      <td>/usr/bin/python</td>
+    </tr>
+    <tr>
+      <th>Python Version:</th>
+      <td>3.3.0</td>
+    </tr>
+    <tr>
+      <th>Python Path:</th>
+      <td><pre>[&#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend&#39;,
+ &#39;/usr/lib/python33.zip&#39;,
+ &#39;/usr/lib/python3.3&#39;,
+ &#39;/usr/lib/python3.3/plat-linux&#39;,
+ &#39;/usr/lib/python3.3/lib-dynload&#39;,
+ &#39;/usr/lib/python3.3/site-packages&#39;]</pre></td>
+    </tr>
+    <tr>
+      <th>Server time:</th>
+      <td>Do, 30 Mai 2013 23:50:27 +0200</td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+<div id="traceback">
+  <h2>Traceback <span class="commands"><a href="#" onclick="return switchPastebinFriendly(this);">Switch to copy-and-paste view</a></span></h2>
+  
+  <div id="browserTraceback">
+    <ul class="traceback">
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/core/handlers/base.py</code> in <code>get_response</code>
+
+          
+            <div class="context" id="c3037926020">
+              
+                <ol start="85" class="pre-context" id="pre3037926020"><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>            urlconf = settings.ROOT_URLCONF</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>            urlresolvers.set_urlconf(urlconf)</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>            resolver = urlresolvers.RegexURLResolver(r&#39;^/&#39;, urlconf)</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>            try:</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                response = None</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                # Apply request middleware</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                for middleware_method in self._request_middleware:</pre></li></ol>
+              
+              <ol start="92" class="context-line"><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                    response = middleware_method(request)</pre> <span>...</span></li></ol>
+              
+                <ol start='93' class="post-context" id="post3037926020"><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                    if response:</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                        break</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre></pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                if response is None:</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                    if hasattr(request, &#39;urlconf&#39;):</pre></li><li onclick="toggle('pre3037926020', 'post3037926020')"><pre>                        # Reset url resolver with a custom urlconf.</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3037926020')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3037926020">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>self</td>
+                    <td class="code"><pre>&lt;django.core.handlers.wsgi.WSGIHandler object at 0xb5b2862c&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>urlconf</td>
+                    <td class="code"><pre>&#39;backend.urls&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>response</td>
+                    <td class="code"><pre>None</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>request</td>
+                    <td class="code"><pre>&quot;&lt;WSGIRequest\npath:/hello,\nGET:&lt;QueryDict: {}&gt;,\nPOST:&lt;QueryDict: {}&gt;,\nCOOKIES:{},\nMETA:{&#39;BROWSER&#39;: &#39;firefox&#39;,\n &#39;CONTENT_LENGTH&#39;: &#39;&#39;,\n &#39;CONTENT_TYPE&#39;: &#39;text/plain&#39;,\n &#39;DBUS_SESSION_BUS_ADDRESS&#39;: &#39;unix:abstract=/tmp/dbus-IxMXQbz6sx,guid=4bcf70ad12c6e70f5b8e3c0a51a7c247&#39;,\n &#39;DISPLAY&#39;: &#39;:0.0&#39;,\n &#39;DJANGO_SETTINGS_MODULE&#39;: &#39;backend.settings&#39;,\n &#39;EDITOR&#39;: &#39;vim&#39;,\n &#39;GATEWAY_INTERFACE&#39;: &#39;CGI/1.1&#39;,\n &#39;GJS_DEBUG_OUTPUT&#39;: &#39;stderr&#39;,\n &#39;GJS_DEBUG_TOPICS&#39;: &#39;JS ERROR;JS LOG&#39;,\n &#39;GNOME_DESKTOP_SESSION_ID&#39;: &#39;this-is-deprecated&#39;,\n &#39;GNOME_KEYRING_CONTROL&#39;: &#39;/run/user/1000/keyring-wyn6Wh&#39;,\n &#39;GNOME_KEYRING_PID&#39;: &#39;303&#39;,\n &#39;GPG_AGENT_INFO&#39;: &#39;/run/user/1000/keyring-wyn6Wh/gpg:0:1&#39;,\n &#39;GREP_COLOR&#39;: &#39;1;31&#39;,\n &#39;GTK2_RC_FILES&#39;: &#39;/home/erak/.gtkrc-2.0&#39;,\n &#39;GTK_MODULES&#39;: &#39;canberra-gtk-module&#39;,\n &#39;HISTCONTROL&#39;: &#39;ignoreboth&#39;,\n &#39;HISTSIZE&#39;: &#39;10000&#39;,\n &#39;HOME&#39;: &#39;/home/erak&#39;,\n &#39;HTTP_ACCEPT&#39;: &#39;*/*&#39;,\n &#39;HTTP_AUTHORIZATION&#39;: &#39;Token 4208b520528611010299d5135d46c7c3c6979a5b&#39;,\n &#39;HTTP_HOST&#39;: &#39;localhost:8080&#39;,\n &#39;HTTP_USER_AGENT&#39;: &#39;curl/7.29.0&#39;,\n &#39;JAVA_HOME&#39;: &#39;/usr/lib/jvm/java-7-openjdk&#39;,\n &#39;LANG&#39;: &#39;en_US.UTF-8&#39;,\n &#39;LESS&#39;: &#39;-R~gIw&#39;,\n &#39;LESS_TERMCAP_mb&#39;: &#39;\\x1b[01;31m&#39;,\n &#39;LESS_TERMCAP_md&#39;: &#39;\\x1b[01;31m&#39;,\n &#39;LESS_TERMCAP_me&#39;: &#39;\\x1b[0m&#39;,\n &#39;LESS_TERMCAP_se&#39;: &#39;\\x1b[0m&#39;,\n &#39;LESS_TERMCAP_so&#39;: &#39;\\x1b[01;44;33m&#39;,\n &#39;LESS_TERMCAP_ue&#39;: &#39;\\x1b[0m&#39;,\n &#39;LESS_TERMCAP_us&#39;: &#39;\\x1b[01;32m&#39;,\n &#39;LOGNAME&#39;: &#39;erak&#39;,\n &#39;LS_COLORS&#39;: &#39;fi=38;5;247:rs=0:di=38;5;241:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;31;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=36;40:ow=01;36:st=37;44:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.pdf=00;35:*.djvu=00;35:*.chm=00;33:*.htm=00;33:*.html=00;33:*.dvi=00;33:*.ps=01;33:*.odt=00;32:*.docx=00;32:*.doc=00;32:*.tex=00;32:*.rtf=00;32:*.sh=00;32:*.csh=00;32:*.t2t=00;36:*.rst=00;36:*.tar=01;31:*.tgz=00;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lha=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=00;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=00;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=00;31:*.rpm=00;31:*.jar=00;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=00;31:*.7z=01;31:*.rz=01;31:*.pacnew=01;30:*.pacsave=01;30:*.tmp=01;30:*.swp=01;30:*.swo=01;30:*.bak=01;30:*.bkp=01;30:*.bin=01;30:*.$$$=01;30:*.aux=01;30:*.out=01;30:*.log=01;30:*.un~=38;5;240:*.zcompdump=38;5;240:*.zwc=38;5;240:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.asx=00;36:*.cue=00;36:*.it=00;36:*.med=00;36:*.m3u=00;36:*.mid=00;36:*.midi=00;36:*.mod=00;36:*.mol=00;36:*.mpl=00;36:*.pls=00;36:*.ra=00;36:*.rm=00;36:*.s3m=00;36:*.umx=00;36:*.xm=00;36:*.anx=00;32:*.avi=00;32:*.axv=00;32:*.mov=00;32:*.mpg=00;32:*.mpeg=00;32:*.ogm=00;32:*.ogv=00;32:*.ogx=00;32:*.vob=00;32:*.asf=01;32:*.dl=01;32:*.flc=01;32:*.fli=01;32:*.flv=01;32:*.m2v=01;32:*.m4v=01;32:*.mkv=01;32:*.mp4=01;32:*.mp4v=01;32:*.nuv=01;32:*.ql=01;32:*.qt=01;32:*.rm=01;32:*.rmvb=01;32:*.swf=01;32:*.wmv=01;32:*.aac=00;34:*.ape=00;34:*.au=00;34:*.axa=00;34:*.flac=00;34:*.m4a=00;34:*.mka=00;34:*.wav=00;34:*.mp2=01;34:*.mp3=01;34:*.mpc=01;34:*.oga=01;34:*.ogg=01;34:*.spx=01;34:*.afm=38;5;58:*.pfb=38;5;58:*.pfm=38;5;58:*.otf=38;5;61:*.dfont=38;5;61:*.TTF=38;5;1:*.ttf=38;5;1:*.ttc=38;5;1:*.pcf=38;5;65:*.psf=38;5;64:*.PL=00;36:*.asm=00;36:*.asoundrc=00;36:*.awk=00;36:*.bash=00;31:*.bashrc=00;31:*.bash_history=00;31:*.bash_profile=00;31:*.zshrc=00;31:*.gtkrc-2.0=00;31:*.gtk-bookmarks=00;31:*.conkyrc=00;31:*.c=00;36:*.cfg=00;36:*.coffee=00;36:*.conf=00;36:*.cpp=00;36:*.cs=00;36:*.css=00;36:*.csv=00;36:*.diff=01;33:*.dircolors=01;33:*.dir_colors=01;33:*.enc=00;36:*.eps=00;36:*.etx=00;36:*.ex=00;36:*.example=00;36:*.fehbg=00;36:*.bashburnrc=00;36:*.fonts=00;36:*.git=00;36:*.gitignore=00;36:*.hgrc=01;34:*.hgignore=01;34:*.go=01;34:*.h=01;34:*.hs=01;34:*.htoprc=01;34:*.toprc=01;34:*.displayrc=01;34:*.xdvirc=01;34:*.xnviewrc=01;34:*.info=01;34:*.ini=01;34:*.java=01;34:*.jhtm=01;34:*.js=01;34:*.jsm=01;34:*.jsm=01;34:*.json=01;34:*.jsp=01;34:*.lisp=01;34:*.lesshst=01;34:*.log=01;34:*.xspf=01;36:*.lua=00;33:*.map=00;33:*.markdown=00;33:*.md=00;33:*.mf=00;33:*.mfasl=00;33:*.mi=00;33:*.mkd=00;33:*.msmtprc=00;33:*.mtx=00;33:*.muttrc=00;33:*.nfo=00;33:*.netrc=01;31:*.offlineimaprc=00;33:*.pacnew=00;33:*.patch=00;31:*.pc=00;31:*.pfa=00;31:*.php=00;31:*.pid=00;31:*.pl=01;36:*.pm=00;31:*.pod=00;31:*.py=00;31:*.rc=00;31:*.rb=08;36:*.rdf=00;31:*.ru=00;31:*.sed=00;31:*.sfv=00;31:*.signature=00;31:*.sty=01;35:*.sug=01;35:*.t=01;35:*.tcl=01;35:*.tdy=01;35:*.textile=01;35:*.tfm=01;35:*.tfnt=01;35:*.theme=01;35:*.viminfo=01;35:*.xml=01;35:*.yml=01;35:*.zsh=01;35:*.urlview=01;35:*.vim=01;35:*.vimrc=01;35:*.NERDTreeBookmarks=01;35:*.docutils=01;35:*.xinitrc=01;31:*.Xauthority=01;31:*.Xmodmap=00;31:*.Xresources=01;33:*.gitconfig=01;33:*.gitk=01;33:*.rarreg.key=00;32:mi=01;05;37;41:&#39;,\n &#39;MAIL&#39;: &#39;/var/mail/erak&#39;,\n &#39;MOZ_PLUGIN_PATH&#39;: &#39;/usr/lib/mozilla/plugins&#39;,\n &#39;OLDPWD&#39;: &#39;/home/erak&#39;,\n &#39;PATH&#39;: &#39;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/qt4/bin&#39;,\n &#39;PATH_INFO&#39;: &#39;/hello&#39;,\n &#39;PWD&#39;: &#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend&#39;,\n &#39;QT_IM_MODULE&#39;: &#39;ibus&#39;,\n &#39;QUERY_STRING&#39;: &#39;&#39;,\n &#39;REMOTE_ADDR&#39;: &#39;127.0.0.1&#39;,\n &#39;REMOTE_HOST&#39;: &#39;&#39;,\n &#39;REQUEST_METHOD&#39;: &#39;GET&#39;,\n &#39;RUN_MAIN&#39;: &#39;true&#39;,\n &#39;SCRIPT_NAME&#39;: &#39;&#39;,\n &#39;SERVER_NAME&#39;: &#39;localhost.localdomain&#39;,\n &#39;SERVER_PORT&#39;: &#39;8080&#39;,\n &#39;SERVER_PROTOCOL&#39;: &#39;HTTP/1.1&#39;,\n &#39;SERVER_SOFTWARE&#39;: &#39;WSGIServer/0.2&#39;,\n &#39;SESSION_MANAGER&#39;: &#39;local/klappi:@/tmp/.ICE-unix/305,unix/klappi:/tmp/.ICE-unix/305&#39;,\n &#39;SHELL&#39;: &#39;/bin/bash&#39;,\n &#39;SHLVL&#39;: &#39;1&#39;,\n &#39;SSH_AUTH_SOCK&#39;: &#39;/run/user/1000/keyring-wyn6Wh/ssh&#39;,\n &#39;TERM&#39;: &#39;xterm&#39;,\n &#39;TZ&#39;: &#39;Europe/Berlin&#39;,\n &#39;USER&#39;: &#39;erak&#39;,\n &#39;XAUTHORITY&#39;: &#39;/home/erak/.Xauthority&#39;,\n &#39;XDG_RUNTIME_DIR&#39;: &#39;/run/user/1000&#39;,\n &#39;XDG_SEAT&#39;: &#39;seat0&#39;,\n &#39;XDG_SESSION_ID&#39;: &#39;1&#39;,\n &#39;XDG_VTNR&#39;: &#39;7&#39;,\n &#39;XMODIFIERS&#39;: &#39;@im=ibus&#39;,\n &#39;_&#39;: &#39;/usr/bin/python&#39;,\n &#39;wsgi.errors&#39;: &lt;_io.TextIOWrapper name=&#39;&lt;stderr&gt;&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;,\n &#39;wsgi.file_wrapper&#39;: &lt;class &#39;wsgiref.util.FileWrapper&#39;&gt;,\n &#39;wsgi.input&#39;: &lt;_io.BufferedReader name=4&gt;,\n &#39;wsgi.multiprocess&#39;: False,\n &#39;wsgi.multithread&#39;: True,\n &#39;wsgi.run_once&#39;: False,\n &#39;wsgi.url_scheme&#39;: &#39;http&#39;,\n &#39;wsgi.version&#39;: (1, 0)}&gt;&quot;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>resolver</td>
+                    <td class="code"><pre>&lt;RegexURLResolver &#39;backend.urls&#39; (None:None) ^/&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>middleware_method</td>
+                    <td class="code"><pre>&lt;bound method CommonMiddleware.process_request of &lt;django.middleware.common.CommonMiddleware object at 0xb598f14c&gt;&gt;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/middleware/common.py</code> in <code>process_request</code>
+
+          
+            <div class="context" id="c3046717596">
+              
+                <ol start="62" class="pre-context" id="pre3046717596"><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>                not old_url[0].startswith(&#39;www.&#39;)):</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>            new_url[0] = &#39;www.&#39; + old_url[0]</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre></pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>        # Append a slash if APPEND_SLASH is set and the URL doesn&#39;t have a</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>        # trailing slash and there is no pattern for the current path</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>        if settings.APPEND_SLASH and (not old_url[1].endswith(&#39;/&#39;)):</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>            urlconf = getattr(request, &#39;urlconf&#39;, None)</pre></li></ol>
+              
+              <ol start="69" class="context-line"><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>            if (not urlresolvers.is_valid_path(request.path_info, urlconf) and</pre> <span>...</span></li></ol>
+              
+                <ol start='70' class="post-context" id="post3046717596"><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>                    urlresolvers.is_valid_path(&quot;%s/&quot; % request.path_info, urlconf)):</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>                new_url[1] = new_url[1] + &#39;/&#39;</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>                if settings.DEBUG and request.method == &#39;POST&#39;:</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>                    raise RuntimeError((&quot;&quot;</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>                    &quot;You called this URL via POST, but the URL doesn&#39;t end &quot;</pre></li><li onclick="toggle('pre3046717596', 'post3046717596')"><pre>                    &quot;in a slash and you have APPEND_SLASH set. Django can&#39;t &quot;</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3046717596')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3046717596">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>self</td>
+                    <td class="code"><pre>&lt;django.middleware.common.CommonMiddleware object at 0xb598f14c&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>host</td>
+                    <td class="code"><pre>&#39;localhost:8080&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>urlconf</td>
+                    <td class="code"><pre>None</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>new_url</td>
+                    <td class="code"><pre>[&#39;localhost:8080&#39;, &#39;/hello&#39;]</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>request</td>
+                    <td class="code"><pre>&quot;&lt;WSGIRequest\npath:/hello,\nGET:&lt;QueryDict: {}&gt;,\nPOST:&lt;QueryDict: {}&gt;,\nCOOKIES:{},\nMETA:{&#39;BROWSER&#39;: &#39;firefox&#39;,\n &#39;CONTENT_LENGTH&#39;: &#39;&#39;,\n &#39;CONTENT_TYPE&#39;: &#39;text/plain&#39;,\n &#39;DBUS_SESSION_BUS_ADDRESS&#39;: &#39;unix:abstract=/tmp/dbus-IxMXQbz6sx,guid=4bcf70ad12c6e70f5b8e3c0a51a7c247&#39;,\n &#39;DISPLAY&#39;: &#39;:0.0&#39;,\n &#39;DJANGO_SETTINGS_MODULE&#39;: &#39;backend.settings&#39;,\n &#39;EDITOR&#39;: &#39;vim&#39;,\n &#39;GATEWAY_INTERFACE&#39;: &#39;CGI/1.1&#39;,\n &#39;GJS_DEBUG_OUTPUT&#39;: &#39;stderr&#39;,\n &#39;GJS_DEBUG_TOPICS&#39;: &#39;JS ERROR;JS LOG&#39;,\n &#39;GNOME_DESKTOP_SESSION_ID&#39;: &#39;this-is-deprecated&#39;,\n &#39;GNOME_KEYRING_CONTROL&#39;: &#39;/run/user/1000/keyring-wyn6Wh&#39;,\n &#39;GNOME_KEYRING_PID&#39;: &#39;303&#39;,\n &#39;GPG_AGENT_INFO&#39;: &#39;/run/user/1000/keyring-wyn6Wh/gpg:0:1&#39;,\n &#39;GREP_COLOR&#39;: &#39;1;31&#39;,\n &#39;GTK2_RC_FILES&#39;: &#39;/home/erak/.gtkrc-2.0&#39;,\n &#39;GTK_MODULES&#39;: &#39;canberra-gtk-module&#39;,\n &#39;HISTCONTROL&#39;: &#39;ignoreboth&#39;,\n &#39;HISTSIZE&#39;: &#39;10000&#39;,\n &#39;HOME&#39;: &#39;/home/erak&#39;,\n &#39;HTTP_ACCEPT&#39;: &#39;*/*&#39;,\n &#39;HTTP_AUTHORIZATION&#39;: &#39;Token 4208b520528611010299d5135d46c7c3c6979a5b&#39;,\n &#39;HTTP_HOST&#39;: &#39;localhost:8080&#39;,\n &#39;HTTP_USER_AGENT&#39;: &#39;curl/7.29.0&#39;,\n &#39;JAVA_HOME&#39;: &#39;/usr/lib/jvm/java-7-openjdk&#39;,\n &#39;LANG&#39;: &#39;en_US.UTF-8&#39;,\n &#39;LESS&#39;: &#39;-R~gIw&#39;,\n &#39;LESS_TERMCAP_mb&#39;: &#39;\\x1b[01;31m&#39;,\n &#39;LESS_TERMCAP_md&#39;: &#39;\\x1b[01;31m&#39;,\n &#39;LESS_TERMCAP_me&#39;: &#39;\\x1b[0m&#39;,\n &#39;LESS_TERMCAP_se&#39;: &#39;\\x1b[0m&#39;,\n &#39;LESS_TERMCAP_so&#39;: &#39;\\x1b[01;44;33m&#39;,\n &#39;LESS_TERMCAP_ue&#39;: &#39;\\x1b[0m&#39;,\n &#39;LESS_TERMCAP_us&#39;: &#39;\\x1b[01;32m&#39;,\n &#39;LOGNAME&#39;: &#39;erak&#39;,\n &#39;LS_COLORS&#39;: &#39;fi=38;5;247:rs=0:di=38;5;241:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;31;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=36;40:ow=01;36:st=37;44:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.pdf=00;35:*.djvu=00;35:*.chm=00;33:*.htm=00;33:*.html=00;33:*.dvi=00;33:*.ps=01;33:*.odt=00;32:*.docx=00;32:*.doc=00;32:*.tex=00;32:*.rtf=00;32:*.sh=00;32:*.csh=00;32:*.t2t=00;36:*.rst=00;36:*.tar=01;31:*.tgz=00;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lha=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=00;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=00;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=00;31:*.rpm=00;31:*.jar=00;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=00;31:*.7z=01;31:*.rz=01;31:*.pacnew=01;30:*.pacsave=01;30:*.tmp=01;30:*.swp=01;30:*.swo=01;30:*.bak=01;30:*.bkp=01;30:*.bin=01;30:*.$$$=01;30:*.aux=01;30:*.out=01;30:*.log=01;30:*.un~=38;5;240:*.zcompdump=38;5;240:*.zwc=38;5;240:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.asx=00;36:*.cue=00;36:*.it=00;36:*.med=00;36:*.m3u=00;36:*.mid=00;36:*.midi=00;36:*.mod=00;36:*.mol=00;36:*.mpl=00;36:*.pls=00;36:*.ra=00;36:*.rm=00;36:*.s3m=00;36:*.umx=00;36:*.xm=00;36:*.anx=00;32:*.avi=00;32:*.axv=00;32:*.mov=00;32:*.mpg=00;32:*.mpeg=00;32:*.ogm=00;32:*.ogv=00;32:*.ogx=00;32:*.vob=00;32:*.asf=01;32:*.dl=01;32:*.flc=01;32:*.fli=01;32:*.flv=01;32:*.m2v=01;32:*.m4v=01;32:*.mkv=01;32:*.mp4=01;32:*.mp4v=01;32:*.nuv=01;32:*.ql=01;32:*.qt=01;32:*.rm=01;32:*.rmvb=01;32:*.swf=01;32:*.wmv=01;32:*.aac=00;34:*.ape=00;34:*.au=00;34:*.axa=00;34:*.flac=00;34:*.m4a=00;34:*.mka=00;34:*.wav=00;34:*.mp2=01;34:*.mp3=01;34:*.mpc=01;34:*.oga=01;34:*.ogg=01;34:*.spx=01;34:*.afm=38;5;58:*.pfb=38;5;58:*.pfm=38;5;58:*.otf=38;5;61:*.dfont=38;5;61:*.TTF=38;5;1:*.ttf=38;5;1:*.ttc=38;5;1:*.pcf=38;5;65:*.psf=38;5;64:*.PL=00;36:*.asm=00;36:*.asoundrc=00;36:*.awk=00;36:*.bash=00;31:*.bashrc=00;31:*.bash_history=00;31:*.bash_profile=00;31:*.zshrc=00;31:*.gtkrc-2.0=00;31:*.gtk-bookmarks=00;31:*.conkyrc=00;31:*.c=00;36:*.cfg=00;36:*.coffee=00;36:*.conf=00;36:*.cpp=00;36:*.cs=00;36:*.css=00;36:*.csv=00;36:*.diff=01;33:*.dircolors=01;33:*.dir_colors=01;33:*.enc=00;36:*.eps=00;36:*.etx=00;36:*.ex=00;36:*.example=00;36:*.fehbg=00;36:*.bashburnrc=00;36:*.fonts=00;36:*.git=00;36:*.gitignore=00;36:*.hgrc=01;34:*.hgignore=01;34:*.go=01;34:*.h=01;34:*.hs=01;34:*.htoprc=01;34:*.toprc=01;34:*.displayrc=01;34:*.xdvirc=01;34:*.xnviewrc=01;34:*.info=01;34:*.ini=01;34:*.java=01;34:*.jhtm=01;34:*.js=01;34:*.jsm=01;34:*.jsm=01;34:*.json=01;34:*.jsp=01;34:*.lisp=01;34:*.lesshst=01;34:*.log=01;34:*.xspf=01;36:*.lua=00;33:*.map=00;33:*.markdown=00;33:*.md=00;33:*.mf=00;33:*.mfasl=00;33:*.mi=00;33:*.mkd=00;33:*.msmtprc=00;33:*.mtx=00;33:*.muttrc=00;33:*.nfo=00;33:*.netrc=01;31:*.offlineimaprc=00;33:*.pacnew=00;33:*.patch=00;31:*.pc=00;31:*.pfa=00;31:*.php=00;31:*.pid=00;31:*.pl=01;36:*.pm=00;31:*.pod=00;31:*.py=00;31:*.rc=00;31:*.rb=08;36:*.rdf=00;31:*.ru=00;31:*.sed=00;31:*.sfv=00;31:*.signature=00;31:*.sty=01;35:*.sug=01;35:*.t=01;35:*.tcl=01;35:*.tdy=01;35:*.textile=01;35:*.tfm=01;35:*.tfnt=01;35:*.theme=01;35:*.viminfo=01;35:*.xml=01;35:*.yml=01;35:*.zsh=01;35:*.urlview=01;35:*.vim=01;35:*.vimrc=01;35:*.NERDTreeBookmarks=01;35:*.docutils=01;35:*.xinitrc=01;31:*.Xauthority=01;31:*.Xmodmap=00;31:*.Xresources=01;33:*.gitconfig=01;33:*.gitk=01;33:*.rarreg.key=00;32:mi=01;05;37;41:&#39;,\n &#39;MAIL&#39;: &#39;/var/mail/erak&#39;,\n &#39;MOZ_PLUGIN_PATH&#39;: &#39;/usr/lib/mozilla/plugins&#39;,\n &#39;OLDPWD&#39;: &#39;/home/erak&#39;,\n &#39;PATH&#39;: &#39;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/qt4/bin&#39;,\n &#39;PATH_INFO&#39;: &#39;/hello&#39;,\n &#39;PWD&#39;: &#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend&#39;,\n &#39;QT_IM_MODULE&#39;: &#39;ibus&#39;,\n &#39;QUERY_STRING&#39;: &#39;&#39;,\n &#39;REMOTE_ADDR&#39;: &#39;127.0.0.1&#39;,\n &#39;REMOTE_HOST&#39;: &#39;&#39;,\n &#39;REQUEST_METHOD&#39;: &#39;GET&#39;,\n &#39;RUN_MAIN&#39;: &#39;true&#39;,\n &#39;SCRIPT_NAME&#39;: &#39;&#39;,\n &#39;SERVER_NAME&#39;: &#39;localhost.localdomain&#39;,\n &#39;SERVER_PORT&#39;: &#39;8080&#39;,\n &#39;SERVER_PROTOCOL&#39;: &#39;HTTP/1.1&#39;,\n &#39;SERVER_SOFTWARE&#39;: &#39;WSGIServer/0.2&#39;,\n &#39;SESSION_MANAGER&#39;: &#39;local/klappi:@/tmp/.ICE-unix/305,unix/klappi:/tmp/.ICE-unix/305&#39;,\n &#39;SHELL&#39;: &#39;/bin/bash&#39;,\n &#39;SHLVL&#39;: &#39;1&#39;,\n &#39;SSH_AUTH_SOCK&#39;: &#39;/run/user/1000/keyring-wyn6Wh/ssh&#39;,\n &#39;TERM&#39;: &#39;xterm&#39;,\n &#39;TZ&#39;: &#39;Europe/Berlin&#39;,\n &#39;USER&#39;: &#39;erak&#39;,\n &#39;XAUTHORITY&#39;: &#39;/home/erak/.Xauthority&#39;,\n &#39;XDG_RUNTIME_DIR&#39;: &#39;/run/user/1000&#39;,\n &#39;XDG_SEAT&#39;: &#39;seat0&#39;,\n &#39;XDG_SESSION_ID&#39;: &#39;1&#39;,\n &#39;XDG_VTNR&#39;: &#39;7&#39;,\n &#39;XMODIFIERS&#39;: &#39;@im=ibus&#39;,\n &#39;_&#39;: &#39;/usr/bin/python&#39;,\n &#39;wsgi.errors&#39;: &lt;_io.TextIOWrapper name=&#39;&lt;stderr&gt;&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;,\n &#39;wsgi.file_wrapper&#39;: &lt;class &#39;wsgiref.util.FileWrapper&#39;&gt;,\n &#39;wsgi.input&#39;: &lt;_io.BufferedReader name=4&gt;,\n &#39;wsgi.multiprocess&#39;: False,\n &#39;wsgi.multithread&#39;: True,\n &#39;wsgi.run_once&#39;: False,\n &#39;wsgi.url_scheme&#39;: &#39;http&#39;,\n &#39;wsgi.version&#39;: (1, 0)}&gt;&quot;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>old_url</td>
+                    <td class="code"><pre>[&#39;localhost:8080&#39;, &#39;/hello&#39;]</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/core/urlresolvers.py</code> in <code>is_valid_path</code>
+
+          
+            <div class="context" id="c3037926340">
+              
+                <ol start="544" class="pre-context" id="pre3037926340"><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>    Returns True if the given path resolves against the default URL resolver,</pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>    False otherwise.</pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre></pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>    This is a convenience method to make working with &quot;is this a match?&quot; cases</pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>    easier, avoiding unnecessarily indented try...except blocks.</pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>    &quot;&quot;&quot;</pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>    try:</pre></li></ol>
+              
+              <ol start="551" class="context-line"><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>        resolve(path, urlconf)</pre> <span>...</span></li></ol>
+              
+                <ol start='552' class="post-context" id="post3037926340"><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>        return True</pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>    except Resolver404:</pre></li><li onclick="toggle('pre3037926340', 'post3037926340')"><pre>        return False</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3037926340')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3037926340">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>urlconf</td>
+                    <td class="code"><pre>None</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>path</td>
+                    <td class="code"><pre>&#39;/hello&#39;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/core/urlresolvers.py</code> in <code>resolve</code>
+
+          
+            <div class="context" id="c3037926300">
+              
+                <ol start="433" class="pre-context" id="pre3037926300"><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>            regex_compiled = re.compile(&#39;^%s/&#39; % language_code, re.UNICODE)</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>            self._regex_dict[language_code] = regex_compiled</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>        return self._regex_dict[language_code]</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre></pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>def resolve(path, urlconf=None):</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>    if urlconf is None:</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>        urlconf = get_urlconf()</pre></li></ol>
+              
+              <ol start="440" class="context-line"><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>    return get_resolver(urlconf).resolve(path)</pre> <span>...</span></li></ol>
+              
+                <ol start='441' class="post-context" id="post3037926300"><li onclick="toggle('pre3037926300', 'post3037926300')"><pre></pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None, current_app=None):</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>    if urlconf is None:</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>        urlconf = get_urlconf()</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>    resolver = get_resolver(urlconf)</pre></li><li onclick="toggle('pre3037926300', 'post3037926300')"><pre>    args = args or []</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3037926300')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3037926300">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>urlconf</td>
+                    <td class="code"><pre>&#39;backend.urls&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>path</td>
+                    <td class="code"><pre>&#39;/hello&#39;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/core/urlresolvers.py</code> in <code>resolve</code>
+
+          
+            <div class="context" id="c3037925860">
+              
+                <ol start="312" class="pre-context" id="pre3037925860"><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>        return self._app_dict[language_code]</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre></pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>    def resolve(self, path):</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>        tried = []</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>        match = self.regex.search(path)</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>        if match:</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>            new_path = path[match.end():]</pre></li></ol>
+              
+              <ol start="319" class="context-line"><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>            for pattern in self.url_patterns:</pre> <span>...</span></li></ol>
+              
+                <ol start='320' class="post-context" id="post3037925860"><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>                try:</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>                    sub_match = pattern.resolve(new_path)</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>                except Resolver404 as e:</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>                    sub_tried = e.args[0].get(&#39;tried&#39;)</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>                    if sub_tried is not None:</pre></li><li onclick="toggle('pre3037925860', 'post3037925860')"><pre>                        tried.extend([[pattern] + t for t in sub_tried])</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3037925860')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3037925860">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>self</td>
+                    <td class="code"><pre>&lt;RegexURLResolver &#39;backend.urls&#39; (None:None) ^/&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>tried</td>
+                    <td class="code"><pre>[]</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>new_path</td>
+                    <td class="code"><pre>&#39;hello&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>path</td>
+                    <td class="code"><pre>&#39;/hello&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>match</td>
+                    <td class="code"><pre>&lt;_sre.SRE_Match object at 0xb5b49950&gt;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/core/urlresolvers.py</code> in <code>url_patterns</code>
+
+          
+            <div class="context" id="c3037925900">
+              
+                <ol start="340" class="pre-context" id="pre3037925900"><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>            return self._urlconf_module</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>        except AttributeError:</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>            self._urlconf_module = import_module(self.urlconf_name)</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>            return self._urlconf_module</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre></pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>    @property</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>    def url_patterns(self):</pre></li></ol>
+              
+              <ol start="347" class="context-line"><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>        patterns = getattr(self.urlconf_module, &quot;urlpatterns&quot;, self.urlconf_module)</pre> <span>...</span></li></ol>
+              
+                <ol start='348' class="post-context" id="post3037925900"><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>        try:</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>            iter(patterns)</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>        except TypeError:</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>            raise ImproperlyConfigured(&quot;The included urlconf %s doesn&#39;t have any patterns in it&quot; % self.urlconf_name)</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre>        return patterns</pre></li><li onclick="toggle('pre3037925900', 'post3037925900')"><pre></pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3037925900')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3037925900">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>self</td>
+                    <td class="code"><pre>&lt;RegexURLResolver &#39;backend.urls&#39; (None:None) ^/&gt;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/core/urlresolvers.py</code> in <code>urlconf_module</code>
+
+          
+            <div class="context" id="c3037925940">
+              
+                <ol start="335" class="pre-context" id="pre3037925940"><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>        raise Resolver404({&#39;path&#39; : path})</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre></pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>    @property</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>    def urlconf_module(self):</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>        try:</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>            return self._urlconf_module</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>        except AttributeError:</pre></li></ol>
+              
+              <ol start="342" class="context-line"><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>            self._urlconf_module = import_module(self.urlconf_name)</pre> <span>...</span></li></ol>
+              
+                <ol start='343' class="post-context" id="post3037925940"><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>            return self._urlconf_module</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre></pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>    @property</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>    def url_patterns(self):</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>        patterns = getattr(self.urlconf_module, &quot;urlpatterns&quot;, self.urlconf_module)</pre></li><li onclick="toggle('pre3037925940', 'post3037925940')"><pre>        try:</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3037925940')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3037925940">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>self</td>
+                    <td class="code"><pre>&lt;RegexURLResolver &#39;backend.urls&#39; (None:None) ^/&gt;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame django">
+          <code>/usr/lib/python3.3/site-packages/django/utils/importlib.py</code> in <code>import_module</code>
+
+          
+            <div class="context" id="c3037925980">
+              
+                <ol start="28" class="pre-context" id="pre3037925980"><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>            raise TypeError(&quot;relative imports require the &#39;package&#39; argument&quot;)</pre></li><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>        level = 0</pre></li><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>        for character in name:</pre></li><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>            if character != &#39;.&#39;:</pre></li><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>                break</pre></li><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>            level += 1</pre></li><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>        name = _resolve_name(name[level:], package, level)</pre></li></ol>
+              
+              <ol start="35" class="context-line"><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>    __import__(name)</pre> <span>...</span></li></ol>
+              
+                <ol start='36' class="post-context" id="post3037925980"><li onclick="toggle('pre3037925980', 'post3037925980')"><pre>    return sys.modules[name]</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3037925980')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3037925980">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>package</td>
+                    <td class="code"><pre>None</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>name</td>
+                    <td class="code"><pre>&#39;backend.urls&#39;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+        <li class="frame user">
+          <code>/home/erak/dev/uni/swp-ucd-2013-eule/backend/backend/urls.py</code> in <code>&lt;module&gt;</code>
+
+          
+            <div class="context" id="c3046717716">
+              
+                <ol start="1" class="pre-context" id="pre3046717716"><li onclick="toggle('pre3046717716', 'post3046717716')"><pre>from django.conf.urls import patterns, include, url</pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre></pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre># Uncomment the next two lines to enable the admin:</pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre>from django.contrib import admin</pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre>from rest_framework import viewsets, routers</pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre></pre></li></ol>
+              
+              <ol start="7" class="context-line"><li onclick="toggle('pre3046717716', 'post3046717716')"><pre>from api import views</pre> <span>...</span></li></ol>
+              
+                <ol start='8' class="post-context" id="post3046717716"><li onclick="toggle('pre3046717716', 'post3046717716')"><pre></pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre>admin.autodiscover()</pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre></pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre># restful config</pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre>router = routers.DefaultRouter()</pre></li><li onclick="toggle('pre3046717716', 'post3046717716')"><pre>router.register(r&#39;users&#39;, views.UserViewSet)</pre></li></ol>
+              
+            </div>
+          
+
+          
+            <div class="commands">
+                
+                    <a href="#" onclick="return varToggle(this, '3046717716')"><span>&#x25b6;</span> Local vars</a>
+                
+            </div>
+            <table class="vars" id="v3046717716">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    <td>__file__</td>
+                    <td class="code"><pre>&#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend/backend/urls.py&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>__builtins__</td>
+                    <td class="code"><pre>{&#39;ArithmeticError&#39;: &lt;class &#39;ArithmeticError&#39;&gt;,
+ &#39;AssertionError&#39;: &lt;class &#39;AssertionError&#39;&gt;,
+ &#39;AttributeError&#39;: &lt;class &#39;AttributeError&#39;&gt;,
+ &#39;BaseException&#39;: &lt;class &#39;BaseException&#39;&gt;,
+ &#39;BlockingIOError&#39;: &lt;class &#39;BlockingIOError&#39;&gt;,
+ &#39;BrokenPipeError&#39;: &lt;class &#39;BrokenPipeError&#39;&gt;,
+ &#39;BufferError&#39;: &lt;class &#39;BufferError&#39;&gt;,
+ &#39;BytesWarning&#39;: &lt;class &#39;BytesWarning&#39;&gt;,
+ &#39;ChildProcessError&#39;: &lt;class &#39;ChildProcessError&#39;&gt;,
+ &#39;ConnectionAbortedError&#39;: &lt;class &#39;ConnectionAbortedError&#39;&gt;,
+ &#39;ConnectionError&#39;: &lt;class &#39;ConnectionError&#39;&gt;,
+ &#39;ConnectionRefusedError&#39;: &lt;class &#39;ConnectionRefusedError&#39;&gt;,
+ &#39;ConnectionResetError&#39;: &lt;class &#39;ConnectionResetError&#39;&gt;,
+ &#39;DeprecationWarning&#39;: &lt;class &#39;DeprecationWarning&#39;&gt;,
+ &#39;EOFError&#39;: &lt;class &#39;EOFError&#39;&gt;,
+ &#39;Ellipsis&#39;: Ellipsis,
+ &#39;EnvironmentError&#39;: &lt;class &#39;OSError&#39;&gt;,
+ &#39;Exception&#39;: &lt;class &#39;Exception&#39;&gt;,
+ &#39;False&#39;: False,
+ &#39;FileExistsError&#39;: &lt;class &#39;FileExistsError&#39;&gt;,
+ &#39;FileNotFoundError&#39;: &lt;class &#39;FileNotFoundError&#39;&gt;,
+ &#39;FloatingPointError&#39;: &lt;class &#39;FloatingPointError&#39;&gt;,
+ &#39;FutureWarning&#39;: &lt;class &#39;FutureWarning&#39;&gt;,
+ &#39;GeneratorExit&#39;: &lt;class &#39;GeneratorExit&#39;&gt;,
+ &#39;IOError&#39;: &lt;class &#39;OSError&#39;&gt;,
+ &#39;ImportError&#39;: &lt;class &#39;ImportError&#39;&gt;,
+ &#39;ImportWarning&#39;: &lt;class &#39;ImportWarning&#39;&gt;,
+ &#39;IndentationError&#39;: &lt;class &#39;IndentationError&#39;&gt;,
+ &#39;IndexError&#39;: &lt;class &#39;IndexError&#39;&gt;,
+ &#39;InterruptedError&#39;: &lt;class &#39;InterruptedError&#39;&gt;,
+ &#39;IsADirectoryError&#39;: &lt;class &#39;IsADirectoryError&#39;&gt;,
+ &#39;KeyError&#39;: &lt;class &#39;KeyError&#39;&gt;,
+ &#39;KeyboardInterrupt&#39;: &lt;class &#39;KeyboardInterrupt&#39;&gt;,
+ &#39;LookupError&#39;: &lt;class &#39;LookupError&#39;&gt;,
+ &#39;MemoryError&#39;: &lt;class &#39;MemoryError&#39;&gt;,
+ &#39;NameError&#39;: &lt;class &#39;NameError&#39;&gt;,
+ &#39;None&#39;: None,
+ &#39;NotADirectoryError&#39;: &lt;class &#39;NotADirectoryError&#39;&gt;,
+ &#39;NotImplemented&#39;: NotImplemented,
+ &#39;NotImplementedError&#39;: &lt;class &#39;NotImplementedError&#39;&gt;,
+ &#39;OSError&#39;: &lt;class &#39;OSError&#39;&gt;,
+ &#39;OverflowError&#39;: &lt;class &#39;OverflowError&#39;&gt;,
+ &#39;PendingDeprecationWarning&#39;: &lt;class &#39;PendingDeprecationWarning&#39;&gt;,
+ &#39;PermissionError&#39;: &lt;class &#39;PermissionError&#39;&gt;,
+ &#39;ProcessLookupError&#39;: &lt;class &#39;ProcessLookupError&#39;&gt;,
+ &#39;ReferenceError&#39;: &lt;class &#39;ReferenceError&#39;&gt;,
+ &#39;ResourceWarning&#39;: &lt;class &#39;ResourceWarning&#39;&gt;,
+ &#39;RuntimeError&#39;: &lt;class &#39;RuntimeError&#39;&gt;,
+ &#39;RuntimeWarning&#39;: &lt;class &#39;RuntimeWarning&#39;&gt;,
+ &#39;StopIteration&#39;: &lt;class &#39;StopIteration&#39;&gt;,
+ &#39;SyntaxError&#39;: &lt;class &#39;SyntaxError&#39;&gt;,
+ &#39;SyntaxWarning&#39;: &lt;class &#39;SyntaxWarning&#39;&gt;,
+ &#39;SystemError&#39;: &lt;class &#39;SystemError&#39;&gt;,
+ &#39;SystemExit&#39;: &lt;class &#39;SystemExit&#39;&gt;,
+ &#39;TabError&#39;: &lt;class &#39;TabError&#39;&gt;,
+ &#39;TimeoutError&#39;: &lt;class &#39;TimeoutError&#39;&gt;,
+ &#39;True&#39;: True,
+ &#39;TypeError&#39;: &lt;class &#39;TypeError&#39;&gt;,
+ &#39;UnboundLocalError&#39;: &lt;class &#39;UnboundLocalError&#39;&gt;,
+ &#39;UnicodeDecodeError&#39;: &lt;class &#39;UnicodeDecodeError&#39;&gt;,
+ &#39;UnicodeEncodeError&#39;: &lt;class &#39;UnicodeEncodeError&#39;&gt;,
+ &#39;UnicodeError&#39;: &lt;class &#39;UnicodeError&#39;&gt;,
+ &#39;UnicodeTranslateError&#39;: &lt;class &#39;UnicodeTranslateError&#39;&gt;,
+ &#39;UnicodeWarning&#39;: &lt;class &#39;UnicodeWarning&#39;&gt;,
+ &#39;UserWarning&#39;: &lt;class &#39;UserWarning&#39;&gt;,
+ &#39;ValueError&#39;: &lt;class &#39;ValueError&#39;&gt;,
+ &#39;Warning&#39;: &lt;class &#39;Warning&#39;&gt;,
+ &#39;ZeroDivisionError&#39;: &lt;class &#39;ZeroDivisionError&#39;&gt;,
+ &#39;__build_class__&#39;: &lt;built-in function __build_class__&gt;,
+ &#39;__debug__&#39;: True,
+ &#39;__doc__&#39;: &quot;Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil&#39; object; Ellipsis represents `...&#39; in slices.&quot;,
+ &#39;__import__&#39;: &lt;built-in function __import__&gt;,
+ &#39;__name__&#39;: &#39;builtins&#39;,
+ &#39;__package__&#39;: None,
+ &#39;abs&#39;: &lt;built-in function abs&gt;,
+ &#39;all&#39;: &lt;built-in function all&gt;,
+ &#39;any&#39;: &lt;built-in function any&gt;,
+ &#39;ascii&#39;: &lt;built-in function ascii&gt;,
+ &#39;bin&#39;: &lt;built-in function bin&gt;,
+ &#39;bool&#39;: &lt;class &#39;bool&#39;&gt;,
+ &#39;bytearray&#39;: &lt;class &#39;bytearray&#39;&gt;,
+ &#39;bytes&#39;: &lt;class &#39;bytes&#39;&gt;,
+ &#39;callable&#39;: &lt;built-in function callable&gt;,
+ &#39;chr&#39;: &lt;built-in function chr&gt;,
+ &#39;classmethod&#39;: &lt;class &#39;classmethod&#39;&gt;,
+ &#39;compile&#39;: &lt;built-in function compile&gt;,
+ &#39;complex&#39;: &lt;class &#39;complex&#39;&gt;,
+ &#39;copyright&#39;: Copyright (c) 2001-2012 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved.,
+ &#39;credits&#39;:     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information.,
+ &#39;delattr&#39;: &lt;built-in function delattr&gt;,
+ &#39;dict&#39;: &lt;class &#39;dict&#39;&gt;,
+ &#39;dir&#39;: &lt;built-in function dir&gt;,
+ &#39;divmod&#39;: &lt;built-in function divmod&gt;,
+ &#39;enumerate&#39;: &lt;class &#39;enumerate&#39;&gt;,
+ &#39;eval&#39;: &lt;built-in function eval&gt;,
+ &#39;exec&#39;: &lt;built-in function exec&gt;,
+ &#39;exit&#39;: Use exit() or Ctrl-D (i.e. EOF) to exit,
+ &#39;filter&#39;: &lt;class &#39;filter&#39;&gt;,
+ &#39;float&#39;: &lt;class &#39;float&#39;&gt;,
+ &#39;format&#39;: &lt;built-in function format&gt;,
+ &#39;frozenset&#39;: &lt;class &#39;frozenset&#39;&gt;,
+ &#39;getattr&#39;: &lt;built-in function getattr&gt;,
+ &#39;globals&#39;: &lt;built-in function globals&gt;,
+ &#39;hasattr&#39;: &lt;built-in function hasattr&gt;,
+ &#39;hash&#39;: &lt;built-in function hash&gt;,
+ &#39;help&#39;: Type help() for interactive help, or help(object) for help about object.,
+ &#39;hex&#39;: &lt;built-in function hex&gt;,
+ &#39;id&#39;: &lt;built-in function id&gt;,
+ &#39;input&#39;: &lt;built-in function input&gt;,
+ &#39;int&#39;: &lt;class &#39;int&#39;&gt;,
+ &#39;isinstance&#39;: &lt;built-in function isinstance&gt;,
+ &#39;issubclass&#39;: &lt;built-in function issubclass&gt;,
+ &#39;iter&#39;: &lt;built-in function iter&gt;,
+ &#39;len&#39;: &lt;built-in function len&gt;,
+ &#39;license&#39;: Type license() to see the full license text,
+ &#39;list&#39;: &lt;class &#39;list&#39;&gt;,
+ &#39;locals&#39;: &lt;built-in function locals&gt;,
+ &#39;map&#39;: &lt;class &#39;map&#39;&gt;,
+ &#39;max&#39;: &lt;built-in function max&gt;,
+ &#39;memoryview&#39;: &lt;class &#39;memoryview&#39;&gt;,
+ &#39;min&#39;: &lt;built-in function min&gt;,
+ &#39;next&#39;: &lt;built-in function next&gt;,
+ &#39;object&#39;: &lt;class &#39;object&#39;&gt;,
+ &#39;oct&#39;: &lt;built-in function oct&gt;,
+ &#39;open&#39;: &lt;built-in function open&gt;,
+ &#39;ord&#39;: &lt;built-in function ord&gt;,
+ &#39;pow&#39;: &lt;built-in function pow&gt;,
+ &#39;print&#39;: &lt;built-in function print&gt;,
+ &#39;property&#39;: &lt;class &#39;property&#39;&gt;,
+ &#39;quit&#39;: Use quit() or Ctrl-D (i.e. EOF) to exit,
+ &#39;range&#39;: &lt;class &#39;range&#39;&gt;,
+ &#39;repr&#39;: &lt;built-in function repr&gt;,
+ &#39;reversed&#39;: &lt;class &#39;reversed&#39;&gt;,
+ &#39;round&#39;: &lt;built-in function round&gt;,
+ &#39;set&#39;: &lt;class &#39;set&#39;&gt;,
+ &#39;setattr&#39;: &lt;built-in function setattr&gt;,
+ &#39;slice&#39;: &lt;class &#39;slice&#39;&gt;,
+ &#39;sorted&#39;: &lt;built-in function sorted&gt;,
+ &#39;staticmethod&#39;: &lt;class &#39;staticmethod&#39;&gt;,
+ &#39;str&#39;: &lt;class &#39;str&#39;&gt;,
+ &#39;sum&#39;: &lt;built-in function sum&gt;,
+ &#39;super&#39;: &lt;class &#39;super&#39;&gt;,
+ &#39;tuple&#39;: &lt;class &#39;tuple&#39;&gt;,
+ &#39;type&#39;: &lt;class &#39;type&#39;&gt;,
+ &#39;vars&#39;: &lt;built-in function vars&gt;,
+ &#39;zip&#39;: &lt;class &#39;zip&#39;&gt;}</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>include</td>
+                    <td class="code"><pre>&lt;function include at 0xb5b244ac&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>__doc__</td>
+                    <td class="code"><pre>None</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>__name__</td>
+                    <td class="code"><pre>&#39;backend.urls&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>__package__</td>
+                    <td class="code"><pre>&#39;backend&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>admin</td>
+                    <td class="code"><pre>&lt;module &#39;django.contrib.admin&#39; from &#39;/usr/lib/python3.3/site-packages/django/contrib/admin/__init__.py&#39;&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>__initializing__</td>
+                    <td class="code"><pre>False</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>url</td>
+                    <td class="code"><pre>&lt;function url at 0xb5b2453c&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>__loader__</td>
+                    <td class="code"><pre>&lt;_frozen_importlib.SourceFileLoader object at 0xb599924c&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>__cached__</td>
+                    <td class="code"><pre>&#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend/backend/__pycache__/urls.cpython-33.pyc&#39;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>routers</td>
+                    <td class="code"><pre>&lt;module &#39;rest_framework.routers&#39; from &#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend/rest_framework/routers.py&#39;&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>patterns</td>
+                    <td class="code"><pre>&lt;function patterns at 0xb5b244f4&gt;</pre></td>
+                  </tr>
+                
+                  <tr>
+                    <td>viewsets</td>
+                    <td class="code"><pre>&lt;module &#39;rest_framework.viewsets&#39; from &#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend/rest_framework/viewsets.py&#39;&gt;</pre></td>
+                  </tr>
+                
+              </tbody>
+            </table>
+          
+        </li>
+      
+    </ul>
+  </div>
+  
+  <form action="http://dpaste.com/" name="pasteform" id="pasteform" method="post">
+
+  <div id="pastebinTraceback" class="pastebin">
+    <input type="hidden" name="language" value="PythonConsole">
+    <input type="hidden" name="title" value="SyntaxError at /hello">
+    <input type="hidden" name="source" value="Django Dpaste Agent">
+    <input type="hidden" name="poster" value="Django">
+    <textarea name="content" id="traceback_area" cols="140" rows="25">
+Environment:
+
+
+Request Method: GET
+Request URL: http://localhost:8080/hello
+
+Django Version: 1.5.1
+Python Version: 3.3.0
+Installed Applications:
+(&#39;django.contrib.auth&#39;,
+ &#39;django.contrib.contenttypes&#39;,
+ &#39;django.contrib.sessions&#39;,
+ &#39;django.contrib.sites&#39;,
+ &#39;django.contrib.messages&#39;,
+ &#39;django.contrib.staticfiles&#39;,
+ &#39;django.contrib.admin&#39;,
+ &#39;django.contrib.admindocs&#39;,
+ &#39;rest_framework&#39;,
+ &#39;rest_framework.authtoken&#39;)
+Installed Middleware:
+(&#39;django.middleware.common.CommonMiddleware&#39;,
+ &#39;django.contrib.sessions.middleware.SessionMiddleware&#39;,
+ &#39;django.middleware.csrf.CsrfViewMiddleware&#39;,
+ &#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;,
+ &#39;django.contrib.messages.middleware.MessageMiddleware&#39;)
+
+
+Traceback:
+File "/usr/lib/python3.3/site-packages/django/core/handlers/base.py" in get_response
+  92.                     response = middleware_method(request)
+File "/usr/lib/python3.3/site-packages/django/middleware/common.py" in process_request
+  69.             if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+File "/usr/lib/python3.3/site-packages/django/core/urlresolvers.py" in is_valid_path
+  551.         resolve(path, urlconf)
+File "/usr/lib/python3.3/site-packages/django/core/urlresolvers.py" in resolve
+  440.     return get_resolver(urlconf).resolve(path)
+File "/usr/lib/python3.3/site-packages/django/core/urlresolvers.py" in resolve
+  319.             for pattern in self.url_patterns:
+File "/usr/lib/python3.3/site-packages/django/core/urlresolvers.py" in url_patterns
+  347.         patterns = getattr(self.urlconf_module, &quot;urlpatterns&quot;, self.urlconf_module)
+File "/usr/lib/python3.3/site-packages/django/core/urlresolvers.py" in urlconf_module
+  342.             self._urlconf_module = import_module(self.urlconf_name)
+File "/usr/lib/python3.3/site-packages/django/utils/importlib.py" in import_module
+  35.     __import__(name)
+File "/home/erak/dev/uni/swp-ucd-2013-eule/backend/backend/urls.py" in &lt;module&gt;
+  7. from api import views
+
+Exception Type: SyntaxError at /hello
+Exception Value: invalid syntax (views.py, line 43)
+</textarea>
+  <br><br>
+  <input type="submit" value="Share this traceback on a public Web site">
+  </div>
+</form>
+</div>
+
+
+
+<div id="requestinfo">
+  <h2>Request information</h2>
+
+
+  <h3 id="get-info">GET</h3>
+  
+    <p>No GET data</p>
+  
+
+  <h3 id="post-info">POST</h3>
+  
+    <p>No POST data</p>
+  
+  <h3 id="files-info">FILES</h3>
+  
+    <p>No FILES data</p>
+  
+
+
+  <h3 id="cookie-info">COOKIES</h3>
+  
+    <p>No cookie data</p>
+  
+
+  <h3 id="meta-info">META</h3>
+  <table class="req">
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>XDG_SEAT</td>
+          <td class="code"><pre>&#39;seat0&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>PWD</td>
+          <td class="code"><pre>&#39;/home/erak/dev/uni/swp-ucd-2013-eule/backend&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DJANGO_SETTINGS_MODULE</td>
+          <td class="code"><pre>&#39;backend.settings&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GNOME_KEYRING_PID</td>
+          <td class="code"><pre>&#39;303&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.file_wrapper</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TERM</td>
+          <td class="code"><pre>&#39;xterm&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LANG</td>
+          <td class="code"><pre>&#39;en_US.UTF-8&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DBUS_SESSION_BUS_ADDRESS</td>
+          <td class="code"><pre>&#39;unix:abstract=/tmp/dbus-IxMXQbz6sx,guid=4bcf70ad12c6e70f5b8e3c0a51a7c247&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GTK2_RC_FILES</td>
+          <td class="code"><pre>&#39;/home/erak/.gtkrc-2.0&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MAIL</td>
+          <td class="code"><pre>&#39;/var/mail/erak&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.input</td>
+          <td class="code"><pre>&lt;_io.BufferedReader name=4&gt;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.version</td>
+          <td class="code"><pre>(1, 0)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>OLDPWD</td>
+          <td class="code"><pre>&#39;/home/erak&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.run_once</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>XDG_VTNR</td>
+          <td class="code"><pre>&#39;7&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS_TERMCAP_se</td>
+          <td class="code"><pre>&#39;\x1b[0m&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GNOME_DESKTOP_SESSION_ID</td>
+          <td class="code"><pre>&#39;this-is-deprecated&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_MANAGER</td>
+          <td class="code"><pre>&#39;local/klappi:@/tmp/.ICE-unix/305,unix/klappi:/tmp/.ICE-unix/305&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GNOME_KEYRING_CONTROL</td>
+          <td class="code"><pre>&#39;/run/user/1000/keyring-wyn6Wh&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LS_COLORS</td>
+          <td class="code"><pre>&#39;fi=38;5;247:rs=0:di=38;5;241:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;31;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=36;40:ow=01;36:st=37;44:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.pdf=00;35:*.djvu=00;35:*.chm=00;33:*.htm=00;33:*.html=00;33:*.dvi=00;33:*.ps=01;33:*.odt=00;32:*.docx=00;32:*.doc=00;32:*.tex=00;32:*.rtf=00;32:*.sh=00;32:*.csh=00;32:*.t2t=00;36:*.rst=00;36:*.tar=01;31:*.tgz=00;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lha=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=00;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=00;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=00;31:*.rpm=00;31:*.jar=00;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=00;31:*.7z=01;31:*.rz=01;31:*.pacnew=01;30:*.pacsave=01;30:*.tmp=01;30:*.swp=01;30:*.swo=01;30:*.bak=01;30:*.bkp=01;30:*.bin=01;30:*.$$$=01;30:*.aux=01;30:*.out=01;30:*.log=01;30:*.un~=38;5;240:*.zcompdump=38;5;240:*.zwc=38;5;240:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.asx=00;36:*.cue=00;36:*.it=00;36:*.med=00;36:*.m3u=00;36:*.mid=00;36:*.midi=00;36:*.mod=00;36:*.mol=00;36:*.mpl=00;36:*.pls=00;36:*.ra=00;36:*.rm=00;36:*.s3m=00;36:*.umx=00;36:*.xm=00;36:*.anx=00;32:*.avi=00;32:*.axv=00;32:*.mov=00;32:*.mpg=00;32:*.mpeg=00;32:*.ogm=00;32:*.ogv=00;32:*.ogx=00;32:*.vob=00;32:*.asf=01;32:*.dl=01;32:*.flc=01;32:*.fli=01;32:*.flv=01;32:*.m2v=01;32:*.m4v=01;32:*.mkv=01;32:*.mp4=01;32:*.mp4v=01;32:*.nuv=01;32:*.ql=01;32:*.qt=01;32:*.rm=01;32:*.rmvb=01;32:*.swf=01;32:*.wmv=01;32:*.aac=00;34:*.ape=00;34:*.au=00;34:*.axa=00;34:*.flac=00;34:*.m4a=00;34:*.mka=00;34:*.wav=00;34:*.mp2=01;34:*.mp3=01;34:*.mpc=01;34:*.oga=01;34:*.ogg=01;34:*.spx=01;34:*.afm=38;5;58:*.pfb=38;5;58:*.pfm=38;5;58:*.otf=38;5;61:*.dfont=38;5;61:*.TTF=38;5;1:*.ttf=38;5;1:*.ttc=38;5;1:*.pcf=38;5;65:*.psf=38;5;64:*.PL=00;36:*.asm=00;36:*.asoundrc=00;36:*.awk=00;36:*.bash=00;31:*.bashrc=00;31:*.bash_history=00;31:*.bash_profile=00;31:*.zshrc=00;31:*.gtkrc-2.0=00;31:*.gtk-bookmarks=00;31:*.conkyrc=00;31:*.c=00;36:*.cfg=00;36:*.coffee=00;36:*.conf=00;36:*.cpp=00;36:*.cs=00;36:*.css=00;36:*.csv=00;36:*.diff=01;33:*.dircolors=01;33:*.dir_colors=01;33:*.enc=00;36:*.eps=00;36:*.etx=00;36:*.ex=00;36:*.example=00;36:*.fehbg=00;36:*.bashburnrc=00;36:*.fonts=00;36:*.git=00;36:*.gitignore=00;36:*.hgrc=01;34:*.hgignore=01;34:*.go=01;34:*.h=01;34:*.hs=01;34:*.htoprc=01;34:*.toprc=01;34:*.displayrc=01;34:*.xdvirc=01;34:*.xnviewrc=01;34:*.info=01;34:*.ini=01;34:*.java=01;34:*.jhtm=01;34:*.js=01;34:*.jsm=01;34:*.jsm=01;34:*.json=01;34:*.jsp=01;34:*.lisp=01;34:*.lesshst=01;34:*.log=01;34:*.xspf=01;36:*.lua=00;33:*.map=00;33:*.markdown=00;33:*.md=00;33:*.mf=00;33:*.mfasl=00;33:*.mi=00;33:*.mkd=00;33:*.msmtprc=00;33:*.mtx=00;33:*.muttrc=00;33:*.nfo=00;33:*.netrc=01;31:*.offlineimaprc=00;33:*.pacnew=00;33:*.patch=00;31:*.pc=00;31:*.pfa=00;31:*.php=00;31:*.pid=00;31:*.pl=01;36:*.pm=00;31:*.pod=00;31:*.py=00;31:*.rc=00;31:*.rb=08;36:*.rdf=00;31:*.ru=00;31:*.sed=00;31:*.sfv=00;31:*.signature=00;31:*.sty=01;35:*.sug=01;35:*.t=01;35:*.tcl=01;35:*.tdy=01;35:*.textile=01;35:*.tfm=01;35:*.tfnt=01;35:*.theme=01;35:*.viminfo=01;35:*.xml=01;35:*.yml=01;35:*.zsh=01;35:*.urlview=01;35:*.vim=01;35:*.vimrc=01;35:*.NERDTreeBookmarks=01;35:*.docutils=01;35:*.xinitrc=01;31:*.Xauthority=01;31:*.Xmodmap=00;31:*.Xresources=01;33:*.gitconfig=01;33:*.gitk=01;33:*.rarreg.key=00;32:mi=01;05;37;41:&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>HISTCONTROL</td>
+          <td class="code"><pre>&#39;ignoreboth&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS_TERMCAP_so</td>
+          <td class="code"><pre>&#39;\x1b[01;44;33m&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SSH_AUTH_SOCK</td>
+          <td class="code"><pre>&#39;/run/user/1000/keyring-wyn6Wh/ssh&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>HTTP_ACCEPT</td>
+          <td class="code"><pre>&#39;*/*&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>HTTP_AUTHORIZATION</td>
+          <td class="code"><pre>&#39;Token 4208b520528611010299d5135d46c7c3c6979a5b&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SERVER_SOFTWARE</td>
+          <td class="code"><pre>&#39;WSGIServer/0.2&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.multiprocess</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SCRIPT_NAME</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>REQUEST_METHOD</td>
+          <td class="code"><pre>&#39;GET&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TZ</td>
+          <td class="code"><pre>&#39;Europe/Berlin&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EDITOR</td>
+          <td class="code"><pre>&#39;vim&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS</td>
+          <td class="code"><pre>&#39;-R~gIw&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SHELL</td>
+          <td class="code"><pre>&#39;/bin/bash&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS_TERMCAP_us</td>
+          <td class="code"><pre>&#39;\x1b[01;32m&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SERVER_PORT</td>
+          <td class="code"><pre>&#39;8080&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>PATH</td>
+          <td class="code"><pre>&#39;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/qt4/bin&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GTK_MODULES</td>
+          <td class="code"><pre>&#39;canberra-gtk-module&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>QUERY_STRING</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>HOME</td>
+          <td class="code"><pre>&#39;/home/erak&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CONTENT_TYPE</td>
+          <td class="code"><pre>&#39;text/plain&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>XDG_RUNTIME_DIR</td>
+          <td class="code"><pre>&#39;/run/user/1000&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GJS_DEBUG_OUTPUT</td>
+          <td class="code"><pre>&#39;stderr&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>PATH_INFO</td>
+          <td class="code"><pre>&#39;/hello&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>RUN_MAIN</td>
+          <td class="code"><pre>&#39;true&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>REMOTE_HOST</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.errors</td>
+          <td class="code"><pre>&lt;_io.TextIOWrapper name=&#39;&lt;stderr&gt;&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>XMODIFIERS</td>
+          <td class="code"><pre>&#39;@im=ibus&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS_TERMCAP_mb</td>
+          <td class="code"><pre>&#39;\x1b[01;31m&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>JAVA_HOME</td>
+          <td class="code"><pre>&#39;/usr/lib/jvm/java-7-openjdk&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SHLVL</td>
+          <td class="code"><pre>&#39;1&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SERVER_NAME</td>
+          <td class="code"><pre>&#39;localhost.localdomain&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>_</td>
+          <td class="code"><pre>&#39;/usr/bin/python&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DISPLAY</td>
+          <td class="code"><pre>&#39;:0.0&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.url_scheme</td>
+          <td class="code"><pre>&#39;http&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GJS_DEBUG_TOPICS</td>
+          <td class="code"><pre>&#39;JS ERROR;JS LOG&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>QT_IM_MODULE</td>
+          <td class="code"><pre>&#39;ibus&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CONTENT_LENGTH</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>HISTSIZE</td>
+          <td class="code"><pre>&#39;10000&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GREP_COLOR</td>
+          <td class="code"><pre>&#39;1;31&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>XDG_SESSION_ID</td>
+          <td class="code"><pre>&#39;1&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GATEWAY_INTERFACE</td>
+          <td class="code"><pre>&#39;CGI/1.1&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>USER</td>
+          <td class="code"><pre>&#39;erak&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>HTTP_HOST</td>
+          <td class="code"><pre>&#39;localhost:8080&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SERVER_PROTOCOL</td>
+          <td class="code"><pre>&#39;HTTP/1.1&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS_TERMCAP_ue</td>
+          <td class="code"><pre>&#39;\x1b[0m&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>wsgi.multithread</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>REMOTE_ADDR</td>
+          <td class="code"><pre>&#39;127.0.0.1&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>XAUTHORITY</td>
+          <td class="code"><pre>&#39;/home/erak/.Xauthority&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MOZ_PLUGIN_PATH</td>
+          <td class="code"><pre>&#39;/usr/lib/mozilla/plugins&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>GPG_AGENT_INFO</td>
+          <td class="code"><pre>&#39;/run/user/1000/keyring-wyn6Wh/gpg:0:1&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS_TERMCAP_md</td>
+          <td class="code"><pre>&#39;\x1b[01;31m&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LOGNAME</td>
+          <td class="code"><pre>&#39;erak&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>HTTP_USER_AGENT</td>
+          <td class="code"><pre>&#39;curl/7.29.0&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LESS_TERMCAP_me</td>
+          <td class="code"><pre>&#39;\x1b[0m&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>BROWSER</td>
+          <td class="code"><pre>&#39;firefox&#39;</pre></td>
+        </tr>
+      
+    </tbody>
+  </table>
+
+
+  <h3 id="settings-info">Settings</h3>
+  <h4>Using settings module <code>backend.settings</code></h4>
+  <table class="req">
+    <thead>
+      <tr>
+        <th>Setting</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>COMMENTS_ALLOW_PROFANITIES</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>INTERNAL_IPS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DATETIME_INPUT_FORMATS</td>
+          <td class="code"><pre>(&#39;%Y-%m-%d %H:%M:%S&#39;,
+ &#39;%Y-%m-%d %H:%M:%S.%f&#39;,
+ &#39;%Y-%m-%d %H:%M&#39;,
+ &#39;%Y-%m-%d&#39;,
+ &#39;%m/%d/%Y %H:%M:%S&#39;,
+ &#39;%m/%d/%Y %H:%M:%S.%f&#39;,
+ &#39;%m/%d/%Y %H:%M&#39;,
+ &#39;%m/%d/%Y&#39;,
+ &#39;%m/%d/%y %H:%M:%S&#39;,
+ &#39;%m/%d/%y %H:%M:%S.%f&#39;,
+ &#39;%m/%d/%y %H:%M&#39;,
+ &#39;%m/%d/%y&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LOGGING</td>
+          <td class="code"><pre>{&#39;disable_existing_loggers&#39;: False,
+ &#39;filters&#39;: {&#39;require_debug_false&#39;: {&#39;()&#39;: &#39;django.utils.log.RequireDebugFalse&#39;}},
+ &#39;handlers&#39;: {&#39;mail_admins&#39;: {&#39;class&#39;: &#39;django.utils.log.AdminEmailHandler&#39;,
+                              &#39;filters&#39;: [&#39;require_debug_false&#39;],
+                              &#39;level&#39;: &#39;ERROR&#39;}},
+ &#39;loggers&#39;: {&#39;django.request&#39;: {&#39;handlers&#39;: [&#39;mail_admins&#39;],
+                                &#39;level&#39;: &#39;ERROR&#39;,
+                                &#39;propagate&#39;: True}},
+ &#39;version&#39;: 1}</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_SAVE_EVERY_REQUEST</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SHORT_DATE_FORMAT</td>
+          <td class="code"><pre>&#39;m/d/Y&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DATABASE_ROUTERS</td>
+          <td class="code"><pre>[]</pre></td>
+        </tr>
+      
+        <tr>
+          <td>USE_L10N</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LOGIN_URL</td>
+          <td class="code"><pre>&#39;/accounts/login/&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_COOKIE_AGE</td>
+          <td class="code"><pre>1209600</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEFAULT_FROM_EMAIL</td>
+          <td class="code"><pre>&#39;webmaster@localhost&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>AUTHENTICATION_BACKENDS</td>
+          <td class="code"><pre>(&#39;django.contrib.auth.backends.ModelBackend&#39;,)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>AUTH_USER_MODEL</td>
+          <td class="code"><pre>&#39;auth.User&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DATABASES</td>
+          <td class="code"><pre>{&#39;default&#39;: {&#39;ENGINE&#39;: &#39;django.db.backends.sqlite3&#39;,
+             &#39;HOST&#39;: &#39;&#39;,
+             &#39;NAME&#39;: &#39;./backend.db&#39;,
+             &#39;OPTIONS&#39;: {},
+             &#39;PASSWORD&#39;: &#39;********************&#39;,
+             &#39;PORT&#39;: &#39;&#39;,
+             &#39;TEST_CHARSET&#39;: None,
+             &#39;TEST_COLLATION&#39;: None,
+             &#39;TEST_MIRROR&#39;: None,
+             &#39;TEST_NAME&#39;: None,
+             &#39;TIME_ZONE&#39;: &#39;UTC&#39;,
+             &#39;USER&#39;: &#39;&#39;}}</pre></td>
+        </tr>
+      
+        <tr>
+          <td>USE_TZ</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>ABSOLUTE_URL_OVERRIDES</td>
+          <td class="code"><pre>{}</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DATETIME_FORMAT</td>
+          <td class="code"><pre>&#39;N j, Y, P&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>STATICFILES_DIRS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EMAIL_USE_TLS</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>ADMIN_FOR</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>USE_X_FORWARDED_HOST</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FORCE_SCRIPT_NAME</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SHORT_DATETIME_FORMAT</td>
+          <td class="code"><pre>&#39;m/d/Y P&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>USE_I18N</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MEDIA_ROOT</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_EXPIRE_AT_BROWSER_CLOSE</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FILE_CHARSET</td>
+          <td class="code"><pre>&#39;utf-8&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_COOKIE_PATH</td>
+          <td class="code"><pre>&#39;/&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CACHES</td>
+          <td class="code"><pre>{&#39;default&#39;: {&#39;BACKEND&#39;: &#39;django.core.cache.backends.locmem.LocMemCache&#39;}}</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FORMAT_MODULE_PATH</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LOGOUT_URL</td>
+          <td class="code"><pre>&#39;/accounts/logout/&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FILE_UPLOAD_TEMP_DIR</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>STATICFILES_STORAGE</td>
+          <td class="code"><pre>&#39;django.contrib.staticfiles.storage.StaticFilesStorage&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_COOKIE_DOMAIN</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TIME_INPUT_FORMATS</td>
+          <td class="code"><pre>(&#39;%H:%M:%S&#39;, &#39;%H:%M&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EMAIL_BACKEND</td>
+          <td class="code"><pre>&#39;django.core.mail.backends.smtp.EmailBackend&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_COOKIE_HTTPONLY</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CSRF_FAILURE_VIEW</td>
+          <td class="code"><pre>&#39;django.views.csrf.csrf_failure&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FIRST_DAY_OF_WEEK</td>
+          <td class="code"><pre>0</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEBUG</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>INSTALLED_APPS</td>
+          <td class="code"><pre>(&#39;django.contrib.auth&#39;,
+ &#39;django.contrib.contenttypes&#39;,
+ &#39;django.contrib.sessions&#39;,
+ &#39;django.contrib.sites&#39;,
+ &#39;django.contrib.messages&#39;,
+ &#39;django.contrib.staticfiles&#39;,
+ &#39;django.contrib.admin&#39;,
+ &#39;django.contrib.admindocs&#39;,
+ &#39;rest_framework&#39;,
+ &#39;rest_framework.authtoken&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>PASSWORD_RESET_TIMEOUT_DAYS</td>
+          <td class="code"><pre>&#39;********************&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEBUG_PROPAGATE_EXCEPTIONS</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MEDIA_URL</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEFAULT_EXCEPTION_REPORTER_FILTER</td>
+          <td class="code"><pre>&#39;django.views.debug.SafeExceptionReporterFilter&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>STATICFILES_FINDERS</td>
+          <td class="code"><pre>(&#39;django.contrib.staticfiles.finders.FileSystemFinder&#39;,
+ &#39;django.contrib.staticfiles.finders.AppDirectoriesFinder&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TEMPLATE_CONTEXT_PROCESSORS</td>
+          <td class="code"><pre>(&#39;django.contrib.auth.context_processors.auth&#39;,
+ &#39;django.core.context_processors.debug&#39;,
+ &#39;django.core.context_processors.i18n&#39;,
+ &#39;django.core.context_processors.media&#39;,
+ &#39;django.core.context_processors.static&#39;,
+ &#39;django.core.context_processors.tz&#39;,
+ &#39;django.contrib.messages.context_processors.messages&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEFAULT_CONTENT_TYPE</td>
+          <td class="code"><pre>&#39;text/html&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>THOUSAND_SEPARATOR</td>
+          <td class="code"><pre>&#39;,&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LOGGING_CONFIG</td>
+          <td class="code"><pre>&#39;django.utils.log.dictConfig&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>YEAR_MONTH_FORMAT</td>
+          <td class="code"><pre>&#39;F Y&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TIME_ZONE</td>
+          <td class="code"><pre>&#39;Europe/Berlin&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FILE_UPLOAD_PERMISSIONS</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LANGUAGE_CODE</td>
+          <td class="code"><pre>&#39;de-DE&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>REST_FRAMEWORK</td>
+          <td class="code"><pre>{&#39;DEFAULT_AUTHENTICATION_CLASSES&#39;: (&#39;rest_framework.authentication.TokenAuthentication&#39;,),
+ &#39;DEFAULT_PERMISSION_CLASSES&#39;: (&#39;rest_framework.permissions.IsAdminUser&#39;,),
+ &#39;PAGINATE_BY&#39;: 10}</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEFAULT_TABLESPACE</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EMAIL_HOST</td>
+          <td class="code"><pre>&#39;localhost&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>ROOT_URLCONF</td>
+          <td class="code"><pre>&#39;backend.urls&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LANGUAGE_COOKIE_NAME</td>
+          <td class="code"><pre>&#39;django_language&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TEMPLATE_DEBUG</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SITE_ID</td>
+          <td class="code"><pre>1</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EMAIL_HOST_PASSWORD</td>
+          <td class="code"><pre>&#39;********************&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CACHE_MIDDLEWARE_KEY_PREFIX</td>
+          <td class="code"><pre>&#39;********************&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MESSAGE_STORAGE</td>
+          <td class="code"><pre>&#39;django.contrib.messages.storage.fallback.FallbackStorage&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MIDDLEWARE_CLASSES</td>
+          <td class="code"><pre>(&#39;django.middleware.common.CommonMiddleware&#39;,
+ &#39;django.contrib.sessions.middleware.SessionMiddleware&#39;,
+ &#39;django.middleware.csrf.CsrfViewMiddleware&#39;,
+ &#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;,
+ &#39;django.contrib.messages.middleware.MessageMiddleware&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_COOKIE_SECURE</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>PASSWORD_HASHERS</td>
+          <td class="code"><pre>&#39;********************&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CSRF_COOKIE_PATH</td>
+          <td class="code"><pre>&#39;/&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_COOKIE_NAME</td>
+          <td class="code"><pre>&#39;sessionid&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SEND_BROKEN_LINK_EMAILS</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TEMPLATE_DIRS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SERVER_EMAIL</td>
+          <td class="code"><pre>&#39;root@localhost&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EMAIL_HOST_USER</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>ALLOWED_INCLUDE_ROOTS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FIXTURE_DIRS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CSRF_COOKIE_NAME</td>
+          <td class="code"><pre>&#39;csrftoken&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DECIMAL_SEPARATOR</td>
+          <td class="code"><pre>&#39;.&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>X_FRAME_OPTIONS</td>
+          <td class="code"><pre>&#39;SAMEORIGIN&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SETTINGS_MODULE</td>
+          <td class="code"><pre>&#39;backend.settings&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SIGNING_BACKEND</td>
+          <td class="code"><pre>&#39;django.core.signing.TimestampSigner&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LANGUAGES</td>
+          <td class="code"><pre>((&#39;af&#39;, &#39;Afrikaans&#39;),
+ (&#39;ar&#39;, &#39;Arabic&#39;),
+ (&#39;az&#39;, &#39;Azerbaijani&#39;),
+ (&#39;bg&#39;, &#39;Bulgarian&#39;),
+ (&#39;be&#39;, &#39;Belarusian&#39;),
+ (&#39;bn&#39;, &#39;Bengali&#39;),
+ (&#39;br&#39;, &#39;Breton&#39;),
+ (&#39;bs&#39;, &#39;Bosnian&#39;),
+ (&#39;ca&#39;, &#39;Catalan&#39;),
+ (&#39;cs&#39;, &#39;Czech&#39;),
+ (&#39;cy&#39;, &#39;Welsh&#39;),
+ (&#39;da&#39;, &#39;Danish&#39;),
+ (&#39;de&#39;, &#39;German&#39;),
+ (&#39;el&#39;, &#39;Greek&#39;),
+ (&#39;en&#39;, &#39;English&#39;),
+ (&#39;en-gb&#39;, &#39;British English&#39;),
+ (&#39;eo&#39;, &#39;Esperanto&#39;),
+ (&#39;es&#39;, &#39;Spanish&#39;),
+ (&#39;es-ar&#39;, &#39;Argentinian Spanish&#39;),
+ (&#39;es-mx&#39;, &#39;Mexican Spanish&#39;),
+ (&#39;es-ni&#39;, &#39;Nicaraguan Spanish&#39;),
+ (&#39;es-ve&#39;, &#39;Venezuelan Spanish&#39;),
+ (&#39;et&#39;, &#39;Estonian&#39;),
+ (&#39;eu&#39;, &#39;Basque&#39;),
+ (&#39;fa&#39;, &#39;Persian&#39;),
+ (&#39;fi&#39;, &#39;Finnish&#39;),
+ (&#39;fr&#39;, &#39;French&#39;),
+ (&#39;fy-nl&#39;, &#39;Frisian&#39;),
+ (&#39;ga&#39;, &#39;Irish&#39;),
+ (&#39;gl&#39;, &#39;Galician&#39;),
+ (&#39;he&#39;, &#39;Hebrew&#39;),
+ (&#39;hi&#39;, &#39;Hindi&#39;),
+ (&#39;hr&#39;, &#39;Croatian&#39;),
+ (&#39;hu&#39;, &#39;Hungarian&#39;),
+ (&#39;ia&#39;, &#39;Interlingua&#39;),
+ (&#39;id&#39;, &#39;Indonesian&#39;),
+ (&#39;is&#39;, &#39;Icelandic&#39;),
+ (&#39;it&#39;, &#39;Italian&#39;),
+ (&#39;ja&#39;, &#39;Japanese&#39;),
+ (&#39;ka&#39;, &#39;Georgian&#39;),
+ (&#39;kk&#39;, &#39;Kazakh&#39;),
+ (&#39;km&#39;, &#39;Khmer&#39;),
+ (&#39;kn&#39;, &#39;Kannada&#39;),
+ (&#39;ko&#39;, &#39;Korean&#39;),
+ (&#39;lb&#39;, &#39;Luxembourgish&#39;),
+ (&#39;lt&#39;, &#39;Lithuanian&#39;),
+ (&#39;lv&#39;, &#39;Latvian&#39;),
+ (&#39;mk&#39;, &#39;Macedonian&#39;),
+ (&#39;ml&#39;, &#39;Malayalam&#39;),
+ (&#39;mn&#39;, &#39;Mongolian&#39;),
+ (&#39;nb&#39;, &#39;Norwegian Bokmal&#39;),
+ (&#39;ne&#39;, &#39;Nepali&#39;),
+ (&#39;nl&#39;, &#39;Dutch&#39;),
+ (&#39;nn&#39;, &#39;Norwegian Nynorsk&#39;),
+ (&#39;pa&#39;, &#39;Punjabi&#39;),
+ (&#39;pl&#39;, &#39;Polish&#39;),
+ (&#39;pt&#39;, &#39;Portuguese&#39;),
+ (&#39;pt-br&#39;, &#39;Brazilian Portuguese&#39;),
+ (&#39;ro&#39;, &#39;Romanian&#39;),
+ (&#39;ru&#39;, &#39;Russian&#39;),
+ (&#39;sk&#39;, &#39;Slovak&#39;),
+ (&#39;sl&#39;, &#39;Slovenian&#39;),
+ (&#39;sq&#39;, &#39;Albanian&#39;),
+ (&#39;sr&#39;, &#39;Serbian&#39;),
+ (&#39;sr-latn&#39;, &#39;Serbian Latin&#39;),
+ (&#39;sv&#39;, &#39;Swedish&#39;),
+ (&#39;sw&#39;, &#39;Swahili&#39;),
+ (&#39;ta&#39;, &#39;Tamil&#39;),
+ (&#39;te&#39;, &#39;Telugu&#39;),
+ (&#39;th&#39;, &#39;Thai&#39;),
+ (&#39;tr&#39;, &#39;Turkish&#39;),
+ (&#39;tt&#39;, &#39;Tatar&#39;),
+ (&#39;udm&#39;, &#39;Udmurt&#39;),
+ (&#39;uk&#39;, &#39;Ukrainian&#39;),
+ (&#39;ur&#39;, &#39;Urdu&#39;),
+ (&#39;vi&#39;, &#39;Vietnamese&#39;),
+ (&#39;zh-cn&#39;, &#39;Simplified Chinese&#39;),
+ (&#39;zh-tw&#39;, &#39;Traditional Chinese&#39;))</pre></td>
+        </tr>
+      
+        <tr>
+          <td>USE_ETAGS</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SECRET_KEY</td>
+          <td class="code"><pre>&#39;********************&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEFAULT_CHARSET</td>
+          <td class="code"><pre>&#39;utf-8&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SECURE_PROXY_SSL_HEADER</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MONTH_DAY_FORMAT</td>
+          <td class="code"><pre>&#39;F j&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LOCALE_PATHS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_ENGINE</td>
+          <td class="code"><pre>&#39;django.contrib.sessions.backends.db&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EMAIL_PORT</td>
+          <td class="code"><pre>25</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DATE_FORMAT</td>
+          <td class="code"><pre>&#39;N j, Y&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>MANAGERS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TRANSACTIONS_MANAGED</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEFAULT_FILE_STORAGE</td>
+          <td class="code"><pre>&#39;django.core.files.storage.FileSystemStorage&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CACHE_MIDDLEWARE_SECONDS</td>
+          <td class="code"><pre>600</pre></td>
+        </tr>
+      
+        <tr>
+          <td>APPEND_SLASH</td>
+          <td class="code"><pre>True</pre></td>
+        </tr>
+      
+        <tr>
+          <td>STATIC_URL</td>
+          <td class="code"><pre>&#39;/static/&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TEMPLATE_LOADERS</td>
+          <td class="code"><pre>(&#39;django.template.loaders.filesystem.Loader&#39;,
+ &#39;django.template.loaders.app_directories.Loader&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_FILE_PATH</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>NUMBER_GROUPING</td>
+          <td class="code"><pre>0</pre></td>
+        </tr>
+      
+        <tr>
+          <td>ADMINS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>IGNORABLE_404_URLS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+        <tr>
+          <td>PROFANITIES_LIST</td>
+          <td class="code"><pre>&#39;********************&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DATE_INPUT_FORMATS</td>
+          <td class="code"><pre>(&#39;%Y-%m-%d&#39;,
+ &#39;%m/%d/%Y&#39;,
+ &#39;%m/%d/%y&#39;,
+ &#39;%b %d %Y&#39;,
+ &#39;%b %d, %Y&#39;,
+ &#39;%d %b %Y&#39;,
+ &#39;%d %b, %Y&#39;,
+ &#39;%B %d %Y&#39;,
+ &#39;%B %d, %Y&#39;,
+ &#39;%d %B %Y&#39;,
+ &#39;%d %B, %Y&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>STATIC_ROOT</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>PREPEND_WWW</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>ALLOWED_HOSTS</td>
+          <td class="code"><pre>[]</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CSRF_COOKIE_DOMAIN</td>
+          <td class="code"><pre>None</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CACHE_MIDDLEWARE_ALIAS</td>
+          <td class="code"><pre>&#39;default&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TIME_FORMAT</td>
+          <td class="code"><pre>&#39;P&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>USE_THOUSAND_SEPARATOR</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DEFAULT_INDEX_TABLESPACE</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>WSGI_APPLICATION</td>
+          <td class="code"><pre>&#39;backend.wsgi.application&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>SESSION_CACHE_ALIAS</td>
+          <td class="code"><pre>&#39;default&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FILE_UPLOAD_MAX_MEMORY_SIZE</td>
+          <td class="code"><pre>2621440</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LOGIN_REDIRECT_URL</td>
+          <td class="code"><pre>&#39;/accounts/profile/&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>FILE_UPLOAD_HANDLERS</td>
+          <td class="code"><pre>(&#39;django.core.files.uploadhandler.MemoryFileUploadHandler&#39;,
+ &#39;django.core.files.uploadhandler.TemporaryFileUploadHandler&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>CSRF_COOKIE_SECURE</td>
+          <td class="code"><pre>False</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TEST_RUNNER</td>
+          <td class="code"><pre>&#39;django.test.simple.DjangoTestSuiteRunner&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>EMAIL_SUBJECT_PREFIX</td>
+          <td class="code"><pre>&#39;[Django] &#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>TEMPLATE_STRING_IF_INVALID</td>
+          <td class="code"><pre>&#39;&#39;</pre></td>
+        </tr>
+      
+        <tr>
+          <td>LANGUAGES_BIDI</td>
+          <td class="code"><pre>(&#39;he&#39;, &#39;ar&#39;, &#39;fa&#39;)</pre></td>
+        </tr>
+      
+        <tr>
+          <td>DISALLOWED_USER_AGENTS</td>
+          <td class="code"><pre>()</pre></td>
+        </tr>
+      
+    </tbody>
+  </table>
+
+</div>
+
+  <div id="explanation">
+    <p>
+      You're seeing this error because you have <code>DEBUG = True</code> in your
+      Django settings file. Change that to <code>False</code>, and Django will
+      display a standard 500 page.
+    </p>
+  </div>
+
+</body>
+</html>
