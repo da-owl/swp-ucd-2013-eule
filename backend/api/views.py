@@ -21,6 +21,12 @@ from api.serializers import UserSerializer
 def index(request):
     return HttpResponse("SWP-UCD Eule API 1.0")
 
+
+def hello(request):
+    for user in User.objects.all():
+        Token.objects.get_or_create(user=user)
+    return json_response(None, 200, 'SWP-UCD Eule API 1.0')
+
 # ***************************************************************************
 # rest-like register using token-authentification
 # json structure defined to match the framework structure
@@ -29,10 +35,9 @@ def index(request):
 # cross-site request forgery disabled
 # ***************************************************************************
 @csrf_exempt
-def register(request):
-    user_json = json.loads(request.body.decode("utf-8"))
-    
+def register(request):    
     try:
+        user_json = json.loads(request.body.decode("utf-8"))
         # for simple parameter implementation
         # username = request.POST['username']
         # email = request.POST['email']
@@ -44,16 +49,16 @@ def register(request):
         password = user_json['password']
 
         if password is '':
-            return json_response(request, 500, 'Password must be set!')
+            return json_response(None, 500, 'Password must be set!')
 
         # Create user
         user = User.objects.create_user(username=username, email=email, password=password)
         token = Token.objects.get_or_create(user=user)
     except ValueError as e:
-        return json_response(request, 500, e.args[0])
+        return json_response(None, 500, e.args[0])
     except IntegrityError:
-        return json_response(request, 500, 'Username already exits!')
-    return json_response(request, 201, 'Created')
+        return json_response(None, 500, 'Username already exits!')
+    return json_response(token, 201, 'Created')
 
 # ***************************************************************************
 # rest-like register

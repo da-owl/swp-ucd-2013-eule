@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     # ***************************************************************************
     url(r'^$', views.index, name='index'),
     url(r'^register', views.register, name='register'),
+    url(r'^hello', views.hello, name='hello'),
     # login no longer required, because credentials are passed in the request
     # url(r'^login', views.login, name='login'),
 
