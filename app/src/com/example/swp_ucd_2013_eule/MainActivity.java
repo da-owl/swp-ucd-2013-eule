@@ -1,7 +1,11 @@
 package com.example.swp_ucd_2013_eule;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,13 +43,29 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
+	Menu mMenu;
+	int mActiveActionTab = R.id.DrivingView;
+	Map<Integer, FragmentPagerAdapter> mActionTabMapping = new HashMap<Integer, FragmentPagerAdapter>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		changeFragment(mSectionsPagerAdapter = new FragmentDriveSectionsPagerAdapter(
-				getSupportFragmentManager()));
+		// Setup mapping for MenuItem-ids to FragmentPagerAdapters
+		mActionTabMapping.put(R.id.DrivingView,
+				new FragmentDriveSectionsPagerAdapter(
+						getSupportFragmentManager()));
+		mActionTabMapping.put(R.id.ForestView,
+				new FragmentForrestSectionsPagerAdapter(
+						getSupportFragmentManager()));
+		mActionTabMapping.put(R.id.SocialView,
+				new FragmentSocialSectionsPagerAdapter(
+						getSupportFragmentManager()));
+		mActionTabMapping.put(R.id.MarketView,
+				new FragmentMarketSectionsPagerAdapter(
+						getSupportFragmentManager()));
+
 	}
 
 	public void changeFragment(FragmentPagerAdapter Adapter) {
@@ -87,29 +108,52 @@ public class MainActivity extends FragmentActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		mMenu = menu; // save as global var; will be used inside showActionTab
+		showActionTab(mActiveActionTab); // show/activate the current actionTab
 		return true;
 	}
 
+	/**
+	 * Highlights the ActionTab identified by the MenuItem-id actionTab.
+	 * Displays the fragment of the corresponding ActionTab.
+	 * 
+	 * @param actionTab
+	 */
+	private void showActionTab(int actionTab) {
+		mActiveActionTab = actionTab;
+		setActionTabActive(mMenu.findItem(actionTab));
+		FragmentPagerAdapter fpa = mActionTabMapping.get(actionTab);
+		changeFragment(fpa);
+	}
+
+	/**
+	 * Removes the highlighted-state from all ActionTabs and set the
+	 * highlighted-state for the specified MenuItemn.
+	 * 
+	 * @param item
+	 */
+	private void setActionTabActive(MenuItem item) {
+		for (int id : mActionTabMapping.keySet()) {
+			mMenu.findItem(id).setActionView(null);
+		}
+
+		Drawable ico = item.getIcon();
+		item.setActionView(R.layout.action_icon_highlighted);
+		((ImageView) item.getActionView().findViewById(R.id.icon_highlighted))
+				.setImageDrawable(ico);
+	}
+
 	public boolean onOptionsItemSelected(MenuItem item) {
+
 		switch (item.getItemId()) {
 		case R.id.action_comm_test:
 			testCommunication();
 			break;
 		case R.id.DrivingView:
-			changeFragment(new FragmentDriveSectionsPagerAdapter(
-					getSupportFragmentManager()));
-			break;
 		case R.id.ForestView:
-			changeFragment(new FragmentForrestSectionsPagerAdapter(
-					getSupportFragmentManager()));
-			break;
 		case R.id.SocialView:
-			changeFragment(new FragmentSocialSectionsPagerAdapter(
-					getSupportFragmentManager()));
-			break;
 		case R.id.MarketView:
-			changeFragment(new FragmentMarketSectionsPagerAdapter(
-					getSupportFragmentManager()));
+			showActionTab(item.getItemId());
 			break;
 		}
 
