@@ -220,9 +220,10 @@ public class MainActivity extends FragmentActivity implements
 	 * one of the sections/tabs/pages.
 	 */
 	public class FragmentDriveSectionsPagerAdapter extends FragmentPagerAdapter {
-
+		
 		public FragmentDriveSectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
+
 		}
 
 		@Override
@@ -230,9 +231,9 @@ public class MainActivity extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
+			Fragment fragment = new DriveFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -246,6 +247,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public CharSequence getPageTitle(int position) {
 			// Locale l = Locale.getDefault();
+			//return ((BaseFragment)mFragment).getPageTitle(position);
 			switch (position) {
 			case 0:
 				return getString(R.string.fragment_drive_title_section1);
@@ -272,9 +274,9 @@ public class MainActivity extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
+			Fragment fragment = new SocialFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -314,9 +316,9 @@ public class MainActivity extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
+			Fragment fragment = new ForestFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -332,9 +334,9 @@ public class MainActivity extends FragmentActivity implements
 			// Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.fragment_forrest_title_section1);
+				return getString(R.string.fragment_forest_title_section1);
 			case 1:
-				return getString(R.string.fragment_forrest_title_section2);
+				return getString(R.string.fragment_forest_title_section2);
 			}
 			return null;
 		}
@@ -356,9 +358,9 @@ public class MainActivity extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
+			Fragment fragment = new MarketFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -381,33 +383,6 @@ public class MainActivity extends FragmentActivity implements
 				return getString(R.string.fragment_market_title_section3);
 			}
 			return null;
-		}
-	}
-
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		public static final String ARG_SECTION_NUMBER = "section_number";
-
-		public DummySectionFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_market,
-					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return rootView;
 		}
 	}
 }
