@@ -13,4 +13,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <com.example.swp_ucd_2013_eule.view.BenchmarkBar
+        android:id="@+id/brakePedalBar"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@+id/section_label" />
+
+    <com.example.swp_ucd_2013_eule.view.BenchmarkBar
+        android:id="@+id/gasPedalBar"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@+id/brakePedalBar" />
+
 </RelativeLayout>
