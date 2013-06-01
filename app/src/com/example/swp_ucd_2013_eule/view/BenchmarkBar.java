@@ -150,8 +150,8 @@ public class BenchmarkBar extends View {
 		// Bad-Rect
 		if (mBadBarLeft != 0 || mBadBarBottom != 0 || mBadBarRight != 0
 				|| mBadBarTop != 0) {
-			canvas.drawRect(mBadBarLeft, mBadBarBottom, mBadBarRight,
-					mBadBarTop, mBadPaint);
+			canvas.drawRect(mBadBarLeft, mBadBarTop, mBadBarRight,
+					mBadBarBottom, mBadPaint);
 		}
 
 	}
