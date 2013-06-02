@@ -76,57 +76,113 @@ public class BenchmarkBar extends View {
 	}
 
 	private void updateColors() {
-		Shader goodShader = new LinearGradient(0, mGoodBarBottom, 0,
-				mGoodBarTop, 0xFFc9dcf9, 0xFF3c80e7, TileMode.CLAMP);
+		float gsx1 = 0, gsy1 = 0, gsx2 = 0, gsy2 = 0;
+		float bsx1 = 0, bsy1 = 0, bsx2 = 0, bsy2 = 0;
+
+		if (mVertical) {
+			gsy1 = mGoodBarBottom;
+			gsy2 = mGoodBarTop;
+
+			bsy1 = mBadBarBottom;
+			bsy2 = mBadBarTop;
+		} else {
+			gsx1 = mGoodBarLeft;
+			gsx2 = mGoodBarRight;
+
+			bsx1 = mBadBarLeft;
+			bsx2 = mBadBarRight;
+		}
+
+		Shader goodShader = new LinearGradient(gsx1, gsy1, gsx2, gsy2,
+				0xFFc9dcf9, 0xFF3c80e7, TileMode.CLAMP);
 		mGoodPaint.setShader(goodShader);
 
-		Shader badShader = new LinearGradient(0, mBadBarBottom, 0, mBadBarTop,
+		Shader badShader = new LinearGradient(bsx1, bsy1, bsx2, bsy2,
 				0xFF3c80e7, 0xFFdd1616, TileMode.CLAMP);
 		mBadPaint.setShader(badShader);
 	}
 
 	private void updateDimensions() {
-		// TODO vertically and horizontally!
-
 		Rect barDimensions = getBarDimensions();
 		float strokeWidth = mBorderPaint.getStrokeWidth(), hStrokeWidth = strokeWidth / 2;
 
-		float referenceHeight = mReferenceValue / mMax
-				* (barDimensions.height() - (2 * strokeWidth));
-		float currentHeight = mValue / mMax
-				* (barDimensions.height() - (2 * strokeWidth));
+		if (mVertical) {
+			float referenceHeight = mReferenceValue / mMax
+					* (barDimensions.height() - (2 * strokeWidth));
+			float currentHeight = mValue / mMax
+					* (barDimensions.height() - (2 * strokeWidth));
 
-		float goodHeight = currentHeight;
-		if (goodHeight > referenceHeight) {
-			goodHeight = referenceHeight;
-		}
+			float goodHeight = currentHeight;
+			if (goodHeight > referenceHeight) {
+				goodHeight = referenceHeight;
+			}
 
-		// Border
-		mBorderLeft = barDimensions.left + hStrokeWidth;
-		mBorderTop = barDimensions.top + hStrokeWidth;
-		mBorderRight = barDimensions.right - hStrokeWidth;
-		mBorderBottom = barDimensions.bottom - hStrokeWidth;
+			// Border
+			mBorderLeft = barDimensions.left + hStrokeWidth;
+			mBorderTop = barDimensions.top + hStrokeWidth;
+			mBorderRight = barDimensions.right - hStrokeWidth;
+			mBorderBottom = barDimensions.bottom - hStrokeWidth;
 
-		// Reference Indicator
-		mReferenceY1 = mReferenceY2 = barDimensions.bottom - referenceHeight
-				- hStrokeWidth;
-		mReferenceX1 = mBorderRight + hStrokeWidth;
-		mReferenceX2 = mReferenceX1 + mReferenceWeight;
+			// Reference Indicator
+			mReferenceY1 = mReferenceY2 = barDimensions.bottom
+					- referenceHeight - hStrokeWidth;
+			mReferenceX1 = mBorderRight + hStrokeWidth;
+			mReferenceX2 = mReferenceX1 + mReferenceWeight;
 
-		// Good-Rect
-		mGoodBarLeft = barDimensions.left + strokeWidth;
-		mGoodBarBottom = barDimensions.bottom - strokeWidth;
-		mGoodBarTop = mGoodBarBottom - goodHeight;
-		mGoodBarRight = barDimensions.right - strokeWidth;
+			// Good-Rect
+			mGoodBarLeft = barDimensions.left + strokeWidth;
+			mGoodBarBottom = barDimensions.bottom - strokeWidth;
+			mGoodBarTop = mGoodBarBottom - goodHeight;
+			mGoodBarRight = barDimensions.right - strokeWidth;
 
-		// Bad-Rect
-		if (currentHeight > referenceHeight) {
-			mBadBarTop = mGoodBarBottom - currentHeight;
-			mBadBarLeft = mGoodBarLeft;
-			mBadBarRight = mGoodBarRight;
-			mBadBarBottom = mGoodBarTop;
+			// Bad-Rect
+			if (currentHeight > referenceHeight) {
+				mBadBarTop = mGoodBarBottom - currentHeight;
+				mBadBarLeft = mGoodBarLeft;
+				mBadBarRight = mGoodBarRight;
+				mBadBarBottom = mGoodBarTop;
+			} else {
+				mBadBarTop = mBadBarLeft = mBadBarRight = mBadBarBottom = 0;
+			}
 		} else {
-			mBadBarTop = mBadBarLeft = mBadBarRight = mBadBarBottom = 0;
+			float referenceWidth = mReferenceValue / mMax
+					* (barDimensions.width() - (2 * strokeWidth));
+			float currentWidth = mValue / mMax
+					* (barDimensions.width() - (2 * strokeWidth));
+
+			float goodWidth = currentWidth;
+			if (goodWidth > referenceWidth) {
+				goodWidth = referenceWidth;
+			}
+
+			// Border
+			mBorderLeft = barDimensions.left + hStrokeWidth;
+			mBorderTop = barDimensions.top + hStrokeWidth;
+			mBorderRight = barDimensions.right - hStrokeWidth;
+			mBorderBottom = barDimensions.bottom - hStrokeWidth;
+
+			// Reference Indicator
+			mReferenceX1 = mReferenceX2 = barDimensions.left + referenceWidth
+					+ hStrokeWidth;
+			mReferenceY1 = mBorderBottom + hStrokeWidth;
+			mReferenceY2 = mReferenceY1 + mReferenceWeight;
+
+			// Good-Rect
+			mGoodBarLeft = barDimensions.left + strokeWidth;
+			mGoodBarBottom = barDimensions.bottom - strokeWidth;
+			mGoodBarTop = barDimensions.top + strokeWidth;
+			mGoodBarRight = barDimensions.left + goodWidth;
+
+			// Bad-Rect
+			if (currentWidth > referenceWidth) {
+				mBadBarTop = mGoodBarTop;
+				mBadBarLeft = mGoodBarRight;
+				mBadBarRight = mGoodBarLeft + currentWidth;
+				mBadBarBottom = mGoodBarBottom;
+			} else {
+				mBadBarTop = mBadBarLeft = mBadBarRight = mBadBarBottom = 0;
+			}
+
 		}
 
 		updateColors();
