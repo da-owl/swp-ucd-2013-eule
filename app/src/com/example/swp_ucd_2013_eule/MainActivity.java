@@ -57,7 +57,7 @@ public class MainActivity extends FragmentActivity implements
 				new FragmentDriveSectionsPagerAdapter(
 						getSupportFragmentManager()));
 		mActionTabMapping.put(R.id.ForestView,
-				new FragmentForrestSectionsPagerAdapter(
+				new FragmentForestSectionsPagerAdapter(
 						getSupportFragmentManager()));
 		mActionTabMapping.put(R.id.SocialView,
 				new FragmentSocialSectionsPagerAdapter(
@@ -304,10 +304,10 @@ public class MainActivity extends FragmentActivity implements
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
-	public class FragmentForrestSectionsPagerAdapter extends
+	public class FragmentForestSectionsPagerAdapter extends
 			FragmentPagerAdapter {
 
-		public FragmentForrestSectionsPagerAdapter(FragmentManager fm) {
+		public FragmentForestSectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
