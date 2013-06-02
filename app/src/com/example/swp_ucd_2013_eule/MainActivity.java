@@ -11,15 +11,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.net.ApiClient;
@@ -31,12 +27,9 @@ public class MainActivity extends FragmentActivity implements
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+	 * {@link android.support.v4.app.FragmentStatePagerAdapter} derivative.
 	 */
-	FragmentPagerAdapter mSectionsPagerAdapter;
+	FragmentStatePagerAdapter mSectionsPagerAdapter;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -44,40 +37,38 @@ public class MainActivity extends FragmentActivity implements
 	ViewPager mViewPager;
 
 	Menu mMenu;
-	int mActiveActionTab = R.id.ForestView;
-	Map<Integer, FragmentPagerAdapter> mActionTabMapping = new HashMap<Integer, FragmentPagerAdapter>();
+	int mActiveActionTab = R.id.DrivingView;
+	Map<Integer, FragmentStatePagerAdapter> mActionTabMapping = new HashMap<Integer, FragmentStatePagerAdapter>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		final ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
 		// Setup mapping for MenuItem-ids to FragmentPagerAdapters
-		mActionTabMapping.put(R.id.DrivingView,
-				new FragmentDriveSectionsPagerAdapter(
-						getSupportFragmentManager()));
-		mActionTabMapping.put(R.id.ForestView,
-				new FragmentForestSectionsPagerAdapter(
-						getSupportFragmentManager()));
-		mActionTabMapping.put(R.id.SocialView,
-				new FragmentSocialSectionsPagerAdapter(
-						getSupportFragmentManager()));
-		mActionTabMapping.put(R.id.MarketView,
-				new FragmentMarketSectionsPagerAdapter(
-						getSupportFragmentManager()));
+		FragmentManager fm = getSupportFragmentManager();
+		addActionTabMapping(new DrivePagerAdapter(R.id.DrivingView, fm));
+		addActionTabMapping(new ForestPagerAdapter(R.id.ForestView, fm));
+		addActionTabMapping(new SocialPagerAdapter(R.id.SocialView, fm));
+		addActionTabMapping(new MarketPagerAdapter(R.id.MarketView, fm));
 
 	}
 
-	public void changeFragment(FragmentPagerAdapter Adapter) {
-		mSectionsPagerAdapter = Adapter;
+	private void addActionTabMapping(PagerAdapter adapter) {
+		mActionTabMapping.put(adapter.getAdapterId(), adapter);
+	}
 
-		// Set up the action bar.
-		final ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	public void changeFragment(FragmentStatePagerAdapter Adapter) {
+		mSectionsPagerAdapter = Adapter;
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+
+		final ActionBar actionBar = getActionBar();
 
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -122,7 +113,7 @@ public class MainActivity extends FragmentActivity implements
 	private void showActionTab(int actionTab) {
 		mActiveActionTab = actionTab;
 		setActionTabActive(mMenu.findItem(actionTab));
-		FragmentPagerAdapter fpa = mActionTabMapping.get(actionTab);
+		FragmentStatePagerAdapter fpa = mActionTabMapping.get(actionTab);
 		changeFragment(fpa);
 	}
 
@@ -216,38 +207,55 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
+	 * Base-class for pager adapters. Each adapter has an adapter-id. If the
+	 * current adapter-id does not match the own adapter-id then getItemPosition
+	 * will return POSITION_NONE (--> item will be removed).
+	 * 
+	 * @author MKay
+	 * 
 	 */
-	public class FragmentDriveSectionsPagerAdapter extends FragmentPagerAdapter {
-		
-		public FragmentDriveSectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
+	public abstract class PagerAdapter extends FragmentStatePagerAdapter {
+		private int mAdapterId;
 
+		public PagerAdapter(int adapterId, FragmentManager fm) {
+			super(fm);
+			mAdapterId = adapterId;
+		}
+
+		public int getAdapterId() {
+			return mAdapterId;
 		}
 
 		@Override
+		public int getItemPosition(Object item) {
+			if (mActiveActionTab != mAdapterId) {
+				return POSITION_NONE;
+			}
+			return super.getItemPosition(item);
+		}
+	}
+
+	public class DrivePagerAdapter extends PagerAdapter {
+		public DrivePagerAdapter(int adapterId, FragmentManager fm) {
+			super(adapterId, fm);
+		}
+
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
 			Fragment fragment = new DriveFragment();
 			Bundle args = new Bundle();
-			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
+			args.putInt(((BaseFragment) fragment).getSectionNumer(),
+					position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			// Show 2 total pages.
 			return 2;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			// Locale l = Locale.getDefault();
-			//return ((BaseFragment)mFragment).getPageTitle(position);
 			switch (position) {
 			case 0:
 				return getString(R.string.fragment_drive_title_section1);
@@ -258,38 +266,28 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class FragmentSocialSectionsPagerAdapter extends
-			FragmentPagerAdapter {
-
-		public FragmentSocialSectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
+	public class SocialPagerAdapter extends PagerAdapter {
+		public SocialPagerAdapter(int adapterId, FragmentManager fm) {
+			super(adapterId, fm);
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
 			Fragment fragment = new SocialFragment();
 			Bundle args = new Bundle();
-			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
+			args.putInt(((BaseFragment) fragment).getSectionNumer(),
+					position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			// Show 2 total pages.
 			return 2;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			// Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
 				return getString(R.string.fragment_social_title_section1);
@@ -300,38 +298,28 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class FragmentForestSectionsPagerAdapter extends
-			FragmentPagerAdapter {
-
-		public FragmentForestSectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
+	public class ForestPagerAdapter extends PagerAdapter {
+		public ForestPagerAdapter(int adapterId, FragmentManager fm) {
+			super(adapterId, fm);
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
 			Fragment fragment = new ForestFragment();
 			Bundle args = new Bundle();
-			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
+			args.putInt(((BaseFragment) fragment).getSectionNumer(),
+					position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			// Show 2 total pages.
 			return 2;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			// Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
 				return getString(R.string.fragment_forest_title_section1);
@@ -342,38 +330,28 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class FragmentMarketSectionsPagerAdapter extends
-			FragmentPagerAdapter {
-
-		public FragmentMarketSectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
+	public class MarketPagerAdapter extends PagerAdapter {
+		public MarketPagerAdapter(int adapterId, FragmentManager fm) {
+			super(adapterId, fm);
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
 			Fragment fragment = new MarketFragment();
 			Bundle args = new Bundle();
-			args.putInt(((BaseFragment)fragment).getSectionNumer(), position + 1);
+			args.putInt(((BaseFragment) fragment).getSectionNumer(),
+					position + 1);
 			fragment.setArguments(args);
 			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			// Show 2 total pages.
 			return 3;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			// Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
 				return getString(R.string.fragment_market_title_section1);
