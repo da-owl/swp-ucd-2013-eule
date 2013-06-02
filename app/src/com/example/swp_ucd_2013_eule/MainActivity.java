@@ -44,7 +44,7 @@ public class MainActivity extends FragmentActivity implements
 	ViewPager mViewPager;
 
 	Menu mMenu;
-	int mActiveActionTab = R.id.DrivingView;
+	int mActiveActionTab = R.id.ForestView;
 	Map<Integer, FragmentPagerAdapter> mActionTabMapping = new HashMap<Integer, FragmentPagerAdapter>();
 
 	@Override

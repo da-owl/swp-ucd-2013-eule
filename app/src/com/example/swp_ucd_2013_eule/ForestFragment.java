@@ -1,5 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
+import com.example.swp_ucd_2013_eule.view.Forest;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ public class ForestFragment extends BaseFragment {
 				.findViewById(R.id.section_label);
 		dummyTextView.setText(Integer.toString(getArguments().getInt(
 				getSectionNumer())));
+		Forest forest = (Forest) rootView.findViewById(R.id.forest);
 		return rootView;
 	}
 
