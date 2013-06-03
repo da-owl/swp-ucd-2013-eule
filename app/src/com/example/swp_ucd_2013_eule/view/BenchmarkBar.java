@@ -74,7 +74,7 @@ public class BenchmarkBar extends View {
 		mBorderPaint.setAntiAlias(true);
 		mBorderPaint.setColor(0xFFffffff);
 		mBorderPaint.setStyle(Style.STROKE);
-		mBorderPaint.setStrokeWidth(1);
+		mBorderPaint.setStrokeWidth(2);
 
 		mGoodPaint = new Paint();
 		mGoodPaint.setAntiAlias(true);
