@@ -11,7 +11,7 @@ import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
 public class DriveFragment extends BaseFragment {
 
 	public DriveFragment() {
-		super("section_number", 2);
+		super("section_drive", 2);
 	}
 
 	@Override

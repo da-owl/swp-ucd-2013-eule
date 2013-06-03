@@ -16,7 +16,7 @@ public class ForestFragment extends BaseFragment {
 	 * fragment.
 	 */
 	public ForestFragment(){
-		super("section_number",2);
+		super("section_forest",2);
 	}
 	
 

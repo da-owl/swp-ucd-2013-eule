@@ -41,9 +41,14 @@ public class Forest extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
 		canvas.drawOval(mMeadowBounds, mMeadowPaint);
 
+	}
+	
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
+		 setMeasuredDimension(800,600);
+		
 	}
 	
 	
