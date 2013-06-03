@@ -2,8 +2,14 @@ package com.example.swp_ucd_2013_eule.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Cap;
+import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -12,17 +18,25 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class GearIndicator extends View {
+	private static final int GEAR_ROUNDED_CORNER = 20;
+
 	private int mSize;
 	private Paint mBorderPaint;
 	private Paint mBackgroundPaint;
 	private Paint mFillPaint;
 	private Paint mGlossyPaint;
+	private Paint mGearPaint;
+	private Paint mGearTextPaint;
 
 	private RectF mInnerBorderRectF;
 	private RectF mOuterBorderRectF;
 	private RectF mFillRectF;
 	private RectF mBackgroundRectF;
 	private RectF mGlossyRectF;
+	private Path mGearPath;
+	private Point mGearCenter;
+
+	private int mGear = 6; // TODO set dynamically
 
 	public GearIndicator(Context context) {
 		super(context);
@@ -56,6 +70,21 @@ public class GearIndicator extends View {
 		mGlossyPaint.setAntiAlias(true);
 		// mGlossyRectF.setColor(0xFFd5d5d5);
 		mGlossyPaint.setStyle(Style.FILL);
+
+		mGearPaint = new Paint();
+		mGearPaint.setAntiAlias(true);
+		mGearPaint.setColor(0x22000000);
+		mGearPaint.setStyle(Style.STROKE);
+		mGearPaint.setStrokeWidth(8);
+		mGearPaint.setStrokeJoin(Join.ROUND);
+		mGearPaint.setStrokeCap(Cap.ROUND);
+		mGearPaint.setPathEffect(new CornerPathEffect(GEAR_ROUNDED_CORNER));
+
+		mGearTextPaint = new Paint();
+		mGearTextPaint.setAntiAlias(true);
+		mGearTextPaint.setColor(0xFF333333);
+		mGearTextPaint.setTextAlign(Align.CENTER);
+		mGearTextPaint.setTextSize(200);
 	}
 
 	private void updateDimensions() {
@@ -83,6 +112,26 @@ public class GearIndicator extends View {
 		mGlossyRectF = new RectF(curOffset + glossyXOffset, glossyTop, mSize
 				- curOffset - glossyXOffset, glossyTop + glossyHeight);
 
+		float bgSize = mSize - 2 * curOffset;
+		float gearOff = curOffset + (bgSize / 9 * 1.75f);
+		float gearMid = curOffset + (bgSize / 9 * 4.75f);
+		float gearBot = curOffset + (bgSize / 9 * 7.5f);
+		mGearPath = new Path();
+		mGearPath.moveTo(gearOff, gearOff);
+		mGearPath.lineTo(gearOff, gearMid);
+		mGearPath.lineTo(mSize - gearOff, gearMid);
+		mGearPath.lineTo(mSize - gearOff, gearOff);
+
+		float foo = (mSize - gearOff * 2) / 3;
+		mGearPath.moveTo(gearOff + foo, gearOff);
+		mGearPath.lineTo(gearOff + foo, gearBot);
+		mGearPath.moveTo(gearOff + foo * 2, gearOff);
+		mGearPath.lineTo(gearOff + foo * 2, gearBot + GEAR_ROUNDED_CORNER);
+
+		mGearCenter = new Point(mSize / 2,
+				(int) (mSize / 2 - ((mGearTextPaint.descent() + mGearTextPaint
+						.ascent()) / 2)));
+
 		updateColors(glossyHeight, glossyTop);
 	}
 
@@ -105,7 +154,9 @@ public class GearIndicator extends View {
 		canvas.drawOval(mInnerBorderRectF, mBorderPaint);
 		canvas.drawOval(mOuterBorderRectF, mBorderPaint);
 		canvas.drawArc(mFillRectF, 270, 225, false, mFillPaint);
+		canvas.drawPath(mGearPath, mGearPaint);
 		canvas.drawOval(mGlossyRectF, mGlossyPaint);
+		canvas.drawText("6", mGearCenter.x, mGearCenter.y, mGearTextPaint);
 	}
 
 	@Override
