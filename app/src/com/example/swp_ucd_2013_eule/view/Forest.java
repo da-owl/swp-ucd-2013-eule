@@ -1,6 +1,7 @@
 package com.example.swp_ucd_2013_eule.view;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,8 +33,10 @@ public class Forest extends View {
 			R.drawable.frog_gordon);
 	private Bitmap mBush = BitmapFactory.decodeResource(getResources(),
 			R.drawable.bush);
-	private ArrayList<ForestItem> mForestItems;
-
+	private ArrayList<ForestItem> mForestItems = new ArrayList<ForestItem>();
+	private boolean mInitComplet;
+	
+	
 	public Forest(Context context) {
 		super(context);
 		initForest();
@@ -62,6 +66,7 @@ public class Forest extends View {
 		mForestPaintBorder.setStrokeCap(Cap.ROUND);
 		mForestPaintBorder.setPathEffect(new CornerPathEffect(
 				FOREST_ROUNDED_CORNER));
+		
 
 	}
 
@@ -115,6 +120,7 @@ public class Forest extends View {
 	}
 
 	private void placeItemsInForest() {
+		if(!mInitComplet){
 		mForestItems = new ArrayList<ForestItem>();
 		int x = getMeasuredWidth() / 4;
 		int y = (getMeasuredHeight() / 4) / 2;
@@ -138,8 +144,10 @@ public class Forest extends View {
 		
 		int x5 = getMeasuredWidth() -40 - getMeasuredWidth() / 2;
 		int y5 = (getMeasuredHeight() / 4)+50;
-		mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon"));		
-		
+		RectF bounds = new RectF(x5-10,y5-20,x5+72+30,y5+48+30);
+		mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon",true,bounds));		
+		mInitComplet=true;
+		}
 		
 		
 	}
@@ -147,16 +155,20 @@ public class Forest extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		// canvas.drawOval(mMeadowBounds, mMeadowPaint);
 		canvas.drawPath(mForestPath, mForestPaint);
 		canvas.drawPath(mForestPath, mForestPaintBorder);
-
 		placeItemsInForest();
 		for (ForestItem item : mForestItems) {
 			canvas.drawBitmap(item.getBitmap(), item.getXCoordinate(),
 					item.getYCoordinate(), null);
 		}
 
+	}
+	
+	public void moveItems(){
+		for (ForestItem item : mForestItems){
+			item.move();
+		}
 	}
 
 	@Override
@@ -173,7 +185,9 @@ public class Forest extends View {
 		private int mHeight;
 		private Bitmap mBitmap;
 		private String mName;
-
+		private boolean mMovable;
+		private RectF mMovableArea;
+		
 		ForestItem(Bitmap bitmap, int x, int y, String name) {
 			mBitmap = bitmap;
 			mX = x;
@@ -182,6 +196,13 @@ public class Forest extends View {
 			mWidth = bitmap.getWidth();
 			mName = name;
 		}
+		
+		ForestItem(Bitmap bitmap, int x, int y, String name, boolean isMoveable, RectF movingArea) {
+			this(bitmap,x,y,name);
+			mMovable= isMoveable;
+			mMovableArea = movingArea;
+		}
+		
 
 		public Bitmap getBitmap() {
 			return mBitmap;
@@ -206,6 +227,15 @@ public class Forest extends View {
 
 		public String getName() {
 			return mName;
+		}
+		
+		public void move(){
+			Random r = new Random();
+			if(mMovable){
+				mX = (int) (r.nextInt((int)mMovableArea.right-(int)mMovableArea.left) + mMovableArea.left);
+				mY = (int) (r.nextInt((int)mMovableArea.bottom-(int)mMovableArea.top) + mMovableArea.top);
+				invalidate();
+			}
 		}
 
 	}
