@@ -4,14 +4,15 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from rest_framework import viewsets, routers
 
-from api import views
+from core.views import index, register, hello
+from core.views import UserViewSet
+from forest.views import ForestList, ForestDetail
 
 admin.autodiscover()
 
 # restful config
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'forests', views.ForestViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = patterns('',
     # """
@@ -26,9 +27,9 @@ urlpatterns = patterns('',
     # """
     # register / login
     # """
-    url(r'^$', views.index, name='index'),
-    url(r'^register', views.register, name='register'),
-    url(r'^hello', views.hello, name='hello'),
+    url(r'^$', index, name='index'),
+    url(r'^register', register, name='register'),
+    url(r'^hello', hello, name='hello'),
     # login no longer required, because credentials are passed in the request
     # url(r'^login', views.login, name='login'),
 
@@ -38,8 +39,10 @@ urlpatterns = patterns('',
     # Wire up our API using automatic URL routing.
     # Additionally, we include login URLs for the browseable API.
     url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
+    url(r'^forests/$', ForestList.as_view()),
+    url(r'^forests/(?P<pk>[0-9]+)/$', ForestDetail.as_view())
 )
 
 

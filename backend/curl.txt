@@ -1,0 +1,1 @@
+curl --data '{ "username": "tester1", "password": "test", "email": "tester@test.de"}' http://localhost:8080/register | python -mjson.tool
