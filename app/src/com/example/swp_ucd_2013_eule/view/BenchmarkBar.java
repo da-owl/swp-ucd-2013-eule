@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
@@ -23,15 +24,17 @@ public class BenchmarkBar extends View {
 	private Paint mBorderPaint;
 	private Paint mGoodPaint;
 	private Paint mBadPaint;
+	private Paint mReferencePaint;
 
 	private float mMax = 100;
 	private float mReferenceValue = 65;
 	private float mValue = 85;
 
-	float mBorderTop, mBorderLeft, mBorderRight, mBorderBottom;
-	float mGoodBarTop, mGoodBarLeft, mGoodBarRight, mGoodBarBottom;
-	float mBadBarTop, mBadBarLeft, mBadBarRight, mBadBarBottom;
-	float mReferenceX1, mReferenceX2, mReferenceY1, mReferenceY2;
+	private float mBorderTop, mBorderLeft, mBorderRight, mBorderBottom;
+	private float mGoodBarTop, mGoodBarLeft, mGoodBarRight, mGoodBarBottom;
+	private float mBadBarTop, mBadBarLeft, mBadBarRight, mBadBarBottom;
+	private float mReferenceX1, mReferenceX2, mReferenceY1, mReferenceY2;
+	private Path mReferencePath;
 
 	public BenchmarkBar(Context context) {
 		super(context);
@@ -52,21 +55,22 @@ public class BenchmarkBar extends View {
 		initBenchmarkBar();
 	}
 
-	// TODO on setters: repaint
-
 	public void setReferenceValue(float val) {
 		mReferenceValue = val;
 		updateDimensions();
+		invalidate();
 	}
 
 	public void setValue(float val) {
 		mValue = val;
 		updateDimensions();
+		invalidate();
 	}
 
 	public void setMax(float max) {
 		mMax = max;
 		updateDimensions();
+		invalidate();
 	}
 
 	private void initBenchmarkBar() {
@@ -83,6 +87,11 @@ public class BenchmarkBar extends View {
 		mBadPaint = new Paint();
 		mBadPaint.setAntiAlias(true);
 		// mBadPaint.setColor(0xFFbd1616);
+
+		mReferencePaint = new Paint();
+		mReferencePaint.setAntiAlias(true);
+		mReferencePaint.setStyle(Style.FILL);
+		mReferencePaint.setColor(0xFFffffff);
 
 		updateColors();
 	}
@@ -141,6 +150,14 @@ public class BenchmarkBar extends View {
 			mReferenceX1 = mBorderRight + hStrokeWidth;
 			mReferenceX2 = mReferenceX1 + mReferenceWeight;
 
+			mReferencePath = new Path();
+			mReferencePath.moveTo(mReferenceX1, mReferenceY1);
+			mReferencePath.lineTo(mReferenceX2, mReferenceY1 - mReferenceWeight
+					/ 2);
+			mReferencePath.lineTo(mReferenceX2, mReferenceY1 + mReferenceWeight
+					/ 2);
+			mReferencePath.close();
+
 			// Good-Rect
 			mGoodBarLeft = barDimensions.left + strokeWidth;
 			mGoodBarBottom = barDimensions.bottom - strokeWidth;
@@ -179,6 +196,14 @@ public class BenchmarkBar extends View {
 			mReferenceY1 = mBorderBottom + hStrokeWidth;
 			mReferenceY2 = mReferenceY1 + mReferenceWeight;
 
+			mReferencePath = new Path();
+			mReferencePath.moveTo(mReferenceX1, mReferenceY1);
+			mReferencePath.lineTo(mReferenceX2 - mReferenceWeight / 2,
+					mReferenceY2);
+			mReferencePath.lineTo(mReferenceX2 + mReferenceWeight / 2,
+					mReferenceY2);
+			mReferencePath.close();
+
 			// Good-Rect
 			mGoodBarLeft = barDimensions.left + strokeWidth;
 			mGoodBarBottom = barDimensions.bottom - strokeWidth;
@@ -203,13 +228,18 @@ public class BenchmarkBar extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+
+		canvas.drawPath(mReferencePath, mReferencePaint);
+
 		// Border
 		canvas.drawRect(mBorderLeft, mBorderTop, mBorderRight, mBorderBottom,
 				mBorderPaint);
 
 		// Reference Indicator
-		canvas.drawLine(mReferenceX1, mReferenceY1, mReferenceX2, mReferenceY2,
-				mBorderPaint);
+		/*
+		 * canvas.drawLine(mReferenceX1, mReferenceY1, mReferenceX2,
+		 * mReferenceY2, mBorderPaint);
+		 */
 
 		// Good-Rect
 		canvas.drawRect(mGoodBarLeft, mGoodBarTop, mGoodBarRight,

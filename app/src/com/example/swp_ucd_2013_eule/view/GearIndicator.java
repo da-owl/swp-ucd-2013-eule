@@ -42,7 +42,8 @@ public class GearIndicator extends View {
 	private float mRPM2Angle;
 	private RectF mRPMRectF;
 
-	private int mGear = 5; // TODO set dynamically
+	private int mGear = 0;
+	private int mRPM = 0;
 	private float mReferenceValue1 = 1600;
 	private float mReferenceValue2 = 2000;
 	private float mRPMMax = 6700;
@@ -179,10 +180,12 @@ public class GearIndicator extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		// TODO repaint Reference-Bar here? (recalc sizes)
 		canvas.drawOval(mBackgroundRectF, mBackgroundPaint);
 		canvas.drawOval(mInnerBorderRectF, mBorderPaint);
 		canvas.drawOval(mOuterBorderRectF, mBorderPaint);
-		canvas.drawArc(mFillRectF, 90, 320, false, mFillPaint);
+		canvas.drawArc(mFillRectF, 90, (mRPM / mRPMMax) * 360, false,
+				mFillPaint);
 		canvas.drawPath(mGearPath, mGearPaint);
 		canvas.drawOval(mGlossyRectF, mGlossyPaint);
 		canvas.drawText(String.valueOf(mGear), mGearCenter.x, mGearCenter.y,
@@ -200,4 +203,13 @@ public class GearIndicator extends View {
 		setMeasuredDimension(mSize, mSize);
 	}
 
+	public void setGear(int gear) {
+		mGear = gear;
+		invalidate();
+	}
+
+	public void setRPM(int rpm) {
+		mRPM = rpm;
+		invalidate();
+	}
 }
