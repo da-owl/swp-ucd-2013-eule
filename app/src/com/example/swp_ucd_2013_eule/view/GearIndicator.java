@@ -3,6 +3,7 @@ package com.example.swp_ucd_2013_eule.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.CornerPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Cap;
@@ -14,6 +15,7 @@ import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
+import android.graphics.SweepGradient;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -27,6 +29,7 @@ public class GearIndicator extends View {
 	private Paint mGlossyPaint;
 	private Paint mGearPaint;
 	private Paint mGearTextPaint;
+	private Paint mRPMPaint;
 
 	private RectF mInnerBorderRectF;
 	private RectF mOuterBorderRectF;
@@ -35,8 +38,14 @@ public class GearIndicator extends View {
 	private RectF mGlossyRectF;
 	private Path mGearPath;
 	private Point mGearCenter;
+	private float mRPM1Angle;
+	private float mRPM2Angle;
+	private RectF mRPMRectF;
 
-	private int mGear = 6; // TODO set dynamically
+	private int mGear = 5; // TODO set dynamically
+	private float mReferenceValue1 = 1600;
+	private float mReferenceValue2 = 2000;
+	private float mRPMMax = 6700;
 
 	public GearIndicator(Context context) {
 		super(context);
@@ -62,7 +71,7 @@ public class GearIndicator extends View {
 
 		mFillPaint = new Paint();
 		mFillPaint.setAntiAlias(true);
-		mFillPaint.setColor(0xFF0f93e7);
+		// mFillPaint.setColor(0xFF0f93e7);
 		mFillPaint.setStyle(Style.STROKE);
 		mFillPaint.setStrokeWidth(16);
 
@@ -84,12 +93,26 @@ public class GearIndicator extends View {
 		mGearTextPaint.setAntiAlias(true);
 		mGearTextPaint.setColor(0xFF333333);
 		mGearTextPaint.setTextAlign(Align.CENTER);
-		mGearTextPaint.setTextSize(200);
+		mGearTextPaint.setTextSize(180);
+
+		mRPMPaint = new Paint();
+		mRPMPaint.setAntiAlias(true);
+		mRPMPaint.setColor(0xFF96e31d);
+		mRPMPaint.setStyle(Style.STROKE);
+		mRPMPaint.setStrokeWidth(16);
 	}
 
 	private void updateDimensions() {
+
+		float hRPMStrokeWidth = mRPMPaint.getStrokeWidth() / 2;
+		float curOffset = hRPMStrokeWidth;
+		mRPM1Angle = mReferenceValue1 / mRPMMax * 360 + 90;
+		mRPM2Angle = mReferenceValue2 / mRPMMax * 360 + 90;
+		mRPMRectF = new RectF(curOffset, curOffset, mSize - curOffset, mSize
+				- curOffset);
+
 		float hBorderStrokeWidth = mBorderPaint.getStrokeWidth() / 2;
-		float curOffset = hBorderStrokeWidth;
+		curOffset += hRPMStrokeWidth + hBorderStrokeWidth;
 		mOuterBorderRectF = new RectF(curOffset, curOffset, mSize - curOffset,
 				mSize - curOffset);
 
@@ -145,6 +168,12 @@ public class GearIndicator extends View {
 				TileMode.CLAMP);
 		mGlossyPaint.setShader(glossyShader);
 
+		Shader rpmShader = new SweepGradient(mSize / 2, mSize / 2, 0xFF0f93e7,
+				0xFF0a51b3);
+		Matrix rpmMatrix = new Matrix();
+		rpmMatrix.postRotate(89, mSize / 2, mSize / 2);
+		rpmShader.setLocalMatrix(rpmMatrix);
+		mFillPaint.setShader(rpmShader);
 	}
 
 	@Override
@@ -153,10 +182,13 @@ public class GearIndicator extends View {
 		canvas.drawOval(mBackgroundRectF, mBackgroundPaint);
 		canvas.drawOval(mInnerBorderRectF, mBorderPaint);
 		canvas.drawOval(mOuterBorderRectF, mBorderPaint);
-		canvas.drawArc(mFillRectF, 270, 225, false, mFillPaint);
+		canvas.drawArc(mFillRectF, 90, 320, false, mFillPaint);
 		canvas.drawPath(mGearPath, mGearPaint);
 		canvas.drawOval(mGlossyRectF, mGlossyPaint);
-		canvas.drawText("6", mGearCenter.x, mGearCenter.y, mGearTextPaint);
+		canvas.drawText(String.valueOf(mGear), mGearCenter.x, mGearCenter.y,
+				mGearTextPaint);
+		canvas.drawArc(mRPMRectF, mRPM1Angle, mRPM2Angle - mRPM1Angle, false,
+				mRPMPaint);
 	}
 
 	@Override
