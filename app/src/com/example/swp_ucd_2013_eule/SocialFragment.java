@@ -9,7 +9,7 @@ import android.widget.TextView;
 public class SocialFragment extends BaseFragment {
 
 	public SocialFragment(){
-		super("section_number",2);
+		super("section_social",2);
 	}
 	
 	@Override

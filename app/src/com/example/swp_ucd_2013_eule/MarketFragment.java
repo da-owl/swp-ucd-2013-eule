@@ -9,7 +9,7 @@ import android.widget.TextView;
 public class MarketFragment extends BaseFragment {
 
 	public MarketFragment() {
-		super("section_number", 3);
+		super("section_market", 3);
 	}
 
 	@Override

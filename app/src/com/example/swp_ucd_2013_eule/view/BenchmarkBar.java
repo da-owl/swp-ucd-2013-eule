@@ -1,6 +1,7 @@
 package com.example.swp_ucd_2013_eule.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
@@ -11,9 +12,11 @@ import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.example.swp_ucd_2013_eule.R;
+
 public class BenchmarkBar extends View {
 	private boolean mVertical = true;
-	private int mWeight = 40; // TODO get from attr
+	private int mWeight = 40;
 	private int mReferenceWeight = 10;
 	private int mWidth, mHeight;
 
@@ -37,6 +40,15 @@ public class BenchmarkBar extends View {
 
 	public BenchmarkBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
+
+		TypedArray a = getContext().obtainStyledAttributes(attrs,
+				R.styleable.BenchmarkBar);
+
+		mVertical = !a.getBoolean(R.styleable.BenchmarkBar_horizontal, false);
+		mWeight = a.getInt(R.styleable.BenchmarkBar_weight, 40);
+
+		a.recycle();
+
 		initBenchmarkBar();
 	}
 
@@ -60,7 +72,7 @@ public class BenchmarkBar extends View {
 	private void initBenchmarkBar() {
 		mBorderPaint = new Paint();
 		mBorderPaint.setAntiAlias(true);
-		mBorderPaint.setColor(0xFF2b3246);
+		mBorderPaint.setColor(0xFFffffff);
 		mBorderPaint.setStyle(Style.STROKE);
 		mBorderPaint.setStrokeWidth(2);
 
@@ -94,11 +106,11 @@ public class BenchmarkBar extends View {
 		}
 
 		Shader goodShader = new LinearGradient(gsx1, gsy1, gsx2, gsy2,
-				0xFFc9dcf9, 0xFF3c80e7, TileMode.CLAMP);
+				0xFF0f93e7, 0xFF0a51b3, TileMode.CLAMP);
 		mGoodPaint.setShader(goodShader);
 
 		Shader badShader = new LinearGradient(bsx1, bsy1, bsx2, bsy2,
-				0xFF3c80e7, 0xFFdd1616, TileMode.CLAMP);
+				0xFF0a51b3, 0xFFca199e, TileMode.CLAMP);
 		mBadPaint.setShader(badShader);
 	}
 
