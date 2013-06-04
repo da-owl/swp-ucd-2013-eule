@@ -26,7 +26,11 @@ public class Forest extends View {
 	private Paint mForestPaint;
 	private Paint mForestPaintBorder;
 	private Bitmap mTree = BitmapFactory.decodeResource(getResources(),
-			R.drawable.forest);
+			R.drawable.tree);
+	private Bitmap mFrog = BitmapFactory.decodeResource(getResources(),
+			R.drawable.frog_gordon);
+	private Bitmap mBush = BitmapFactory.decodeResource(getResources(),
+			R.drawable.bush);
 	private ArrayList<ForestItem> mForestItems;
 
 	public Forest(Context context) {
@@ -123,6 +127,21 @@ public class Forest extends View {
 		int x2 = getMeasuredWidth() / 6;
 		int y2 = getMeasuredHeight() - getMeasuredHeight() / 4;
 		mForestItems.add(new ForestItem(mTree, x2, y2, "Tree 3"));
+		
+		int x3 = getMeasuredWidth() / 6;
+		int y3 = getMeasuredHeight() - getMeasuredHeight() / 2;
+		mForestItems.add(new ForestItem(mBush,x3,y3,"Bush 1"));
+		
+		int x4 = getMeasuredWidth() - 40 - getMeasuredWidth() / 4;
+		int y4 = getMeasuredHeight() -20 - getMeasuredHeight() / 4;
+		mForestItems.add(new ForestItem(mBush, x4, y4, "Bush 2"));
+		
+		int x5 = getMeasuredWidth() -40 - getMeasuredWidth() / 2;
+		int y5 = (getMeasuredHeight() / 4)+50;
+		mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon"));		
+		
+		
+		
 	}
 
 	@Override
