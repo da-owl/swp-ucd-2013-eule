@@ -18,7 +18,8 @@
         android:id="@+id/gasPedalBar"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
+        android:layout_above="@+id/imgGasPedal"
+        android:layout_alignLeft="@+id/imgGasPedal"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         app:weight="48" />
@@ -27,9 +28,10 @@
         android:id="@+id/brakePedalBar"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_alignTop="@+id/gasPedalBar"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@+id/gasPedalBar"
+        android:layout_above="@+id/imgBrakePedal"
+        android:layout_alignLeft="@+id/imgBrakePedal"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
         app:weight="48" />
 
     <com.example.swp_ucd_2013_eule.view.GearIndicator
@@ -40,5 +42,29 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="30dp"
         android:layout_toLeftOf="@+id/brakePedalBar" />
+
+    <ImageView
+        android:id="@+id/imgGasPedal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:maxHeight="32dp"
+        android:maxWidth="32dp"
+        android:src="@drawable/gaspedal" />
+
+    <ImageView
+        android:id="@+id/imgBrakePedal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/imgGasPedal"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:maxHeight="32dp"
+        android:maxWidth="32dp"
+        android:src="@drawable/brakepedal" />
 
 </RelativeLayout>
