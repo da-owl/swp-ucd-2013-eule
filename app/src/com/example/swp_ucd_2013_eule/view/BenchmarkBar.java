@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.example.swp_ucd_2013_eule.R;
@@ -49,6 +50,10 @@ public class BenchmarkBar extends View {
 
 		mVertical = !a.getBoolean(R.styleable.BenchmarkBar_horizontal, false);
 		mWeight = a.getInt(R.styleable.BenchmarkBar_weight, 40);
+
+		// convert dp to px
+		mWeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				mWeight, getResources().getDisplayMetrics());
 
 		a.recycle();
 
