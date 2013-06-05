@@ -67,4 +67,80 @@
         android:maxWidth="32dp"
         android:src="@drawable/brakepedal" />
 
+    <TextView
+        android:id="@+id/lblFuelConsumption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gearIndicator"
+        android:layout_below="@+id/gearIndicator"
+        android:layout_marginTop="20dp"
+        android:text="@string/drive_fuel_consumption"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imgFuelConsumptionNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lblFuelConsumption"
+        android:layout_below="@+id/lblFuelConsumption"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:maxHeight="32dp"
+        android:maxWidth="32dp"
+        android:src="@drawable/fuel_consumption_now" />
+
+    <ImageView
+        android:id="@+id/imgFuelConsumptionCurrentTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imgFuelConsumptionNow"
+        android:layout_below="@+id/imgFuelConsumptionNow"
+        android:layout_marginRight="10dp"
+        android:maxHeight="32dp"
+        android:maxWidth="32dp"
+        android:src="@drawable/fuel_consumption_current_trip" />
+
+    <ImageView
+        android:id="@+id/imgFuelConsumptionAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imgFuelConsumptionCurrentTrip"
+        android:layout_below="@+id/imgFuelConsumptionCurrentTrip"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/fuel_consumption_all" />
+
+    <TextView
+        android:id="@+id/txtFuelConsumptionNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imgFuelConsumptionNow"
+        android:layout_alignTop="@id/imgFuelConsumptionNow"
+        android:layout_centerVertical="false"
+        android:layout_toRightOf="@+id/imgFuelConsumptionNow"
+        android:gravity="center_vertical"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtFuelConsumptionCurrentTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imgFuelConsumptionCurrentTrip"
+        android:layout_alignTop="@id/imgFuelConsumptionCurrentTrip"
+        android:layout_toRightOf="@id/imgFuelConsumptionAll"
+        android:gravity="center_vertical"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtFuelConsumptionAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imgFuelConsumptionAll"
+        android:layout_alignTop="@id/imgFuelConsumptionAll"
+        android:layout_toRightOf="@id/imgFuelConsumptionAll"
+        android:gravity="center_vertical"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>

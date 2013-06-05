@@ -38,6 +38,10 @@ public class DriveFragment extends BaseFragment {
 		View rootView = inflater.inflate(R.layout.fragment_drive, container,
 				false);
 		mDummyTextView = (TextView) rootView.findViewById(R.id.section_label);
+		
+		((TextView) rootView.findViewById(R.id.txtFuelConsumptionNow)).setText("7,5 l/100km");
+		((TextView) rootView.findViewById(R.id.txtFuelConsumptionCurrentTrip)).setText("4,3 l/100km");
+		((TextView) rootView.findViewById(R.id.txtFuelConsumptionAll)).setText("3,8 l/100km");
 
 		mGearIndicator = (GearIndicator) rootView
 				.findViewById(R.id.gearIndicator);

@@ -16,6 +16,7 @@
     <string name="MenuIconString_ForrestView">Forrest</string>
     <string name="MenuIconString_SocialView">Social</string>
     <string name="MenuIconString_MarketView">Market</string>
+    <string name="drive_fuel_consumption">Verbrauch:</string>
     
 
 </resources>
