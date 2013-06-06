@@ -28,15 +28,16 @@ public class Forest extends View {
 	private Paint mForestPaint;
 	private Paint mForestPaintBorder;
 	private Bitmap mTree = BitmapFactory.decodeResource(getResources(),
-			R.drawable.tree);
+			R.drawable.item_tree);
+	private Bitmap mFir = BitmapFactory.decodeResource(getResources(),
+			R.drawable.item_fir);
 	private Bitmap mFrog = BitmapFactory.decodeResource(getResources(),
-			R.drawable.frog_gordon);
+			R.drawable.item_gordan);
 	private Bitmap mBush = BitmapFactory.decodeResource(getResources(),
-			R.drawable.bush);
+			R.drawable.item_bush);
 	private ArrayList<ForestItem> mForestItems = new ArrayList<ForestItem>();
 	private boolean mInitComplet;
-	
-	
+
 	public Forest(Context context) {
 		super(context);
 		initForest();
@@ -50,7 +51,7 @@ public class Forest extends View {
 	private void initForest() {
 		mForestPaint = new Paint();
 		mForestPaint.setAntiAlias(true);
-		mForestPaint.setColor(0xFF426200);
+		mForestPaint.setColor(0xFF86b55c);
 		mForestPaint.setStyle(Style.FILL);
 		mForestPaint.setStrokeWidth(FOREST_STROKE_WIDTH);
 		mForestPaint.setStrokeJoin(Join.ROUND);
@@ -59,14 +60,13 @@ public class Forest extends View {
 
 		mForestPaintBorder = new Paint();
 		mForestPaintBorder.setAntiAlias(true);
-		mForestPaintBorder.setColor(0xFF9CEF60);
+		mForestPaintBorder.setColor(0xFF36660a);
 		mForestPaintBorder.setStyle(Style.STROKE);
 		mForestPaintBorder.setStrokeWidth(FOREST_STROKE_WIDTH);
 		mForestPaintBorder.setStrokeJoin(Join.ROUND);
 		mForestPaintBorder.setStrokeCap(Cap.ROUND);
 		mForestPaintBorder.setPathEffect(new CornerPathEffect(
 				FOREST_ROUNDED_CORNER));
-		
 
 	}
 
@@ -120,36 +120,37 @@ public class Forest extends View {
 	}
 
 	private void placeItemsInForest() {
-		if(!mInitComplet){
-		mForestItems = new ArrayList<ForestItem>();
-		int x = getMeasuredWidth() / 4;
-		int y = (getMeasuredHeight() / 4) / 2;
-		mForestItems.add(new ForestItem(mTree, x, y, "Tree 1"));
+		if (!mInitComplet) {
+			mForestItems = new ArrayList<ForestItem>();
+			int x = getMeasuredWidth() / 4;
+			int y = (getMeasuredHeight() / 4) / 2;
+			mForestItems.add(new ForestItem(mFir, x, y, "Fir 1"));
 
-		int x1 = getMeasuredWidth() - getMeasuredWidth() / 4;
-		int y1 = getMeasuredHeight() - getMeasuredHeight() / 2;
-		mForestItems.add(new ForestItem(mTree, x1, y1, "Tree 2"));
+			int x1 = getMeasuredWidth() - getMeasuredWidth() / 4;
+			int y1 = getMeasuredHeight() - getMeasuredHeight() / 2;
+			mForestItems.add(new ForestItem(mFir, x1, y1, "Fir 2"));
 
-		int x2 = getMeasuredWidth() / 6;
-		int y2 = getMeasuredHeight() - getMeasuredHeight() / 4;
-		mForestItems.add(new ForestItem(mTree, x2, y2, "Tree 3"));
-		
-		int x3 = getMeasuredWidth() / 6;
-		int y3 = getMeasuredHeight() - getMeasuredHeight() / 2;
-		mForestItems.add(new ForestItem(mBush,x3,y3,"Bush 1"));
-		
-		int x4 = getMeasuredWidth() - 40 - getMeasuredWidth() / 4;
-		int y4 = getMeasuredHeight() -20 - getMeasuredHeight() / 4;
-		mForestItems.add(new ForestItem(mBush, x4, y4, "Bush 2"));
-		
-		int x5 = getMeasuredWidth() -40 - getMeasuredWidth() / 2;
-		int y5 = (getMeasuredHeight() / 4)+50;
-		RectF bounds = new RectF(x5-10,y5-20,x5+72+30,y5+48+30);
-		mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon",true,bounds));		
-		mInitComplet=true;
+			int x2 = getMeasuredWidth() / 6;
+			int y2 = getMeasuredHeight() - getMeasuredHeight() / 4;
+			mForestItems.add(new ForestItem(mTree, x2, y2, "Tree 1"));
+
+			int x3 = getMeasuredWidth() / 6;
+			int y3 = getMeasuredHeight() - getMeasuredHeight() / 2;
+			mForestItems.add(new ForestItem(mBush, x3, y3, "Bush 1"));
+
+			int x4 = getMeasuredWidth() - 40 - getMeasuredWidth() / 4;
+			int y4 = getMeasuredHeight() - 20 - getMeasuredHeight() / 4;
+			mForestItems.add(new ForestItem(mBush, x4, y4, "Bush 2"));
+
+			int x5 = getMeasuredWidth() - 40 - getMeasuredWidth() / 2;
+			int y5 = (getMeasuredHeight() / 4) + 50;
+			RectF bounds = new RectF(x5 - 10, y5 - 20, x5 + 72 + 30,
+					y5 + 48 + 30);
+			mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon", true,
+					bounds));
+			mInitComplet = true;
 		}
-		
-		
+
 	}
 
 	@Override
@@ -164,9 +165,9 @@ public class Forest extends View {
 		}
 
 	}
-	
-	public void moveItems(){
-		for (ForestItem item : mForestItems){
+
+	public void moveItems() {
+		for (ForestItem item : mForestItems) {
 			item.move();
 		}
 	}
@@ -187,7 +188,7 @@ public class Forest extends View {
 		private String mName;
 		private boolean mMovable;
 		private RectF mMovableArea;
-		
+
 		ForestItem(Bitmap bitmap, int x, int y, String name) {
 			mBitmap = bitmap;
 			mX = x;
@@ -196,13 +197,13 @@ public class Forest extends View {
 			mWidth = bitmap.getWidth();
 			mName = name;
 		}
-		
-		ForestItem(Bitmap bitmap, int x, int y, String name, boolean isMoveable, RectF movingArea) {
-			this(bitmap,x,y,name);
-			mMovable= isMoveable;
+
+		ForestItem(Bitmap bitmap, int x, int y, String name,
+				boolean isMoveable, RectF movingArea) {
+			this(bitmap, x, y, name);
+			mMovable = isMoveable;
 			mMovableArea = movingArea;
 		}
-		
 
 		public Bitmap getBitmap() {
 			return mBitmap;
@@ -228,12 +229,14 @@ public class Forest extends View {
 		public String getName() {
 			return mName;
 		}
-		
-		public void move(){
+
+		public void move() {
 			Random r = new Random();
-			if(mMovable){
-				mX = (int) (r.nextInt((int)mMovableArea.right-(int)mMovableArea.left) + mMovableArea.left);
-				mY = (int) (r.nextInt((int)mMovableArea.bottom-(int)mMovableArea.top) + mMovableArea.top);
+			if (mMovable) {
+				mX = (int) (r.nextInt((int) mMovableArea.right
+						- (int) mMovableArea.left) + mMovableArea.left);
+				mY = (int) (r.nextInt((int) mMovableArea.bottom
+						- (int) mMovableArea.top) + mMovableArea.top);
 				invalidate();
 			}
 		}
