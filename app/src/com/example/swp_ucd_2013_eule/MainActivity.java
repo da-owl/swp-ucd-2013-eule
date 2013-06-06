@@ -241,12 +241,11 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		public Fragment getItem(int position) {
-			Fragment fragment = new DriveFragment();
-			Bundle args = new Bundle();
-			args.putInt(((BaseFragment) fragment).getSectionNumer(),
-					position + 1);
-			fragment.setArguments(args);
-			return fragment;
+			if (position == 0) {
+				return new DrivePointsFragment();
+			}
+
+			return new DriveTechFragment();
 		}
 
 		@Override
@@ -273,12 +272,10 @@ public class MainActivity extends FragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			Fragment fragment = new SocialFragment();
-			Bundle args = new Bundle();
-			args.putInt(((BaseFragment) fragment).getSectionNumer(),
-					position + 1);
-			fragment.setArguments(args);
-			return fragment;
+			if (position == 0) {
+				return new SocialTopListFragment();
+			}
+			return new SocialFriendListFragment();
 		}
 
 		@Override
@@ -305,12 +302,7 @@ public class MainActivity extends FragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			Fragment fragment = new ForestFragment();
-			Bundle args = new Bundle();
-			args.putInt(((BaseFragment) fragment).getSectionNumer(),
-					position + 1);
-			fragment.setArguments(args);
-			return fragment;
+			return new ForestFragment();
 		}
 
 		@Override
@@ -337,12 +329,12 @@ public class MainActivity extends FragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			Fragment fragment = new MarketFragment();
-			Bundle args = new Bundle();
-			args.putInt(((BaseFragment) fragment).getSectionNumer(),
-					position + 1);
-			fragment.setArguments(args);
-			return fragment;
+			if (position == 0) {
+				return new MarketPlantsFragment();
+			} else if (position == 1) {
+				return new MarketAnimalsFragment();
+			}
+			return new MarketClothesFragment();
 		}
 
 		@Override

@@ -9,11 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$DummySectionFragment" >
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <com.example.swp_ucd_2013_eule.view.BenchmarkBar
         android:id="@+id/gasPedalBar"
         android:layout_width="wrap_content"
