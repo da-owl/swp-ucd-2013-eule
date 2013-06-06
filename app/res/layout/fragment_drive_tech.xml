@@ -48,7 +48,7 @@
         android:layout_marginTop="5dp"
         android:maxHeight="32dp"
         android:maxWidth="32dp"
-        android:src="@drawable/gaspedal" />
+        android:src="@drawable/drive_gaspedal" />
 
     <ImageView
         android:id="@+id/imgBrakePedal"
@@ -60,7 +60,7 @@
         android:layout_marginTop="5dp"
         android:maxHeight="32dp"
         android:maxWidth="32dp"
-        android:src="@drawable/brakepedal" />
+        android:src="@drawable/drive_brakepedal" />
 
     <TextView
         android:id="@+id/lblFuelConsumption"
