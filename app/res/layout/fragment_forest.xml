@@ -22,4 +22,26 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
+        <TextView
+            android:id="@+id/txtLevelNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="Big Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="26dp" />
+
+        <TextView
+            android:id="@+id/txtLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txtLevelNumber"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="16dp" />
+
 </RelativeLayout>

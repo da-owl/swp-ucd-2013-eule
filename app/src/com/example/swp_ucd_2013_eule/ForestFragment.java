@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.view.Forest;
 
@@ -25,6 +26,10 @@ public class ForestFragment extends Fragment {
 				false);
 
 		mForest = (Forest) rootView.findViewById(R.id.forest);
+		((TextView) rootView.findViewById(R.id.txtLevelNumber))
+		.setText("17");
+((TextView) rootView.findViewById(R.id.txtLevel))
+		.setText("Level:");
 
 		// Test-Only Animation
 		mHandler = new Handler() {
