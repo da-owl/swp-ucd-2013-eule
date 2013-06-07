@@ -37,6 +37,7 @@ public class Forest extends View {
 			R.drawable.item_bush);
 	private ArrayList<ForestItem> mForestItems = new ArrayList<ForestItem>();
 	private boolean mInitComplet;
+	private boolean mDown;
 
 	public Forest(Context context) {
 		super(context);
@@ -86,7 +87,7 @@ public class Forest extends View {
 		int heigth48 = heigth / 2;
 		int heigth28 = heigth48 / 2;
 		int heigth18 = heigth28 / 2;
-		int heigth38 = heigth28 + heigth18  -10;
+		int heigth38 = heigth28 + heigth18 - 10;
 		int heigth58 = heigth48 + heigth18;
 		int heigth68 = heigth48 + heigth28;
 		int heigth78 = heigth48 + heigth38;
@@ -248,15 +249,23 @@ public class Forest extends View {
 		float x = event.getX(), y = event.getY();
 
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			mDown = true;
+			return true;
+		} else if (event.getAction() == MotionEvent.ACTION_UP && mDown) {
 			for (ForestItem item : mForestItems) {
 				if (item.isClicked(x, y)) {
 					Toast.makeText(this.getContext(), item.getName(),
 							Toast.LENGTH_SHORT).show();
+					mDown = false;
 					return true;
 				}
 			}
-		}
-		return false;
-	}
+		} else {
+			mDown = false;
 
+		}
+		mDown = false;
+		return false;
+
+	}
 }
