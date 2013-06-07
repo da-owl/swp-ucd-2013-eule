@@ -24,35 +24,53 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
+    <com.example.swp_ucd_2013_eule.view.Level
+        android:id="@+id/level"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp" />
+
     <TextView
         android:id="@+id/txtLevelNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/level"
+        android:layout_alignTop="@id/level"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/level"
         android:gravity="center_vertical"
-        android:text="Big Text"
+        android:text="50"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="26sp" />
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/txtLevel"
+        android:id="@+id/txtCurPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/txtLevelNumber"
-        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@id/level"
         android:gravity="center_vertical"
         android:text="@string/fragment_forest_Level"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="16sp" />
 
+    <ImageView
+        android:id="@+id/imgPoints"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@id/level"
+        android:layout_toLeftOf="@+id/txtLevelNumber"
+        android:src="@drawable/ico_points" />
+
     <TextView
         android:id="@+id/txtPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtLevel"
-        android:layout_alignBottom="@+id/txtLevel"
-        android:layout_toLeftOf="@+id/txtLevel"
+        android:layout_alignBaseline="@id/txtCurPoints"
+        android:layout_alignLeft="@id/imgPoints"
+        android:layout_toLeftOf="@+id/txtCurPoints"
         android:gravity="center_vertical"
         android:paddingRight="10dp"
         android:text="@string/fragment_forest_points"

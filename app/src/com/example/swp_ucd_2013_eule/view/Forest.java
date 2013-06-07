@@ -86,7 +86,7 @@ public class Forest extends View {
 		int heigth48 = heigth / 2;
 		int heigth28 = heigth48 / 2;
 		int heigth18 = heigth28 / 2;
-		int heigth38 = heigth28 + heigth18;
+		int heigth38 = heigth28 + heigth18  -10;
 		int heigth58 = heigth48 + heigth18;
 		int heigth68 = heigth48 + heigth28;
 		int heigth78 = heigth48 + heigth38;
@@ -139,7 +139,7 @@ public class Forest extends View {
 			mForestItems.add(new ForestItem(mBush, x3, y3, "Bush 1"));
 
 			int x4 = getMeasuredWidth() - 40 - getMeasuredWidth() / 4;
-			int y4 = getMeasuredHeight() - 20 - getMeasuredHeight() / 4;
+			int y4 = getMeasuredHeight() - 30 - getMeasuredHeight() / 4;
 			mForestItems.add(new ForestItem(mBush, x4, y4, "Bush 2"));
 
 			int x5 = getMeasuredWidth() - 40 - getMeasuredWidth() / 2;

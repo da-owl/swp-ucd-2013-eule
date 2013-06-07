@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.view.Forest;
+import com.example.swp_ucd_2013_eule.view.Level;
 
 public class ForestFragment extends Fragment {
 	private Handler mHandler;
@@ -26,8 +27,9 @@ public class ForestFragment extends Fragment {
 				false);
 
 		mForest = (Forest) rootView.findViewById(R.id.forest);
-		((TextView) rootView.findViewById(R.id.txtLevelNumber))
-		.setText("17");
+		((TextView) rootView.findViewById(R.id.txtLevelNumber)).setText("80");
+
+		((Level) rootView.findViewById(R.id.level)).setLevel(17);
 
 		// Test-Only Animation
 		mHandler = new Handler() {
