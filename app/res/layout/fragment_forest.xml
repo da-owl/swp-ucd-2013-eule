@@ -8,10 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$DummySectionFragment" >
 
-    <!--  TextView
+    <!--
+          TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" /-->
+        android:layout_height="wrap_content" /
+    -->
 
     <com.example.swp_ucd_2013_eule.view.Forest
         android:id="@+id/forest"
@@ -22,26 +24,39 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
-        <TextView
-            android:id="@+id/txtLevelNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center_vertical"
-            android:text="Big Text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="26dp" />
+    <TextView
+        android:id="@+id/txtLevelNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:text="Big Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="26sp" />
 
-        <TextView
-            android:id="@+id/txtLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/txtLevelNumber"
-            android:layout_alignParentRight="true"
-            android:gravity="center_vertical"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="16dp" />
+    <TextView
+        android:id="@+id/txtLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtLevelNumber"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:text="@string/fragment_forest_Level"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtLevel"
+        android:layout_alignBottom="@+id/txtLevel"
+        android:layout_toLeftOf="@+id/txtLevel"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:text="@string/fragment_forest_points"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16sp" />
 
 </RelativeLayout>

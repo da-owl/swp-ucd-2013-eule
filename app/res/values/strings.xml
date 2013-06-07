@@ -17,6 +17,8 @@
     <string name="MenuIconString_SocialView">Social</string>
     <string name="MenuIconString_MarketView">Market</string>
     <string name="drive_fuel_consumption">Verbrauch:</string>
+    <string name="fragment_forest_points">Punkte</string>
+    <string name="fragment_forest_Level">Level</string>
     
 
 </resources>

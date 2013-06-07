@@ -28,8 +28,6 @@ public class ForestFragment extends Fragment {
 		mForest = (Forest) rootView.findViewById(R.id.forest);
 		((TextView) rootView.findViewById(R.id.txtLevelNumber))
 		.setText("17");
-((TextView) rootView.findViewById(R.id.txtLevel))
-		.setText("Level:");
 
 		// Test-Only Animation
 		mHandler = new Handler() {
