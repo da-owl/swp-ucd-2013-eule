@@ -19,6 +19,12 @@
     <string name="drive_fuel_consumption">Verbrauch:</string>
     <string name="fragment_forest_points">Punkte</string>
     <string name="fragment_forest_Level">Level</string>
+    <string name="fragment_social_toplist_worldlist">Top 5 Weltweit</string>
+    <string name="fragment_social_toplist_locallist">Top 5 in Berlin</string>
+    
+    <string name="social_table_header_position">#</string>
+    <string name="social_table_header_name">Name</string>   
+    <string name="social_table_header_level">Level</string>
     
 
 </resources>

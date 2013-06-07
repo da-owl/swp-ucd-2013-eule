@@ -9,16 +9,45 @@
     tools:context=".MainActivity$DummySectionFragment" >
 
     <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/txt_social_toplist_local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/section_label"
-        android:layout_below="@+id/section_label"
-        android:text="Top-List-View" />
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="@string/fragment_social_toplist_locallist" />
+
+    <TextView
+        android:id="@+id/txt_social_toplist_world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/fragment_social_toplist_worldlist" />
+
+    <com.example.swp_ucd_2013_eule.view.SocialList
+        android:id="@+id/social_toplist_local"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/txt_social_toplist_local"
+        android:layout_below="@+id/txt_social_toplist_local"
+        android:orientation="horizontal"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical" >
+
+    </com.example.swp_ucd_2013_eule.view.SocialList>
+
+    <com.example.swp_ucd_2013_eule.view.SocialList
+        android:id="@+id/social_toplist_world"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/txt_social_toplist_local"
+        android:layout_alignLeft="@+id/txt_social_toplist_world"
+        android:layout_below="@+id/txt_social_toplist_world"
+        android:orientation="horizontal"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:showDividers="middle" >
+
+    </com.example.swp_ucd_2013_eule.view.SocialList>
 
 </RelativeLayout>

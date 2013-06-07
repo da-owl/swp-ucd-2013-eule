@@ -8,17 +8,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$DummySectionFragment" >
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/section_label"
-        android:layout_below="@+id/section_label"
-        android:text="Friend-List-View" />
+    <com.example.swp_ucd_2013_eule.view.SocialList
+        android:id="@+id/social_ListFriends"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical" />
 
 </RelativeLayout>

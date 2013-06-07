@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.swp_ucd_2013_eule.view.SocialRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/social_friend_row" >
+
+    <TextView
+        android:id="@+id/social_friend_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:gravity="left"
+        android:scrollHorizontally="false"
+        android:text="#"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="18sp"
+        android:width="36dp" android:maxWidth="36dp" android:minWidth="36dp" />
+
+    <TextView
+        android:id="@+id/social_friend_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center_vertical"
+        android:scrollHorizontally="false"
+        android:text="Name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/social_friend_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:gravity="right"
+        android:scrollHorizontally="false"
+        android:text="Level"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="18sp" />
+
+</com.example.swp_ucd_2013_eule.view.SocialRow>
