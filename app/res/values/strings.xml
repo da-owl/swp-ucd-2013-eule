@@ -26,5 +26,7 @@
     <string name="social_table_header_name">Name</string>   
     <string name="social_table_header_level">Level</string>
     
+    <string name="settings_activity">Einstellungen</string>
+    
 
 </resources>
