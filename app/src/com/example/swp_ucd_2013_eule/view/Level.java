@@ -18,8 +18,6 @@ public class Level extends View {
 	private Bitmap mLevelBitmap = BitmapFactory.decodeResource(getResources(),
 			R.drawable.ico_level);
 
-	private int mSize;
-	private Rect mSrcRect = new Rect(0, 0, 48, 48);
 	private Rect mDstRect = new Rect();
 	private Paint mTextPaint;
 	private Point mTextPos;
@@ -45,10 +43,12 @@ public class Level extends View {
 	}
 
 	private void updateDimensions() {
-		mTextPos = new Point(
-				mSize / 2,
-				(int) (mSize / 2 - ((mTextPaint.descent() + mTextPaint.ascent()) / 2)));
-		mDstRect.set(0, 0, mSize, mSize);
+		int width = getMeasuredWidth();
+		int height = getMeasuredHeight();
+		mTextPos = new Point(width / 2,
+				(int) (height / 2 - ((mTextPaint.descent() + mTextPaint
+						.ascent()) / 2)));
+		mDstRect.set(0, 0, width, height);
 	}
 
 	public void setLevel(int level) {
@@ -64,15 +64,15 @@ public class Level extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		canvas.drawBitmap(mLevelBitmap, mSrcRect, mDstRect, null);
+		canvas.drawBitmap(mLevelBitmap, null, mDstRect, null);
 		canvas.drawText(mLevel, mTextPos.x, mTextPos.y, mTextPaint);
 	}
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		mSize = dpToPx(32);
+		int size = dpToPx(32);
+		setMeasuredDimension(size, size);
 		updateDimensions();
-		setMeasuredDimension(mSize, mSize);
 	}
 }
