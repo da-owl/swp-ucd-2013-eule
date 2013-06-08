@@ -26,15 +26,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="22sp" />
 
-    <TextView
+    <ImageView
+        android:id="@+id/imgRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
         android:gravity="right"
         android:scrollHorizontally="false"
-        android:text="@string/social_table_header_level"
-        android:textAlignment="viewStart"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="22sp" />
+        android:src="@drawable/ico_ranking" />
 
 </TableRow>
