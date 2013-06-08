@@ -9,14 +9,6 @@
     tools:context=".MainActivity$DummySectionFragment" >
 
     <TextView
-        android:id="@+id/txt_social_toplist_local"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:text="@string/fragment_social_toplist_locallist" />
-
-    <TextView
         android:id="@+id/txt_social_toplist_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,8 +20,8 @@
         android:id="@+id/ScrollViewWorld"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_social_toplist_world"
-        android:layout_below="@+id/txt_social_toplist_world" >
+        android:layout_alignLeft="@id/txt_social_toplist_world"
+        android:layout_below="@id/txt_social_toplist_world" >
 
         <com.example.swp_ucd_2013_eule.view.SocialList
             android:id="@+id/social_toplist_world"
@@ -42,12 +34,21 @@
         </com.example.swp_ucd_2013_eule.view.SocialList>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/txt_social_toplist_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/ScrollViewWorld"
+        android:layout_below="@id/ScrollViewWorld"
+        android:layout_marginTop="20dp"
+        android:text="@string/fragment_social_toplist_locallist" />
+
     <ScrollView
         android:id="@+id/ScrollViewLocal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_social_toplist_local"
-        android:layout_below="@+id/txt_social_toplist_local" >
+        android:layout_alignLeft="@id/txt_social_toplist_local"
+        android:layout_below="@id/txt_social_toplist_local" >
 
         <com.example.swp_ucd_2013_eule.view.SocialList
             android:id="@+id/social_toplist_local"
