@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
+	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -139,6 +141,9 @@ public class MainActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.action_comm_test:
 			testCommunication();
+			break;
+		case R.id.action_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
 			break;
 		case R.id.DrivingView:
 		case R.id.ForestView:
