@@ -37,7 +37,7 @@ public class SocialList extends TableLayout {
 		removeAllViews();
 		TableRow header = (TableRow) mInflater.inflate(
 				R.layout.social_table_header, null);
-		addView(header, 0);
+		addView(header);
 
 		for (RowElement elem : mRows) {
 			// TableRow friendRow = (TableRow)
@@ -59,7 +59,9 @@ public class SocialList extends TableLayout {
 			position.setText(String.valueOf(playerPosition));
 			
 			friendRow.addRowElement(elem);
-			addView(friendRow, playerPosition);
+			TableRow divider = (TableRow)mInflater.inflate(R.layout.social_row_divider, null);
+			addView(divider);
+			addView(friendRow);
 
 		}
 

@@ -11,21 +11,20 @@
         android:gravity="left"
         android:scrollHorizontally="false"
         android:text="@string/social_table_header_position"
-        android:textAlignment="viewStart"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="26sp"
-        android:width="36dp" android:maxWidth="36dp" android:minWidth="36dp"/>
+        android:textSize="22sp"
+        android:width="20dp" android:maxWidth="20dp" android:minWidth="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:scrollHorizontally="false"
         android:text="@string/social_table_header_name"
         android:textAlignment="viewStart"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="26sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,6 +35,6 @@
         android:text="@string/social_table_header_level"
         android:textAlignment="viewStart"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="26sp" />
+        android:textSize="22sp" />
 
 </TableRow>
