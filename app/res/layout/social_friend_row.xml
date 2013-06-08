@@ -2,8 +2,8 @@
 <com.example.swp_ucd_2013_eule.view.SocialRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/social_friend_row"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_background" >
 
     <TextView
         android:id="@+id/social_friend_position"

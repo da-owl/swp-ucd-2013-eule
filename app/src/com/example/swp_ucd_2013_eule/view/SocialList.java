@@ -3,12 +3,15 @@ package com.example.swp_ucd_2013_eule.view;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.swp_ucd_2013_eule.OtherForestActivity;
 import com.example.swp_ucd_2013_eule.R;
 
 public class SocialList extends TableLayout {
@@ -44,6 +47,7 @@ public class SocialList extends TableLayout {
 			// rootView.findViewById(R.id.social_friend_row);
 			SocialRow friendRow = (SocialRow) mInflater.inflate(
 					R.layout.social_friend_row, null);
+
 			// set Name
 			TextView name = (TextView) friendRow
 					.findViewById(R.id.social_friend_name);
@@ -57,9 +61,25 @@ public class SocialList extends TableLayout {
 			TextView position = (TextView) friendRow
 					.findViewById(R.id.social_friend_position);
 			position.setText(String.valueOf(playerPosition));
-			
-			friendRow.addRowElement(elem);
-			TableRow divider = (TableRow)mInflater.inflate(R.layout.social_row_divider, null);
+
+			// friendRow.addRowElement(elem);
+			final String userName = elem.mUserName;
+
+			friendRow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// show other forest
+					Intent intent = new Intent(mContext,
+							OtherForestActivity.class);
+					intent.putExtra("userName", userName); // Optional
+															// parameters
+					mContext.startActivity(intent);
+
+				}
+			});
+
+			TableRow divider = (TableRow) mInflater.inflate(
+					R.layout.social_row_divider, null);
 			addView(divider);
 			addView(friendRow);
 
@@ -70,7 +90,6 @@ public class SocialList extends TableLayout {
 	public void addRow(int position, String userName, int level) {
 		mRows.add(new RowElement(position, userName, level));
 	}
-
 
 	public void updateUser(String userName, int level, int position) {
 		for (RowElement elem : mRows) {
