@@ -10,18 +10,67 @@
     tools:context=".MainActivity$DummySectionFragment" >
 
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/drive_lvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Drive-Points-View" />
-
+        android:layout_above="@+id/levelBar"
+        android:layout_marginBottom="32dp"
+        android:text="@string/fragment_drive_Level"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
+        android:id="@+id/txtLevelNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/drive_lvl"
+        android:text="LevelNow"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
     <com.example.swp_ucd_2013_eule.view.BenchmarkBar
         android:id="@+id/levelBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="35dp"
         app:weight="32"
         app:horizontal="true" />
-        
+    
+    <ImageView
+        android:id="@+id/drive_pts_stack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
+        android:maxHeight="32dp"
+        android:maxWidth="32dp"
+        android:src="@drawable/ico_points" />
+
+    <TextView
+        android:id="@+id/txtPointsStackNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/drive_pts_stack"
+        android:layout_toRightOf="@+id/drive_pts_stack"
+        android:text="PointsStack"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/txtPointsNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/levelBar"
+        android:layout_centerHorizontal="true"
+        android:text="PointsNow"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imgCombo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/levelBar"
+        android:layout_alignRight="@+id/levelBar"
+        android:src="@drawable/combo_x4" />
+    
 </RelativeLayout>

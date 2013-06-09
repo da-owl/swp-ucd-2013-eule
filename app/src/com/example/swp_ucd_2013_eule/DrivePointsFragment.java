@@ -5,6 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
 
@@ -16,17 +20,29 @@ public class DrivePointsFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_drive_points,
 				container, false);
-
 		
 		/*
 		TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 		dummyTextView.setText("...");
 		*/
 		
+		((TextView) rootView.findViewById(R.id.txtPointsNow))
+		.setText("60/100");
+		((TextView) rootView.findViewById(R.id.txtLevelNow))
+		.setText("17");
+		((TextView) rootView.findViewById(R.id.txtPointsStackNow))
+		.setText("80");
+		
 		mLevelBar = (BenchmarkBar) rootView.findViewById(R.id.levelBar);
 		mLevelBar.setReferenceValue(-1); // No Reference-Indicator
-
-		return rootView;
+		mLevelBar.setMax(100);
+		mLevelBar.setValue(60);
+		
+		final ImageView image = (ImageView)rootView.findViewById(R.id.imgCombo);
+	    final Animation animationFadeOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade);
+    	image.startAnimation(animationFadeOut);
+    	
+	    return rootView;
 	}
 
 	@Override
