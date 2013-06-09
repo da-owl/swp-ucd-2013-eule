@@ -133,8 +133,11 @@ public class BenchmarkBar extends View {
 		float strokeWidth = mBorderPaint.getStrokeWidth(), hStrokeWidth = strokeWidth / 2;
 
 		if (mVertical) {
-			float referenceHeight = mReferenceValue / mMax
-					* (barDimensions.height() - (2 * strokeWidth));
+			float referenceHeight = (barDimensions.height() - (2 * strokeWidth));
+			if (mReferenceValue >= 0) {
+				referenceHeight = mReferenceValue / mMax
+						* (barDimensions.height() - (2 * strokeWidth));
+			}
 			float currentHeight = mValue / mMax
 					* (barDimensions.height() - (2 * strokeWidth));
 
@@ -179,8 +182,11 @@ public class BenchmarkBar extends View {
 				mBadBarTop = mBadBarLeft = mBadBarRight = mBadBarBottom = 0;
 			}
 		} else {
-			float referenceWidth = mReferenceValue / mMax
-					* (barDimensions.width() - (2 * strokeWidth));
+			float referenceWidth = (barDimensions.width() - (2 * strokeWidth));
+			if (mReferenceValue >= 0) {
+				referenceWidth = mReferenceValue / mMax
+						* (barDimensions.width() - (2 * strokeWidth));
+			}
 			float currentWidth = mValue / mMax
 					* (barDimensions.width() - (2 * strokeWidth));
 
@@ -213,7 +219,7 @@ public class BenchmarkBar extends View {
 			mGoodBarLeft = barDimensions.left + strokeWidth;
 			mGoodBarBottom = barDimensions.bottom - strokeWidth;
 			mGoodBarTop = barDimensions.top + strokeWidth;
-			mGoodBarRight = barDimensions.left + goodWidth;
+			mGoodBarRight = barDimensions.left + strokeWidth + goodWidth;
 
 			// Bad-Rect
 			if (currentWidth > referenceWidth) {
@@ -234,17 +240,14 @@ public class BenchmarkBar extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		canvas.drawPath(mReferencePath, mReferencePaint);
+		// Reference Indicator
+		if (mReferenceValue >= 0) {
+			canvas.drawPath(mReferencePath, mReferencePaint);
+		}
 
 		// Border
 		canvas.drawRect(mBorderLeft, mBorderTop, mBorderRight, mBorderBottom,
 				mBorderPaint);
-
-		// Reference Indicator
-		/*
-		 * canvas.drawLine(mReferenceX1, mReferenceY1, mReferenceX2,
-		 * mReferenceY2, mBorderPaint);
-		 */
 
 		// Good-Rect
 		canvas.drawRect(mGoodBarLeft, mGoodBarTop, mGoodBarRight,
