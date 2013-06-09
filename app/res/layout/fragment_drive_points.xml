@@ -67,10 +67,11 @@
 
     <ImageView
         android:id="@+id/imgCombo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/levelBar"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/levelBar"
+        android:scaleType="fitEnd"
         android:src="@drawable/combo_x4" />
     
 </RelativeLayout>
