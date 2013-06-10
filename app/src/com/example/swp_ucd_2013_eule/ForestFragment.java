@@ -9,11 +9,16 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.view.Forest;
+import com.example.swp_ucd_2013_eule.view.Forest.ForestItem;
+import com.example.swp_ucd_2013_eule.view.Forest.ForestItemListener;
 import com.example.swp_ucd_2013_eule.view.Level;
+import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
 public class ForestFragment extends Fragment {
 	private Handler mHandler;
@@ -26,8 +31,25 @@ public class ForestFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_forest, container,
 				false);
 
+		final SlideUpContainer slideUpContainer = (SlideUpContainer) rootView
+				.findViewById(R.id.forestSlideUp);
+		Button btnClose = (Button) rootView.findViewById(R.id.btnSlideUpClose);
+
 		mForest = (Forest) rootView.findViewById(R.id.forest);
 		((TextView) rootView.findViewById(R.id.txtLevelNumber)).setText("80");
+
+		mForest.setForestItemListener(new ForestItemListener() {
+			@Override
+			public void onForestItemClicked(ForestItem item) {
+				slideUpContainer.slideOpen();
+			}
+		});
+		btnClose.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				slideUpContainer.slideClose();
+			}
+		});
 
 		((Level) rootView.findViewById(R.id.level)).setLevel(17);
 

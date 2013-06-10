@@ -39,6 +39,8 @@ public class Forest extends View {
 	private boolean mInitComplet;
 	private boolean mDown;
 
+	private ForestItemListener mForestItemListener;
+
 	public Forest(Context context) {
 		super(context);
 		initForest();
@@ -153,6 +155,11 @@ public class Forest extends View {
 		}
 
 	}
+	
+	public void setForestItemListener(ForestItemListener forestItemListener) {
+		this.mForestItemListener = forestItemListener;
+	}
+
 
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -180,7 +187,7 @@ public class Forest extends View {
 		updateForestSize();
 	}
 
-	private class ForestItem {
+	public class ForestItem {
 		private int mX;
 		private int mY;
 		private int mWidth;
@@ -254,8 +261,9 @@ public class Forest extends View {
 		} else if (event.getAction() == MotionEvent.ACTION_UP && mDown) {
 			for (ForestItem item : mForestItems) {
 				if (item.isClicked(x, y)) {
-					Toast.makeText(this.getContext(), item.getName(),
-							Toast.LENGTH_SHORT).show();
+					if (mForestItemListener != null) {
+						mForestItemListener.onForestItemClicked(item);
+					}
 					mDown = false;
 					return true;
 				}
@@ -267,5 +275,9 @@ public class Forest extends View {
 		mDown = false;
 		return false;
 
+	}
+
+	public interface ForestItemListener {
+		public void onForestItemClicked(ForestItem item);
 	}
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="actionBarTabBarBackgroundColor">#4178dc</color>
+    <color name="slideUpContainerBackgroundColor">#3d5a8e</color>
 </resources>
