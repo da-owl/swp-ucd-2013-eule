@@ -122,44 +122,48 @@ public class Forest extends View {
 
 	}
 
-	private void placeItemsInForest() {
+	public void placeItemsInForest() {
 		if (!mInitComplet) {
 			mForestItems = new ArrayList<ForestItem>();
 			int x = getMeasuredWidth() / 4;
 			int y = (getMeasuredHeight() / 4) / 2;
-			mForestItems.add(new ForestItem(mFir, x, y, "Fir 1"));
+			String text;
+			text = "Dies ist eine Fichte.\n Zum erlangen\n muss man mindestens\n das Level 5 erreicht haben.";
+			mForestItems.add(new ForestItem(mFir, x, y, "Fir 1", text, 2));
 
 			int x1 = getMeasuredWidth() - getMeasuredWidth() / 4;
 			int y1 = getMeasuredHeight() - getMeasuredHeight() / 2;
-			mForestItems.add(new ForestItem(mFir, x1, y1, "Fir 2"));
+			mForestItems.add(new ForestItem(mFir, x1, y1, "Fir 2", text, 2));
 
+			text = "Dies ist ein Laubbaum.\n Es ist ein Startgegenstand.";
 			int x2 = getMeasuredWidth() / 6;
 			int y2 = getMeasuredHeight() - getMeasuredHeight() / 4;
-			mForestItems.add(new ForestItem(mTree, x2, y2, "Tree 1"));
+			mForestItems.add(new ForestItem(mTree, x2, y2, "Tree 1", text, 1));
 
+			text = "Dies ist ein Busch.\n Es ist ein Startgegenstand.";
 			int x3 = getMeasuredWidth() / 6;
 			int y3 = getMeasuredHeight() - getMeasuredHeight() / 2;
-			mForestItems.add(new ForestItem(mBush, x3, y3, "Bush 1"));
+			mForestItems.add(new ForestItem(mBush, x3, y3, "Bush 1", text, 2));
 
 			int x4 = getMeasuredWidth() - 40 - getMeasuredWidth() / 4;
 			int y4 = getMeasuredHeight() - 30 - getMeasuredHeight() / 4;
-			mForestItems.add(new ForestItem(mBush, x4, y4, "Bush 2"));
+			mForestItems.add(new ForestItem(mBush, x4, y4, "Bush 2", text, 2));
 
 			int x5 = getMeasuredWidth() - 40 - getMeasuredWidth() / 2;
 			int y5 = (getMeasuredHeight() / 4) + 50;
 			RectF bounds = new RectF(x5 - 10, y5 - 20, x5 + 72 + 30,
 					y5 + 48 + 30);
+			text = "SPEZIALGEGENSTAND!\n Gordon.\n Dieser Gegenstand\n ist nicht zu kaufen!\n Man erlangt ihn für\n herrausragendes fahren!";
 			mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon", true,
-					bounds));
+					bounds, text, 1));
 			mInitComplet = true;
 		}
 
 	}
-	
+
 	public void setForestItemListener(ForestItemListener forestItemListener) {
 		this.mForestItemListener = forestItemListener;
 	}
-
 
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -196,19 +200,26 @@ public class Forest extends View {
 		private String mName;
 		private boolean mMovable;
 		private RectF mMovableArea;
+		private String mDescription;
+		private int mAmount;
 
-		ForestItem(Bitmap bitmap, int x, int y, String name) {
+		ForestItem(Bitmap bitmap, int x, int y, String name,
+				String description, int amount) {
 			mBitmap = bitmap;
 			mX = x;
 			mY = y;
 			mHeight = bitmap.getHeight();
 			mWidth = bitmap.getWidth();
 			mName = name;
+			mDescription = description;
+			mAmount = amount;
+
 		}
 
 		ForestItem(Bitmap bitmap, int x, int y, String name,
-				boolean isMoveable, RectF movingArea) {
-			this(bitmap, x, y, name);
+				boolean isMoveable, RectF movingArea, String description,
+				int amount) {
+			this(bitmap, x, y, name, description, amount);
 			mMovable = isMoveable;
 			mMovableArea = movingArea;
 		}
@@ -223,6 +234,14 @@ public class Forest extends View {
 
 		public int getYCoordinate() {
 			return mY;
+		}
+
+		public String getDescription() {
+			return mDescription;
+		}
+
+		public int getAmount() {
+			return mAmount;
 		}
 
 		public boolean isClicked(float x, float y) {

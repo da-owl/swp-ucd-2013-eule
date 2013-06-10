@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.view.Forest;
@@ -41,6 +42,19 @@ public class ForestFragment extends Fragment {
 		mForest.setForestItemListener(new ForestItemListener() {
 			@Override
 			public void onForestItemClicked(ForestItem item) {
+				// set label
+				TextView name = (TextView) slideUpContainer.findViewById(R.id.txt_label);
+				name.setText("Detailansicht "+item.getName());
+				// set description
+				TextView des = (TextView) slideUpContainer.findViewById(R.id.txt_details);
+				des.setText(item.getDescription());
+				// set Picture
+				ImageView pic = (ImageView) slideUpContainer.findViewById(R.id.imgItem);
+				pic.setImageBitmap(item.getBitmap());
+				// set amount
+				TextView amount = (TextView) slideUpContainer.findViewById(R.id.txt_amount);
+				amount.setText("Anzahl: "+item.getAmount());
+				
 				slideUpContainer.slideOpen();
 			}
 		});
