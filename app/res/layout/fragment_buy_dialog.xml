@@ -8,4 +8,10 @@
         android:id="@+id/random_dialog_id" android:text="Item Details" 
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
       
+    <Button
+     android:layout_height="wrap_content"
+     android:layout_width="wrap_content"
+     android:text="@string/fragment_buy_dialog_buyItem"
+     android:layout_marginLeft="210dp"/>
+    
 </LinearLayout>

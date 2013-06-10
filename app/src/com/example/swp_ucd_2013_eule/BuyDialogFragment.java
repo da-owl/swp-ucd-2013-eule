@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class BuyDialogFragment extends DialogFragment {
 
-    private EditText mEditText;
 
     public BuyDialogFragment() {
         // Empty constructor required for DialogFragment
@@ -29,6 +29,11 @@ public class BuyDialogFragment extends DialogFragment {
         Bundle bundle = new Bundle();
         dialog.setArguments(bundle);
         return dialog;
+    }
+    
+    public void buyItem(View view){
+    	// buy the item represented buy the current Dialogfragment
+    	//although currently isn't called
     }
 
 }
