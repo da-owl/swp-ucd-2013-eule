@@ -2,6 +2,7 @@ package com.example.swp_ucd_2013_eule;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +28,13 @@ public class MarketAnimalsFragment extends ListFragment {
 	  }
 
 	  @Override
+	  	// Method called when an item in the list is clicked. It opens up a dialogFragment
+		  // that will eventually detail the item further and provide a button that allows it
+		  // to be bought.
 	  public void onListItemClick(ListView l, View v, int position, long id) {
-	    // Open dialogfragment
-
+		  FragmentManager manager = getFragmentManager();
+	        BuyDialogFragment dialog = BuyDialogFragment.newInstance();
+	        dialog.show(manager, "testing, testing 123");
 	  }
 
 }
