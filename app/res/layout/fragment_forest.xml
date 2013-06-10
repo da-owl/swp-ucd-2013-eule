@@ -77,26 +77,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="16sp" />
 
-    <com.example.swp_ucd_2013_eule.view.SlideUpContainer
-        android:id="@+id/forestSlideUp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:background="@color/slideUpContainerBackgroundColor" >
-
-        <TextView
-            android:id="@+id/test_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TEST" />
-
-        <Button
-            android:id="@+id/btnSlideUpClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="X" />
-    </com.example.swp_ucd_2013_eule.view.SlideUpContainer>
+    <include layout="@layout/forest_item_slideup" />
 
 </RelativeLayout>
