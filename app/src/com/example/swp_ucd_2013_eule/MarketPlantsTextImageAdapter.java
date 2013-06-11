@@ -8,14 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-
-public class MarketImageAdapter extends BaseAdapter{
+public class MarketPlantsTextImageAdapter extends BaseAdapter{
 
 	private Context mContext;
-    public static final int ACTIVITY_CREATE = 10;
 
-	public  MarketImageAdapter(Context c) {
+	public  MarketPlantsTextImageAdapter(Context c) {
 	    mContext = c;
 	}
 
@@ -58,18 +55,15 @@ public class MarketImageAdapter extends BaseAdapter{
 
 
 	private Integer[] mThumbIds = {
-	        R.drawable.item_clothes, R.drawable.item_clothes,
-	        R.drawable.item_clothes, R.drawable.item_clothes,
-	        R.drawable.item_clothes, R.drawable.item_clothes,
-	        R.drawable.item_clothes, R.drawable.item_clothes,
-	        R.drawable.item_clothes, R.drawable.item_clothes,
+	        R.drawable.item_plants, R.drawable.item_plants,
+	        R.drawable.item_plants, R.drawable.item_plants,
+	        R.drawable.item_plants, R.drawable.item_plants,
 	};
 	
 	private String[] mNoPoints = {
 			"5 Points", "8 Points",
 			"15 Points", "17 Points",
 			"25 Points", "50 Points",
-			"45 Points", "100 Points",
-			"500 Points", "520 Points",
 	};
+	
 }

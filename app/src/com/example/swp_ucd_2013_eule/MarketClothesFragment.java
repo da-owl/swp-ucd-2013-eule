@@ -19,7 +19,7 @@ public class MarketClothesFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_market_grid,container,false);
         GridView gridView = (GridView) view.findViewById(R.id.fragment_market_clothes);
-        gridView.setAdapter(new MarketImageAdapter(view.getContext())); // uses the view to get the context instead of getActivity().
+        gridView.setAdapter(new MarketClothesTextImageAdapter(view.getContext())); // uses the view to get the context instead of getActivity().
         return view;
     }
 
