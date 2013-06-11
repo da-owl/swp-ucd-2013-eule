@@ -14,10 +14,10 @@ import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.R;
 
@@ -37,7 +37,6 @@ public class Forest extends View {
 			R.drawable.item_bush);
 	private ArrayList<ForestItem> mForestItems = new ArrayList<ForestItem>();
 	private boolean mInitComplet;
-	private boolean mDown;
 
 	private ForestItemListener mForestItemListener;
 
@@ -153,7 +152,7 @@ public class Forest extends View {
 			int y5 = (getMeasuredHeight() / 4) + 50;
 			RectF bounds = new RectF(x5 - 10, y5 - 20, x5 + 72 + 30,
 					y5 + 48 + 30);
-			text = "SPEZIALGEGENSTAND!\n Gordon.\n Dieser Gegenstand\n ist nicht zu kaufen!\n Man erlangt ihn für\n herrausragendes fahren!";
+			text = "SPEZIALGEGENSTAND!\n Gordon.\n Dieser Gegenstand\n ist nicht zu kaufen!\n Man erlangt ihn fï¿½r\n herrausragendes fahren!";
 			mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon", true,
 					bounds, text, 1));
 			mInitComplet = true;
@@ -270,30 +269,42 @@ public class Forest extends View {
 
 	}
 
+	long mLastTouchDown;
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		float x = event.getX(), y = event.getY();
+		boolean handled = false;
 
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			mDown = true;
-			return true;
-		} else if (event.getAction() == MotionEvent.ACTION_UP && mDown) {
-			for (ForestItem item : mForestItems) {
-				if (item.isClicked(x, y)) {
-					if (mForestItemListener != null) {
-						mForestItemListener.onForestItemClicked(item);
-					}
-					mDown = false;
-					return true;
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			handled = true;
+			mLastTouchDown = SystemClock.elapsedRealtime();
+			break;
+
+		case MotionEvent.ACTION_UP:
+			handled = true;
+			if (SystemClock.elapsedRealtime() - mLastTouchDown <= 500) {
+				resolveItemClick(event.getX(), event.getY());
+			}
+			break;
+
+		case MotionEvent.ACTION_CANCEL:
+		case MotionEvent.ACTION_OUTSIDE:
+			mLastTouchDown = 0;
+		}
+
+		return handled;
+	}
+
+	private void resolveItemClick(float x, float y) {
+		for (ForestItem item : mForestItems) {
+			if (item.isClicked(x, y)) {
+				if (mForestItemListener != null) {
+					mForestItemListener.onForestItemClicked(item);
+					return;
 				}
 			}
-		} else {
-			mDown = false;
-
 		}
-		mDown = false;
-		return false;
-
 	}
 
 	public interface ForestItemListener {
