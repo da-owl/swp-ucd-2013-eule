@@ -32,7 +32,6 @@ public class SlideUpContainer extends RelativeLayout {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		System.out.println(MeasureSpec.getSize(heightMeasureSpec) * 0.5);
 		heightMeasureSpec = MeasureSpec.makeMeasureSpec(
 				(int) (MeasureSpec.getSize(heightMeasureSpec) * 0.5),
 				MeasureSpec.getMode(heightMeasureSpec));

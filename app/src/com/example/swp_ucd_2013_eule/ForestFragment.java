@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.view.Forest;
-import com.example.swp_ucd_2013_eule.view.Forest.ForestItem;
 import com.example.swp_ucd_2013_eule.view.Forest.ForestItemListener;
 import com.example.swp_ucd_2013_eule.view.Level;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
@@ -50,7 +50,7 @@ public class ForestFragment extends Fragment {
 				des.setText(item.getDescription());
 				// set Picture
 				ImageView pic = (ImageView) slideUpContainer.findViewById(R.id.imgItem);
-				pic.setImageBitmap(item.getBitmap());
+				pic.setImageBitmap(item.getImage());
 				// set amount
 				TextView amount = (TextView) slideUpContainer.findViewById(R.id.txt_amount);
 				amount.setText("Anzahl: "+item.getAmount());
