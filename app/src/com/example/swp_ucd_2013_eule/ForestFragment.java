@@ -9,7 +9,9 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.KeyEvent;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,24 +39,29 @@ public class ForestFragment extends Fragment {
 		Button btnClose = (Button) rootView.findViewById(R.id.btnSlideUpClose);
 
 		mForest = (Forest) rootView.findViewById(R.id.forest);
+		mForest.setSlideUpContainer(slideUpContainer);
 		((TextView) rootView.findViewById(R.id.txtLevelNumber)).setText("80");
 
 		mForest.setForestItemListener(new ForestItemListener() {
 			@Override
 			public void onForestItemClicked(ForestItem item) {
 				// set label
-				TextView name = (TextView) slideUpContainer.findViewById(R.id.txt_label);
-				name.setText("Detailansicht "+item.getName());
+				TextView name = (TextView) slideUpContainer
+						.findViewById(R.id.txt_label);
+				name.setText("Detailansicht " + item.getName());
 				// set description
-				TextView des = (TextView) slideUpContainer.findViewById(R.id.txt_details);
+				TextView des = (TextView) slideUpContainer
+						.findViewById(R.id.txt_details);
 				des.setText(item.getDescription());
 				// set Picture
-				ImageView pic = (ImageView) slideUpContainer.findViewById(R.id.imgItem);
+				ImageView pic = (ImageView) slideUpContainer
+						.findViewById(R.id.imgItem);
 				pic.setImageBitmap(item.getImage());
 				// set amount
-				TextView amount = (TextView) slideUpContainer.findViewById(R.id.txt_amount);
-				amount.setText("Anzahl: "+item.getAmount());
-				
+				TextView amount = (TextView) slideUpContainer
+						.findViewById(R.id.txt_amount);
+				amount.setText("Anzahl: " + item.getAmount());
+
 				slideUpContainer.slideOpen();
 			}
 		});

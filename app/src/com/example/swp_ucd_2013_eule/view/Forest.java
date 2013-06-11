@@ -30,6 +30,7 @@ public class Forest extends View {
 	private HashMap<ForestItem, RectF> mMoveableItems = new HashMap<ForestItem, RectF>();
 	private boolean mInitComplet;
 	private Random mRand = new Random();
+	private SlideUpContainer mSlideUpContainer;
 
 	private ForestItemListener mForestItemListener;
 
@@ -41,7 +42,7 @@ public class Forest extends View {
 	public Forest(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initForest();
-	}
+	}	
 
 	private void initForest() {
 		mForestPaint = new Paint();
@@ -197,7 +198,9 @@ public class Forest extends View {
 		case MotionEvent.ACTION_UP:
 			handled = true;
 			if (SystemClock.elapsedRealtime() - mLastTouchDown <= 500) {
-				resolveItemClick(event.getX(), event.getY());
+				if(!resolveSliderClick(event.getX(), event.getY())){
+					resolveItemClick(event.getX(), event.getY());
+				}
 			}
 			break;
 
@@ -207,6 +210,22 @@ public class Forest extends View {
 		}
 
 		return handled;
+	}
+	
+	private boolean resolveSliderClick(float x, float y){
+		if(mSlideUpContainer.getVisibility()==android.view.View.VISIBLE){
+			//slider visible handling necessary
+			if(x >=mSlideUpContainer.getX() && x <= mSlideUpContainer.getX() + mSlideUpContainer.getWidth()
+					&& y >= mSlideUpContainer.getY() && y <= mSlideUpContainer.getY() + mSlideUpContainer.getHeight()){
+				return true;
+			//click was inside slider, no handling necessary
+			}else{
+			// click was outside slider, close slider
+				mSlideUpContainer.slideClose();
+			}
+		}
+		// Slider invisible no handling necessary
+		return false;
 	}
 
 	private void resolveItemClick(float x, float y) {
@@ -227,5 +246,9 @@ public class Forest extends View {
 
 	public interface ForestItemListener {
 		public void onForestItemClicked(ForestItem item);
+	}
+	
+	public void setSlideUpContainer(SlideUpContainer container){
+		mSlideUpContainer = container;
 	}
 }
