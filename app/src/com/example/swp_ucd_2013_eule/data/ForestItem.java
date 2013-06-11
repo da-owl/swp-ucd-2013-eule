@@ -52,7 +52,7 @@ public class ForestItem {
 
 		ForestItem tree = new ForestItem(ForestItemType.STANDARD, imgTree,
 				"Laubbaum",
-				"Dies ist ein Laubbaum.\nEs ist ein Startgegenstand.", 2);
+				"Dies ist ein Laubbaum.\nEs ist ein Startgegenstand.", 1);
 
 		ForestItem bush1 = new ForestItem(ForestItemType.STANDARD, imgBush,
 				"Busch", "Dies ist ein Busch.\nEr ist ein Startgegenstand.", 2);
@@ -64,8 +64,8 @@ public class ForestItem {
 				ForestItemType.SPECIAL,
 				imgFrog,
 				"Gordon der Frosch",
-				"SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn für\nherrausragendes Fahren!",
-				2);
+				"SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn fuer\nherrausragendes Fahren!",
+				1);
 
 		examples = new ForestItem[] { fir1, fir2, tree, bush1, bush2, gordon };
 		return examples;
