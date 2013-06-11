@@ -11,6 +11,8 @@
         android:id="@+id/txt_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="Detailansicht" />
 
     <Button
@@ -23,10 +25,12 @@
 
     <ImageView
         android:id="@+id/imgItem"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/btnSlideUpClose" />
+        android:layout_below="@+id/btnSlideUpClose"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp" />
 
     <TextView
         android:id="@+id/txt_details"
@@ -35,6 +39,7 @@
         android:layout_above="@+id/txt_amount"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btnSlideUpClose"
+        android:layout_marginRight="10dp"
         android:layout_toRightOf="@+id/imgItem"
         android:paddingLeft="10dp"
         android:text="Spezialgegenstand! \n BLALBALBALBALBA\n BLALBALBALBALBA" />
@@ -45,6 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="Anzahl im Besitz: 1" />
 
 </com.example.swp_ucd_2013_eule.view.SlideUpContainer>
