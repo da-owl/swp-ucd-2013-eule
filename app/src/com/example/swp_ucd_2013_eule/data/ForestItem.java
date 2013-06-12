@@ -71,7 +71,7 @@ public class ForestItem {
 		return examples;
 	}
 
-	ForestItem(ForestItemType type, Bitmap bitmap, String name,
+	public ForestItem(ForestItemType type, Bitmap bitmap, String name,
 			String description, int amount) {
 		mType = type;
 		setImage(bitmap);
