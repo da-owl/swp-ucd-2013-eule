@@ -85,6 +85,10 @@ public class ForestItem {
 
 		examples = new ForestItem[] { fir, tree, bush, gordon, flower, bird,
 				dress };
+
+		// call once, to update amounts
+		UserForestItem.getExamples(ctx);
+
 		return examples;
 	}
 

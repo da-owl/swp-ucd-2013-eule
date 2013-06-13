@@ -21,19 +21,19 @@ public class UserForestItem {
 
 	public static UserForestItem[] getExamples(Context ctx) {
 		if (examples != null) {
+			System.out.println("existing");
 			return examples;
 		}
+		System.out.println("create");
 
+		examples = new UserForestItem[6];
 		ForestItem[] availableItems = ForestItem.getExamples(ctx);
-		UserForestItem fir1 = new UserForestItem(availableItems[0]);
-		UserForestItem fir2 = new UserForestItem(availableItems[0]);
-		UserForestItem tree = new UserForestItem(availableItems[1]);
-		UserForestItem bush1 = new UserForestItem(availableItems[2]);
-		UserForestItem bush2 = new UserForestItem(availableItems[2]);
-		UserForestItem gordon = new UserForestItem(availableItems[3]);
-
-		examples = new UserForestItem[] { fir1, fir2, tree, bush1, bush2,
-				gordon };
+		examples[0] = new UserForestItem(availableItems[0]);
+		examples[1] = new UserForestItem(availableItems[0]);
+		examples[2] = new UserForestItem(availableItems[1]);
+		examples[3] = new UserForestItem(availableItems[2]);
+		examples[4] = new UserForestItem(availableItems[2]);
+		examples[5] = new UserForestItem(availableItems[3]);
 
 		for (UserForestItem item : examples) {
 			item.mItem.incAmount();
