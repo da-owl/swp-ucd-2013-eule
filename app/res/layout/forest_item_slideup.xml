@@ -55,4 +55,13 @@
         android:layout_marginTop="10dp"
         android:text="Anzahl im Besitz: 1" />
 
+    <Button
+        android:id="@+id/btnBuyItem"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/txt_details"
+        android:layout_below="@+id/txt_details"
+        android:text="@string/forest_item_slide_up_buy" />
+
 </com.example.swp_ucd_2013_eule.view.SlideUpContainer>

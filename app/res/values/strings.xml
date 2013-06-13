@@ -30,6 +30,7 @@
     
     <string name="settings_activity">Einstellungen</string>
     <string name="fragment_buy_dialog_buyItem">Buy</string>
+    <string name="forest_item_slide_up_buy">Kaufen</string>
     
 
 </resources>
