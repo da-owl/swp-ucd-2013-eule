@@ -1,11 +1,10 @@
 package com.example.swp_ucd_2013_eule.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
@@ -14,12 +13,13 @@ import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.swp_ucd_2013_eule.R;
+import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.data.UserForestItem;
 
 public class Forest extends View {
 	private static final int FOREST_ROUNDED_CORNER = 70;
@@ -27,16 +27,13 @@ public class Forest extends View {
 	private Path mForestPath;
 	private Paint mForestPaint;
 	private Paint mForestPaintBorder;
-	private Bitmap mTree = BitmapFactory.decodeResource(getResources(),
-			R.drawable.item_tree);
-	private Bitmap mFir = BitmapFactory.decodeResource(getResources(),
-			R.drawable.item_fir);
-	private Bitmap mFrog = BitmapFactory.decodeResource(getResources(),
-			R.drawable.item_gordan);
-	private Bitmap mBush = BitmapFactory.decodeResource(getResources(),
-			R.drawable.item_bush);
-	private ArrayList<ForestItem> mForestItems = new ArrayList<ForestItem>();
+	private ArrayList<UserForestItem> mForestItems = new ArrayList<UserForestItem>();
+	private HashMap<UserForestItem, RectF> mMoveableItems = new HashMap<UserForestItem, RectF>();
 	private boolean mInitComplet;
+	private Random mRand = new Random();
+	private SlideUpContainer mSlideUpContainer;
+
+	private UserForestItemListener mForestItemListener;
 
 	public Forest(Context context) {
 		super(context);
@@ -86,7 +83,7 @@ public class Forest extends View {
 		int heigth48 = heigth / 2;
 		int heigth28 = heigth48 / 2;
 		int heigth18 = heigth28 / 2;
-		int heigth38 = heigth28 + heigth18;
+		int heigth38 = heigth28 + heigth18 - 10;
 		int heigth58 = heigth48 + heigth18;
 		int heigth68 = heigth48 + heigth28;
 		int heigth78 = heigth48 + heigth38;
@@ -119,38 +116,43 @@ public class Forest extends View {
 
 	}
 
-	private void placeItemsInForest() {
+	public void placeItemsInForest() {
 		if (!mInitComplet) {
-			mForestItems = new ArrayList<ForestItem>();
-			int x = getMeasuredWidth() / 4;
-			int y = (getMeasuredHeight() / 4) / 2;
-			mForestItems.add(new ForestItem(mFir, x, y, "Fir 1"));
+			UserForestItem[] items = UserForestItem.getExamples(getContext());
 
-			int x1 = getMeasuredWidth() - getMeasuredWidth() / 4;
-			int y1 = getMeasuredHeight() - getMeasuredHeight() / 2;
-			mForestItems.add(new ForestItem(mFir, x1, y1, "Fir 2"));
+			items[0].setCoordinates(getMeasuredWidth() / 4,
+					(getMeasuredHeight() / 4) / 2);
+			items[1].setCoordinates(
+					getMeasuredWidth() - getMeasuredWidth() / 4,
+					getMeasuredHeight() - getMeasuredHeight() / 2);
+			items[2].setCoordinates(getMeasuredWidth() / 6, getMeasuredHeight()
+					- getMeasuredHeight() / 4);
+			items[3].setCoordinates(getMeasuredWidth() / 6, getMeasuredHeight()
+					- getMeasuredHeight() / 2);
+			items[4].setCoordinates(getMeasuredWidth() - 40
+					- getMeasuredWidth() / 4, getMeasuredHeight() - 30
+					- getMeasuredHeight() / 4);
+			items[5].setCoordinates(getMeasuredWidth() - 40
+					- getMeasuredWidth() / 2, (getMeasuredHeight() / 4) + 50);
 
-			int x2 = getMeasuredWidth() / 6;
-			int y2 = getMeasuredHeight() - getMeasuredHeight() / 4;
-			mForestItems.add(new ForestItem(mTree, x2, y2, "Tree 1"));
+			mForestItems = new ArrayList<UserForestItem>();
+			for (UserForestItem item : items) {
+				mForestItems.add(item);
+			}
 
-			int x3 = getMeasuredWidth() / 6;
-			int y3 = getMeasuredHeight() - getMeasuredHeight() / 2;
-			mForestItems.add(new ForestItem(mBush, x3, y3, "Bush 1"));
+			// frog gordon is moveable
+			UserForestItem gordon = items[5];
+			RectF bounds = new RectF(gordon.getX() - 10, gordon.getY() - 20,
+					gordon.getX() + 72 + 30, gordon.getY() + 48 + 30);
+			mMoveableItems.put(items[5], bounds);
 
-			int x4 = getMeasuredWidth() - 40 - getMeasuredWidth() / 4;
-			int y4 = getMeasuredHeight() - 20 - getMeasuredHeight() / 4;
-			mForestItems.add(new ForestItem(mBush, x4, y4, "Bush 2"));
-
-			int x5 = getMeasuredWidth() - 40 - getMeasuredWidth() / 2;
-			int y5 = (getMeasuredHeight() / 4) + 50;
-			RectF bounds = new RectF(x5 - 10, y5 - 20, x5 + 72 + 30,
-					y5 + 48 + 30);
-			mForestItems.add(new ForestItem(mFrog, x5, y5, "Gordon", true,
-					bounds));
 			mInitComplet = true;
 		}
 
+	}
+
+	public void setForestItemListener(UserForestItemListener forestItemListener) {
+		this.mForestItemListener = forestItemListener;
 	}
 
 	@Override
@@ -159,17 +161,21 @@ public class Forest extends View {
 		canvas.drawPath(mForestPath, mForestPaint);
 		canvas.drawPath(mForestPath, mForestPaintBorder);
 		placeItemsInForest();
-		for (ForestItem item : mForestItems) {
-			canvas.drawBitmap(item.getBitmap(), item.getXCoordinate(),
-					item.getYCoordinate(), null);
+		for (UserForestItem item : mForestItems) {
+			canvas.drawBitmap(item.getForestItem().getImage(), item.getX(),
+					item.getY(), null);
 		}
 
 	}
 
 	public void moveItems() {
-		for (ForestItem item : mForestItems) {
-			item.move();
+		for (UserForestItem item : mMoveableItems.keySet()) {
+			RectF bounds = mMoveableItems.get(item);
+			int x = (int) (mRand.nextInt((int) (bounds.right - bounds.left)) + bounds.left);
+			int y = (int) (mRand.nextInt((int) (bounds.bottom - bounds.top)) + bounds.top);
+			item.setCoordinates(x, y);
 		}
+		invalidate();
 	}
 
 	@Override
@@ -179,84 +185,77 @@ public class Forest extends View {
 		updateForestSize();
 	}
 
-	private class ForestItem {
-		private int mX;
-		private int mY;
-		private int mWidth;
-		private int mHeight;
-		private Bitmap mBitmap;
-		private String mName;
-		private boolean mMovable;
-		private RectF mMovableArea;
-
-		ForestItem(Bitmap bitmap, int x, int y, String name) {
-			mBitmap = bitmap;
-			mX = x;
-			mY = y;
-			mHeight = bitmap.getHeight();
-			mWidth = bitmap.getWidth();
-			mName = name;
-		}
-
-		ForestItem(Bitmap bitmap, int x, int y, String name,
-				boolean isMoveable, RectF movingArea) {
-			this(bitmap, x, y, name);
-			mMovable = isMoveable;
-			mMovableArea = movingArea;
-		}
-
-		public Bitmap getBitmap() {
-			return mBitmap;
-		}
-
-		public int getXCoordinate() {
-			return mX;
-		}
-
-		public int getYCoordinate() {
-			return mY;
-		}
-
-		public boolean isClicked(float x, float y) {
-			if (mX <= x && x <= mX + mWidth) {
-				if (mY <= y && y <= mY + mHeight) {
-					return true;
-				}
-			}
-			return false;
-		}
-
-		public String getName() {
-			return mName;
-		}
-
-		public void move() {
-			Random r = new Random();
-			if (mMovable) {
-				mX = (int) (r.nextInt((int) mMovableArea.right
-						- (int) mMovableArea.left) + mMovableArea.left);
-				mY = (int) (r.nextInt((int) mMovableArea.bottom
-						- (int) mMovableArea.top) + mMovableArea.top);
-				invalidate();
-			}
-		}
-
-	}
+	long mLastTouchDown;
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		float x = event.getX(), y = event.getY();
+		boolean handled = false;
 
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			for (ForestItem item : mForestItems) {
-				if (item.isClicked(x, y)) {
-					Toast.makeText(this.getContext(), item.getName(),
-							Toast.LENGTH_SHORT).show();
-					return true;
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			handled = true;
+			mLastTouchDown = SystemClock.elapsedRealtime();
+			break;
+
+		case MotionEvent.ACTION_UP:
+			handled = true;
+			if (SystemClock.elapsedRealtime() - mLastTouchDown <= 500) {
+				if (!resolveSliderClick(event.getX(), event.getY())) {
+					resolveItemClick(event.getX(), event.getY());
 				}
 			}
+			break;
+
+		case MotionEvent.ACTION_CANCEL:
+		case MotionEvent.ACTION_OUTSIDE:
+			mLastTouchDown = 0;
 		}
+
+		return handled;
+	}
+
+	private boolean resolveSliderClick(float x, float y) {
+		if (mSlideUpContainer.getVisibility() == android.view.View.VISIBLE) {
+			// slider visible handling necessary
+			if (x >= mSlideUpContainer.getX()
+					&& x <= mSlideUpContainer.getX()
+							+ mSlideUpContainer.getWidth()
+					&& y >= mSlideUpContainer.getY()
+					&& y <= mSlideUpContainer.getY()
+							+ mSlideUpContainer.getHeight()) {
+				return true;
+				// click was inside slider, no handling necessary
+			} else {
+				// click was outside slider, close slider
+				mSlideUpContainer.slideClose();
+			}
+		}
+		// Slider invisible no handling necessary
 		return false;
 	}
 
+	private void resolveItemClick(float x, float y) {
+		for (UserForestItem item : mForestItems) {
+			if (isItemClicked(item, x, y)) {
+				if (mForestItemListener != null) {
+					mForestItemListener.onForestItemClicked(item);
+					return;
+				}
+			}
+		}
+	}
+
+	private boolean isItemClicked(UserForestItem i, float x, float y) {
+		ForestItem item = i.getForestItem();
+		return x >= i.getX() && x <= i.getX() + item.getImageWidth()
+				&& y >= i.getY() && y <= i.getY() + item.getImageHeight();
+	}
+
+	public interface UserForestItemListener {
+		public void onForestItemClicked(UserForestItem item);
+	}
+
+	public void setSlideUpContainer(SlideUpContainer container) {
+		mSlideUpContainer = container;
+	}
 }

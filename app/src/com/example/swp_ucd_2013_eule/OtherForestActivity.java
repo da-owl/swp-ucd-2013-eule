@@ -3,14 +3,12 @@ package com.example.swp_ucd_2013_eule;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,27 +20,28 @@ import com.example.swp_ucd_2013_eule.view.Forest.UserForestItemListener;
 import com.example.swp_ucd_2013_eule.view.Level;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
-public class ForestFragment extends Fragment {
+public class OtherForestActivity extends Activity {
 	private Handler mHandler;
-	private Timer mTimer;
 	private Forest mForest;
+	private Timer mTimer;
+
 	private SlideUpContainer mSlideUpContainer;
 	private ForestItem mCurItem;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_forest, container,
-				false);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_other_forest);
+
+		TextView userName = ((TextView) findViewById(R.id.txt_other_forest_name));
+		userName.setText(getIntent().getStringExtra("userName") + "'s forest");
+
+		mForest = (Forest) findViewById(R.id.forest);
 
 		// XXX Duplicate code (see MarketCategoryFragment) --> outsource
-		mSlideUpContainer = (SlideUpContainer) rootView
-				.findViewById(R.id.forestSlideUp);
-		Button btnClose = (Button) rootView.findViewById(R.id.btnSlideUpClose);
-
-		mForest = (Forest) rootView.findViewById(R.id.forest);
+		mSlideUpContainer = (SlideUpContainer) findViewById(R.id.forestSlideUp);
 		mForest.setSlideUpContainer(mSlideUpContainer);
-		((TextView) rootView.findViewById(R.id.txtLevelNumber)).setText("80");
+		Button btnClose = (Button) findViewById(R.id.btnSlideUpClose);
 
 		mForest.setForestItemListener(new UserForestItemListener() {
 			@Override
@@ -52,6 +51,7 @@ public class ForestFragment extends Fragment {
 				mSlideUpContainer.slideOpen();
 			}
 		});
+
 		btnClose.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -59,7 +59,7 @@ public class ForestFragment extends Fragment {
 			}
 		});
 
-		Button btnBuy = (Button) rootView.findViewById(R.id.btnBuyItem);
+		Button btnBuy = (Button) findViewById(R.id.btnBuyItem);
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -68,7 +68,9 @@ public class ForestFragment extends Fragment {
 			}
 		});
 
-		((Level) rootView.findViewById(R.id.level)).setLevel(17);
+		((TextView) findViewById(R.id.txtLevelNumber)).setText("80");
+
+		((Level) findViewById(R.id.level)).setLevel(17);
 
 		// Test-Only Animation
 		mHandler = new Handler() {
@@ -85,13 +87,6 @@ public class ForestFragment extends Fragment {
 			}
 		}, 0, 2000);
 
-		return rootView;
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		mTimer.cancel();
 	}
 
 	// XXX Duplicate code (see MarketCategoryFragment) --> outsource

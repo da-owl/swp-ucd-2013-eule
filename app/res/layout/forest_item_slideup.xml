@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.swp_ucd_2013_eule.view.SlideUpContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/forestSlideUp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:background="@color/slideUpContainerBackgroundColor"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Detailansicht" />
+
+    <Button
+        android:id="@+id/btnSlideUpClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="X" />
+
+    <ImageView
+        android:id="@+id/imgItem"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnSlideUpClose"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp" />
+
+    <TextView
+        android:id="@+id/txt_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txt_amount"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnSlideUpClose"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/imgItem"
+        android:paddingLeft="10dp"
+        android:text="Spezialgegenstand! \n BLALBALBALBALBA\n BLALBALBALBALBA" />
+
+    <TextView
+        android:id="@+id/txt_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Anzahl im Besitz: 1" />
+
+    <Button
+        android:id="@+id/btnBuyItem"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/txt_details"
+        android:layout_below="@+id/txt_details"
+        android:text="@string/forest_item_slide_up_buy" />
+
+</com.example.swp_ucd_2013_eule.view.SlideUpContainer>

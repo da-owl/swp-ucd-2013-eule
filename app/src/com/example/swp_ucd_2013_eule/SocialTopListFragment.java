@@ -1,5 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
+import com.example.swp_ucd_2013_eule.view.SocialList;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,18 +9,37 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class SocialTopListFragment extends Fragment {
-
+	
+	private SocialList mWorldList;
+	private SocialList mLocalList;
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_social_top_list,
 				container, false);
 
-		/*
-		TextView dummyTextView = (TextView) rootView
-				.findViewById(R.id.section_label);
-		dummyTextView.setText("...");
-		*/
+		mWorldList = (SocialList) rootView.findViewById(R.id.social_toplist_world);
+		
+		mWorldList.addRow(1, "Ronald", 60);
+		mWorldList.addRow(2, "Anakin", 45);
+		mWorldList.addRow(3, "Owl", 30);
+		mWorldList.addRow(4, "XXX_MEGABOY_XXX", 26);
+		mWorldList.addRow(5, "Badass", 24);
+		
+		
+		
+		mLocalList = (SocialList) rootView.findViewById(R.id.social_toplist_local);
+		
+		mLocalList.addRow(1, "Marc", 20);
+		mLocalList.addRow(2, "Manu", 15);
+		mLocalList.addRow(3, "Erik", 13);
+		mLocalList.addRow(4, "Konrad", 11);
+		mLocalList.addRow(5, "Sammy", 10);
+		
+		mWorldList.drawList();
+		mLocalList.drawList();
 
 		return rootView;
 	}
