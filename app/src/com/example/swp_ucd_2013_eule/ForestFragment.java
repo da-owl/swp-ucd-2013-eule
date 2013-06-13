@@ -9,17 +9,16 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.KeyEvent;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.data.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.Forest;
-import com.example.swp_ucd_2013_eule.view.Forest.ForestItemListener;
+import com.example.swp_ucd_2013_eule.view.Forest.UserForestItemListener;
 import com.example.swp_ucd_2013_eule.view.Level;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
@@ -42,25 +41,27 @@ public class ForestFragment extends Fragment {
 		mForest.setSlideUpContainer(slideUpContainer);
 		((TextView) rootView.findViewById(R.id.txtLevelNumber)).setText("80");
 
-		mForest.setForestItemListener(new ForestItemListener() {
+		mForest.setForestItemListener(new UserForestItemListener() {
 			@Override
-			public void onForestItemClicked(ForestItem item) {
+			public void onForestItemClicked(UserForestItem item) {
+				ForestItem fItem = item.getForestItem();
+
 				// set label
 				TextView name = (TextView) slideUpContainer
 						.findViewById(R.id.txt_label);
-				name.setText("Detailansicht " + item.getName());
+				name.setText("Detailansicht " + fItem.getName());
 				// set description
 				TextView des = (TextView) slideUpContainer
 						.findViewById(R.id.txt_details);
-				des.setText(item.getDescription());
+				des.setText(fItem.getDescription());
 				// set Picture
 				ImageView pic = (ImageView) slideUpContainer
 						.findViewById(R.id.imgItem);
-				pic.setImageBitmap(item.getImage());
+				pic.setImageBitmap(fItem.getImage());
 				// set amount
 				TextView amount = (TextView) slideUpContainer
 						.findViewById(R.id.txt_amount);
-				amount.setText("Anzahl: " + item.getAmount());
+				amount.setText("Anzahl: " + fItem.getAmount());
 
 				slideUpContainer.slideOpen();
 			}

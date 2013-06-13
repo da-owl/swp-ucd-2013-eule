@@ -8,16 +8,14 @@ import android.graphics.BitmapFactory;
 import com.example.swp_ucd_2013_eule.R;
 
 public class ForestItem {
-	private int mX;
-	private int mY;
 	private Bitmap mImage;
 	private int mImageWidth;
 	private int mImageHeight;
 	private String mName;
 	private String mDescription;
-	private int mAmount;
 	private int mPrice;
 	private ForestItemType mType;
+	private int mAmount;
 
 	private static ForestItem[] examples;
 
@@ -35,62 +33,67 @@ public class ForestItem {
 		Bitmap imgFrog = BitmapFactory
 				.decodeResource(r, R.drawable.item_gordan);
 		Bitmap imgBush = BitmapFactory.decodeResource(r, R.drawable.item_bush);
+		Bitmap imgPlants = BitmapFactory.decodeResource(r,
+				R.drawable.item_plants);
+		Bitmap imgAnimals = BitmapFactory.decodeResource(r,
+				R.drawable.item_animals);
+		Bitmap imgClothes = BitmapFactory.decodeResource(r,
+				R.drawable.item_clothes);
 
-		ForestItem fir1 = new ForestItem(
+		ForestItem fir = new ForestItem(
 				ForestItemType.STANDARD,
 				imgFir,
 				"Fichte",
-				"Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\ndas Level 5 erreicht haben.",
-				2);
-
-		ForestItem fir2 = new ForestItem(
-				ForestItemType.STANDARD,
-				imgFir,
-				"Fichte",
-				"Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\ndas Level 5 erreicht haben.",
-				2);
+				"Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\ndas Level 5 erreicht haben.");
+		fir.setPrice(10);
 
 		ForestItem tree = new ForestItem(ForestItemType.STANDARD, imgTree,
 				"Laubbaum",
-				"Dies ist ein Laubbaum.\nEs ist ein Startgegenstand.", 1);
+				"Dies ist ein Laubbaum.\nEs ist ein Startgegenstand.");
+		tree.setPrice(15);
 
-		ForestItem bush1 = new ForestItem(ForestItemType.STANDARD, imgBush,
-				"Busch", "Dies ist ein Busch.\nEr ist ein Startgegenstand.", 2);
-
-		ForestItem bush2 = new ForestItem(ForestItemType.STANDARD, imgBush,
-				"Busch", "Dies ist ein Busch.\nEr ist ein Startgegenstand.", 2);
+		ForestItem bush = new ForestItem(ForestItemType.STANDARD, imgBush,
+				"Busch", "Dies ist ein Busch.\nEr ist ein Startgegenstand.");
+		bush.setPrice(15);
 
 		ForestItem gordon = new ForestItem(
 				ForestItemType.SPECIAL,
 				imgFrog,
 				"Gordon der Frosch",
-				"SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn fuer\nherrausragendes Fahren!",
-				1);
+				"SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn fuer\nherrausragendes Fahren!");
 
-		examples = new ForestItem[] { fir1, fir2, tree, bush1, bush2, gordon };
+		ForestItem flower = new ForestItem(
+				ForestItemType.STANDARD,
+				imgPlants,
+				"Blume",
+				"Dies ist eine Tuple.\nZum Erlangen\nmuss man mindestens\ndas Level 15 erreicht haben.");
+		flower.setPrice(20);
+
+		ForestItem bird = new ForestItem(
+				ForestItemType.STANDARD,
+				imgAnimals,
+				"Vogel",
+				"Dies ist ein Vogel.\nZum Erlangen\nmuss man mindestens\ndas Level 15 erreicht haben.");
+		bird.setPrice(20);
+
+		ForestItem dress = new ForestItem(
+				ForestItemType.STANDARD,
+				imgClothes,
+				"Kleid",
+				"Dies ist ein Kleid.\nZum Erlangen\nmuss man mindestens\ndas Level 15 erreicht haben.");
+		dress.setPrice(35);
+
+		examples = new ForestItem[] { fir, tree, bush, gordon, flower, bird,
+				dress };
 		return examples;
 	}
 
 	public ForestItem(ForestItemType type, Bitmap bitmap, String name,
-			String description, int amount) {
+			String description) {
 		mType = type;
 		setImage(bitmap);
 		setName(name);
 		setDescription(description);
-		setAmount(amount);
-	}
-
-	public int getX() {
-		return mX;
-	}
-
-	public int getY() {
-		return mY;
-	}
-
-	public void setCoordinates(int x, int y) {
-		this.mX = x;
-		this.mY = y;
 	}
 
 	public Bitmap getImage() {
@@ -119,14 +122,6 @@ public class ForestItem {
 		this.mDescription = description;
 	}
 
-	public int getAmount() {
-		return mAmount;
-	}
-
-	public void setAmount(int amount) {
-		this.mAmount = amount;
-	}
-
 	public int getPrice() {
 		return mPrice;
 	}
@@ -149,6 +144,18 @@ public class ForestItem {
 
 	public int getImageWidth() {
 		return mImageWidth;
+	}
+
+	public int getAmount() {
+		return mAmount;
+	}
+
+	public void setAmount(int amount) {
+		this.mAmount = amount;
+	}
+
+	public void incAmount() {
+		this.mAmount++;
 	}
 
 }
