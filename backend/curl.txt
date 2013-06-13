@@ -1,1 +1,29 @@
-curl --data '{ "username": "tester1", "password": "test", "email": "tester@test.de"}' http://localhost:8080/register | python -mjson.tool
+"""
+general ideas for futher testing
+"""
+curl -X POST -d @filename http://example.com/path/to/resource --header "Content-Type:application/json"
+
+"""
+testing forests
+"""
+curl -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/ | python3 -mjson.tool
+
+curl -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/?level=2 | python3 -mjson.tool
+
+curl -X PUT -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" -H "Content-Type: application/json" --data '{ "points": "10", "level" : 2, "user" : 2}' http://localhost:8080/forests/1/ | python -mjson.tool
+
+curl -X PUT -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" -H "Content-Type: application/json" --data '{ "points": "10", "level" : 2, "user" : 2}' http://localhost:8080/forests/1/friends/ | python -mjson.tool
+
+"""
+testing users endpoint
+"""
+curl --data '{ "username": "tester2", "password": "test", "email": "tester@test.de"}' http://localhost:8080/register | python -mjson.tool
+
+curl -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/users/ | python3 -mjson.tool
+
+curl -X PUT -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" -H "Content-Type: application/json" --data '{ "username": "tester1", "password": "test_changed", "email": "tester@test.de"}' http://localhost:8080/users/1/ | python -mjson.tool
+
+
+
+
+

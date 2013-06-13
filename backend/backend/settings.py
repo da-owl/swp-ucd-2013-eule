@@ -35,6 +35,9 @@ TIME_ZONE = 'Europe/Berlin'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'de-DE'
 
+# http://localhost/users and http://localhost/users are equivalent / both handled
+APPEND_SLASH = False
+
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
@@ -168,5 +171,6 @@ REST_FRAMEWORK = {
     'PAGINATE_BY': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
 }

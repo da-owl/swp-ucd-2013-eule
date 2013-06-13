@@ -246,6 +246,7 @@ class GenericAPIView(views.APIView):
         queryset lookups.  Eg if objects are referenced using multiple
         keyword arguments in the url conf.
         """
+
         # Determine the base queryset to use.
         if queryset is None:
             queryset = self.filter_queryset(self.get_queryset())
@@ -280,7 +281,7 @@ class GenericAPIView(views.APIView):
                 'attribute on the view correctly.' %
                 (self.__class__.__name__, self.lookup_field)
             )
-
+        print(queryset)
         obj = get_object_or_404(queryset, **filter_kwargs)
 
         # May raise a permission denied

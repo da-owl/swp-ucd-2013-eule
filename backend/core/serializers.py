@@ -1,17 +1,22 @@
 from django.contrib.auth.models import User
-from core.models import Forest
-from core.models import Item
+from core.models import Forest, Item, Stat
 from rest_framework import serializers
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('id', 'url', 'username', 'email', 'groups')
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ('name', 'description')
+        fields = ('id', 'name', 'description')
+
+class StatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stat
+        fields = ('id', 'level', 'points')
+        ordering = ['timestamp']
 
 
 class ForestFriendSerializer(serializers.ModelSerializer):
@@ -20,15 +25,17 @@ class ForestFriendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Forest
-        fields = ('user', 'level', 'points', 'friends', 'items')
+        fields = ('id', 'user', 'level', 'points')
         depth = 1
 
 class ForestSerializer(serializers.ModelSerializer):
     friends = ForestFriendSerializer()
-    items = ItemSerializer()
-    user = UserSerializer()
+    # items = ItemSerializer()
+    # user = UserSerializer()
+    user = serializers.PrimaryKeyRelatedField()
 
     class Meta:
         model = Forest
-        fields = ('user', 'level', 'points', 'friends', 'items')
+        fields = ('id', 'user', 'level', 'points')
         depth = 1
+        ordering = ['points']

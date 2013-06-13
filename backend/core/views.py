@@ -70,11 +70,14 @@ def register(request):
 
         # Create user
         user = User.objects.create_user(username=username, email=email, password=password)
+        forest = Forest(user=user, level=1, points=0)
+        forest.save()
         token = Token.objects.get_or_create(user=user)
     except ValueError as e:
         return json_response(None, 500, e.args[0])
-    except IntegrityError:
+    except IntegrityError as e:
         return json_response(None, 500, 'Username already exits!')
+        # return json_response(None, 500, e.args[0])
     return json_response(token, 201, 'Created')
 
 # """
@@ -107,3 +110,5 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
