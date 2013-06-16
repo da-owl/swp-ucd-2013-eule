@@ -109,11 +109,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/imgFuelConsumptionNow"
+        android:layout_alignRight="@+id/gearIndicator"
         android:layout_alignTop="@id/imgFuelConsumptionNow"
         android:layout_centerVertical="false"
         android:layout_toRightOf="@+id/imgFuelConsumptionNow"
         android:gravity="center_vertical"
-        android:text="Medium Text"
+        android:text="-,- l/100km"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -121,6 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/imgFuelConsumptionCurrentTrip"
+        android:layout_alignRight="@+id/txtFuelConsumptionNow"
         android:layout_alignTop="@id/imgFuelConsumptionCurrentTrip"
         android:layout_toRightOf="@id/imgFuelConsumptionAll"
         android:gravity="center_vertical"
@@ -132,6 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/imgFuelConsumptionAll"
+        android:layout_alignRight="@+id/txtFuelConsumptionCurrentTrip"
         android:layout_alignTop="@id/imgFuelConsumptionAll"
         android:layout_toRightOf="@id/imgFuelConsumptionAll"
         android:gravity="center_vertical"

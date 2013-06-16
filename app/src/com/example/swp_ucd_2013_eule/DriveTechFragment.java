@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.swp_ucd_2013_eule.car_data.CarData;
+import com.example.swp_ucd_2013_eule.car_data.CarDataListener;
 import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
 import com.example.swp_ucd_2013_eule.view.GearIndicator;
 
-public class DriveTechFragment extends Fragment {
+public class DriveTechFragment extends Fragment implements CarDataListener{
 	private Handler mHandler;
 	private Timer mTimer;
 
@@ -28,14 +30,17 @@ public class DriveTechFragment extends Fragment {
 	private int mTestGas = 60;
 	private int mTestBreak = 20;
 
+	private TextView mFuelConsumptionNow;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_drive_tech,
 				container, false);
 
-		((TextView) rootView.findViewById(R.id.txtFuelConsumptionNow))
-				.setText("7,5 l/100km");
+		mFuelConsumptionNow = (TextView) rootView.findViewById(R.id.txtFuelConsumptionNow);
+		//((TextView) rootView.findViewById(R.id.txtFuelConsumptionNow))
+		//		.setText("7,5 l/100km");
 		((TextView) rootView.findViewById(R.id.txtFuelConsumptionCurrentTrip))
 				.setText("4,3 l/100km");
 		((TextView) rootView.findViewById(R.id.txtFuelConsumptionAll))
@@ -51,7 +56,10 @@ public class DriveTechFragment extends Fragment {
 		mBreakBar.setValue(mTestBreak);
 		mBreakBar.setMax(45);
 		mBreakBar.setReferenceValue(40);
-
+		
+		CarData.getInstance().subscribeListener(this, "InstantaneousValuePerMilage");
+		CarData.getInstance().subscribeListener(this, "InstantaneousValuePerTime");
+		
 		// Test-Only Animation
 		mHandler = new Handler() {
 
@@ -98,5 +106,19 @@ public class DriveTechFragment extends Fragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 		mTimer.cancel();
+	}
+
+	
+	
+	@Override
+	public void handleCarData(String name, String value) {
+		if(name.equals("InstantaneousValuePerMilage")){
+			System.out.println(value);
+			mFuelConsumptionNow.setText(value+" l/100km");
+		}
+		if(name.equals("InstantaneousValuePerTime")){
+			mFuelConsumptionNow.setText(value+" l/hour");
+		}
+		
 	}
 }

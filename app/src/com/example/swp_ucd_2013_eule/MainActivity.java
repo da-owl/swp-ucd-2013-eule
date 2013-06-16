@@ -1,5 +1,6 @@
 package com.example.swp_ucd_2013_eule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,13 +20,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.swp_ucd_2013_eule.car_data.CarData;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
-	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -56,7 +57,24 @@ public class MainActivity extends FragmentActivity implements
 		addActionTabMapping(new ForestPagerAdapter(R.id.ForestView, fm));
 		addActionTabMapping(new SocialPagerAdapter(R.id.SocialView, fm));
 		addActionTabMapping(new MarketPagerAdapter(R.id.MarketView, fm));
+		startEXLAPListener();
 
+	}
+
+	private void startEXLAPListener() {
+		ArrayList<String> data = new ArrayList<String>();
+		data.add("VehicleSpeed");
+		data.add("TypeOfDrive");
+		data.add("TripOdometer");
+		data.add("RecommendedGear");
+		data.add("PowerOutput");
+		data.add("Odometer");
+		data.add("LongitudinalAcceleration");
+		data.add("LateralAcceleration");
+		data.add("FuelConsumption");
+		data.add("EngineSpeed");
+		data.add("CurrentGear");
+		CarData.getInstance().startService("socket://192.168.0.40:28500", data);
 	}
 
 	private void addActionTabMapping(PagerAdapter adapter) {
