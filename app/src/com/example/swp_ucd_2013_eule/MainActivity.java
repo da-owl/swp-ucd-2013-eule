@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.car_data.CarData;
+import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
@@ -58,16 +59,15 @@ public class MainActivity extends FragmentActivity implements
 		addActionTabMapping(new SocialPagerAdapter(R.id.SocialView, fm));
 		addActionTabMapping(new MarketPagerAdapter(R.id.MarketView, fm));
 		startEXLAPListener();
+		CarDataLogic.init();
 
 	}
 
 	private void startEXLAPListener() {
 		ArrayList<String> data = new ArrayList<String>();
 		data.add("VehicleSpeed");
-		data.add("TypeOfDrive");
 		data.add("TripOdometer");
 		data.add("RecommendedGear");
-		data.add("PowerOutput");
 		data.add("Odometer");
 		data.add("LongitudinalAcceleration");
 		data.add("LateralAcceleration");

@@ -113,7 +113,6 @@ public class DriveTechFragment extends Fragment implements CarDataListener{
 	@Override
 	public void handleCarData(String name, String value) {
 		if(name.equals("InstantaneousValuePerMilage")){
-			System.out.println(value);
 			mFuelConsumptionNow.setText(value+" l/100km");
 		}
 		if(name.equals("InstantaneousValuePerTime")){
