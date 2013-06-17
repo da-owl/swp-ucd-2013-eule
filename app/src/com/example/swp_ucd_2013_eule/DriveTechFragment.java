@@ -26,7 +26,7 @@ public class DriveTechFragment extends Fragment implements CarDataListener{
 	private BenchmarkBar mGasBar;
 
 	private int mTestGear = 1;
-	private int mTestRPM = 1000;
+	private int mTestRPM = 500;
 	private int mTestGas = 60;
 	private int mTestBreak = 20;
 
@@ -66,7 +66,7 @@ public class DriveTechFragment extends Fragment implements CarDataListener{
 			public void handleMessage(Message msg) {
 				mTestRPM += 25;
 				if (mTestRPM > 1800) {
-					mTestRPM = 1000;
+					mTestRPM = 500;
 				}
 				mGearIndicator.setRPM(mTestRPM);
 
