@@ -33,6 +33,7 @@ public class GearIndicator extends View {
 	private Paint mGearPaint;
 	private Paint mGearTextPaint;
 	private Paint mRPMPaint;
+	private Paint mGearShiftPaint;
 
 	private RectF mInnerBorderRectF;
 	private RectF mOuterBorderRectF;
@@ -111,6 +112,11 @@ public class GearIndicator extends View {
 		mRPMPaint.setColor(0xFF96e31d);
 		mRPMPaint.setStyle(Style.STROKE);
 		mRPMPaint.setStrokeWidth(16);
+
+		mGearShiftPaint = new Paint();
+		mGearShiftPaint.setAntiAlias(true);
+		mGearShiftPaint.setStyle(Style.FILL);
+		mGearShiftPaint.setAlpha(0);
 	}
 
 	private void updateDimensions() {
@@ -236,6 +242,10 @@ public class GearIndicator extends View {
 		canvas.drawPath(mGearPath, mGearPaint);
 		canvas.drawOval(mGlossyRectF, mGlossyPaint);
 
+		if (mGearShiftPaint.getAlpha() > 0) {
+			canvas.drawOval(mBackgroundRectF, mGearShiftPaint);
+		}
+
 		canvas.drawText(String.valueOf(mGear), mGearCenter.x, mGearCenter.y,
 				mGearTextPaint);
 	}
@@ -252,6 +262,32 @@ public class GearIndicator extends View {
 	public void setGear(int gear) {
 		mGear = gear;
 		invalidate();
+	}
+
+	private Runnable mGearShiftAnimator = new Runnable() {
+
+		@Override
+		public void run() {
+			int alpha = mGearShiftPaint.getAlpha() - 10;
+			alpha = Math.max(alpha, 0);
+			mGearShiftPaint.setAlpha(alpha);
+
+			if (alpha > 0) {
+				postDelayed(this, 15);
+			}
+			invalidate();
+		}
+
+	};
+
+	public void gearShift(boolean good) {
+		if (good) {
+			mGearShiftPaint.setColor(0xF584c719);
+		} else {
+			mGearShiftPaint.setColor(0xF5e92525);
+		}
+		removeCallbacks(mGearShiftAnimator);
+		post(mGearShiftAnimator);
 	}
 
 	public void setRPM(float rpm) {
