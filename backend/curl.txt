@@ -10,9 +10,19 @@ curl -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://l
 
 curl -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/?level=2 | python3 -mjson.tool
 
+curl -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/1/friends/ | python3 -mjson.tool
+
 curl -X PUT -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" -H "Content-Type: application/json" --data '{ "points": "10", "level" : 2, "user" : 2}' http://localhost:8080/forests/1/ | python -mjson.tool
 
 curl -X PUT -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" -H "Content-Type: application/json" --data '{ "points": "10", "level" : 2, "user" : 2}' http://localhost:8080/forests/1/friends/ | python -mjson.tool
+
+curl -X PUT -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/1/items/1/ | python3 -mjson.tool
+
+curl -X DELETE -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/1/items/1/ | python3 -mjson.tool
+
+curl -X PUT -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/1/friends/1/ | python3 -mjson.tool
+
+curl -X DELETE -H "Authorization: Token c515f179da3f768d6802709fbd98aa5c8e60d9a1" http://localhost:8080/forests/1/friends/1/ | python3 -mjson.tool
 
 """
 testing users endpoint

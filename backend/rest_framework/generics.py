@@ -281,11 +281,13 @@ class GenericAPIView(views.APIView):
                 'attribute on the view correctly.' %
                 (self.__class__.__name__, self.lookup_field)
             )
-        print(queryset)
         obj = get_object_or_404(queryset, **filter_kwargs)
-
+        
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
+
+        print('generics.get_object()')
+        print(obj)
 
         return obj
 
