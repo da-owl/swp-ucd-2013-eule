@@ -17,7 +17,7 @@ import com.example.swp_ucd_2013_eule.car_data.CarDataListener;
 import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
 import com.example.swp_ucd_2013_eule.view.GearIndicator;
 
-public class DriveTechFragment extends Fragment implements CarDataListener{
+public class DriveTechFragment extends Fragment implements CarDataListener {
 	private Handler mHandler;
 	private Timer mTimer;
 
@@ -29,18 +29,20 @@ public class DriveTechFragment extends Fragment implements CarDataListener{
 	private int mTestRPM = 500;
 	private int mTestGas = 60;
 	private int mTestBreak = 20;
+	private int mMode = 0;
 
 	private TextView mFuelConsumptionNow;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_drive_tech,
 				container, false);
 
-		mFuelConsumptionNow = (TextView) rootView.findViewById(R.id.txtFuelConsumptionNow);
-		//((TextView) rootView.findViewById(R.id.txtFuelConsumptionNow))
-		//		.setText("7,5 l/100km");
+		mFuelConsumptionNow = (TextView) rootView
+				.findViewById(R.id.txtFuelConsumptionNow);
+		// ((TextView) rootView.findViewById(R.id.txtFuelConsumptionNow))
+		// .setText("7,5 l/100km");
 		((TextView) rootView.findViewById(R.id.txtFuelConsumptionCurrentTrip))
 				.setText("4,3 l/100km");
 		((TextView) rootView.findViewById(R.id.txtFuelConsumptionAll))
@@ -56,27 +58,34 @@ public class DriveTechFragment extends Fragment implements CarDataListener{
 		mBreakBar.setValue(mTestBreak);
 		mBreakBar.setMax(45);
 		mBreakBar.setReferenceValue(40);
-		
-		CarData.getInstance().subscribeListener(this, "InstantaneousValuePerMilage");
-		CarData.getInstance().subscribeListener(this, "InstantaneousValuePerTime");
-		
+
+		CarData.getInstance().subscribeListener(this,
+				"InstantaneousValuePerMilage");
+		CarData.getInstance().subscribeListener(this,
+				"InstantaneousValuePerTime");
+
 		// Test-Only Animation
 		mHandler = new Handler() {
 
 			public void handleMessage(Message msg) {
 				mTestRPM += 25;
-				if (mTestRPM > 1800) {
-					mTestRPM = 500;
-				}
 				mGearIndicator.setRPM(mTestRPM);
 
-				if (mTestRPM == 1800) {
+				boolean gearShift = false;
+				if ((mMode == 0 && mTestRPM == 1800)
+						|| (mMode == 1 && mTestRPM == 2500)) {
 					mTestGear++;
+					gearShift = true;
+					mTestRPM = 500;
 				}
 				if (mTestGear > 6) {
 					mTestGear = 1;
 				}
-				mGearIndicator.setGear(mTestGear);
+				if (gearShift) {
+					mGearIndicator.setGear(mTestGear);
+					mMode = 1 - mMode;
+					mGearIndicator.gearShift(mMode == 1);
+				}
 
 				mTestGas += 1;
 				if (mTestGas > 80) {
@@ -108,16 +117,14 @@ public class DriveTechFragment extends Fragment implements CarDataListener{
 		mTimer.cancel();
 	}
 
-	
-	
 	@Override
 	public void handleCarData(String name, String value) {
-		if(name.equals("InstantaneousValuePerMilage")){
-			mFuelConsumptionNow.setText(value+" l/100km");
+		if (name.equals("InstantaneousValuePerMilage")) {
+			mFuelConsumptionNow.setText(value + " l/100km");
 		}
-		if(name.equals("InstantaneousValuePerTime")){
-			mFuelConsumptionNow.setText(value+" l/hour");
+		if (name.equals("InstantaneousValuePerTime")) {
+			mFuelConsumptionNow.setText(value + " l/hour");
 		}
-		
+
 	}
 }

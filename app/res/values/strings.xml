@@ -5,8 +5,8 @@
     <string name="action_settings">Einstellungen</string>
     <string name="action_comm_test">Teste Kommunikation</string>
     <string name="fragment_drive_title_section1">Punkte-Fortschritt</string>
-    <string name="fragment_drive_title_section2">Verbrauch-Richtwerte</string>
-    <string name="fragment_drive_Level">Level:</string>
+    <string name="fragment_drive_title_section2">Fahr-Empfehlung</string>
+    <string name="fragment_drive_Level">Waldgröße:</string>
     <string name="fragment_forest_title_section1">Mein Wald</string>
     <string name="fragment_forest_title_section2">Anderer Tab</string>
     <string name="fragment_social_title_section1">Bestenliste</string>
@@ -15,18 +15,18 @@
     <string name="fragment_market_title_section2">Tiere</string>
     <string name="fragment_market_title_section3">Kleidung</string>
     <string name="MenuIconString_DriveView">Drive</string>
-    <string name="MenuIconString_ForrestView">Forrest</string>
+    <string name="MenuIconString_ForrestView">Forest</string>
     <string name="MenuIconString_SocialView">Social</string>
     <string name="MenuIconString_MarketView">Market</string>
     <string name="drive_fuel_consumption">Verbrauch:</string>
-    <string name="fragment_forest_points">Punkte</string>
-    <string name="fragment_forest_Level">Level</string>
+    <string name="fragment_forest_points">Tropfen</string>
+    <string name="fragment_forest_Level">Größe</string>
     <string name="fragment_social_toplist_worldlist">Top 5 Weltweit</string>
     <string name="fragment_social_toplist_locallist">Top 5 in Berlin</string>
     
     <string name="social_table_header_position">#</string>
     <string name="social_table_header_name">Name</string>   
-    <string name="social_table_header_level">Level</string>
+    <string name="social_table_header_level">Wald-Größe</string>
     
     <string name="settings_activity">Einstellungen</string>
     <string name="fragment_buy_dialog_buyItem">Buy</string>
