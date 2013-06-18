@@ -20,29 +20,32 @@ public class DrivePointsFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_drive_points,
 				container, false);
-		
+
 		/*
-		TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
-		dummyTextView.setText("...");
-		*/
-		
-		((TextView) rootView.findViewById(R.id.txtPointsNow))
-		.setText("60/100");
-		((TextView) rootView.findViewById(R.id.txtLevelNow))
-		.setText("17");
+		 * TextView dummyTextView = (TextView)
+		 * rootView.findViewById(R.id.section_label);
+		 * dummyTextView.setText("...");
+		 */
+
+		((TextView) rootView.findViewById(R.id.txtLevelCur)).setText("135 m²");
+		((TextView) rootView.findViewById(R.id.txtLevelNext)).setText("140 m²");
 		((TextView) rootView.findViewById(R.id.txtPointsStackNow))
-		.setText("80");
-		
+				.setText("80");
+
 		mLevelBar = (BenchmarkBar) rootView.findViewById(R.id.levelBar);
 		mLevelBar.setReferenceValue(-1); // No Reference-Indicator
 		mLevelBar.setMax(100);
-		mLevelBar.setValue(60);
-		
-		final ImageView image = (ImageView)rootView.findViewById(R.id.imgCombo);
-	    final Animation animationFadeOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade);
-    	image.startAnimation(animationFadeOut);
-    	
-	    return rootView;
+		mLevelBar.setValue(90);
+		mLevelBar.setGradientColors(0xFF6cbf1c, 0xFF346802, 0xFF6cbf1c,
+				0xFF346802);
+
+		final ImageView image = (ImageView) rootView
+				.findViewById(R.id.imgCombo);
+		final Animation animationFadeOut = AnimationUtils.loadAnimation(
+				getActivity(), R.anim.fade);
+		image.startAnimation(animationFadeOut);
+
+		return rootView;
 	}
 
 	@Override

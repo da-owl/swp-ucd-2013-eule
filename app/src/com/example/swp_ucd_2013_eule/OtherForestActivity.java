@@ -68,9 +68,9 @@ public class OtherForestActivity extends Activity {
 			}
 		});
 
-		((TextView) findViewById(R.id.txtLevelNumber)).setText("80");
+		((TextView) findViewById(R.id.txtDrops)).setText("80");
 
-		((Level) findViewById(R.id.level)).setLevel(17);
+		((TextView) findViewById(R.id.txtForestSize)).setText("135 m²");
 
 		// Test-Only Animation
 		mHandler = new Handler() {

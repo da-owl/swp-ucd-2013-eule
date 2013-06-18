@@ -18,14 +18,6 @@
         android:text="@string/fragment_drive_Level"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
-    <TextView
-        android:id="@+id/txtLevelNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/drive_lvl"
-        android:text="LevelNow"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
     <com.example.swp_ucd_2013_eule.view.BenchmarkBar
         android:id="@+id/levelBar"
         android:layout_width="fill_parent"
@@ -45,7 +37,7 @@
         android:layout_marginTop="80dp"
         android:maxHeight="32dp"
         android:maxWidth="32dp"
-        android:src="@drawable/ico_points" />
+        android:src="@drawable/ico_waterdrops" />
 
     <TextView
         android:id="@+id/txtPointsStackNow"
@@ -57,12 +49,23 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/txtPointsNow"
+        android:id="@+id/txtLevelCur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/levelBar"
         android:layout_alignTop="@+id/levelBar"
-        android:layout_centerHorizontal="true"
-        android:text="PointsNow"
+        android:layout_marginLeft="5dp"
+        android:text="LevelCur"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/txtLevelNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/levelBar"
+        android:layout_alignTop="@+id/levelBar"
+        android:layout_marginRight="5dp"
+        android:text="LevelNext"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView

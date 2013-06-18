@@ -44,7 +44,7 @@ public class ForestItem {
 				ForestItemType.STANDARD,
 				imgFir,
 				"Fichte",
-				"Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\ndas Level 5 erreicht haben.");
+				"Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 85 m² erreicht haben.");
 		fir.setPrice(10);
 
 		ForestItem tree = new ForestItem(ForestItemType.STANDARD, imgTree,
@@ -66,21 +66,21 @@ public class ForestItem {
 				ForestItemType.STANDARD,
 				imgPlants,
 				"Blume",
-				"Dies ist eine Tuple.\nZum Erlangen\nmuss man mindestens\ndas Level 15 erreicht haben.");
+				"Dies ist eine Tuple.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.");
 		flower.setPrice(20);
 
 		ForestItem bird = new ForestItem(
 				ForestItemType.STANDARD,
 				imgAnimals,
 				"Vogel",
-				"Dies ist ein Vogel.\nZum Erlangen\nmuss man mindestens\ndas Level 15 erreicht haben.");
+				"Dies ist ein Vogel.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.");
 		bird.setPrice(20);
 
 		ForestItem dress = new ForestItem(
 				ForestItemType.STANDARD,
 				imgClothes,
 				"Kleid",
-				"Dies ist ein Kleid.\nZum Erlangen\nmuss man mindestens\ndas Level 15 erreicht haben.");
+				"Dies ist ein Kleid.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.");
 		dress.setPrice(35);
 
 		examples = new ForestItem[] { fir, tree, bush, gordon, flower, bird,
