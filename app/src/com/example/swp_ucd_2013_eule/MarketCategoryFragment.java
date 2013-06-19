@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.view.Level;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
 public abstract class MarketCategoryFragment extends Fragment {
@@ -35,7 +36,10 @@ public abstract class MarketCategoryFragment extends Fragment {
 		GridView gridView = (GridView) rootView.findViewById(R.id.gridItems);
 		mAdapter = getMarketForestItemAdapter(rootView.getContext());
 		gridView.setAdapter(mAdapter);
-
+		
+		((TextView) rootView.findViewById(R.id.txtPointNumberHeader)).setText("80");
+		((Level) rootView.findViewById(R.id.level)).setLevel(17);
+		
 		// XXX Duplicate code (see ForestFragment) --> outsource
 		mSlideUpContainer = (SlideUpContainer) rootView
 				.findViewById(R.id.forestSlideUp);
