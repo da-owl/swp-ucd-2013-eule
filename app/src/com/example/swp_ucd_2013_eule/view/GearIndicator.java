@@ -1,5 +1,8 @@
 package com.example.swp_ucd_2013_eule.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.CornerPathEffect;
@@ -30,6 +33,7 @@ public class GearIndicator extends View {
 	private Paint mGearPaint;
 	private Paint mGearTextPaint;
 	private Paint mRPMPaint;
+	private Paint mGearShiftPaint;
 
 	private RectF mInnerBorderRectF;
 	private RectF mOuterBorderRectF;
@@ -42,11 +46,18 @@ public class GearIndicator extends View {
 	private float mRPM2Angle;
 	private RectF mRPMRectF;
 
+	private List<Point> mMarks = new ArrayList<Point>();
+	private List<Point> mMarks2 = new ArrayList<Point>();
+
 	private int mGear = 0;
-	private int mRPM = 0;
+	private float mRPM = 0;
 	private float mReferenceValue1 = 1600;
 	private float mReferenceValue2 = 2000;
 	private float mRPMMax = 6700;
+
+	// TODO when setting mRPMMax dynamically adjust these values:
+	private int mRPMMaxScaled = Math.round(mRPMMax / 1000);
+	private double mRPMMaxLog = Math.log10(mRPMMaxScaled + 1);
 
 	public GearIndicator(Context context) {
 		super(context);
@@ -101,14 +112,19 @@ public class GearIndicator extends View {
 		mRPMPaint.setColor(0xFF96e31d);
 		mRPMPaint.setStyle(Style.STROKE);
 		mRPMPaint.setStrokeWidth(16);
+
+		mGearShiftPaint = new Paint();
+		mGearShiftPaint.setAntiAlias(true);
+		mGearShiftPaint.setStyle(Style.FILL);
+		mGearShiftPaint.setAlpha(0);
 	}
 
 	private void updateDimensions() {
 
 		float hRPMStrokeWidth = mRPMPaint.getStrokeWidth() / 2;
 		float curOffset = hRPMStrokeWidth;
-		mRPM1Angle = mReferenceValue1 / mRPMMax * 360 + 90;
-		mRPM2Angle = mReferenceValue2 / mRPMMax * 360 + 90;
+		mRPM1Angle = (float) getAngleByRPM(mReferenceValue1) + 90;
+		mRPM2Angle = (float) getAngleByRPM(mReferenceValue2) + 90;
 		mRPMRectF = new RectF(curOffset, curOffset, mSize - curOffset, mSize
 				- curOffset);
 
@@ -156,7 +172,33 @@ public class GearIndicator extends View {
 				(int) (mSize / 2 - ((mGearTextPaint.descent() + mGearTextPaint
 						.ascent()) / 2)));
 
+		mMarks.clear();
+		mMarks2.clear();
+		float half = (float) mSize / 2;
+		float radius = half - (mRPMPaint.getStrokeWidth() / 2);
+		float radius2 = half - mRPMPaint.getStrokeWidth();
+		for (float i = 1; i < mRPMMaxScaled; i++) {
+			// linear: float angle = i / maxRPM * 360;
+			double angle = getAngleByRPM(i * 1000);
+			double xAngleSin = Math.sin(Math.toRadians(0 + angle));
+			double yAngleSin = Math.sin(Math.toRadians(270 + angle));
+
+			int x = (int) (half - xAngleSin * radius);
+			int y = (int) (half - yAngleSin * radius);
+			mMarks.add(new Point(x, y));
+
+			int x2 = (int) (half - xAngleSin * radius2);
+			int y2 = (int) (half - yAngleSin * radius2);
+			mMarks2.add(new Point(x2, y2));
+		}
+
 		updateColors(glossyHeight, glossyTop);
+	}
+
+	private double getAngleByRPM(float rpm) {
+		rpm = rpm / 1000;
+		double angle = (Math.log10(rpm + 1) / mRPMMaxLog) * 360;
+		return angle;
 	}
 
 	private void updateColors(float glossyHeight, float glossyTop) {
@@ -180,18 +222,32 @@ public class GearIndicator extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+
 		// TODO repaint Reference-Bar here? (recalc sizes)
-		canvas.drawOval(mBackgroundRectF, mBackgroundPaint);
 		canvas.drawOval(mInnerBorderRectF, mBorderPaint);
 		canvas.drawOval(mOuterBorderRectF, mBorderPaint);
-		canvas.drawArc(mFillRectF, 90, (mRPM / mRPMMax) * 360, false,
+		canvas.drawArc(mFillRectF, 90, (float) getAngleByRPM(mRPM), false,
 				mFillPaint);
-		canvas.drawPath(mGearPath, mGearPaint);
-		canvas.drawOval(mGlossyRectF, mGlossyPaint);
-		canvas.drawText(String.valueOf(mGear), mGearCenter.x, mGearCenter.y,
-				mGearTextPaint);
+
 		canvas.drawArc(mRPMRectF, mRPM1Angle, mRPM2Angle - mRPM1Angle, false,
 				mRPMPaint);
+
+		for (int i = 0; i < mMarks.size(); i++) {
+			Point p = mMarks.get(i);
+			Point q = mMarks2.get(i);
+			canvas.drawLine(q.x, q.y, p.x, p.y, mBorderPaint);
+		}
+
+		canvas.drawOval(mBackgroundRectF, mBackgroundPaint);
+		canvas.drawPath(mGearPath, mGearPaint);
+		canvas.drawOval(mGlossyRectF, mGlossyPaint);
+
+		if (mGearShiftPaint.getAlpha() > 0) {
+			canvas.drawOval(mBackgroundRectF, mGearShiftPaint);
+		}
+
+		canvas.drawText(String.valueOf(mGear), mGearCenter.x, mGearCenter.y,
+				mGearTextPaint);
 	}
 
 	@Override
@@ -208,7 +264,33 @@ public class GearIndicator extends View {
 		invalidate();
 	}
 
-	public void setRPM(int rpm) {
+	private Runnable mGearShiftAnimator = new Runnable() {
+
+		@Override
+		public void run() {
+			int alpha = mGearShiftPaint.getAlpha() - 10;
+			alpha = Math.max(alpha, 0);
+			mGearShiftPaint.setAlpha(alpha);
+
+			if (alpha > 0) {
+				postDelayed(this, 15);
+			}
+			invalidate();
+		}
+
+	};
+
+	public void gearShift(boolean good) {
+		if (good) {
+			mGearShiftPaint.setColor(0xF584c719);
+		} else {
+			mGearShiftPaint.setColor(0xF5e92525);
+		}
+		removeCallbacks(mGearShiftAnimator);
+		post(mGearShiftAnimator);
+	}
+
+	public void setRPM(float rpm) {
 		mRPM = rpm;
 		invalidate();
 	}

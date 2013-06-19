@@ -19,23 +19,23 @@ class StatSerializer(serializers.ModelSerializer):
         ordering = ['timestamp']
 
 
-class ForestFriendSerializer(serializers.ModelSerializer):
-    items = ItemSerializer()
-    user = UserSerializer()
+# class ForestFriendSerializer(serializers.ModelSerializer):
+#     items = ItemSerializer()
+#     user = UserSerializer()
 
-    class Meta:
-        model = Forest
-        fields = ('id', 'user', 'level', 'points')
-        depth = 1
+#     class Meta:
+#         model = Forest
+#         fields = ('id', 'user', 'level', 'points')
+#         depth = 1
 
 class ForestSerializer(serializers.ModelSerializer):
-    friends = ForestFriendSerializer()
+    # friends = ForestSerializer()
     # items = ItemSerializer()
     # user = UserSerializer()
     user = serializers.PrimaryKeyRelatedField()
 
     class Meta:
         model = Forest
-        fields = ('id', 'user', 'level', 'points')
-        depth = 1
+        fields = ('forest_id', 'user', 'level', 'points')
+        # depth = 1
         ordering = ['points']

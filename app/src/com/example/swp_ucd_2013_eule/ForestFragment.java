@@ -42,7 +42,7 @@ public class ForestFragment extends Fragment {
 
 		mForest = (Forest) rootView.findViewById(R.id.forest);
 		mForest.setSlideUpContainer(mSlideUpContainer);
-		((TextView) rootView.findViewById(R.id.txtLevelNumber)).setText("80");
+		((TextView) rootView.findViewById(R.id.txtDrops)).setText("80");
 
 		mForest.setForestItemListener(new UserForestItemListener() {
 			@Override
@@ -68,7 +68,7 @@ public class ForestFragment extends Fragment {
 			}
 		});
 
-		((Level) rootView.findViewById(R.id.level)).setLevel(17);
+		((TextView) rootView.findViewById(R.id.txtForestSize)).setText("135 m²");
 
 		// Test-Only Animation
 		mHandler = new Handler() {

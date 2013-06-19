@@ -67,7 +67,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			LayoutInflater li = LayoutInflater.from(mContext);
 			v = li.inflate(R.layout.fragment_market_item, null);
 			TextView tv = (TextView) v.findViewById(R.id.icon_text);
-			tv.setText(item.getPrice() + " Points");
+			tv.setText(item.getPrice() + " Tropfen");
 			ImageView iv = (ImageView) v.findViewById(R.id.icon_image);
 			iv.setImageBitmap(item.getImage());
 

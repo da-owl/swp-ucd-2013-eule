@@ -21,53 +21,66 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
 
-        <com.example.swp_ucd_2013_eule.view.Level
-            android:id="@+id/level"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp" />
-
         <TextView
-            android:id="@+id/txtLevelNumber"
+            android:id="@+id/txtForestSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/level"
-            android:layout_alignTop="@id/level"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@+id/level"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="85 m²"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/imgForestSize"
+            android:layout_width="18dp"
+            android:layout_height="32dp"
+            android:layout_alignTop="@id/txtForestSize"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/txtForestSize"
+            android:src="@drawable/ico_forest_size" />
+
+        <TextView
+            android:id="@+id/txtDrops"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imgForestSize"
+            android:layout_alignTop="@id/imgForestSize"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@+id/imgDrops"
             android:gravity="center_vertical"
             android:text="50"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/txtCurPoints"
+            android:id="@+id/txtForestSizeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/txtLevelNumber"
-            android:layout_alignLeft="@id/level"
+            android:layout_above="@+id/txtDrops"
+            android:layout_alignLeft="@id/imgForestSize"
             android:gravity="center_vertical"
             android:text="@string/fragment_forest_Level"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/imgPoints"
-            android:layout_width="32dp"
+            android:id="@+id/imgDrops"
+            android:layout_width="25dp"
             android:layout_height="32dp"
-            android:layout_alignTop="@id/level"
-            android:layout_toLeftOf="@+id/txtLevelNumber"
-            android:src="@drawable/ico_points" />
+            android:layout_alignLeft="@+id/txtDropsLabel"
+            android:layout_alignTop="@id/imgForestSize"
+            android:layout_below="@+id/txtDropsLabel"
+            android:src="@drawable/ico_waterdrops" />
 
         <TextView
-            android:id="@+id/txtPoints"
+            android:id="@+id/txtDropsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/txtCurPoints"
-            android:layout_alignLeft="@id/imgPoints"
-            android:layout_toLeftOf="@+id/txtCurPoints"
+            android:layout_alignBaseline="@id/txtForestSizeLabel"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/txtForestSizeLabel"
             android:gravity="center_vertical"
             android:paddingRight="10dp"
             android:text="@string/fragment_forest_points"

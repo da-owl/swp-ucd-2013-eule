@@ -27,6 +27,8 @@ from rest_framework import status
 
 from core.helpers import json_response
 
+import sys
+
 
 class CRUDManyToManyView(mixins.ListModelMixin, SingleObjectMixin,
                          generics.GenericAPIView):
@@ -43,12 +45,13 @@ class CRUDManyToManyView(mixins.ListModelMixin, SingleObjectMixin,
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        # print(self, kwargs)
+    def put(self, request, *args, **kwargs):
         obj = self.get_object()
         item = self.get_item()
         getattr(self.get_item(), self.field_name).add(obj)
         item = self.get_item().save()
+        getattr(obj, self.field_name).add(item)
+        obj = obj.save()
         return json_response(None, 201, 'Created')
 
     def delete(self, request, *args, **kwargs):
@@ -65,7 +68,7 @@ class CRUDManyToManyView(mixins.ListModelMixin, SingleObjectMixin,
             raise ImproperlyConfigured("%(cls)s is missing a model." % {
                 'cls': self.__class__.__name__
             })
-        item_view = generics.MultipleObjectAPIView()
+        item_view = generics.GenericAPIView()
         item_view.model = self.model
         item_view.request = self.request
         item_view.args = self.args

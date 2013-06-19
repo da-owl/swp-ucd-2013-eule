@@ -24,6 +24,7 @@ class Stat(models.Model):
     points = models.IntegerField()
 
 class Forest(models.Model):
+    forest_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     level = models.IntegerField()
     points = models.IntegerField()
@@ -34,5 +35,8 @@ class Forest(models.Model):
 
     class Meta:
         ordering = ["points"]
+
+    def __str__(self):
+        return 'forest_id:' + str(self.forest_id) + ',level:' + str(self.level)
 
 

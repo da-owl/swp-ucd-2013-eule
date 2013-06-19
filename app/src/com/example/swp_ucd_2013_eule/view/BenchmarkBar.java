@@ -27,6 +27,11 @@ public class BenchmarkBar extends View {
 	private Paint mBadPaint;
 	private Paint mReferencePaint;
 
+	private int mGoodGradient1 = 0xFF0f93e7;
+	private int mGoodGradient2 = 0xFF0a51b3;
+	private int mBadGradient1 = 0xFF0a51b3;
+	private int mBadGradient2 = 0xFFca199e;
+
 	private float mMax = 100;
 	private float mReferenceValue = 65;
 	private float mValue = 85;
@@ -120,11 +125,11 @@ public class BenchmarkBar extends View {
 		}
 
 		Shader goodShader = new LinearGradient(gsx1, gsy1, gsx2, gsy2,
-				0xFF0f93e7, 0xFF0a51b3, TileMode.CLAMP);
+				mGoodGradient1, mGoodGradient2, TileMode.CLAMP);
 		mGoodPaint.setShader(goodShader);
 
 		Shader badShader = new LinearGradient(bsx1, bsy1, bsx2, bsy2,
-				0xFF0a51b3, 0xFFca199e, TileMode.CLAMP);
+				mBadGradient1, mBadGradient2, TileMode.CLAMP);
 		mBadPaint.setShader(badShader);
 	}
 
@@ -339,5 +344,14 @@ public class BenchmarkBar extends View {
 			}
 		}
 		return result;
+	}
+
+	public void setGradientColors(int good1, int good2, int bad1, int bad2) {
+		mGoodGradient1 = good1;
+		mGoodGradient2 = good2;
+		mBadGradient1 = bad1;
+		mBadGradient2 = bad2;
+		updateColors();
+		invalidate();
 	}
 }
