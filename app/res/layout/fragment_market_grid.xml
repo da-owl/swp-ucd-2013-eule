@@ -24,12 +24,12 @@
             android:textSize="16sp" />
      
       <ImageView
-            android:id="@+id/imgPointsHeader"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/ico_points" />
+          android:id="@+id/imgPointsHeader"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginTop="20dp"
+          android:src="@drawable/ico_waterdrops" />
       
       <TextView
             android:id="@+id/txtPointsHeader"
