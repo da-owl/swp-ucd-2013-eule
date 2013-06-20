@@ -68,22 +68,8 @@ public class ForestFragment extends Fragment {
 			}
 		});
 
-		((TextView) rootView.findViewById(R.id.txtForestSize)).setText("135 m²");
-
-		// Test-Only Animation
-		mHandler = new Handler() {
-
-			public void handleMessage(Message msg) {
-				mForest.moveItems();
-			}
-		};
-		mTimer = new Timer();
-		mTimer.scheduleAtFixedRate(new TimerTask() {
-			public void run() {
-				Message msg = mHandler.obtainMessage();
-				msg.sendToTarget();
-			}
-		}, 0, 2000);
+		((TextView) rootView.findViewById(R.id.txtForestSize))
+				.setText("135 m²");
 
 		return rootView;
 	}
@@ -91,7 +77,6 @@ public class ForestFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		mTimer.cancel();
 	}
 
 	// XXX Duplicate code (see MarketCategoryFragment) --> outsource

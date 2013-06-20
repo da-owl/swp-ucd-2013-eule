@@ -10,8 +10,10 @@ import android.content.Context;
  */
 public class UserForestItem {
 	private ForestItem mItem;
-	private int mX;
-	private int mY;
+	private int mTileX;
+	private int mTileY;
+	private float mOffsetX;
+	private float mOffsetY;
 
 	private static UserForestItem[] examples;
 
@@ -35,23 +37,56 @@ public class UserForestItem {
 		examples[4] = new UserForestItem(availableItems[2]);
 		examples[5] = new UserForestItem(availableItems[3]);
 
+		examples[0].setTile(0, 0);
+		examples[0].setOffset(0.5f, 0.5f);
+		examples[1].setTile(1, 0);
+		examples[1].setOffset(0.5f, 0.5f);
+		examples[2].setTile(2, 0);
+		examples[2].setOffset(0.5f, 0.5f);
+		examples[3].setTile(0, 1);
+		examples[3].setOffset(0.5f, 0.5f);
+		examples[4].setTile(1, 1);
+		examples[4].setOffset(0.5f, 0.5f);
+		examples[5].setTile(2, 1);
+		examples[5].setOffset(0.5f, 0.5f);
+
 		for (UserForestItem item : examples) {
 			item.mItem.incAmount();
 		}
 		return examples;
 	}
 
-	public int getX() {
-		return mX;
+	public float getOffsetX() {
+		return mOffsetX;
 	}
 
-	public int getY() {
-		return mY;
+	public float getOffsetY() {
+		return mOffsetY;
 	}
 
-	public void setCoordinates(int x, int y) {
-		this.mX = x;
-		this.mY = y;
+	/**
+	 * 
+	 * @param x
+	 *            value between 0 and 1
+	 * @param y
+	 *            value between 0 and 1
+	 */
+	public void setOffset(float x, float y) {
+		mOffsetX = x;
+		mOffsetY = y;
+	}
+
+	public int getTileX() {
+		return mTileX;
+	}
+
+	public int getTileY() {
+		return mTileY;
+	}
+
+	public void setTile(int x, int y) {
+		mTileX = x;
+		mTileY = y;
 	}
 
 	public ForestItem getForestItem() {
