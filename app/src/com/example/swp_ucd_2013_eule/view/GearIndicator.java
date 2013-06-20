@@ -34,6 +34,7 @@ public class GearIndicator extends View {
 	private Paint mGearTextPaint;
 	private Paint mRPMPaint;
 	private Paint mGearShiftPaint;
+	private int mGearShiftStartAlpha = 0xF5;
 
 	private RectF mInnerBorderRectF;
 	private RectF mOuterBorderRectF;
@@ -268,12 +269,13 @@ public class GearIndicator extends View {
 
 		@Override
 		public void run() {
-			int alpha = mGearShiftPaint.getAlpha() - 10;
+			int oldAlpha = mGearShiftPaint.getAlpha();
+			int alpha = oldAlpha - 10;
 			alpha = Math.max(alpha, 0);
 			mGearShiftPaint.setAlpha(alpha);
 
 			if (alpha > 0) {
-				postDelayed(this, 15);
+				postDelayed(this, oldAlpha == mGearShiftStartAlpha ? 250 : 15);
 			}
 			invalidate();
 		}
@@ -282,10 +284,11 @@ public class GearIndicator extends View {
 
 	public void gearShift(boolean good) {
 		if (good) {
-			mGearShiftPaint.setColor(0xF584c719);
+			mGearShiftPaint.setColor(0x84c719);
 		} else {
-			mGearShiftPaint.setColor(0xF5e92525);
+			mGearShiftPaint.setColor(0xe92525);
 		}
+		mGearShiftPaint.setAlpha(mGearShiftStartAlpha);
 		removeCallbacks(mGearShiftAnimator);
 		post(mGearShiftAnimator);
 	}
