@@ -74,7 +74,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			}
 			tv = (TextView) v.findViewById(R.id.icon_text2);
 			tv.setText(item.getLevel() + " 	Forest size");
-			if(item.getLevel() > 17){
+			if(item.getLevel() > 7){
 				tv.setTextColor(Color.RED);
 			}
 			ImageView iv = (ImageView) v.findViewById(R.id.icon_image);

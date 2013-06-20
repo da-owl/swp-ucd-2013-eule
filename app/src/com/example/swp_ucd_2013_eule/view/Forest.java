@@ -93,37 +93,51 @@ public class Forest extends View {
 		mForestPath = new Path();
 		float baseX = FOREST_STROKE_WIDTH / 2, baseY = FOREST_STROKE_WIDTH / 2;
 		float curX = baseX, curY = baseY;
+		int rows = 1;
 
 		// start
 		mForestPath.moveTo(curX, curY);
 
+		// move right
+		int minSquareCols = mCols - 1;
+		int tilesLeft = mLevel - minSquareCols * minSquareCols - 1;
+		curX += mCols * mTileSize;
+		mForestPath.lineTo(curX, curY);
+		
+		// move 1 down
+		curY += mTileSize;
+		mForestPath.lineTo(curX, curY);
+
 		// move down
-		int tile = 0;
-		for (tile = 0; mLevel - tile >= mCols; tile += mCols) {
-			curY += mTileSize;
+		if (tilesLeft > 0) {
+			int vertTiles = Math.min(mCols-1, tilesLeft);
+			tilesLeft -= vertTiles;
+			rows += vertTiles;
+			curY += (vertTiles * mTileSize);
 			mForestPath.lineTo(curX, curY);
 		}
 
-		// incomplete row? (less than mCols tiles)
-		if (tile < mLevel) {
-			curY += mTileSize;
-			mForestPath.lineTo(curX, curY); // one row down
+		// move 1 left
+		curX -= mTileSize;
+		mForestPath.lineTo(curX, curY);
 
-			curX += (mLevel - tile) * mTileSize;
-			mForestPath.lineTo(curX, curY); // move right
-
-			curY -= mTileSize;
-			mForestPath.lineTo(curX, curY); // one row up
+		// move left
+		if (tilesLeft > 0) {
+			curX -= tilesLeft * mTileSize;
+			tilesLeft = 0;
+			mForestPath.lineTo(curX, curY);
 		}
 
-		curX += (mCols - (mLevel - tile)) * mTileSize;
-		mForestPath.lineTo(curX, curY); // move right
+		// move up/down
+		curY += (mCols - rows - 1)* mTileSize;
+		mForestPath.lineTo(curX, curY);
 
-		mForestPath.lineTo(curX, baseY); // move top
+		// move to left end
+		curX = baseX;
+		mForestPath.lineTo(curX, curY);
 
 		// End
 		mForestPath.close();
-
 	}
 
 	public void placeItemsInForest() {

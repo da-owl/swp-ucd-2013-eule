@@ -22,21 +22,21 @@ public class SocialTopListFragment extends Fragment {
 
 		mWorldList = (SocialList) rootView.findViewById(R.id.social_toplist_world);
 		
-		mWorldList.addRow(1, "Ronald", 60);
-		mWorldList.addRow(2, "Anakin", 45);
-		mWorldList.addRow(3, "Owl", 30);
-		mWorldList.addRow(4, "XXX_MEGABOY_XXX", 26);
-		mWorldList.addRow(5, "Badass", 24);
+		mWorldList.addRow(1, "Ronald", 12);
+		mWorldList.addRow(2, "Anakin", 9);
+		mWorldList.addRow(3, "Owl", 6);
+		mWorldList.addRow(4, "XXX_MEGABOY_XXX", 5);
+		mWorldList.addRow(5, "Badass", 4);
 		
 		
 		
 		mLocalList = (SocialList) rootView.findViewById(R.id.social_toplist_local);
 		
-		mLocalList.addRow(1, "Marc", 20);
-		mLocalList.addRow(2, "Manu", 15);
-		mLocalList.addRow(3, "Erik", 13);
-		mLocalList.addRow(4, "Konrad", 11);
-		mLocalList.addRow(5, "Sammy", 10);
+		mLocalList.addRow(1, "Marc", 4);
+		mLocalList.addRow(2, "Manu", 3);
+		mLocalList.addRow(3, "Erik", 3);
+		mLocalList.addRow(4, "Konrad", 2);
+		mLocalList.addRow(5, "Sammy", 2);
 		
 		mWorldList.drawList();
 		mLocalList.drawList();

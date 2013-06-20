@@ -39,7 +39,7 @@ public abstract class MarketCategoryFragment extends Fragment {
 		gridView.setAdapter(mAdapter);
 		
 		((TextView) rootView.findViewById(R.id.txtPointNumberHeader)).setText("80");
-		((Level) rootView.findViewById(R.id.level)).setLevel(17);
+		((Level) rootView.findViewById(R.id.level)).setLevel(7);
 		
 		// XXX Duplicate code (see ForestFragment) --> outsource
 		mSlideUpContainer = (SlideUpContainer) rootView

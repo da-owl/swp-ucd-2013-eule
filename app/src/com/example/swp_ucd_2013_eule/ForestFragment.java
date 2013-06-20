@@ -1,12 +1,11 @@
 package com.example.swp_ucd_2013_eule;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +18,6 @@ import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.data.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.Forest;
 import com.example.swp_ucd_2013_eule.view.Forest.UserForestItemListener;
-import com.example.swp_ucd_2013_eule.view.Level;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
 public class ForestFragment extends Fragment {
@@ -28,6 +26,7 @@ public class ForestFragment extends Fragment {
 	private Forest mForest;
 	private SlideUpContainer mSlideUpContainer;
 	private ForestItem mCurItem;
+	private ViewPager mViewPager;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +68,7 @@ public class ForestFragment extends Fragment {
 		});
 
 		((TextView) rootView.findViewById(R.id.txtForestSize))
-				.setText("135 m²");
+				.setText("35 m²");
 
 		return rootView;
 	}

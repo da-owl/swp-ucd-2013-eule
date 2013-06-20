@@ -70,7 +70,7 @@ public class OtherForestActivity extends Activity {
 
 		((TextView) findViewById(R.id.txtDrops)).setText("80");
 
-		((TextView) findViewById(R.id.txtForestSize)).setText("135 m²");
+		((TextView) findViewById(R.id.txtForestSize)).setText("35 m²");
 
 	}
 

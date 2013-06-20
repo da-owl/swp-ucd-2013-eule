@@ -55,7 +55,7 @@ public class SocialList extends TableLayout {
 			// set Level
 			TextView level = (TextView) friendRow
 					.findViewById(R.id.social_friend_level);
-			level.setText(String.valueOf(elem.mLevel));
+			level.setText(String.valueOf(elem.mLevel * 5) + " m²");
 			// set Position
 			int playerPosition = elem.mPosition;
 			TextView position = (TextView) friendRow
