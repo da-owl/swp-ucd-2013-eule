@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="horizontal" format="boolean" />
+    <attr name="weight" format="integer" />
+
     <declare-styleable name="BenchmarkBar">
-        <attr name="horizontal" format="boolean" />
-        <attr name="weight" format="integer" />
+        <attr name="horizontal" />
+        <attr name="weight" />
+    </declare-styleable>
+    <declare-styleable name="ReferenceBar">
+        <attr name="horizontal" />
+        <attr name="weight" />
     </declare-styleable>
 
 </resources>

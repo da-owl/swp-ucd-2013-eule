@@ -16,20 +16,20 @@ import com.example.swp_ucd_2013_eule.car_data.CarData;
 import com.example.swp_ucd_2013_eule.car_data.CarDataListener;
 import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
 import com.example.swp_ucd_2013_eule.view.GearIndicator;
+import com.example.swp_ucd_2013_eule.view.ReferenceBar;
 
 public class DriveTechFragment extends Fragment implements CarDataListener {
 	private Handler mHandler;
 	private Timer mTimer;
 
 	private GearIndicator mGearIndicator;
-	private BenchmarkBar mBreakBar;
-	private BenchmarkBar mGasBar;
+	private ReferenceBar mRefBar;
 
 	private int mTestGear = 1;
 	private int mTestRPM = 500;
-	private int mTestGas = 60;
-	private int mTestBreak = 20;
+	private int mTestRef = 0;
 	private int mMode = 0;
+	private int mRefMode = 0;
 
 	private TextView mFuelConsumptionNow;
 
@@ -51,13 +51,8 @@ public class DriveTechFragment extends Fragment implements CarDataListener {
 		mGearIndicator = (GearIndicator) rootView
 				.findViewById(R.id.gearIndicator);
 
-		mGasBar = (BenchmarkBar) rootView.findViewById(R.id.gasPedalBar);
-		mGasBar.setValue(mTestGas);
-
-		mBreakBar = (BenchmarkBar) rootView.findViewById(R.id.brakePedalBar);
-		mBreakBar.setValue(mTestBreak);
-		mBreakBar.setMax(45);
-		mBreakBar.setReferenceValue(40);
+		mRefBar = (ReferenceBar) rootView.findViewById(R.id.referenceBar);
+		mRefBar.setValue(mTestRef);
 
 		CarData.getInstance().subscribeListener(this,
 				"InstantaneousValuePerMilage");
@@ -87,17 +82,12 @@ public class DriveTechFragment extends Fragment implements CarDataListener {
 					mGearIndicator.gearShift(mMode == 1);
 				}
 
-				mTestGas += 1;
-				if (mTestGas > 80) {
-					mTestGas = 60;
+				mTestRef += mRefMode == 0 ? 3 : -3;
+				if (mTestRef > 100 || mTestRef < -100) {
+					mTestRef = mRefMode == 0 ? 100 : -100;
+					mRefMode = 1 - mRefMode;
 				}
-				mGasBar.setValue(mTestGas);
-
-				mTestBreak += 1;
-				if (mTestBreak > 39) {
-					mTestBreak = 20;
-				}
-				mBreakBar.setValue(mTestBreak);
+				mRefBar.setValue(mTestRef);
 			}
 		};
 

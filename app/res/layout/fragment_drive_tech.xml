@@ -9,34 +9,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$DummySectionFragment" >
 
-    <com.example.swp_ucd_2013_eule.view.BenchmarkBar
-        android:id="@+id/gasPedalBar"
+    <com.example.swp_ucd_2013_eule.view.ReferenceBar
+        android:id="@+id/referenceBar"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_above="@+id/imgGasPedal"
-        android:layout_alignLeft="@+id/imgGasPedal"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        app:weight="32" />
-
-    <com.example.swp_ucd_2013_eule.view.BenchmarkBar
-        android:id="@+id/brakePedalBar"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/imgBrakePedal"
-        android:layout_alignLeft="@+id/imgBrakePedal"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        app:weight="32" />
+        android:layout_alignRight="@+id/imgGasPedal"
+        app:weight="64" />
 
     <com.example.swp_ucd_2013_eule.view.GearIndicator
         android:id="@+id/gearIndicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/brakePedalBar"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="30dp"
-        android:layout_toLeftOf="@+id/brakePedalBar" />
+        android:layout_toLeftOf="@+id/referenceBar" />
 
     <ImageView
         android:id="@+id/imgGasPedal"
@@ -44,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:maxHeight="32dp"
         android:maxWidth="32dp"
@@ -54,9 +41,8 @@
         android:id="@+id/imgBrakePedal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/imgGasPedal"
-        android:layout_marginRight="20dp"
+        android:layout_alignLeft="@+id/referenceBar"
+        android:layout_below="@+id/referenceBar"
         android:layout_marginTop="5dp"
         android:maxHeight="32dp"
         android:maxWidth="32dp"
