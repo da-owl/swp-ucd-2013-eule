@@ -76,9 +76,8 @@
             android:id="@+id/imgDrops"
             android:layout_width="26dp"
             android:layout_height="32dp"
-            android:layout_alignLeft="@+id/txtDropsLabel"
-            android:layout_alignTop="@id/imgForestSize"
-            android:layout_below="@+id/txtDropsLabel"
+            android:layout_alignLeft="@id/txtDropsLabel"
+            android:layout_alignParentBottom="true"
             android:src="@drawable/ico_waterdrops" />
 
         <TextView
