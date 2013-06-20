@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+
 import de.exlap.DataListener;
 import de.exlap.DataObject;
 import de.exlap.ExlapClient;
@@ -24,7 +28,7 @@ public class CarData implements DataListener {
 	private ExlapClient mEC;
 	private DataListener mEXLAPListener = this;
 	private List<String> mSubscribeItems;
-	private HashMap<String, List<CarDataListener>> mDataListeners = new HashMap<String, List<CarDataListener>>();
+	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
 	private Thread mConnectionWatcher;
 	private boolean mRun = false;
 	private static CarData mCarDataInstance = null;
@@ -45,7 +49,6 @@ public class CarData implements DataListener {
 	 * into the DataObject.
 	 */
 	public void onData(DataObject dataObject) {
-
 		// logging?
 		String objectString = dataObject.toString();
 
@@ -66,10 +69,14 @@ public class CarData implements DataListener {
 			// e.g. 42.6
 			String value = data[3].substring(data[3].indexOf("=") + 1,
 					data[3].indexOf("]")).trim();
-			List<CarDataListener> listeners = mDataListeners.get(key);
-			if (listeners != null) {
-				for (CarDataListener listener : listeners) {
-					listener.handleCarData(key, value);
+			List<Handler> handlers = mDataListeners.get(key);
+			if (handlers != null) {
+				for (Handler handler : handlers) {
+					Message msg = handler.obtainMessage();
+					Bundle bundleData = new Bundle();
+					bundleData.putString(key, value);
+					msg.setData(bundleData);
+					msg.sendToTarget();
 				}
 			}
 		}
@@ -188,10 +195,10 @@ public class CarData implements DataListener {
 	 *            for the data to subscribe
 	 * @return false if the listener is allready known for the given identifier
 	 */
-	public boolean subscribeListener(CarDataListener listener, String identifier) {
-		List<CarDataListener> list = mDataListeners.get(identifier);
+	public boolean subscribeHandler(Handler listener, String identifier) {
+		List<Handler> list = mDataListeners.get(identifier);
 		if (list == null) {
-			list = new ArrayList<CarDataListener>();
+			list = new ArrayList<Handler>();
 		} else if (list.contains(listener)) {
 			return false;
 		}

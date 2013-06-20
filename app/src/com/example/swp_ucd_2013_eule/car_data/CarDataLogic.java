@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CarDataLogic implements CarDataListener {
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+
+public class CarDataLogic extends Handler {
+
 	private static CarDataLogic CarDataLogicInstance = null;
 	private volatile int mShifts = 0; // positiv gut, negativ schlecht
 	private int mMaxRPM = 0; // innerhalb der ermittelten Zeit
@@ -14,26 +19,25 @@ public class CarDataLogic implements CarDataListener {
 	private volatile boolean mFastAcceleration = false;
 	private volatile boolean mHardBreaking = false;
 	private int mInterval = 150;
-	private volatile float mCurPoints=0;
+	private volatile float mCurPoints = 0;
 	// for now static
 	private float mCity = 5.8f;
 	private float mCountry = 4.2f;
 	private float mMotorWay = 4.7f;
 	private int mGears = 6;
-	private float m5percent =0.1f;
-	private float m10percent =0.2f;
-	private float m15percent =0.3f;
-	private float m20percent =0.4f;
-	
+	private float m5percent = 0.1f;
+	private float m10percent = 0.2f;
+	private float m15percent = 0.3f;
+	private float m20percent = 0.4f;
 
 	private CarDataLogic() {
 		CarData instance = CarData.getInstance();
 
-		instance.subscribeListener(this, "InstantaneousValuePerMilage");
+		instance.subscribeHandler(this, "InstantaneousValuePerMilage");
 		// instance.subscribeListener(this, "EngineSpeed");
 		// instance.subscribeListener(this, "CurrentGear");
 		// instance.subscribeListener(this, "RecommendedGear");
-		instance.subscribeListener(this, "VehicleSpeed");
+		instance.subscribeHandler(this, "VehicleSpeed");
 	}
 
 	public static void init() {
@@ -42,13 +46,15 @@ public class CarDataLogic implements CarDataListener {
 		}
 	}
 
-	@Override
-	public void handleCarData(String name, String value) {
-		if (name.equals("InstantaneousValuePerMilage")) {
-			mCurrentConsumptions.add(Float.valueOf(value));
+	public void handleMessage(Message msg) {
+		Bundle data = msg.getData();
+
+		if (data.containsKey("InstantaneousValuePerMilage")) {
+			mCurrentConsumptions.add(Float.valueOf(data
+					.getString("InstantaneousValuePerMilage")));
 		}
-		if (name.equals("VehicleSpeed")) {
-			mCurrentSpeed.add(Float.valueOf(value));
+		if (data.containsKey("VehicleSpeed")) {
+			mCurrentSpeed.add(Float.valueOf(data.getString("VehicleSpeed")));
 		}
 		if (mCurrentConsumptions.size() >= mInterval
 				&& mCurrentSpeed.size() >= mInterval) {
@@ -63,10 +69,10 @@ public class CarDataLogic implements CarDataListener {
 		 * Zeiteinheit definieren: 30 Sekunden ~ 150 Messwerte (alle 200ms)
 		 * Durchschnitt des Momentanverbrauchs (ist schon auf l/100km normiert)
 		 * Durchschnitt der Fahrgeschwindigt => Berechnen ob Stadt/Land/Autobahn
-		 * Penaltyflag checken für Beschleunigung/Verzögerung größer als GW
-		 * errechneten Durchschnitsverbrauch für diese Fahrt in Klasse einordnen
-		 * 20% drunter 10% drunter 0 10% drüber 20%drüber etc Schaltpunkte
-		 * bewerten Drehzahl Überschreitungen bewerten
+		 * Penaltyflag checken fï¿½r Beschleunigung/Verzï¿½gerung grï¿½ï¿½er als GW
+		 * errechneten Durchschnitsverbrauch fï¿½r diese Fahrt in Klasse einordnen
+		 * 20% drunter 10% drunter 0 10% drï¿½ber 20%drï¿½ber etc Schaltpunkte
+		 * bewerten Drehzahl ï¿½berschreitungen bewerten
 		 */
 		ArrayList<Float> listConsum = new ArrayList<Float>();
 		ArrayList<Float> listSpeed = new ArrayList<Float>();
@@ -110,28 +116,28 @@ public class CarDataLogic implements CarDataListener {
 			} else {
 				mReferenceConsumption = mMotorWay;
 			}
-			
+
 			float delta = mReferenceConsumption - mConsumption;
-			float percent = Math.abs(delta)/mReferenceConsumption;
+			float percent = Math.abs(delta) / mReferenceConsumption;
 			float factor = m20percent;
-			if(percent < 0.05f){
+			if (percent < 0.05f) {
 				factor = m5percent;
-			}else if(percent <0.1f){
+			} else if (percent < 0.1f) {
 				factor = m10percent;
-			}else if(percent < 0.15f){
+			} else if (percent < 0.15f) {
 				factor = m15percent;
 			}
-			
-			if(delta > 0f){
-				//+Points
-				mCurPoints += 1*factor;
-			}else{
-				//-Points
-				mCurPoints -= 1*factor;
+
+			if (delta > 0f) {
+				// +Points
+				mCurPoints += 1 * factor;
+			} else {
+				// -Points
+				mCurPoints -= 1 * factor;
 			}
-			
-			System.out.println("curent points: "+mCurPoints);
-			
+
+			System.out.println("curent points: " + mCurPoints);
+
 		}
 
 	}

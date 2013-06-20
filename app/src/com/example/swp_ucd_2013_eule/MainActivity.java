@@ -58,6 +58,7 @@ public class MainActivity extends FragmentActivity implements
 		addActionTabMapping(new ForestPagerAdapter(R.id.ForestView, fm));
 		addActionTabMapping(new SocialPagerAdapter(R.id.SocialView, fm));
 		addActionTabMapping(new MarketPagerAdapter(R.id.MarketView, fm));
+		CarData.getInstance();
 		startEXLAPListener();
 		CarDataLogic.init();
 
