@@ -18,6 +18,11 @@ public class DriveTechFragment extends Fragment {
 
 	private GearIndicator mGearIndicator;
 	private ReferenceBar mRefBar;
+	
+	private int mGear = 0;
+	private float mAcc = 0;
+	private float mRPM = 0;
+	private float mConsumption = 0;
 
 	private TextView mFuelConsumptionNow;
 
@@ -48,13 +53,12 @@ public class DriveTechFragment extends Fragment {
 				Bundle data = msg.getData();
 
 				if (data.containsKey("InstantaneousValuePerMilage")) {
-					float value = 0.0f;
 					try{
-					value = Float.parseFloat(data.getString("InstantaneousValuePerMilage"));
+						mConsumption = Float.parseFloat(data.getString("InstantaneousValuePerMilage"));
 					}catch(NumberFormatException e){
 						System.out.println(e.getMessage());
 					}
-					mFuelConsumptionNow.setText(String.format("%.1f", value)+ " l/100km");
+					mFuelConsumptionNow.setText(String.format("%.1f", mConsumption)+ " l/100km");
 				} /*
 				 * else if (data.containsKey("InstantaneousValuePerTime")) {
 				 * value = Float.parseFloat(data
@@ -62,37 +66,39 @@ public class DriveTechFragment extends Fragment {
 				 * mFuelConsumptionNow.setText(String.format("%.1f", value) +
 				 * " l/hour"); }
 				 */else if (data.containsKey("EngineSpeed")) {
-					float rpm = 0;
 					 try {
-						 rpm = Float.parseFloat(data.getString("EngineSpeed"));
+						 mRPM = Float.parseFloat(data.getString("EngineSpeed"));
 					} catch (NumberFormatException e) {
 						System.out.println(e.getMessage());
 					}
-					 mGearIndicator.setRPM(rpm);
+					 mGearIndicator.setRPM(mRPM);
 				} else if (data.containsKey("CurrentGear")) {
-					int gear = 0;
+					int oldGear = mGear;
 					try {
-						gear = Integer.parseInt(data.getString("CurrentGear"));
+						mGear = Integer.parseInt(data.getString("CurrentGear"));
 					} catch (NumberFormatException e) {
 						System.out.println(e.getMessage());
 					}
-					mGearIndicator.setGear(gear);
-				} else if(data.containsKey("LongitudinalAcceleration")){
-					float acc = 50;
-					try {
-						acc = (Float.parseFloat(data.getString("LongitudinalAcceleration")))*2.5f;
-						if(acc <0){
-							acc = 50-acc;
-						}else if(acc>0){
-							acc+=50;
+					if(oldGear < mGear){
+						if(1600<mRPM && mRPM<2000){
+							mGearIndicator.gearShift(true);
 						}else{
-							acc =50;
+							mGearIndicator.gearShift(false);
 						}
+					}
+					mGearIndicator.setGear(mGear);
+
+				} else if(data.containsKey("LongitudinalAcceleration")){
+					try {
+						// value can be -20 to +20, bar goes from -100 to +100 therefore use *5 of the value
+						// additional use *6 to get better results for the indicator
+						mAcc = (Float.parseFloat(data.getString("LongitudinalAcceleration")))*30f;
+
 					} catch (NumberFormatException e) {
 						System.out.println(e.getMessage());
 					}
 					
-					
+					mRefBar.setValue(mAcc);
 					
 				}
 			}

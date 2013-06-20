@@ -274,7 +274,14 @@ public class ReferenceBar extends View {
 	}
 
 	public void setValue(float val) {
-		mValue = val;
+		if(val > 0){
+			mValue = Math.min(val, mMax);
+		}else if(val <0){
+			mValue = Math.max(val, -mMax);
+		}else{
+			mValue = val;
+		}
+		
 		updateBarFillDimensions();
 		invalidate();
 	}
