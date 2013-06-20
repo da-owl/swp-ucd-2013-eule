@@ -50,7 +50,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public ForestItem getItem(int position) {
 		return mItems[position];
 	}
 

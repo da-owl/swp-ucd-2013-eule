@@ -1,6 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -51,16 +52,21 @@ public abstract class MarketCategoryFragment extends Fragment {
 				mSlideUpContainer.slideClose();
 			}
 		});
-
+		
+		
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				mCurItem = (ForestItem) mAdapter.getItem(position);
-				updateCurrentItemView();
-				mSlideUpContainer.slideOpen();
+				if (mAdapter.getItem(position).getPrice() < 80
+						& mAdapter.getItem(position).getLevel() < 18) {
+					mCurItem = (ForestItem) mAdapter.getItem(position);
+					updateCurrentItemView();
+					mSlideUpContainer.slideOpen();
+				}
 			}
+			
 		});
 
 		Button btnBuy = (Button) rootView.findViewById(R.id.btnBuyItem);
@@ -94,4 +100,5 @@ public abstract class MarketCategoryFragment extends Fragment {
 				.findViewById(R.id.txt_amount);
 		amount.setText("Anzahl: " + mCurItem.getAmount());
 	}
+
 }
