@@ -1,5 +1,6 @@
 package com.example.swp_ucd_2013_eule;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,8 +30,10 @@ import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
+import de.exlap.ExlapException;
+
 public class MainActivity extends FragmentActivity implements
-		ActionBar.TabListener {
+		ActionBar.TabListener, OnSharedPreferenceChangeListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -43,7 +47,7 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
-	Menu mMenu;
+	Menu mMenu; 
 	int mActiveActionTab = R.id.DrivingView;
 	Map<Integer, FragmentStatePagerAdapter> mActionTabMapping = new HashMap<Integer, FragmentStatePagerAdapter>();
 
@@ -68,6 +72,9 @@ public class MainActivity extends FragmentActivity implements
 				+ prefs.getString("prefIpAdress", "192.168.0.40"));
 		builder.append(":"+prefs.getString("prefPort", "28500"));
 		
+		//register for changes in your PreferenceActivity's onResume() method and unregister in the onPause() ?!
+		prefs.registerOnSharedPreferenceChangeListener(this);
+		
 		
 		CarData.getInstance();
 		startEXLAPListener(builder.toString());
@@ -86,9 +93,7 @@ public class MainActivity extends FragmentActivity implements
 		data.add("FuelConsumption");
 		data.add("EngineSpeed");
 		data.add("CurrentGear");
-		Log.i("IP-Port-Setting ", "EXLAPListener "+ settings);
 		CarData.getInstance().startService(settings, data);
-//		CarData.getInstance().startService("socket://192.168.0.40:28500", data);
 	}
 
 	private void addActionTabMapping(PagerAdapter adapter) {
@@ -391,5 +396,25 @@ public class MainActivity extends FragmentActivity implements
 			}
 			return null;
 		}
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+		if(key.equals("prefIpAdress")||key.equals("prefPort")){
+			StringBuilder builder = new StringBuilder();
+			builder.append("socket://"
+					+ prefs.getString("prefIpAdress", "192.168.0.40"));
+			builder.append(":"+prefs.getString("prefPort", "28500"));
+			try {
+				System.out.println("ending listener");
+				CarData.getInstance().endListener();
+				System.out.println("ending listener finished");
+				startEXLAPListener(builder.toString());
+			} catch (Exception e) {
+				Log.e("CarData Listener",e.getMessage());
+			}
+			
+		}
+		
 	}
 }

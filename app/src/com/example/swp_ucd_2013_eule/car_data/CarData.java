@@ -8,10 +8,13 @@ import java.util.List;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
+import de.exlap.ConnectionConfiguration;
 import de.exlap.DataListener;
 import de.exlap.DataObject;
 import de.exlap.ExlapClient;
+import de.exlap.ExlapClientAsync;
 import de.exlap.ExlapException;
 
 /**
@@ -30,7 +33,7 @@ public class CarData implements DataListener {
 	private List<String> mSubscribeItems;
 	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
 	private Thread mConnectionWatcher;
-	private boolean mRun = false;
+	private  volatile boolean mRun = false;
 	private static CarData mCarDataInstance = null;
 
 	private CarData() {
@@ -104,26 +107,41 @@ public class CarData implements DataListener {
 		mConnectionWatcher = new Thread(new Runnable() {
 
 			public void run() {
-				mEC = new ExlapClient(address);
+				ConnectionConfiguration config = new ConnectionConfiguration(address);
+				config.setConnectTimeout(500);
+				mEC = new ExlapClient(config);
 				mEC.addDataListener(mEXLAPListener);
 
+				Log.d("CarData conWatcher","started");
 				while (mRun) {
+					Log.d("CarData conWatcher","checking status");
 					// check if the EXLAP-Client is connected
 					if (!mEC.isConnected()) {
+						Log.d("CarData conWatcher","not connected");
 						// logging?
 						// as long as there is no connection try to reconnect to
 						// the server
-						while (!mEC.isConnected()) {
+						while (!mEC.isConnected() && mRun) {
+							Log.d("CarData conWatcher","trying to connect");
 							mEC.connect();
 							// TODO: abbruch Bedingung (4 mal versuchen oder
 							// so??)
 							try {
-								Thread.sleep(200);
+								Thread.sleep(500);
 							} catch (InterruptedException e) {
 							}
 						}
+						if(mEC.isConnected()){
+							Log.d("CarData conWatcher","subscribing");
+							subscribe();
+						}
 						// if a connection has been made, subscribe the data
-						subscribe();
+					}else{
+						Log.d("CarData conWatcher","connected");
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+						}
 					}
 
 				}
@@ -177,11 +195,16 @@ public class CarData implements DataListener {
 		mRun = false;
 		try {
 			mConnectionWatcher.join();
+
 		} catch (InterruptedException e) {
 			// logging?
 		}
 		// logging?
+		try{
 		unsubscribe();
+		}catch(Exception e){
+			Log.i("CarData.endListener",e.getMessage());
+		}
 		mEC.shutdown();
 		mConnectionWatcher = null;
 		// logging?
