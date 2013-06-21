@@ -47,7 +47,7 @@ public class DrivePointsFragment extends Fragment {
 				0xFF346802);
 		
 		mRefBar = (ReferenceBar) rootView.findViewById(R.id.pointReferenceBar);
-		mRefBar.setValue(0);
+		mRefBar.setValue(mPointProgress);
 		
 		
 		

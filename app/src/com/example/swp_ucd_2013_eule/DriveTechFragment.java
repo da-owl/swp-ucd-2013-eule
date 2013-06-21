@@ -67,11 +67,13 @@ public class DriveTechFragment extends Fragment {
 				 * mFuelConsumptionNow.setText(String.format("%.1f", value) +
 				 * " l/hour"); }
 				 */else if (data.containsKey("EngineSpeed")) {
-					try {
+
+					 try {
 						mRPM = Float.parseFloat(data.getString("EngineSpeed"));
 					} catch (NumberFormatException e) {
 						System.out.println(e.getMessage());
 					}
+				
 					mGearIndicator.setRPM(mRPM);
 				} else if (data.containsKey("CurrentGear")) {
 					int oldGear = mGear;
