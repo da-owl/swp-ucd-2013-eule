@@ -1,11 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
-import java.util.Timer;
-
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,12 +17,9 @@ import com.example.swp_ucd_2013_eule.view.Forest.UserForestItemListener;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
 public class ForestFragment extends Fragment {
-	private Handler mHandler;
-	private Timer mTimer;
 	private Forest mForest;
 	private SlideUpContainer mSlideUpContainer;
 	private ForestItem mCurItem;
-	private ViewPager mViewPager;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
