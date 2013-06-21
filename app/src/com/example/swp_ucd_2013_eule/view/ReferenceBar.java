@@ -274,15 +274,24 @@ public class ReferenceBar extends View {
 	}
 
 	public void setValue(float val) {
-		if(val > 0){
+		if (val > 0) {
 			mValue = Math.min(val, mMax);
-		}else if(val <0){
+		} else if (val < 0) {
 			mValue = Math.max(val, -mMax);
-		}else{
+		} else {
 			mValue = val;
 		}
-		
+
 		updateBarFillDimensions();
+		invalidate();
+	}
+
+	public void setGradientColors(int good1, int good2, int bad1, int bad2) {
+		mGoodGradient1 = good1;
+		mGoodGradient2 = good2;
+		mBadGradient1 = bad1;
+		mBadGradient2 = bad2;
+		updateGradients();
 		invalidate();
 	}
 }
