@@ -11,9 +11,11 @@ import android.widget.TextView;
 import android.widget.ImageView;
 
 import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
+import com.example.swp_ucd_2013_eule.view.ReferenceBar;
 
 public class DrivePointsFragment extends Fragment {
-	BenchmarkBar mLevelBar;
+	private BenchmarkBar mLevelBar;
+	private ReferenceBar mRefBar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +40,9 @@ public class DrivePointsFragment extends Fragment {
 		mLevelBar.setValue(90);
 		mLevelBar.setGradientColors(0xFF6cbf1c, 0xFF346802, 0xFF6cbf1c,
 				0xFF346802);
+		
+		mRefBar = (ReferenceBar) rootView.findViewById(R.id.pointReferenceBar);
+		mRefBar.setValue(0);
 
 		final ImageView image = (ImageView) rootView
 				.findViewById(R.id.imgCombo);

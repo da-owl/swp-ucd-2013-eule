@@ -13,38 +13,17 @@
         android:id="@+id/drive_lvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/levelBar"
-        android:layout_marginBottom="32dp"
         android:text="@string/fragment_drive_Level"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-    
+
     <com.example.swp_ucd_2013_eule.view.BenchmarkBar
         android:id="@+id/levelBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="35dp"
-        app:weight="32"
-        app:horizontal="true" />
-    
-    <ImageView
-        android:id="@+id/drive_pts_stack"
-        android:layout_width="26dp"
-        android:layout_height="32dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/ico_waterdrops" />
-
-    <TextView
-        android:id="@+id/txtPointsStackNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/drive_pts_stack"
-        android:layout_toRightOf="@+id/drive_pts_stack"
-        android:text="PointsStack"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_below="@+id/drive_lvl"
+        app:horizontal="true"
+        app:weight="32" />
 
     <TextView
         android:id="@+id/txtLevelCur"
@@ -70,9 +49,36 @@
         android:id="@+id/imgCombo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_alignLeft="@+id/levelBar"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/levelBar"
-        android:scaleType="fitEnd"
+        android:layout_below="@+id/drive_pts_stack"
         android:src="@drawable/combo_x4" />
-    
+
+    <com.example.swp_ucd_2013_eule.view.ReferenceBar
+        android:id="@+id/pointReferenceBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/levelBar"
+        android:layout_below="@+id/levelBar"
+        app:horizontal="true"
+        app:weight="32" />
+
+    <ImageView
+        android:id="@+id/drive_pts_stack"
+        android:layout_width="26dp"
+        android:layout_height="32dp"
+        android:layout_alignLeft="@+id/pointReferenceBar"
+        android:layout_below="@+id/pointReferenceBar"
+        android:src="@drawable/ico_waterdrops" />
+
+    <TextView
+        android:id="@+id/txtPointsStackNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/drive_pts_stack"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/drive_pts_stack"
+        android:text="PointsStack"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>

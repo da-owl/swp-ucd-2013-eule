@@ -39,7 +39,7 @@ public class DriveTechFragment extends Fragment {
 		((TextView) rootView.findViewById(R.id.txtFuelConsumptionCurrentTrip))
 				.setText("4,3 l/100km");
 		((TextView) rootView.findViewById(R.id.txtFuelConsumptionAll))
-				.setText("3,8 l/100km");
+				.setText("3,8 l/100km"); 
 
 		mGearIndicator = (GearIndicator) rootView
 				.findViewById(R.id.gearIndicator);
