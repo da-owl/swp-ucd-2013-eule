@@ -7,14 +7,17 @@ import java.util.Map;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -58,13 +61,21 @@ public class MainActivity extends FragmentActivity implements
 		addActionTabMapping(new ForestPagerAdapter(R.id.ForestView, fm));
 		addActionTabMapping(new SocialPagerAdapter(R.id.SocialView, fm));
 		addActionTabMapping(new MarketPagerAdapter(R.id.MarketView, fm));
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		StringBuilder builder = new StringBuilder();
+		builder.append("socket://"
+				+ prefs.getString("prefIpAdress", "192.168.0.40"));
+		builder.append(":"+prefs.getString("prefPort", "28500"));
+		
+		
 		CarData.getInstance();
-		startEXLAPListener();
+		startEXLAPListener(builder.toString());
 		CarDataLogic.getInstance();
 
 	}
 
-	private void startEXLAPListener() {
+	private void startEXLAPListener(String settings) {
 		ArrayList<String> data = new ArrayList<String>();
 		data.add("VehicleSpeed");
 		data.add("TripOdometer");
@@ -75,7 +86,9 @@ public class MainActivity extends FragmentActivity implements
 		data.add("FuelConsumption");
 		data.add("EngineSpeed");
 		data.add("CurrentGear");
-		CarData.getInstance().startService("socket://192.168.0.40:28500", data);
+		Log.i("IP-Port-Setting ", "EXLAPListener "+ settings);
+		CarData.getInstance().startService(settings, data);
+//		CarData.getInstance().startService("socket://192.168.0.40:28500", data);
 	}
 
 	private void addActionTabMapping(PagerAdapter adapter) {

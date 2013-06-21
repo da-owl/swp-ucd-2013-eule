@@ -2,11 +2,15 @@
 <resources>
 
     <string name="app_name">Team Eule</string>
-    <string name="action_settings">Einstellungen</string>
+    <string name="MenuIconString_ForrestView">Forest</string>
+    <string name="MenuIconString_DriveView">Drive</string>
+    <string name="MenuIconString_SocialView">Social</string>
+    <string name="MenuIconString_MarketView">Market</string>
     <string name="action_comm_test">Teste Kommunikation</string>
+    <string name="action_settings">Einstellungen</string>
+    
     <string name="fragment_drive_title_section1">Punkte-Fortschritt</string>
     <string name="fragment_drive_title_section2">Fahr-Empfehlung</string>
-    <string name="fragment_drive_Level">Waldgröße:</string>
     <string name="fragment_forest_title_section1">Mein Wald</string>
     <string name="fragment_forest_title_section2">Anderer Tab</string>
     <string name="fragment_social_title_section1">Bestenliste</string>
@@ -14,13 +18,12 @@
     <string name="fragment_market_title_section1">Pflanzen</string>
     <string name="fragment_market_title_section2">Tiere</string>
     <string name="fragment_market_title_section3">Kleidung</string>
-    <string name="MenuIconString_DriveView">Drive</string>
-    <string name="MenuIconString_ForrestView">Forest</string>
-    <string name="MenuIconString_SocialView">Social</string>
-    <string name="MenuIconString_MarketView">Market</string>
-    <string name="drive_fuel_consumption">Verbrauch:</string>
+    
+    <string name="fragment_drive_Level">Waldgröße:</string>
     <string name="fragment_forest_points">Tropfen</string>
     <string name="fragment_forest_Level">Größe</string>
+    <string name="drive_fuel_consumption">Verbrauch:</string>
+    
     <string name="fragment_social_toplist_worldlist">Top 5 Weltweit</string>
     <string name="fragment_social_toplist_locallist">Top 5 in Berlin</string>
     
@@ -28,9 +31,26 @@
     <string name="social_table_header_name">Name</string>   
     <string name="social_table_header_level">Wald-Größe</string>
     
-    <string name="settings_activity">Einstellungen</string>
     <string name="fragment_buy_dialog_buyItem">Buy</string>
     <string name="forest_item_slide_up_buy">Kaufen</string>
     
+	<string name="txt_setting_profile">Profil</string>
+	<string name="txt_setting_bt">Bluetooth</string>
+	<string name="txt_setting_dev">Entwickler Optionen</string>
+    <string name="txt_setting_other">Anderes</string>
+    <string name="txt_setting_user_name">Benutzername</string>
+    <string name="txt_setting_user_name_summary">Geben Sie sich einen Name</string>
+    <string name="txt_setting_enable_bt">Bluetooth</string>
+    <string name="txt_setting_enable_bt_summary">Bluetooth Einstellungen</string>
+    <string name="txt_setting_pair">Pairing</string>
+    <string name="txt_setting_pair_summary">Pairing verhalten</string>
+    <string name="txt_setting_enable_dev">Sie sind Entwickler</string>
+    <string name="txt_setting_enable_dev_summary">Änderungen erfordern Neustart</string>
+    <string name="txt_setting_ipadress">IP-Adresse</string>
+    <string name="txt_setting_ipadress_summary">IP-Adresse des Clients</string>
+    <string name="txt_setting_port">Port</string>
+    <string name="txt_setting_port_summary">Standard: 28500</string>
+    <string name="txt_setting_send_report">Absturzberichte senden</string>
+    <string name="txt_setting_send_report_summary">Hilft den Entwicklern</string>
 
 </resources>
