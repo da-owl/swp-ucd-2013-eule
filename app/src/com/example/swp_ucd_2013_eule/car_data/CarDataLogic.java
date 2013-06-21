@@ -2,6 +2,7 @@ package com.example.swp_ucd_2013_eule.car_data;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class CarDataLogic extends Handler {
 	private volatile boolean mHardBreaking = false;
 	private int mInterval = 150;
 	private volatile float mCurPoints = 0;
+	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
 	// for now static
 	private float mCity = 5.8f;
 	private float mCountry = 4.2f;
@@ -40,10 +42,11 @@ public class CarDataLogic extends Handler {
 		instance.subscribeHandler(this, "VehicleSpeed");
 	}
 
-	public static void init() {
+	public static CarDataLogic getInstance() {
 		if (CarDataLogicInstance == null) {
 			CarDataLogicInstance = new CarDataLogic();
 		}
+		return CarDataLogicInstance;
 	}
 
 	public void handleMessage(Message msg) {
@@ -88,6 +91,31 @@ public class CarDataLogic extends Handler {
 		thread.start();
 
 	}
+	
+	
+	
+	/**
+	 * 
+	 * @param handler
+	 *            which will be notified at a data event
+	 * @param identifier
+	 *            for the data to subscribe
+	 * @return false if the listener is allready known for the given identifier
+	 */
+	public boolean subscribeHandler(Handler handler, String identifier) {
+		List<Handler> list = mDataListeners.get(identifier);
+		if (list == null) {
+			list = new ArrayList<Handler>();
+		} else if (list.contains(handler)) {
+			return false;
+		}
+		list.add(handler);
+		mDataListeners.put(identifier, list);
+		return true;
+
+	}
+	
+	
 
 	private class CalculationThread extends Thread {
 		private List<Float> mConsumptions;
@@ -136,6 +164,18 @@ public class CarDataLogic extends Handler {
 				mCurPoints -= 1 * factor;
 			}
 
+			List<Handler> handlers = mDataListeners.get("pointProgress");
+			if (handlers != null) {
+				for (Handler handler : handlers) {
+					Message msg = handler.obtainMessage();
+					Bundle bundleData = new Bundle();
+					bundleData.putFloat("pointProgress", mCurPoints);
+					msg.setData(bundleData);
+					msg.sendToTarget();
+				}
+			}
+			
+			
 			System.out.println("curent points: " + mCurPoints);
 
 		}

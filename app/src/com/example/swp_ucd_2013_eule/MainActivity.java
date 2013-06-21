@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity implements
 		addActionTabMapping(new MarketPagerAdapter(R.id.MarketView, fm));
 		CarData.getInstance();
 		startEXLAPListener();
-		CarDataLogic.init();
+		CarDataLogic.getInstance();
 
 	}
 

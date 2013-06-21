@@ -189,20 +189,20 @@ public class CarData implements DataListener {
 
 	/**
 	 * 
-	 * @param listener
+	 * @param handler
 	 *            which will be notified at a data event
 	 * @param identifier
 	 *            for the data to subscribe
 	 * @return false if the listener is allready known for the given identifier
 	 */
-	public boolean subscribeHandler(Handler listener, String identifier) {
+	public boolean subscribeHandler(Handler handler, String identifier) {
 		List<Handler> list = mDataListeners.get(identifier);
 		if (list == null) {
 			list = new ArrayList<Handler>();
-		} else if (list.contains(listener)) {
+		} else if (list.contains(handler)) {
 			return false;
 		}
-		list.add(listener);
+		list.add(handler);
 		mDataListeners.put(identifier, list);
 		return true;
 

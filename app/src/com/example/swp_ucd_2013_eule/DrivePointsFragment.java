@@ -1,6 +1,8 @@
 package com.example.swp_ucd_2013_eule;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +12,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.ImageView;
 
+import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
 import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
 import com.example.swp_ucd_2013_eule.view.ReferenceBar;
 
 public class DrivePointsFragment extends Fragment {
 	private BenchmarkBar mLevelBar;
 	private ReferenceBar mRefBar;
-
+	private Handler mHandler;
+	
+	private float mPointProgress;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -43,6 +48,23 @@ public class DrivePointsFragment extends Fragment {
 		
 		mRefBar = (ReferenceBar) rootView.findViewById(R.id.pointReferenceBar);
 		mRefBar.setValue(0);
+		
+		
+		
+		mHandler = new Handler() {
+
+			public void handleMessage(Message msg) {
+				Bundle data = msg.getData();
+
+				if (data.containsKey("pointProgress")) {
+					mPointProgress = data.getFloat("pointProgress");
+					mRefBar.setValue(mPointProgress);
+				} 
+			}};
+		
+			CarDataLogic.getInstance().subscribeHandler(mHandler, "pointProgress");
+			CarDataLogic.getInstance().subscribeHandler(mHandler, "points");
+		
 
 		final ImageView image = (ImageView) rootView
 				.findViewById(R.id.imgCombo);
