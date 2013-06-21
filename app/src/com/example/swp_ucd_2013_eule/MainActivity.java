@@ -50,7 +50,9 @@ public class MainActivity extends FragmentActivity implements
 	Menu mMenu; 
 	int mActiveActionTab = R.id.DrivingView;
 	Map<Integer, FragmentStatePagerAdapter> mActionTabMapping = new HashMap<Integer, FragmentStatePagerAdapter>();
-
+	private boolean mInit;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,11 +77,12 @@ public class MainActivity extends FragmentActivity implements
 		//register for changes in your PreferenceActivity's onResume() method and unregister in the onPause() ?!
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		
-		
-		CarData.getInstance();
-		startEXLAPListener(builder.toString());
-		CarDataLogic.getInstance();
-
+		if(!mInit){
+			mInit= true;
+			CarData.getInstance();
+			startEXLAPListener(builder.toString());
+			CarDataLogic.getInstance();
+		}
 	}
 
 	private void startEXLAPListener(String settings) {
@@ -108,6 +111,7 @@ public class MainActivity extends FragmentActivity implements
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		final ActionBar actionBar = getActionBar();
+		
 
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -406,9 +410,7 @@ public class MainActivity extends FragmentActivity implements
 					+ prefs.getString("prefIpAdress", "192.168.0.40"));
 			builder.append(":"+prefs.getString("prefPort", "28500"));
 			try {
-				System.out.println("ending listener");
 				CarData.getInstance().endListener();
-				System.out.println("ending listener finished");
 				startEXLAPListener(builder.toString());
 			} catch (Exception e) {
 				Log.e("CarData Listener",e.getMessage());

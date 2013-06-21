@@ -32,8 +32,8 @@ public class CarData implements DataListener {
 	private DataListener mEXLAPListener = this;
 	private List<String> mSubscribeItems;
 	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
-	private Thread mConnectionWatcher;
-	private  volatile boolean mRun = false;
+	private volatile Thread mConnectionWatcher;
+	private volatile boolean mRun = false;
 	private static CarData mCarDataInstance = null;
 
 	private CarData() {
@@ -98,7 +98,7 @@ public class CarData implements DataListener {
 	public void startService(final String address, List<String> subscribeItems) {
 		mRun = true;
 		mSubscribeItems = subscribeItems;
-		// do not create a new Thread if theres allready one running which
+		// do not create a new Thread if there is already one running which
 		// hasn't been stopped
 		if (mConnectionWatcher != null) {
 			return;
