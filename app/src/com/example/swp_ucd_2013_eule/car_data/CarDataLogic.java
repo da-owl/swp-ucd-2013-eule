@@ -22,10 +22,13 @@ public class CarDataLogic extends Handler {
 	private int mInterval = 150;
 	private volatile float mCurPoints = 0;
 	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
+	private float mPointsScaleFactor =4;
+	private float mCurrentRPM=0;
+	private int[] mRPMExceeding= {0,0,0,0};
 	// for now static
-	private float mCity = 5.8f;
-	private float mCountry = 4.2f;
-	private float mMotorWay = 4.7f;
+	private float mCity = 7.5f;
+	private float mCountry = 5.8f;
+	private float mMotorWay = 5.2f;
 	private int mGears = 6;
 	private float m5percent = 0.1f;
 	private float m10percent = 0.2f;
@@ -36,7 +39,7 @@ public class CarDataLogic extends Handler {
 		CarData instance = CarData.getInstance();
 
 		instance.subscribeHandler(this, "InstantaneousValuePerMilage");
-		// instance.subscribeListener(this, "EngineSpeed");
+		instance.subscribeHandler(this, "EngineSpeed");
 		// instance.subscribeListener(this, "CurrentGear");
 		// instance.subscribeListener(this, "RecommendedGear");
 		instance.subscribeHandler(this, "VehicleSpeed");
@@ -63,6 +66,22 @@ public class CarDataLogic extends Handler {
 				&& mCurrentSpeed.size() >= mInterval) {
 			calculatePoints();
 		}
+		if(data.containsKey("EngineSpeed")){
+			try{
+			mCurrentRPM = Float.parseFloat(data.getString("EngineSpeed"));
+			}catch(NumberFormatException e){
+				System.out.println(e.getMessage());
+			}
+			if(mCurrentRPM > 4000){
+				mRPMExceeding[3]++;
+			}else if (mCurrentRPM > 3000){
+				mRPMExceeding[2]++;
+			}else if (mCurrentRPM >2000){
+				mRPMExceeding[1]++;
+			}else{
+				mRPMExceeding[0]++;
+			}
+		}
 	}
 
 	private void calculatePoints() {
@@ -87,9 +106,11 @@ public class CarDataLogic extends Handler {
 			listSpeed.addAll(mCurrentSpeed);
 			mCurrentConsumptions.clear();
 		}
-		Thread thread = new CalculationThread(listConsum, listSpeed);
+		int[] rpm = new int[]{mRPMExceeding[0],mRPMExceeding[1],mRPMExceeding[2],mRPMExceeding[3]};
+		mRPMExceeding = new int[] {0,0,0,0};
+		Thread thread = new CalculationThread(listConsum, listSpeed, rpm);
 		thread.start();
-
+		
 	}
 	
 	
@@ -123,10 +144,12 @@ public class CarDataLogic extends Handler {
 		private float mConsumption = 0f;
 		private float mSpeed = 0f;
 		private float mReferenceConsumption;
+		private int[] mRPM;
 
-		public CalculationThread(List<Float> consumps, List<Float> speed) {
+		public CalculationThread(List<Float> consumps, List<Float> speed, int[] rpm) {
 			mConsumptions = consumps;
 			mSpeedList = speed;
+			mRPM = rpm;
 		}
 
 		@Override
@@ -164,19 +187,30 @@ public class CarDataLogic extends Handler {
 				mCurPoints -= 1 * factor;
 			}
 
+
+			mCurPoints += ((float)mRPM[0]/mInterval)*2;	
+
+			mCurPoints -= ((float)mRPM[1]/mInterval)*1;
+
+			mCurPoints -= ((float)mRPM[2]/mInterval)*4;
+
+			mCurPoints -= ((float)mRPM[3]/mInterval)*8;
+
+			
 			List<Handler> handlers = mDataListeners.get("pointProgress");
 			if (handlers != null) {
 				for (Handler handler : handlers) {
 					Message msg = handler.obtainMessage();
 					Bundle bundleData = new Bundle();
-					bundleData.putFloat("pointProgress", mCurPoints);
+					bundleData.putFloat("pointProgress", mCurPoints*mPointsScaleFactor);
 					msg.setData(bundleData);
 					msg.sendToTarget();
 				}
 			}
+
+
 			
-			
-			System.out.println("curent points: " + mCurPoints);
+			System.out.println("curent points: " + mCurPoints*mPointsScaleFactor);
 
 		}
 
