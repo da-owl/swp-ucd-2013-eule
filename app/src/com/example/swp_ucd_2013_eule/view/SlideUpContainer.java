@@ -39,8 +39,10 @@ public class SlideUpContainer extends RelativeLayout {
 	}
 
 	public void slideOpen() {
-		startAnimation(mShowAnimation);
-		setVisibility(android.view.View.VISIBLE);
+		if (getVisibility() != android.view.View.VISIBLE) {
+			startAnimation(mShowAnimation);
+			setVisibility(android.view.View.VISIBLE);
+		}
 	}
 
 	public void slideClose() {

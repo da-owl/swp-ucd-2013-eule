@@ -3,128 +3,127 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$DummySectionFragment" >
 
-    <com.example.swp_ucd_2013_eule.view.ReferenceBar
-        android:id="@+id/referenceBar"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/imgGasPedal"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/imgGasPedal"
-        app:weight="64" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <com.example.swp_ucd_2013_eule.view.GearIndicator
-        android:id="@+id/gearIndicator"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_toLeftOf="@+id/referenceBar" />
+        <com.example.swp_ucd_2013_eule.view.ReferenceBar
+            android:id="@+id/referenceBar"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/imgGasPedal"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/imgGasPedal"
+            app:weight="64" />
 
-    <ImageView
-        android:id="@+id/imgGasPedal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <com.example.swp_ucd_2013_eule.view.GearIndicator
+            android:id="@+id/gearIndicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@+id/referenceBar" />
+
+        <ImageView
+            android:id="@+id/imgGasPedal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:maxHeight="32dp"
+            android:maxWidth="32dp"
+            android:src="@drawable/drive_gaspedal" />
+
+        <ImageView
+            android:id="@+id/imgBrakePedal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/referenceBar"
+            android:layout_below="@+id/referenceBar"
+            android:layout_marginTop="5dp"
+            android:maxHeight="32dp"
+            android:maxWidth="32dp"
+            android:src="@drawable/drive_brakepedal" />
+
+        <TextView
+            android:id="@+id/lblFuelConsumption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/gearIndicator"
+            android:layout_below="@+id/gearIndicator"
+            android:layout_marginTop="20dp"
+            android:text="@string/drive_fuel_consumption"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageView
+            android:id="@+id/imgFuelConsumptionNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/lblFuelConsumption"
+            android:layout_below="@+id/lblFuelConsumption"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:maxHeight="32dp"
+            android:maxWidth="32dp"
+            android:src="@drawable/fuel_consumption_now" />
+
+        <TextView
+            android:id="@+id/txtFuelConsumptionNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imgFuelConsumptionNow"
+            android:layout_alignRight="@+id/gearIndicator"
+            android:layout_alignTop="@id/imgFuelConsumptionNow"
+            android:layout_centerVertical="false"
+            android:layout_toRightOf="@+id/imgFuelConsumptionNow"
+            android:gravity="center_vertical"
+            android:text="-,- l/100km"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+    <com.example.swp_ucd_2013_eule.view.SlideUpContainer
+        android:id="@+id/infoSlideUp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="5dp"
-        android:maxHeight="32dp"
-        android:maxWidth="32dp"
-        android:src="@drawable/drive_gaspedal" />
+        android:background="@color/slideUpContainerBackgroundColor"
+        android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/imgBrakePedal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/referenceBar"
-        android:layout_below="@+id/referenceBar"
-        android:layout_marginTop="5dp"
-        android:maxHeight="32dp"
-        android:maxWidth="32dp"
-        android:src="@drawable/drive_brakepedal" />
+        <ImageView
+            android:id="@+id/imgInfo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ico_info" />
 
-    <TextView
-        android:id="@+id/lblFuelConsumption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/gearIndicator"
-        android:layout_below="@+id/gearIndicator"
-        android:layout_marginTop="20dp"
-        android:text="@string/drive_fuel_consumption"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <Button
+            android:id="@+id/btnSlideUpClose"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="X" />
 
-    <ImageView
-        android:id="@+id/imgFuelConsumptionNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lblFuelConsumption"
-        android:layout_below="@+id/lblFuelConsumption"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:maxHeight="32dp"
-        android:maxWidth="32dp"
-        android:src="@drawable/fuel_consumption_now" />
-
-    <ImageView
-        android:id="@+id/imgFuelConsumptionCurrentTrip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imgFuelConsumptionNow"
-        android:layout_below="@+id/imgFuelConsumptionNow"
-        android:layout_marginRight="10dp"
-        android:maxHeight="32dp"
-        android:maxWidth="32dp"
-        android:src="@drawable/fuel_consumption_current_trip" />
-
-    <ImageView
-        android:id="@+id/imgFuelConsumptionAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imgFuelConsumptionCurrentTrip"
-        android:layout_below="@+id/imgFuelConsumptionCurrentTrip"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/fuel_consumption_all" />
-
-    <TextView
-        android:id="@+id/txtFuelConsumptionNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/imgFuelConsumptionNow"
-        android:layout_alignRight="@+id/gearIndicator"
-        android:layout_alignTop="@id/imgFuelConsumptionNow"
-        android:layout_centerVertical="false"
-        android:layout_toRightOf="@+id/imgFuelConsumptionNow"
-        android:gravity="center_vertical"
-        android:text="-,- l/100km"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/txtFuelConsumptionCurrentTrip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/imgFuelConsumptionCurrentTrip"
-        android:layout_alignRight="@+id/txtFuelConsumptionNow"
-        android:layout_alignTop="@id/imgFuelConsumptionCurrentTrip"
-        android:layout_toRightOf="@id/imgFuelConsumptionAll"
-        android:gravity="center_vertical"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/txtFuelConsumptionAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/imgFuelConsumptionAll"
-        android:layout_alignRight="@+id/txtFuelConsumptionCurrentTrip"
-        android:layout_alignTop="@id/imgFuelConsumptionAll"
-        android:layout_toRightOf="@id/imgFuelConsumptionAll"
-        android:gravity="center_vertical"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/txtInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/imgInfo"
+            android:layout_toLeftOf="@+id/btnSlideUpClose"
+            android:layout_toRightOf="@+id/imgInfo"
+            android:text="TextView" />
+    </com.example.swp_ucd_2013_eule.view.SlideUpContainer>
 
 </RelativeLayout>
