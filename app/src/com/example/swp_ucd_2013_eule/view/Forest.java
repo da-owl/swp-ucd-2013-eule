@@ -42,6 +42,19 @@ public class Forest extends View {
 	private Random mRand = new Random();
 	private SlideUpContainer mSlideUpContainer;
 
+	private float mCurX, mCurY;
+
+	// used to eliminate straight lines
+	private float[][][] mDistortTop;
+	private float[][][] mDistortBottom;
+	private float[][][] mDistortLeft;
+	private float[][][] mDistortRight;
+
+	private int mCurDistortTop;
+	private int mCurDistortBottom;
+	private int mCurDistortRight;
+	private int mCurDistortLeft;
+
 	private UserForestItemListener mForestItemListener;
 
 	public Forest(Context context) {
@@ -87,54 +100,158 @@ public class Forest extends View {
 		mForestPaintBorder.setPathEffect(new CornerPathEffect(
 				FOREST_ROUNDED_CORNER));
 
+		float[][] topTile1 = new float[][] { new float[] { 0.1f, 0.1f },
+				new float[] { 0.5f, 0f }, new float[] { 0.8f, 0.2f } };
+		float[][] topTile2 = new float[][] { new float[] { 0.2f, 0.1f },
+				new float[] { 0.5f, 0.12f }, new float[] { 0.8f, 0.1f } };
+		float[][] topTile3 = new float[][] { new float[] { 0.3f, 0.1f },
+				new float[] { 0.4f, 0.12f }, new float[] { 0.5f, 0.1f },
+				new float[] { 0.7f, 0f }, new float[] { 0.95f, 0.02f } };
+		mDistortTop = new float[][][] { topTile1, topTile2, topTile3 };
+
+		mDistortBottom = new float[mDistortTop.length][][];
+		for (int i = 0; i < mDistortTop.length; i++) {
+			float[][] baseDistort = mDistortTop[mDistortTop.length - i - 1];
+			mDistortBottom[i] = new float[baseDistort.length][];
+			for (int j = 0; j < baseDistort.length; j++) {
+				mDistortBottom[i][j] = new float[] { -baseDistort[j][0],
+						-baseDistort[j][1] };
+			}
+		}
+
+		float[][] rightTile1 = new float[][] { new float[] { 0f, 0.4f },
+				new float[] { -0.1f, 0.9f } };
+		float[][] rightTile2 = new float[][] { new float[] { -0.13f, 0.3f },
+				new float[] { -0.04f, 0.3f }, new float[] { -0.13f, 0.4f } };
+		float[][] rightTile3 = new float[][] { new float[] { -0.05f, 0.1f },
+				new float[] { 0f, 0.3f }, new float[] { -0.07f, 0.7f } };
+		mDistortRight = new float[][][] { rightTile1, rightTile2, rightTile3 };
+
+		mDistortLeft = new float[mDistortRight.length][][];
+		for (int i = 0; i < mDistortRight.length; i++) {
+			float[][] baseDistort = mDistortRight[mDistortRight.length - i - 1];
+			mDistortLeft[i] = new float[baseDistort.length][];
+			for (int j = 0; j < baseDistort.length; j++) {
+				mDistortLeft[i][j] = new float[] { -baseDistort[j][0],
+						-baseDistort[j][1] };
+			}
+		}
+	}
+
+	private void applyDistort(float[][] distorts, float targetX, float targetY) {
+		float oldX = mCurX, oldY = mCurY;
+
+		for (float[] distort : distorts) {
+			mCurX = oldX + distort[0] * mTileSize;
+			mCurY = oldY + distort[1] * mTileSize;
+			mForestPath.lineTo(mCurX, mCurY);
+		}
+
+		mCurX = targetX;
+		mCurY = targetY;
+		mForestPath.lineTo(mCurX, mCurY);
+	}
+
+	private void moveRight() {
+		float targetX = mCurX + mTileSize, targetY = mCurY;
+		float[][] distorts = mDistortTop[mCurDistortTop];
+		applyDistort(distorts, targetX, targetY);
+		mCurDistortTop = ++mCurDistortTop % mDistortTop.length;
+	}
+
+	private void moveLeft() {
+		float targetX = mCurX - mTileSize, targetY = mCurY;
+		float[][] distorts = mDistortBottom[mCurDistortBottom];
+		applyDistort(distorts, targetX, targetY);
+		mCurDistortBottom = mCurDistortBottom == 0 ? mDistortBottom.length - 1
+				: --mCurDistortBottom;
+	}
+
+	private void moveRightDown() {
+		float targetX = mCurX, targetY = mCurY + mTileSize;
+		float[][] distorts = mDistortRight[mCurDistortRight];
+		applyDistort(distorts, targetX, targetY);
+		mCurDistortRight = ++mCurDistortRight % mDistortRight.length;
+	}
+
+	private void moveLeftUp() {
+		float targetX = mCurX, targetY = mCurY - mTileSize;
+		float[][] distorts = mDistortLeft[mCurDistortLeft];
+		applyDistort(distorts, targetX, targetY);
+		mCurDistortLeft = mCurDistortLeft == 0 ? mDistortLeft.length - 1
+				: --mCurDistortLeft;
 	}
 
 	private void updateForestSize() {
 		mForestPath = new Path();
+		mCurDistortTop = 0;
+		mCurDistortRight = 0;
+		mCurDistortBottom = (mCols - 1) % mDistortBottom.length;
+
 		float baseX = FOREST_STROKE_WIDTH / 2, baseY = FOREST_STROKE_WIDTH / 2;
-		float curX = baseX, curY = baseY;
-		int rows = 1;
+		mCurX = baseX;
+		mCurY = baseY;
 
 		// start
-		mForestPath.moveTo(curX, curY);
+		mForestPath.moveTo(mCurX, mCurY);
 
 		// move right
 		int minSquareCols = mCols - 1;
 		int tilesLeft = mLevel - minSquareCols * minSquareCols - 1;
-		curX += mCols * mTileSize;
-		mForestPath.lineTo(curX, curY);
-		
+		for (int i = 0; i < mCols; ++i) {
+			moveRight();
+		}
+
 		// move 1 down
-		curY += mTileSize;
-		mForestPath.lineTo(curX, curY);
+		int rows = 1;
+		moveRightDown();
 
 		// move down
 		if (tilesLeft > 0) {
-			int vertTiles = Math.min(mCols-1, tilesLeft);
+			int vertTiles = Math.min(mCols - 1, tilesLeft);
 			tilesLeft -= vertTiles;
 			rows += vertTiles;
-			curY += (vertTiles * mTileSize);
-			mForestPath.lineTo(curX, curY);
+			for (int i = 0; i < vertTiles; ++i) {
+				moveRightDown();
+			}
 		}
 
 		// move 1 left
-		curX -= mTileSize;
-		mForestPath.lineTo(curX, curY);
+		int leftMoves = 1;
+		moveLeft();
 
 		// move left
 		if (tilesLeft > 0) {
-			curX -= tilesLeft * mTileSize;
-			tilesLeft = 0;
-			mForestPath.lineTo(curX, curY);
+			leftMoves += tilesLeft;
+			for (int i = 0; i < tilesLeft; ++i) {
+				moveLeft();
+			}
 		}
 
 		// move up/down
-		curY += (mCols - rows - 1)* mTileSize;
-		mForestPath.lineTo(curX, curY);
+		int leftRowsDown = mCols - rows - 1;
+		if (leftRowsDown >= 0) {
+			rows += leftRowsDown;
+			for (int i = 0; i < leftRowsDown; i++) {
+				moveRightDown();
+			}
+			mCurDistortLeft = (rows-1) % mDistortLeft.length;
+
+		} else {
+			mCurDistortLeft = (rows-1) % mDistortLeft.length;
+			moveLeftUp();
+			--rows;
+		}
 
 		// move to left end
-		curX = baseX;
-		mForestPath.lineTo(curX, curY);
+		for (int i = 0; i < mCols - leftMoves; i++) {
+			moveLeft();
+		}
+
+		// move up
+		for (int i = 0; i < rows; i++) {
+			moveLeftUp();
+		}
 
 		// End
 		mForestPath.close();
