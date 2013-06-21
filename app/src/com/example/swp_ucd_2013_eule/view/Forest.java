@@ -1,7 +1,6 @@
 package com.example.swp_ucd_2013_eule.view;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,6 +19,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 
 import com.example.swp_ucd_2013_eule.R;
 import com.example.swp_ucd_2013_eule.data.ForestItem;
@@ -32,14 +32,13 @@ public class Forest extends View {
 	private float mTileSize;
 	private int mCols, mRows;
 
-	private int mLevel = 7;
+	private int mLevel = 17;
 
 	private Path mForestPath;
 	private Paint mForestPaint;
 	private Paint mForestPaintBorder;
 	private ArrayList<ForestItemWrapper> mForestItems = new ArrayList<ForestItemWrapper>();
 	private boolean mInitComplet;
-	private Random mRand = new Random();
 	private SlideUpContainer mSlideUpContainer;
 
 	private float mCurX, mCurY;
@@ -54,6 +53,9 @@ public class Forest extends View {
 	private int mCurDistortBottom;
 	private int mCurDistortRight;
 	private int mCurDistortLeft;
+
+	private float mCurTouchX;
+	private float mCurTouchY;
 
 	private UserForestItemListener mForestItemListener;
 
@@ -235,10 +237,10 @@ public class Forest extends View {
 			for (int i = 0; i < leftRowsDown; i++) {
 				moveRightDown();
 			}
-			mCurDistortLeft = (rows-1) % mDistortLeft.length;
+			mCurDistortLeft = (rows - 1) % mDistortLeft.length;
 
 		} else {
-			mCurDistortLeft = (rows-1) % mDistortLeft.length;
+			mCurDistortLeft = (rows - 1) % mDistortLeft.length;
 			moveLeftUp();
 			--rows;
 		}
@@ -302,7 +304,9 @@ public class Forest extends View {
 		mRows = (int) Math.ceil(((float) mLevel) / mCols);
 		int width = (int) (mCols * mTileSize + FOREST_STROKE_WIDTH);
 		int height = (int) (mRows * mTileSize + FOREST_STROKE_WIDTH);
-		setMeasuredDimension(width, height);
+		setMeasuredDimension(
+				Math.max(width, MeasureSpec.getSize(widthMeasureSpec)),
+				Math.max(height, MeasureSpec.getSize(heightMeasureSpec)));
 		updateForestSize();
 	}
 
@@ -310,22 +314,42 @@ public class Forest extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		// e.g. viewpager should not scroll horizontal
+		ViewParent parent = getParent();
+		if (parent != null) {
+			parent.requestDisallowInterceptTouchEvent(true);
+		}
+
 		boolean handled = false;
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			handled = true;
+			mCurTouchX = (int) event.getRawX();
+			mCurTouchY = (int) event.getRawY();
 			mLastTouchDown = SystemClock.elapsedRealtime();
 			break;
 
 		case MotionEvent.ACTION_UP:
 			handled = true;
-			if (SystemClock.elapsedRealtime() - mLastTouchDown <= 500) {
-				if (!resolveSliderClick(event.getX(), event.getY())) {
-					resolveItemClick(event.getX(), event.getY());
+			if (SystemClock.elapsedRealtime() - mLastTouchDown <= 200) {
+				float clickX = event.getX() + getScrollX();
+				float clickY = event.getY() + getScrollY();
+				if (!resolveSliderClick(clickX, clickY)) {
+					resolveItemClick(clickX, clickY);
 				}
 			}
 			break;
+
+		case MotionEvent.ACTION_MOVE: {
+			handled = true;
+			float x2 = event.getRawX();
+			float y2 = event.getRawY();
+			scrollBy((int) (mCurTouchX - x2), (int) (mCurTouchY - y2));
+			mCurTouchX = x2;
+			mCurTouchY = y2;
+			break;
+		}
 
 		case MotionEvent.ACTION_CANCEL:
 		case MotionEvent.ACTION_OUTSIDE:

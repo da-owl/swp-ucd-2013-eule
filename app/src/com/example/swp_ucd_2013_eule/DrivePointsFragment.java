@@ -34,8 +34,8 @@ public class DrivePointsFragment extends Fragment {
 		 * dummyTextView.setText("...");
 		 */
 
-		((TextView) rootView.findViewById(R.id.txtLevelCur)).setText("35 m²");
-		((TextView) rootView.findViewById(R.id.txtLevelNext)).setText("40 m²");
+		((TextView) rootView.findViewById(R.id.txtLevelCur)).setText("85 m²");
+		((TextView) rootView.findViewById(R.id.txtLevelNext)).setText("90 m²");
 		((TextView) rootView.findViewById(R.id.txtPointsStackNow))
 				.setText("80");
 

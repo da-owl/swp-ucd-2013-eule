@@ -47,18 +47,18 @@ public class ForestItem {
 				"Fichte",
 				"Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 85 m² erreicht haben.");
 		fir.setPrice(100);
-		fir.setLevel(20);
+		fir.setLevel(17);
 
 		ForestItem tree = new ForestItem(ForestItemType.STANDARD, imgTree,
 				"Laubbaum",
 				"Dies ist ein Laubbaum.\nEs ist ein Startgegenstand.");
 		tree.setPrice(15);
-		tree.setLevel(4);
+		tree.setLevel(1);
 
 		ForestItem bush = new ForestItem(ForestItemType.STANDARD, imgBush,
 				"Busch", "Dies ist ein Busch.\nEr ist ein Startgegenstand.");
 		bush.setPrice(95);
-		bush.setLevel(4);
+		bush.setLevel(1);
 
 		ForestItem gordon = new ForestItem(
 				ForestItemType.SPECIAL,
@@ -72,7 +72,7 @@ public class ForestItem {
 				"Blume",
 				"Dies ist eine Tuple.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.");
 		flower.setPrice(20);
-		flower.setLevel(20);
+		flower.setLevel(26);
 
 		ForestItem bird = new ForestItem(
 				ForestItemType.STANDARD,
@@ -80,7 +80,7 @@ public class ForestItem {
 				"Vogel",
 				"Dies ist ein Vogel.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.");
 		bird.setPrice(20);
-		bird.setLevel(18);
+		bird.setLevel(26);
 
 		ForestItem dress = new ForestItem(
 				ForestItemType.STANDARD,
@@ -88,7 +88,7 @@ public class ForestItem {
 				"Kleid",
 				"Dies ist ein Kleid.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.");
 		dress.setPrice(35);
-		dress.setLevel(10);
+		dress.setLevel(26);
 
 		examples = new ForestItem[] { fir, tree, bush, gordon, flower, bird,
 				dress };

@@ -69,18 +69,16 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			v = li.inflate(R.layout.fragment_market_item, null);
 			TextView tv = (TextView) v.findViewById(R.id.icon_text);
 			tv.setText(item.getPrice() + " Tropfen");
-			if(item.getPrice() > 80){
+			if (item.getPrice() > 80) {
 				tv.setTextColor(Color.RED);
 			}
 			tv = (TextView) v.findViewById(R.id.icon_text2);
-			tv.setText(item.getLevel() + " 	Forest size");
-			if(item.getLevel() > 7){
+			tv.setText((item.getLevel() * 5) + " m²");
+			if (item.getLevel() > 17) {
 				tv.setTextColor(Color.RED);
 			}
 			ImageView iv = (ImageView) v.findViewById(R.id.icon_image);
 			iv.setImageBitmap(item.getImage());
-			
-			
 
 		} else {
 			v = convertView;

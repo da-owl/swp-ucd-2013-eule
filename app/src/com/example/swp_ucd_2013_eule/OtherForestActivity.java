@@ -1,12 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,13 +12,10 @@ import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.data.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.Forest;
 import com.example.swp_ucd_2013_eule.view.Forest.UserForestItemListener;
-import com.example.swp_ucd_2013_eule.view.Level;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
 public class OtherForestActivity extends Activity {
-	private Handler mHandler;
 	private Forest mForest;
-	private Timer mTimer;
 
 	private SlideUpContainer mSlideUpContainer;
 	private ForestItem mCurItem;
@@ -31,10 +23,9 @@ public class OtherForestActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_other_forest);
+		setContentView(R.layout.fragment_forest);
 
-		TextView userName = ((TextView) findViewById(R.id.txt_other_forest_name));
-		userName.setText(getIntent().getStringExtra("userName") + "'s forest");
+		setTitle(getIntent().getStringExtra("userName") + "'s forest");
 
 		mForest = (Forest) findViewById(R.id.forest);
 
@@ -70,7 +61,7 @@ public class OtherForestActivity extends Activity {
 
 		((TextView) findViewById(R.id.txtDrops)).setText("80");
 
-		((TextView) findViewById(R.id.txtForestSize)).setText("35 m²");
+		((TextView) findViewById(R.id.txtForestSize)).setText("85 m²");
 
 	}
 

@@ -37,10 +37,11 @@ public abstract class MarketCategoryFragment extends Fragment {
 		GridView gridView = (GridView) rootView.findViewById(R.id.gridItems);
 		mAdapter = getMarketForestItemAdapter(rootView.getContext());
 		gridView.setAdapter(mAdapter);
-		
-		((TextView) rootView.findViewById(R.id.txtPointNumberHeader)).setText("80");
-		((Level) rootView.findViewById(R.id.level)).setLevel(7);
-		
+
+		((TextView) rootView.findViewById(R.id.txtPointNumberHeader))
+				.setText("80");
+		((Level) rootView.findViewById(R.id.level)).setLevel(17);
+
 		// XXX Duplicate code (see ForestFragment) --> outsource
 		mSlideUpContainer = (SlideUpContainer) rootView
 				.findViewById(R.id.forestSlideUp);
@@ -52,21 +53,16 @@ public abstract class MarketCategoryFragment extends Fragment {
 				mSlideUpContainer.slideClose();
 			}
 		});
-		
-		
+
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if (mAdapter.getItem(position).getPrice() < 80
-						& mAdapter.getItem(position).getLevel() < 18) {
-					mCurItem = (ForestItem) mAdapter.getItem(position);
-					updateCurrentItemView();
-					mSlideUpContainer.slideOpen();
-				}
+				mCurItem = (ForestItem) mAdapter.getItem(position);
+				updateCurrentItemView();
+				mSlideUpContainer.slideOpen();
 			}
-			
 		});
 
 		Button btnBuy = (Button) rootView.findViewById(R.id.btnBuyItem);

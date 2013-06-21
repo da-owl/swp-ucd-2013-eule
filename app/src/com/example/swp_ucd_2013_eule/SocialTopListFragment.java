@@ -22,11 +22,11 @@ public class SocialTopListFragment extends Fragment {
 
 		mWorldList = (SocialList) rootView.findViewById(R.id.social_toplist_world);
 		
-		mWorldList.addRow(1, "Ronald", 12);
-		mWorldList.addRow(2, "Anakin", 9);
-		mWorldList.addRow(3, "Owl", 6);
-		mWorldList.addRow(4, "XXX_MEGABOY_XXX", 5);
-		mWorldList.addRow(5, "Badass", 4);
+		mWorldList.addRow(1, "Ronald", 24);
+		mWorldList.addRow(2, "Anakin", 23);
+		mWorldList.addRow(3, "Owl", 19);
+		mWorldList.addRow(4, "XXX_MEGABOY_XXX", 18);
+		mWorldList.addRow(5, "Badass", 18);
 		
 		
 		

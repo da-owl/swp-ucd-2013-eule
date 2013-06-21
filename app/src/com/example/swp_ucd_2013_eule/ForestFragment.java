@@ -68,7 +68,7 @@ public class ForestFragment extends Fragment {
 		});
 
 		((TextView) rootView.findViewById(R.id.txtForestSize))
-				.setText("35 m²");
+				.setText("85 m²");
 
 		return rootView;
 	}
