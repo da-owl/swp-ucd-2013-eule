@@ -66,7 +66,7 @@ public class ReferenceBar extends View {
 		mBorderPaint.setAntiAlias(true);
 		mBorderPaint.setColor(0xFFffffff);
 		mBorderPaint.setStyle(Style.STROKE);
-		mBorderPaint.setStrokeWidth(2);
+		mBorderPaint.setStrokeWidth(dpToPx(2));
 
 		mGoodPaint = new Paint();
 		mGoodPaint.setAntiAlias(true);
