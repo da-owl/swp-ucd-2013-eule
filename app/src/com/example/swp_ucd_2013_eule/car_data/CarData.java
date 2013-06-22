@@ -72,16 +72,20 @@ public class CarData implements DataListener {
 			String value = data[3].substring(data[3].indexOf("=") + 1,
 					data[3].indexOf("]")).trim();
 			Log.d("CarData", "Data key: " + key + ", value: " + value);
-			List<Handler> handlers = mDataListeners.get(key);
-			if (handlers != null) {
-				Log.d("CarData", "notifying handlers");
-				for (Handler handler : handlers) {
-					Message msg = handler.obtainMessage();
-					Bundle bundleData = new Bundle();
-					bundleData.putString(key, value);
-					msg.setData(bundleData);
-					msg.sendToTarget();
+			if (!value.equals("null")) {
+				List<Handler> handlers = mDataListeners.get(key);
+				if (handlers != null) {
+					Log.d("CarData", "notifying handlers");
+					for (Handler handler : handlers) {
+						Message msg = handler.obtainMessage();
+						Bundle bundleData = new Bundle();
+						bundleData.putString(key, value);
+						msg.setData(bundleData);
+						msg.sendToTarget();
+					}
 				}
+			} else {
+				Log.d("CarData", "null received, key: " + key);
 			}
 		}
 

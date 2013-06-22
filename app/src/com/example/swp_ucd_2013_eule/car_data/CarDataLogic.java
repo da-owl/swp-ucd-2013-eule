@@ -74,7 +74,7 @@ public class CarDataLogic extends Handler {
 					"Geschwindigkeit: " + data.getString("VehicleSpeed"));
 		} else if (data.containsKey("EngineSpeed")) {
 			Log.d("CarDataLogic",
-					"RPM: " + data.getString(data.getString("EngineSpeed")));
+					"EngineSpeed: " + data.getString("EngineSpeed"));
 
 			try {
 				mCurrentRPM = Float.parseFloat(data.getString("EngineSpeed"));
@@ -93,7 +93,7 @@ public class CarDataLogic extends Handler {
 			}
 
 		} else if (data.containsKey("CurrentGear")) {
-			Log.d("CarDataLogic", "Gang: " + data.getString("CurrentGear"));
+			Log.d("CarDataLogic", "Gear: " + data.getString("CurrentGear"));
 			int oldGear = mCurGear;
 			try {
 				mCurGear = Integer.parseInt(data.getString("CurrentGear"));
@@ -168,7 +168,8 @@ public class CarDataLogic extends Handler {
 		}
 		int[] rpm = new int[] { mRPMExceeding[0], mRPMExceeding[1],
 				mRPMExceeding[2], mRPMExceeding[3] };
-		int[] acc = new int[] { mAccExceeding[0], mAccExceeding[1], mAccExceeding[2] };
+		int[] acc = new int[] { mAccExceeding[0], mAccExceeding[1],
+				mAccExceeding[2] };
 		Thread thread = new CalculationThread(listConsum, listSpeed, rpm,
 				mGoodShifts, mMaxAcc, mMaxBreak, acc);
 		thread.start();
@@ -269,10 +270,10 @@ public class CarDataLogic extends Handler {
 				// -Points
 				mCurPoints -= 1 * factor;
 			}
-			
+
 			// calculate RPM exceeding penalty or bonus
 			int interval = mRPM[0] + mRPM[1] + mRPM[2] + mRPM[3];
-			//rpm under 2000
+			// rpm under 2000
 			mCurPoints += ((float) mRPM[0] / interval) * 2;
 			// rpm under 3000
 			mCurPoints -= ((float) mRPM[1] / interval) * 1;
@@ -280,7 +281,7 @@ public class CarDataLogic extends Handler {
 			mCurPoints -= ((float) mRPM[2] / interval) * 4;
 			// rpm above 4000
 			mCurPoints -= ((float) mRPM[3] / interval) * 8;
-			
+
 			// calculate bad shift penalty and good shift bonus
 			if (mShifts < 0) {
 				mCurPoints += (mShifts * 0.1);
@@ -288,15 +289,15 @@ public class CarDataLogic extends Handler {
 				mCurPoints += (mShifts * 0.2);
 			}
 			// calculate acceleration and breaking penalty/bonus
-			interval = mAcc[0] + mAcc[1]+ mAcc[2];
+			interval = mAcc[0] + mAcc[1] + mAcc[2];
 			// fast acc
 			mCurPoints -= ((float) mAcc[0] / interval) * 3;
 			// hard breaking
 			mCurPoints -= ((float) mAcc[1] / interval) * 2;
 			// acc in range
 			mCurPoints += ((float) mAcc[2] / interval) * 4;
-			Log.d("CarDataLogic","MaxAcc: "+mMAcc);
-			Log.d("CarDataLogic","MaxBreak: "+mMBreak);
+			Log.d("CarDataLogic", "MaxAcc: " + mMAcc);
+			Log.d("CarDataLogic", "MaxBreak: " + mMBreak);
 
 			List<Handler> handlers = mDataListeners.get("pointProgress");
 			if (handlers != null) {
