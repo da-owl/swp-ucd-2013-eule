@@ -55,14 +55,16 @@ public class BenchmarkBar extends View {
 
 		mVertical = !a.getBoolean(R.styleable.BenchmarkBar_horizontal, false);
 		mWeight = a.getInt(R.styleable.BenchmarkBar_weight, 40);
-
-		// convert dp to px
-		mWeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-				mWeight, getResources().getDisplayMetrics());
+		mWeight = dpToPx(mWeight);
 
 		a.recycle();
 
 		initBenchmarkBar();
+	}
+
+	private int dpToPx(int value) {
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				value, getResources().getDisplayMetrics());
 	}
 
 	public void setReferenceValue(float val) {
@@ -88,7 +90,7 @@ public class BenchmarkBar extends View {
 		mBorderPaint.setAntiAlias(true);
 		mBorderPaint.setColor(0xFFffffff);
 		mBorderPaint.setStyle(Style.STROKE);
-		mBorderPaint.setStrokeWidth(2);
+		mBorderPaint.setStrokeWidth(dpToPx(2));
 
 		mGoodPaint = new Paint();
 		mGoodPaint.setAntiAlias(true);
