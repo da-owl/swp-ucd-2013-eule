@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,10 +25,10 @@ public class DriveTechFragment extends Fragment {
 	private SlideUpContainer mSlideUp;
 	private TextView mInfoText;
 
-	private int mGear = 0;
-	private float mAcc = 0;
-	private float mRPM = 0;
-	private float mConsumption = 0;
+	private static int mGear = 0;
+	private static float mAcc = 0;
+	private static float mRPM = 0;
+	private static float mConsumption = 0;
 
 	private TextView mFuelConsumptionNow;
 
@@ -58,7 +59,8 @@ public class DriveTechFragment extends Fragment {
 						mConsumption = Float.parseFloat(data
 								.getString("InstantaneousValuePerMilage"));
 					} catch (NumberFormatException e) {
-						System.out.println(e.getMessage());
+						Log.w("DriveTechFragment",
+								"FuelConsumption: " + e.getMessage());
 					}
 					mFuelConsumptionNow.setText(String.format("%.1f",
 							mConsumption) + " l/100km");
@@ -73,7 +75,8 @@ public class DriveTechFragment extends Fragment {
 					try {
 						mRPM = Float.parseFloat(data.getString("EngineSpeed"));
 					} catch (NumberFormatException e) {
-						System.out.println(e.getMessage());
+						Log.w("DriveTechFragment",
+								"EngineSpeed: " + e.getMessage());
 					}
 
 					mGearIndicator.setRPM(mRPM);
@@ -82,7 +85,7 @@ public class DriveTechFragment extends Fragment {
 					try {
 						mGear = Integer.parseInt(data.getString("CurrentGear"));
 					} catch (NumberFormatException e) {
-						System.out.println(e.getMessage());
+						Log.w("DriveTechFragment", "Gear: " + e.getMessage());
 					}
 					if (oldGear < mGear) {
 						if (1600 < mRPM && mRPM < 2000) {
@@ -98,18 +101,18 @@ public class DriveTechFragment extends Fragment {
 						// value can be -20 to +20, bar goes from -100 to +100
 						// therefore use *5 of the value
 						// a normal car accelerates with 1.5 and max at 3
-						// a normal car breaks with 3 and max at 10
+						// a normal car breaks with -3 and max at -10
 						mAcc = (Float.parseFloat(data
-								.getString("LongitudinalAcceleration"))*5);
-						if(mAcc<0){
-							mAcc*=2;
-						}else{
-							mAcc*=5;
+								.getString("LongitudinalAcceleration")) * 5);
+						if (mAcc < 0) {
+							mAcc *= 2;
+						} else {
+							mAcc *= 5.5;
 						}
-						
-						
+
 					} catch (NumberFormatException e) {
-						System.out.println(e.getMessage());
+						Log.w("DriveTechFragment",
+								"Acceleration: " + e.getMessage());
 					}
 
 					mRefBar.setValue(mAcc);

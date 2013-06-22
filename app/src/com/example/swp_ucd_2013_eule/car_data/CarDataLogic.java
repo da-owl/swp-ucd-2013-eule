@@ -1,7 +1,6 @@
 package com.example.swp_ucd_2013_eule.car_data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +27,9 @@ public class CarDataLogic extends Handler {
 	private int[] mRPMExceeding = { 0, 0, 0, 0 };
 	private int mCurGear;
 	private int mGoodShifts = 0;
+	private float mMaxAcc = 0;
+	private float mMaxBreak = 0;
+	private int[] mAccExceeding = { 0, 0, 0 };
 
 	// for now static
 	private float mCity = 7.5f;
@@ -47,6 +49,7 @@ public class CarDataLogic extends Handler {
 		instance.subscribeHandler(this, "CurrentGear");
 		// instance.subscribeHandler(this, "RecommendedGear");
 		instance.subscribeHandler(this, "VehicleSpeed");
+		instance.subscribeHandler(this, "LongitudinalAcceleration");
 	}
 
 	public static CarDataLogic getInstance() {
@@ -62,23 +65,23 @@ public class CarDataLogic extends Handler {
 		if (data.containsKey("InstantaneousValuePerMilage")) {
 			mCurrentConsumptions.add(Float.valueOf(data
 					.getString("InstantaneousValuePerMilage")));
-			Log.d("CarDataLogic","Verbrauch: "
-					+ data.getString("InstantaneousValuePerMilage"));
+			Log.d("CarDataLogic",
+					"Verbrauch: "
+							+ data.getString("InstantaneousValuePerMilage"));
 		} else if (data.containsKey("VehicleSpeed")) {
 			mCurrentSpeed.add(Float.valueOf(data.getString("VehicleSpeed")));
-			Log.d("CarDataLogic","Geschwindigkeit: "
-					+ data.getString("VehicleSpeed"));
+			Log.d("CarDataLogic",
+					"Geschwindigkeit: " + data.getString("VehicleSpeed"));
 		} else if (data.containsKey("EngineSpeed")) {
-			Log.d("CarDataLogic","RPM: "
-					+ data.getString(data.getString("EngineSpeed")));
-			
-				try {
-					mCurrentRPM = Float.parseFloat(data
-							.getString("EngineSpeed"));
-				} catch (NumberFormatException e) {
-					System.out.println(e.getMessage());
-				}
-			
+			Log.d("CarDataLogic",
+					"RPM: " + data.getString(data.getString("EngineSpeed")));
+
+			try {
+				mCurrentRPM = Float.parseFloat(data.getString("EngineSpeed"));
+			} catch (NumberFormatException e) {
+				Log.w("CarDataLogic", "EngineSpeed: " + e.getMessage());
+			}
+
 			if (mCurrentRPM > 4000) {
 				mRPMExceeding[3]++;
 			} else if (mCurrentRPM > 3000) {
@@ -90,12 +93,12 @@ public class CarDataLogic extends Handler {
 			}
 
 		} else if (data.containsKey("CurrentGear")) {
-			Log.d("CarDataLogic","Gang: " + data.getString("CurrentGear"));
+			Log.d("CarDataLogic", "Gang: " + data.getString("CurrentGear"));
 			int oldGear = mCurGear;
 			try {
 				mCurGear = Integer.parseInt(data.getString("CurrentGear"));
 			} catch (NumberFormatException e) {
-				System.out.println(e.getMessage());
+				Log.w("CarDataLogic", "Gear: " + e.getMessage());
 			}
 			if (oldGear < mCurGear) {
 				if (1600 < mCurrentRPM && mCurrentRPM < 2000) {
@@ -105,6 +108,35 @@ public class CarDataLogic extends Handler {
 				}
 			}
 
+		} else if (data.containsKey("LongitudinalAcceleration")) {
+			try {
+				// value can be -20 to +20,
+				// a normal car accelerates with 1.5 and max at 3
+				// a normal car breaks with -3 and max at -10
+				float acc = (Float.parseFloat(data
+						.getString("LongitudinalAcceleration")));
+				if (acc < 0) {
+					if (acc < mMaxBreak) {
+						mMaxBreak = acc;
+					}
+					if (acc < -4) {
+						mAccExceeding[1]++;
+					} else {
+						mAccExceeding[2]++;
+					}
+				} else {
+					if (mMaxAcc < acc) {
+						mMaxAcc = acc;
+					}
+					if (1.8 < acc) {
+						mAccExceeding[0]++;
+					} else {
+						mAccExceeding[2]++;
+					}
+				}
+			} catch (NumberFormatException e) {
+				Log.w("CarDataLogic", "Acceleration: " + e.getMessage());
+			}
 		}
 
 		if (mCurrentConsumptions.size() >= mInterval
@@ -130,20 +162,29 @@ public class CarDataLogic extends Handler {
 		ArrayList<Float> listSpeed = new ArrayList<Float>();
 		synchronized (mCurrentConsumptions) {
 			listConsum.addAll(mCurrentConsumptions);
-			mCurrentConsumptions.clear();
 		}
 		synchronized (mCurrentSpeed) {
 			listSpeed.addAll(mCurrentSpeed);
-			mCurrentConsumptions.clear();
 		}
 		int[] rpm = new int[] { mRPMExceeding[0], mRPMExceeding[1],
 				mRPMExceeding[2], mRPMExceeding[3] };
-		mRPMExceeding = new int[] { 0, 0, 0, 0 };
+		int[] acc = new int[] { mAccExceeding[0], mAccExceeding[1], mAccExceeding[2] };
 		Thread thread = new CalculationThread(listConsum, listSpeed, rpm,
-				mGoodShifts);
+				mGoodShifts, mMaxAcc, mMaxBreak, acc);
 		thread.start();
-		mGoodShifts = 0;
 
+		resetVariables();
+
+	}
+
+	private void resetVariables() {
+		mGoodShifts = 0;
+		mRPMExceeding = new int[] { 0, 0, 0, 0 };
+		mCurrentConsumptions.clear();
+		mCurrentConsumptions.clear();
+		mMaxAcc = 0;
+		mMaxBreak = 0;
+		mAccExceeding = new int[] { 0, 0, 0 };
 	}
 
 	/**
@@ -175,23 +216,32 @@ public class CarDataLogic extends Handler {
 		private float mReferenceConsumption;
 		private int[] mRPM;
 		private int mShifts;
+		private float mMAcc;
+		private float mMBreak;
+		private int[] mAcc;
 
 		public CalculationThread(List<Float> consumps, List<Float> speed,
-				int[] rpm, int goodShifts) {
+				int[] rpm, int goodShifts, float maxAcc, float maxBreak,
+				int[] acc) {
 			mConsumptions = consumps;
 			mSpeedList = speed;
 			mRPM = rpm;
 			mShifts = goodShifts;
+			mMAcc = maxAcc;
+			mMBreak = maxBreak;
+			mAcc = acc;
 		}
 
 		@Override
 		public void run() {
+			// calculate average consumption and speed
 			for (int i = 0; i < mInterval; i++) {
 				mSpeed += mSpeedList.get(i);
 				mConsumption += mConsumptions.get(i);
 			}
 			mConsumption = mConsumption / mInterval;
 			mSpeed = mSpeed / mInterval;
+			// determine the driving conditions
 			if (mSpeed < 60) {
 				mReferenceConsumption = mCity;
 			} else if (mSpeed < 90) {
@@ -199,7 +249,8 @@ public class CarDataLogic extends Handler {
 			} else {
 				mReferenceConsumption = mMotorWay;
 			}
-
+			// according to the driving conditions determine if the consumption
+			// was above or below car average
 			float delta = mReferenceConsumption - mConsumption;
 			float percent = Math.abs(delta) / mReferenceConsumption;
 			float factor = m20percent;
@@ -218,20 +269,34 @@ public class CarDataLogic extends Handler {
 				// -Points
 				mCurPoints -= 1 * factor;
 			}
-
-			mCurPoints += ((float) mRPM[0] / mInterval) * 2;
-
-			mCurPoints -= ((float) mRPM[1] / mInterval) * 1;
-
-			mCurPoints -= ((float) mRPM[2] / mInterval) * 4;
-
-			mCurPoints -= ((float) mRPM[3] / mInterval) * 8;
-
+			
+			// calculate RPM exceeding penalty or bonus
+			int interval = mRPM[0] + mRPM[1] + mRPM[2] + mRPM[3];
+			//rpm under 2000
+			mCurPoints += ((float) mRPM[0] / interval) * 2;
+			// rpm under 3000
+			mCurPoints -= ((float) mRPM[1] / interval) * 1;
+			// rpm under 4000
+			mCurPoints -= ((float) mRPM[2] / interval) * 4;
+			// rpm above 4000
+			mCurPoints -= ((float) mRPM[3] / interval) * 8;
+			
+			// calculate bad shift penalty and good shift bonus
 			if (mShifts < 0) {
 				mCurPoints += (mShifts * 0.1);
 			} else {
 				mCurPoints += (mShifts * 0.2);
 			}
+			// calculate acceleration and breaking penalty/bonus
+			interval = mAcc[0] + mAcc[1]+ mAcc[2];
+			// fast acc
+			mCurPoints -= ((float) mAcc[0] / interval) * 3;
+			// hard breaking
+			mCurPoints -= ((float) mAcc[1] / interval) * 2;
+			// acc in range
+			mCurPoints += ((float) mAcc[2] / interval) * 4;
+			Log.d("CarDataLogic","MaxAcc: "+mMAcc);
+			Log.d("CarDataLogic","MaxBreak: "+mMBreak);
 
 			List<Handler> handlers = mDataListeners.get("pointProgress");
 			if (handlers != null) {
@@ -245,7 +310,7 @@ public class CarDataLogic extends Handler {
 				}
 			}
 
-			Log.d("CarDataLogic ", "CurPoints: "+mCurPoints
+			Log.d("CarDataLogic", "CurPoints: " + mCurPoints
 					* mPointsScaleFactor);
 
 		}

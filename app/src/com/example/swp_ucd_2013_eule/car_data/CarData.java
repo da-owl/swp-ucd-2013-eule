@@ -9,12 +9,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import de.exlap.ConnectionConfiguration;
 import de.exlap.DataListener;
 import de.exlap.DataObject;
 import de.exlap.ExlapClient;
-import de.exlap.ExlapClientAsync;
 import de.exlap.ExlapException;
 
 /**
@@ -52,10 +50,11 @@ public class CarData implements DataListener {
 	 * into the DataObject.
 	 */
 	public void onData(DataObject dataObject) {
-		// logging?
+
 		String objectString = dataObject.toString();
 
 		if (!objectString.contains(", no data elements!")) {
+			Log.d("CarData", "Got data!");
 			/*
 			 * getting the name of the received data int fst =
 			 * objectString.indexOf("url=") + 4; int snd =
@@ -72,8 +71,10 @@ public class CarData implements DataListener {
 			// e.g. 42.6
 			String value = data[3].substring(data[3].indexOf("=") + 1,
 					data[3].indexOf("]")).trim();
+			Log.d("CarData", "Data key: " + key + ", value: " + value);
 			List<Handler> handlers = mDataListeners.get(key);
 			if (handlers != null) {
+				Log.d("CarData", "notifying handlers");
 				for (Handler handler : handlers) {
 					Message msg = handler.obtainMessage();
 					Bundle bundleData = new Bundle();
@@ -107,22 +108,24 @@ public class CarData implements DataListener {
 		mConnectionWatcher = new Thread(new Runnable() {
 
 			public void run() {
-				ConnectionConfiguration config = new ConnectionConfiguration(address);
+				ConnectionConfiguration config = new ConnectionConfiguration(
+						address);
 				config.setConnectTimeout(500);
 				mEC = new ExlapClient(config);
 				mEC.addDataListener(mEXLAPListener);
 
-				Log.d("CarData conWatcher","started");
+				Log.i("CarData.ConectionWatcher", "started");
 				while (mRun) {
-					Log.d("CarData conWatcher","checking status");
+					Log.d("CarData.ConectionWatcher", "checking status");
 					// check if the EXLAP-Client is connected
 					if (!mEC.isConnected()) {
-						Log.d("CarData conWatcher","not connected");
+						Log.i("CarData.ConectionWatcher", "not connected");
 						// logging?
 						// as long as there is no connection try to reconnect to
 						// the server
 						while (!mEC.isConnected() && mRun) {
-							Log.d("CarData conWatcher","trying to connect");
+							Log.d("CarData.ConectionWatcher",
+									"trying to connect");
 							mEC.connect();
 							// TODO: abbruch Bedingung (4 mal versuchen oder
 							// so??)
@@ -131,13 +134,13 @@ public class CarData implements DataListener {
 							} catch (InterruptedException e) {
 							}
 						}
-						if(mEC.isConnected()){
-							Log.d("CarData conWatcher","subscribing");
+						if (mEC.isConnected()) {
+							Log.d("CarData.ConectionWatcher", "subscribing");
 							subscribe();
 						}
 						// if a connection has been made, subscribe the data
-					}else{
-						Log.d("CarData conWatcher","connected");
+					} else {
+						Log.i("CarData.ConectionWatcher", "connected");
 						try {
 							Thread.sleep(500);
 						} catch (InterruptedException e) {
@@ -158,13 +161,11 @@ public class CarData implements DataListener {
 	 */
 	private void subscribe() {
 		try {
-			// logging?
 			for (String item : mSubscribeItems) {
 				mEC.subscribeObject(item, 100);
 			}
 		} catch (Exception e) {
-			// logging?
-			System.out.println(e.getMessage());
+			Log.e("CarData", "failed to subscribe listener: " + e.getMessage());
 		}
 	}
 
@@ -192,22 +193,24 @@ public class CarData implements DataListener {
 	 */
 	public void endListener() throws IllegalArgumentException, IOException,
 			ExlapException {
+		Log.d("CarData", "terminating listener");
 		mRun = false;
 		try {
 			mConnectionWatcher.join();
 
 		} catch (InterruptedException e) {
-			// logging?
+			Log.w("CarData", "coudln't end ConectionWatcher: " + e.getMessage());
 		}
-		// logging?
-		try{
-		unsubscribe();
-		}catch(Exception e){
-			Log.i("CarData.endListener",e.getMessage());
+		try {
+			unsubscribe();
+		} catch (Exception e) {
+			Log.i("CarData",
+					"failed to unsubscribe ConnectionWatcher: "
+							+ e.getMessage());
 		}
 		mEC.shutdown();
 		mConnectionWatcher = null;
-		// logging?
+		Log.d("CarData", "listener terminated");
 	}
 
 	/**

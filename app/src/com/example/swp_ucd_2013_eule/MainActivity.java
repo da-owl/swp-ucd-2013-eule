@@ -1,6 +1,6 @@
 package com.example.swp_ucd_2013_eule;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +30,6 @@ import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
-import de.exlap.ExlapException;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener, OnSharedPreferenceChangeListener {
