@@ -21,7 +21,7 @@ public class DrivePointsFragment extends Fragment {
 	private ReferenceBar mRefBar;
 	private Handler mHandler;
 	
-	private float mPointProgress;
+	private static float mPointProgress;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

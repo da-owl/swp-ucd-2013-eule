@@ -97,11 +97,17 @@ public class DriveTechFragment extends Fragment {
 					try {
 						// value can be -20 to +20, bar goes from -100 to +100
 						// therefore use *5 of the value
-						// additional use *6 to get better results for the
-						// indicator
+						// a normal car accelerates with 1.5 and max at 3
+						// a normal car breaks with 3 and max at 10
 						mAcc = (Float.parseFloat(data
-								.getString("LongitudinalAcceleration"))) * 30f;
-
+								.getString("LongitudinalAcceleration"))*5);
+						if(mAcc<0){
+							mAcc*=2;
+						}else{
+							mAcc*=5;
+						}
+						
+						
 					} catch (NumberFormatException e) {
 						System.out.println(e.getMessage());
 					}

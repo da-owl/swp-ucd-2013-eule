@@ -8,6 +8,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class CarDataLogic extends Handler {
 
@@ -61,14 +62,14 @@ public class CarDataLogic extends Handler {
 		if (data.containsKey("InstantaneousValuePerMilage")) {
 			mCurrentConsumptions.add(Float.valueOf(data
 					.getString("InstantaneousValuePerMilage")));
-			System.out.println("Verbrauch: "
+			Log.d("CarDataLogic","Verbrauch: "
 					+ data.getString("InstantaneousValuePerMilage"));
 		} else if (data.containsKey("VehicleSpeed")) {
 			mCurrentSpeed.add(Float.valueOf(data.getString("VehicleSpeed")));
-			System.out.println("Geschwindigkeit: "
+			Log.d("CarDataLogic","Geschwindigkeit: "
 					+ data.getString("VehicleSpeed"));
 		} else if (data.containsKey("EngineSpeed")) {
-			System.out.println("RPM: "
+			Log.d("CarDataLogic","RPM: "
 					+ data.getString(data.getString("EngineSpeed")));
 			
 				try {
@@ -89,7 +90,7 @@ public class CarDataLogic extends Handler {
 			}
 
 		} else if (data.containsKey("CurrentGear")) {
-			System.out.println("Gang: " + data.getString("CurrentGear"));
+			Log.d("CarDataLogic","Gang: " + data.getString("CurrentGear"));
 			int oldGear = mCurGear;
 			try {
 				mCurGear = Integer.parseInt(data.getString("CurrentGear"));
@@ -244,7 +245,7 @@ public class CarDataLogic extends Handler {
 				}
 			}
 
-			System.out.println("curent points: " + mCurPoints
+			Log.d("CarDataLogic ", "CurPoints: "+mCurPoints
 					* mPointsScaleFactor);
 
 		}
