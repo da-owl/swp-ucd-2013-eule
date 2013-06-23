@@ -8,6 +8,7 @@
     <string name="MenuIconString_MarketView">Market</string>
     <string name="action_comm_test">Teste Kommunikation</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="exit_app">Beenden</string>
     
     <string name="fragment_drive_title_section1">Punkte-Fortschritt</string>
     <string name="fragment_drive_title_section2">Fahr-Empfehlung</string>

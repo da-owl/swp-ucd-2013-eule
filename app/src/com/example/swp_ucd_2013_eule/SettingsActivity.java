@@ -7,7 +7,7 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.id.action_settings);
+        setTitle(R.string.action_settings);
 
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()

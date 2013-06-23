@@ -1,6 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,7 @@ import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
+import de.exlap.ExlapException;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener, OnSharedPreferenceChangeListener {
@@ -96,6 +98,18 @@ public class MainActivity extends FragmentActivity implements
 		data.add("EngineSpeed");
 		data.add("CurrentGear");
 		CarData.getInstance().startService(settings, data);
+	}
+	
+	private void stopEXLAPListener(){
+		try {
+			CarData.getInstance().endListener();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ExlapException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void addActionTabMapping(PagerAdapter adapter) {
@@ -184,6 +198,10 @@ public class MainActivity extends FragmentActivity implements
 			break;
 		case R.id.action_settings:
 			startActivity(new Intent(this, SettingsActivity.class));
+			break;
+		case R.id.exit_app:
+			stopEXLAPListener();
+			finish();
 			break;
 		case R.id.DrivingView:
 		case R.id.ForestView:
