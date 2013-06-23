@@ -81,4 +81,11 @@
         android:text="PointsStack"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <ToggleButton
+        android:id="@+id/tglBtTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/imgCombo"
+        android:layout_alignTop="@+id/txtPointsStackNow" />
+
 </RelativeLayout>

@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
@@ -38,8 +41,15 @@ public class DrivePointsFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_drive_points,
 				container, false);
 
+		ToggleButton button = (ToggleButton) rootView.findViewById(R.id.tglBtTrip);
+		button.setOnCheckedChangeListener( new OnCheckedChangeListener() {
+	        @Override
+	        public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked) {
+	            CarDataLogic.getInstance().setTripStartStop(isChecked);
+	        }
+	    }) ;
 		
-		mPointProgress = mForest.getPointProgress()*2;
+		mPointProgress = mForest.getPointProgress();
 		mTxtLevelCur = (TextView) rootView.findViewById(R.id.txtLevelCur);
 		mTxtLevelNext = (TextView) rootView.findViewById(R.id.txtLevelNext);
 		mTxtPointsStackNow = (TextView) rootView.findViewById(R.id.txtPointsStackNow);

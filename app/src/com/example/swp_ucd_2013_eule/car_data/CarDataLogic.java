@@ -51,6 +51,7 @@ public class CarDataLogic extends Handler {
 	private Context mCtx;
 	private int mUserID;
 	private int mProgressPointInterval = 100;
+	private boolean mRecordTrip = false;
 
 	private volatile float mCurPoints;
 
@@ -72,8 +73,9 @@ public class CarDataLogic extends Handler {
 		// instance.subscribeHandler(this, "RecommendedGear");
 		carDataListener.subscribeHandler(this, "VehicleSpeed");
 		carDataListener.subscribeHandler(this, "LongitudinalAcceleration");
-		
-		mCurPoints = MyForest.getInstance().getForest().getPointProgress();
+
+		mCurPoints = MyForest.getInstance().getForest().getPointProgress()
+				/ mPointsScaleFactor;
 	}
 
 	public void setContextUserID(Context ctx, int userID) {
@@ -82,6 +84,12 @@ public class CarDataLogic extends Handler {
 		mStatistics = new DrivingStatistics(mUserID);
 	}
 
+	public void setTripStartStop(boolean state) {
+		if(mRecordTrip && !state){
+			//TODO: save statistics!
+		}
+		mRecordTrip = state;
+	}
 
 	public static CarDataLogic getInstance() {
 		return INSTANCE;
@@ -89,97 +97,100 @@ public class CarDataLogic extends Handler {
 
 	public void handleMessage(Message msg) {
 		Bundle data = msg.getData();
-
-		if (data.containsKey("InstantaneousValuePerMilage")) {
-			try {
-				mCurrentConsumptions.add(Float.valueOf(data
-						.getString("InstantaneousValuePerMilage")));
+		if (mRecordTrip) {
+			if (data.containsKey("InstantaneousValuePerMilage")) {
+				try {
+					mCurrentConsumptions.add(Float.valueOf(data
+							.getString("InstantaneousValuePerMilage")));
+					Log.d("CarDataLogic",
+							"Verbrauch: "
+									+ data.getString("InstantaneousValuePerMilage"));
+				} catch (NumberFormatException e) {
+					Log.w("CarDataLogic",
+							"InstantaneousValuePerMilage: " + e.getMessage());
+				}
+			} else if (data.containsKey("VehicleSpeed")) {
+				try {
+					mCurrentSpeed.add(Float.valueOf(data
+							.getString("VehicleSpeed")));
+					Log.d("CarDataLogic",
+							"Geschwindigkeit: "
+									+ data.getString("VehicleSpeed"));
+				} catch (NumberFormatException e) {
+					Log.w("CarDataLogic", "VehicleSpeed: " + e.getMessage());
+				}
+			} else if (data.containsKey("EngineSpeed")) {
 				Log.d("CarDataLogic",
-						"Verbrauch: "
-								+ data.getString("InstantaneousValuePerMilage"));
-			} catch (NumberFormatException e) {
-				Log.w("CarDataLogic",
-						"InstantaneousValuePerMilage: " + e.getMessage());
-			}
-		} else if (data.containsKey("VehicleSpeed")) {
-			try {
-				mCurrentSpeed
-						.add(Float.valueOf(data.getString("VehicleSpeed")));
-				Log.d("CarDataLogic",
-						"Geschwindigkeit: " + data.getString("VehicleSpeed"));
-			} catch (NumberFormatException e) {
-				Log.w("CarDataLogic", "VehicleSpeed: " + e.getMessage());
-			}
-		} else if (data.containsKey("EngineSpeed")) {
-			Log.d("CarDataLogic",
-					"EngineSpeed: " + data.getString("EngineSpeed"));
+						"EngineSpeed: " + data.getString("EngineSpeed"));
 
-			try {
-				mCurrentRPM = Float.parseFloat(data.getString("EngineSpeed"));
-			} catch (NumberFormatException e) {
-				Log.w("CarDataLogic", "EngineSpeed: " + e.getMessage());
-			}
+				try {
+					mCurrentRPM = Float.parseFloat(data
+							.getString("EngineSpeed"));
+				} catch (NumberFormatException e) {
+					Log.w("CarDataLogic", "EngineSpeed: " + e.getMessage());
+				}
 
-			if (mCurrentRPM > 4000) {
-				mRPMExceeding[3]++;
-			} else if (mCurrentRPM > 3000) {
-				mRPMExceeding[2]++;
-			} else if (mCurrentRPM > 2000) {
-				mRPMExceeding[1]++;
-			} else {
-				mRPMExceeding[0]++;
-			}
-
-		} else if (data.containsKey("CurrentGear")) {
-			Log.d("CarDataLogic", "Gear: " + data.getString("CurrentGear"));
-			int oldGear = mCurGear;
-			try {
-				mCurGear = Integer.parseInt(data.getString("CurrentGear"));
-			} catch (NumberFormatException e) {
-				Log.w("CarDataLogic", "Gear: " + e.getMessage());
-			}
-			if (oldGear < mCurGear) {
-				if (1600 < mCurrentRPM && mCurrentRPM < 2000) {
-					mGoodShifts++;
+				if (mCurrentRPM > 4000) {
+					mRPMExceeding[3]++;
+				} else if (mCurrentRPM > 3000) {
+					mRPMExceeding[2]++;
+				} else if (mCurrentRPM > 2000) {
+					mRPMExceeding[1]++;
 				} else {
-					mGoodShifts--;
+					mRPMExceeding[0]++;
+				}
+
+			} else if (data.containsKey("CurrentGear")) {
+				Log.d("CarDataLogic", "Gear: " + data.getString("CurrentGear"));
+				int oldGear = mCurGear;
+				try {
+					mCurGear = Integer.parseInt(data.getString("CurrentGear"));
+				} catch (NumberFormatException e) {
+					Log.w("CarDataLogic", "Gear: " + e.getMessage());
+				}
+				if (oldGear < mCurGear) {
+					if (1600 < mCurrentRPM && mCurrentRPM < 2000) {
+						mGoodShifts++;
+					} else {
+						mGoodShifts--;
+					}
+				}
+
+			} else if (data.containsKey("LongitudinalAcceleration")) {
+				try {
+					// value can be -20 to +20,
+					// a normal car accelerates with 1.5 and max at 3
+					// a normal car breaks with -3 and max at -10
+					float acc = (Float.parseFloat(data
+							.getString("LongitudinalAcceleration")));
+					if (acc < 0) {
+						if (acc < mMaxBreak) {
+							mMaxBreak = acc;
+						}
+						if (acc < -4) {
+							mAccExceeding[1]++;
+						} else {
+							mAccExceeding[2]++;
+						}
+					} else {
+						if (mMaxAcc < acc) {
+							mMaxAcc = acc;
+						}
+						if (1.8 < acc) {
+							mAccExceeding[0]++;
+						} else {
+							mAccExceeding[2]++;
+						}
+					}
+				} catch (NumberFormatException e) {
+					Log.w("CarDataLogic", "Acceleration: " + e.getMessage());
 				}
 			}
 
-		} else if (data.containsKey("LongitudinalAcceleration")) {
-			try {
-				// value can be -20 to +20,
-				// a normal car accelerates with 1.5 and max at 3
-				// a normal car breaks with -3 and max at -10
-				float acc = (Float.parseFloat(data
-						.getString("LongitudinalAcceleration")));
-				if (acc < 0) {
-					if (acc < mMaxBreak) {
-						mMaxBreak = acc;
-					}
-					if (acc < -4) {
-						mAccExceeding[1]++;
-					} else {
-						mAccExceeding[2]++;
-					}
-				} else {
-					if (mMaxAcc < acc) {
-						mMaxAcc = acc;
-					}
-					if (1.8 < acc) {
-						mAccExceeding[0]++;
-					} else {
-						mAccExceeding[2]++;
-					}
-				}
-			} catch (NumberFormatException e) {
-				Log.w("CarDataLogic", "Acceleration: " + e.getMessage());
+			if (mCurrentConsumptions.size() >= mInterval
+					&& mCurrentSpeed.size() >= mInterval) {
+				calculatePoints();
 			}
-		}
-
-		if (mCurrentConsumptions.size() >= mInterval
-				&& mCurrentSpeed.size() >= mInterval) {
-			calculatePoints();
 		}
 
 	}
@@ -287,7 +298,7 @@ public class CarDataLogic extends Handler {
 			}
 
 			checkLevel();
-			
+
 			float curPoints = mCurPoints * mPointsScaleFactor;
 			List<Handler> handlers = mDataListeners.get("pointProgress");
 			if (handlers != null) {
@@ -386,17 +397,15 @@ public class CarDataLogic extends Handler {
 			Forest forest = MyForest.getInstance().getForest();
 			SettingsWrapper settings = SettingsWrapper.getInstance();
 			boolean viewChanged = false;
-			System.out.println(mCurPoints * mPointsScaleFactor);
-			System.out.println(mProgressPointInterval);
 			if (mCurPoints * mPointsScaleFactor > mProgressPointInterval) {
 				viewChanged = true;
-				forest.setPoints(forest.getPoints() + 1);
+				forest.setPoints(forest.getPoints() + 5);
 				mCurPoints = mCurPoints * mPointsScaleFactor
 						- mProgressPointInterval;
 				int level = forest.getLevel();
 				int lvlPrgPoints = forest.getLevelProgessPoints() + 1;
 				// level up
-				if (lvlPrgPoints >= settings.getPointsToNextLevel(level+1)
+				if (lvlPrgPoints >= settings.getPointsToNextLevel(level + 1)
 						&& level <= 100) {
 					mStatistics.addGainedPoint();
 					// calculate new progresPoints = curPoints -
