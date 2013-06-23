@@ -16,6 +16,8 @@ public class Forest extends Model {
 	
 	private Integer level;
 	
+	private Integer LevelProgessPoints; // added!!! @ Erik
+	
 	private List<UserForestItem> useritems;
 	
 	private List<Forest> friends;
@@ -95,6 +97,14 @@ public class Forest extends Model {
 	private boolean canAdd(UserForestItem item){
 		// TODO: to be implemented (check geometrics. maybe code is already there ... somewhere ... :)
 		return true;		
+	}
+
+	public Integer getLevelProgessPoints() {
+		return LevelProgessPoints;
+	}
+
+	public void setLevelProgessPoints(Integer levelProgessPoints) {
+		LevelProgessPoints = levelProgessPoints;
 	}
 	
 }

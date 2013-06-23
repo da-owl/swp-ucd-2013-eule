@@ -84,7 +84,6 @@ public class MainActivity extends FragmentActivity implements
 			CarData.getInstance();
 			startEXLAPListener(builder.toString());
 			CarDataLogic.getInstance().setContextUserID(MainActivity.this,1);
-			MyForest.getInstance();
 		}
 	}
 

@@ -9,6 +9,7 @@ public class MyForest {
 		mForest = new Forest();
 		mForest.setLevel(17);
 		mForest.setPoints(80);
+		mForest.setLevelProgessPoints(84);
 	}
 
 	public static MyForest getInstance() {
