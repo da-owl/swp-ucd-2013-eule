@@ -81,7 +81,7 @@ public class ForestView extends View {
 		try {
 			mForestAPI = new APIModel<Forest, Forest>(Forest.class, context);
 			mUserItemAPI = new APIModel<UserForestItem, Forest>(UserForestItem.class, context);
-			mForest = mForestAPI.get(new Forest(), FOREST_ID);
+			mForest = mForestAPI.get(new Forest(FOREST_ID));
 			mLevel = mForest.getLevel();
 			System.out.println("APITest - init() level " + mForest.getLevel());
 		} catch (APIException e) {
