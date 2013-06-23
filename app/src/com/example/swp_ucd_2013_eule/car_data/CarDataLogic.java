@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.model.APIModel;
 import com.example.swp_ucd_2013_eule.model.DrivingStatistics;
+import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.net.APIException;
 
 import android.content.Context;
@@ -25,7 +28,7 @@ import android.util.Log;
  */
 public class CarDataLogic extends Handler {
 
-	private static CarDataLogic CarDataLogicInstance = null;
+	private static CarDataLogic INSTANCE = new CarDataLogic();
 	private volatile int mShifts = 0; // positiv gut, negativ schlecht
 	private int mMaxRPM = 0; // innerhalb der ermittelten Zeit
 	private volatile int mShiftCount = 0;
@@ -34,7 +37,6 @@ public class CarDataLogic extends Handler {
 	private volatile boolean mFastAcceleration = false;
 	private volatile boolean mHardBreaking = false;
 	private int mInterval = 150;
-	private volatile float mCurPoints = 0;
 	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
 	private float mPointsScaleFactor = 2;
 	private float mCurrentRPM = 0;
@@ -48,13 +50,15 @@ public class CarDataLogic extends Handler {
 	private APIModel<DrivingStatistics, DrivingStatistics> mAPI;
 	private Context mCtx;
 	private int mUserID;
-	private boolean mGotDataFromBackend;
+	private volatile boolean mGotDataFromBackend;
+	private int mProgressPointInterval = 100;
+
+	private volatile float mCurPoints = -48;
 
 	// for now static
 	private float mCity = 7.5f;
 	private float mCountry = 5.8f;
 	private float mMotorWay = 5.2f;
-	private int mGears = 6;
 	private float m5percent = 0.1f;
 	private float m10percent = 0.2f;
 	private float m15percent = 0.3f;
@@ -99,32 +103,39 @@ public class CarDataLogic extends Handler {
 		} catch (APIException e) {
 			Log.e("CarDataLogic",
 					" failed to get data from backend: " + e.getMessage());
-		}catch(NullPointerException e){
-			Log.e("CarDataLogic","NullPointer in Backend!");
+		} catch (NullPointerException e) {
+			Log.e("CarDataLogic", "NullPointer in Backend!");
 		}
 		return false;
 	}
 
 	public static CarDataLogic getInstance() {
-		if (CarDataLogicInstance == null) {
-			CarDataLogicInstance = new CarDataLogic();
-		}
-		return CarDataLogicInstance;
+		return INSTANCE;
 	}
 
 	public void handleMessage(Message msg) {
 		Bundle data = msg.getData();
 
 		if (data.containsKey("InstantaneousValuePerMilage")) {
-			mCurrentConsumptions.add(Float.valueOf(data
-					.getString("InstantaneousValuePerMilage")));
-			Log.d("CarDataLogic",
-					"Verbrauch: "
-							+ data.getString("InstantaneousValuePerMilage"));
+			try {
+				mCurrentConsumptions.add(Float.valueOf(data
+						.getString("InstantaneousValuePerMilage")));
+				Log.d("CarDataLogic",
+						"Verbrauch: "
+								+ data.getString("InstantaneousValuePerMilage"));
+			} catch (NumberFormatException e) {
+				Log.w("CarDataLogic",
+						"InstantaneousValuePerMilage: " + e.getMessage());
+			}
 		} else if (data.containsKey("VehicleSpeed")) {
-			mCurrentSpeed.add(Float.valueOf(data.getString("VehicleSpeed")));
-			Log.d("CarDataLogic",
-					"Geschwindigkeit: " + data.getString("VehicleSpeed"));
+			try {
+				mCurrentSpeed
+						.add(Float.valueOf(data.getString("VehicleSpeed")));
+				Log.d("CarDataLogic",
+						"Geschwindigkeit: " + data.getString("VehicleSpeed"));
+			} catch (NumberFormatException e) {
+				Log.w("CarDataLogic", "VehicleSpeed: " + e.getMessage());
+			}
 		} else if (data.containsKey("EngineSpeed")) {
 			Log.d("CarDataLogic",
 					"EngineSpeed: " + data.getString("EngineSpeed"));
@@ -269,7 +280,7 @@ public class CarDataLogic extends Handler {
 		private float mSpeed = 0f;
 		private float mReferenceConsumption;
 		private int[] mRPM;
-		private int mShifts;
+		private int mGShifts;
 		private float mMAcc;
 		private float mMBreak;
 		private int[] mAcc;
@@ -280,7 +291,7 @@ public class CarDataLogic extends Handler {
 			mConsumptions = consumps;
 			mSpeedList = speed;
 			mRPM = rpm;
-			mShifts = goodShifts;
+			mGShifts = goodShifts;
 			mMAcc = maxAcc;
 			mMBreak = maxBreak;
 			mAcc = acc;
@@ -288,9 +299,41 @@ public class CarDataLogic extends Handler {
 
 		@Override
 		public void run() {
-			if (!mGotDataFromBackend) {
-				getDataFromBackend();
+			/*
+			 * TODO: ERIK if (!mGotDataFromBackend) { getDataFromBackend(); }
+			 */
+			if (!mConsumptions.isEmpty() || !mSpeedList.isEmpty()) {
+				calcConsumption();
 			}
+			if (mRPM[0] != 0 || mRPM[1] != 0 || mRPM[2] != 0 || mRPM[3] != 0) {
+				calcRPM();
+			}
+			calcShift();
+
+			if (mAcc[0] != 0 || mAcc[1] != 0 || mAcc[2] != 0) {
+				calcAcc();
+			}
+
+			checkLevel();
+
+			List<Handler> handlers = mDataListeners.get("pointProgress");
+			if (handlers != null) {
+				for (Handler handler : handlers) {
+					Message msg = handler.obtainMessage();
+					Bundle bundleData = new Bundle();
+					bundleData.putFloat("pointProgress", mCurPoints
+							* mPointsScaleFactor);
+					msg.setData(bundleData);
+					msg.sendToTarget();
+				}
+			}
+			mStatistics.setProgressPoints(mCurPoints);
+			Log.d("CarDataLogic", "CurPoints: " + mCurPoints
+					* mPointsScaleFactor);
+
+		}
+
+		private void calcConsumption() {
 			// calculate average consumption and speed
 			for (int i = 0; i < mInterval; i++) {
 				mSpeed += mSpeedList.get(i);
@@ -328,6 +371,9 @@ public class CarDataLogic extends Handler {
 				mCurPoints -= 1 * factor;
 			}
 
+		}
+
+		private void calcRPM() {
 			// calculate RPM exceeding penalty or bonus
 			int interval = mRPM[0] + mRPM[1] + mRPM[2] + mRPM[3];
 			// rpm under 2000
@@ -339,14 +385,21 @@ public class CarDataLogic extends Handler {
 			// rpm above 4000
 			mCurPoints -= ((float) mRPM[3] / interval) * 8;
 
+		}
+
+		private void calcShift() {
 			// calculate bad shift penalty and good shift bonus
-			if (mShifts < 0) {
-				mCurPoints += (mShifts * 0.1);
+			if (mGShifts < 0) {
+				mCurPoints += (mGShifts * 0.1);
 			} else {
-				mCurPoints += (mShifts * 0.2);
+				mCurPoints += (mGShifts * 0.2);
 			}
+
+		}
+
+		private void calcAcc() {
 			// calculate acceleration and breaking penalty/bonus
-			interval = mAcc[0] + mAcc[1] + mAcc[2];
+			int interval = mAcc[0] + mAcc[1] + mAcc[2];
 			// fast acc
 			mCurPoints -= ((float) mAcc[0] / interval) * 3;
 			// hard breaking
@@ -356,20 +409,64 @@ public class CarDataLogic extends Handler {
 			Log.d("CarDataLogic", "MaxAcc: " + mMAcc);
 			Log.d("CarDataLogic", "MaxBreak: " + mMBreak);
 
-			List<Handler> handlers = mDataListeners.get("pointProgress");
-			if (handlers != null) {
-				for (Handler handler : handlers) {
-					Message msg = handler.obtainMessage();
-					Bundle bundleData = new Bundle();
-					bundleData.putFloat("pointProgress", mCurPoints
-							* mPointsScaleFactor);
-					msg.setData(bundleData);
-					msg.sendToTarget();
+		}
+
+		private void checkLevel() {
+			Forest forest = MyForest.getInstance().getForest();
+			SettingsWrapper settings = SettingsWrapper.getInstance();
+			boolean viewChanged = false;
+			System.out.println(mCurPoints * mPointsScaleFactor);
+			System.out.println(mProgressPointInterval);
+			if (mCurPoints * mPointsScaleFactor > mProgressPointInterval) {
+				viewChanged = true;
+				forest.setPoints(forest.getPoints() + 1);
+				mCurPoints = mCurPoints * mPointsScaleFactor
+						- mProgressPointInterval;
+				int level = forest.getLevel();
+				int lvlPrgPoints = forest.getLevelProgessPoints() + 1;
+				// level up
+				if (lvlPrgPoints >= settings.getPointsToNextLevel(level)
+						&& level <= 100) {
+
+					// calculate new progresPoints = curPoints -
+					// levelNeededPoints
+					lvlPrgPoints = 0;
+					// increment level in Forest
+					forest.setLevel(++level);
 				}
+				// update lvlPrgPoints in Forest
+				forest.setLevelProgessPoints(lvlPrgPoints);
+
+			} else if (mCurPoints * mPointsScaleFactor < -mProgressPointInterval) {
+				viewChanged = true;
+				mCurPoints = mCurPoints * mPointsScaleFactor
+						+ mProgressPointInterval;
+				int level = forest.getLevel();
+				int lvlPrgPoints = forest.getLevelProgessPoints() - 1;
+				// level down
+				if (lvlPrgPoints < 0 && level > 1) {
+
+					// calculate new progressPoints = levelNeededpoints -
+					// curPoints
+					lvlPrgPoints = settings.getPointsToNextLevel(--level) - 1;
+					forest.setLevel(level);
+				}
+				// update lvlPrgPoints in Forest
+				forest.setLevelProgessPoints(lvlPrgPoints);
 			}
-			mStatistics.setProgressPoints(mCurPoints);
-			Log.d("CarDataLogic", "CurPoints: " + mCurPoints
-					* mPointsScaleFactor);
+			if (viewChanged) {
+				List<Handler> handlers = mDataListeners.get("viewChanged");
+				if (handlers != null) {
+					for (Handler handler : handlers) {
+						Message msg = handler.obtainMessage();
+						Bundle bundleData = new Bundle();
+						bundleData.putString("viewChanged", "");
+						msg.setData(bundleData);
+						msg.sendToTarget();
+					}
+				}
+
+			}
 
 		}
 

@@ -32,17 +32,14 @@ public class CarData implements DataListener {
 	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
 	private volatile Thread mConnectionWatcher;
 	private volatile boolean mRun = false;
-	private static CarData mCarDataInstance = null;
+	private static CarData INSTANCE = new CarData();
 
 	private CarData() {
 
 	}
 
 	public static CarData getInstance() {
-		if (mCarDataInstance == null) {
-			mCarDataInstance = new CarData();
-		}
-		return mCarDataInstance;
+		return INSTANCE;
 	}
 
 	/**

@@ -5,11 +5,11 @@ public class SettingsWrapper {
 	private static SettingsWrapper INSTANCE = new SettingsWrapper();
 	private Integer[] levels;
 	
-	private final int levelCount = 100;
+	private final int levelCount = 101;
 	
 	private SettingsWrapper() {
 		levels = new Integer[levelCount];
-		for(int i = 0; i < levelCount; i++){
+		for(int i = 1; i < levelCount; i++){
 			levels[i] = i * 5;
 		}		
 	}
