@@ -18,6 +18,8 @@ public class Forest extends Model {
 	
 	private Integer LevelProgessPoints; // added!!! @ Erik
 	
+	private Float PointProgress; //added!!! @ Erik
+	
 	private List<UserForestItem> useritems;
 	
 	private List<Forest> friends;
@@ -105,6 +107,14 @@ public class Forest extends Model {
 
 	public void setLevelProgessPoints(Integer levelProgessPoints) {
 		LevelProgessPoints = levelProgessPoints;
+	}
+
+	public Float getPointProgress() {
+		return PointProgress;
+	}
+
+	public void setPointProgress(Float pointProgress) {
+		PointProgress = pointProgress;
 	}
 	
 }

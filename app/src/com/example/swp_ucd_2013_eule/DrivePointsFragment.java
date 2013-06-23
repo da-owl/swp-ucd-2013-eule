@@ -39,7 +39,7 @@ public class DrivePointsFragment extends Fragment {
 				container, false);
 
 		
-		
+		mPointProgress = mForest.getPointProgress()*2;
 		mTxtLevelCur = (TextView) rootView.findViewById(R.id.txtLevelCur);
 		mTxtLevelNext = (TextView) rootView.findViewById(R.id.txtLevelNext);
 		mTxtPointsStackNow = (TextView) rootView.findViewById(R.id.txtPointsStackNow);

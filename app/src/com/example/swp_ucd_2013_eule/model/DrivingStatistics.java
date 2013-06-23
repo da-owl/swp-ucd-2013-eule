@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class DrivingStatistics extends Model {
 
 
-	private Float mLevelProgress;
+	private Integer mGainedPoints=0;
 
 	private LinkedList<Float> mConsumptions = new LinkedList<Float>();
 
@@ -32,12 +32,16 @@ public class DrivingStatistics extends Model {
 	}
 
 
-	public void setProgressPoints(Float points) {
-		mLevelProgress = points;
+	public void addGainedPoint() {
+		mGainedPoints++;
+	}
+	
+	public void removeGainedPoint(){
+		mGainedPoints--;
 	}
 
-	public Float getProgressPoints() {
-		return mLevelProgress;
+	public Integer getGainedPoints() {
+		return mGainedPoints;
 	}
 
 	public void setConsumption(Float consumption) {

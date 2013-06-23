@@ -50,10 +50,9 @@ public class CarDataLogic extends Handler {
 	private APIModel<DrivingStatistics, DrivingStatistics> mAPI;
 	private Context mCtx;
 	private int mUserID;
-	private volatile boolean mGotDataFromBackend;
 	private int mProgressPointInterval = 100;
 
-	private volatile float mCurPoints = 49;
+	private volatile float mCurPoints;
 
 	// for now static
 	private float mCity = 7.5f;
@@ -73,41 +72,16 @@ public class CarDataLogic extends Handler {
 		// instance.subscribeHandler(this, "RecommendedGear");
 		carDataListener.subscribeHandler(this, "VehicleSpeed");
 		carDataListener.subscribeHandler(this, "LongitudinalAcceleration");
-
+		
+		mCurPoints = MyForest.getInstance().getForest().getPointProgress();
 	}
 
 	public void setContextUserID(Context ctx, int userID) {
 		mCtx = ctx;
 		mUserID = userID;
-		if (!getDataFromBackend()) {
-			mStatistics = new DrivingStatistics(mUserID, mInterval);
-		}
+		mStatistics = new DrivingStatistics(mUserID);
 	}
 
-	private synchronized boolean getDataFromBackend() {
-		/**
-		 * init the API and retrieve statistics
-		 */
-		try {
-			mAPI = new APIModel<DrivingStatistics, DrivingStatistics>(
-					DrivingStatistics.class, mCtx);
-			DrivingStatistics stat = (DrivingStatistics) mAPI
-					.get(new DrivingStatistics(mUserID));
-			if (mStatistics == null) {
-				mStatistics = new DrivingStatistics(mUserID, mInterval);
-			}
-			mStatistics
-					.setProgressPoints(stat.getProgressPoints() + mCurPoints);
-			mGotDataFromBackend = true;
-			return true;
-		} catch (APIException e) {
-			Log.e("CarDataLogic",
-					" failed to get data from backend: " + e.getMessage());
-		} catch (NullPointerException e) {
-			Log.e("CarDataLogic", "NullPointer in Backend!");
-		}
-		return false;
-	}
 
 	public static CarDataLogic getInstance() {
 		return INSTANCE;
@@ -299,9 +273,7 @@ public class CarDataLogic extends Handler {
 
 		@Override
 		public void run() {
-			/*
-			 * TODO: ERIK if (!mGotDataFromBackend) { getDataFromBackend(); }
-			 */
+
 			if (!mConsumptions.isEmpty() || !mSpeedList.isEmpty()) {
 				calcConsumption();
 			}
@@ -315,21 +287,20 @@ public class CarDataLogic extends Handler {
 			}
 
 			checkLevel();
-
+			
+			float curPoints = mCurPoints * mPointsScaleFactor;
 			List<Handler> handlers = mDataListeners.get("pointProgress");
 			if (handlers != null) {
 				for (Handler handler : handlers) {
 					Message msg = handler.obtainMessage();
 					Bundle bundleData = new Bundle();
-					bundleData.putFloat("pointProgress", mCurPoints
-							* mPointsScaleFactor);
+					bundleData.putFloat("pointProgress", curPoints);
 					msg.setData(bundleData);
 					msg.sendToTarget();
 				}
 			}
-			mStatistics.setProgressPoints(mCurPoints);
-			Log.d("CarDataLogic", "CurPoints: " + mCurPoints
-					* mPointsScaleFactor);
+			MyForest.getInstance().getForest().setPointProgress(curPoints);
+			Log.d("CarDataLogic", "CurPoints: " + curPoints);
 
 		}
 
@@ -427,7 +398,7 @@ public class CarDataLogic extends Handler {
 				// level up
 				if (lvlPrgPoints >= settings.getPointsToNextLevel(level+1)
 						&& level <= 100) {
-
+					mStatistics.addGainedPoint();
 					// calculate new progresPoints = curPoints -
 					// levelNeededPoints
 					lvlPrgPoints = 0;
@@ -445,7 +416,7 @@ public class CarDataLogic extends Handler {
 				int lvlPrgPoints = forest.getLevelProgessPoints() - 1;
 				// level down
 				if (lvlPrgPoints < 0 && level > 1) {
-
+					mStatistics.removeGainedPoint();
 					// calculate new progressPoints = levelNeededpoints -
 					// curPoints
 					lvlPrgPoints = settings.getPointsToNextLevel(level) - 1;

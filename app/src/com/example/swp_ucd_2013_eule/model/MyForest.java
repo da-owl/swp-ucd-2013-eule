@@ -10,6 +10,7 @@ public class MyForest {
 		mForest.setLevel(17);
 		mForest.setPoints(80);
 		mForest.setLevelProgessPoints(84);
+		mForest.setPointProgress(45f);
 	}
 
 	public static MyForest getInstance() {
