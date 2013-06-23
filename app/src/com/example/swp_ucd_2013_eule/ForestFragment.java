@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.ForestView;
 import com.example.swp_ucd_2013_eule.view.ForestView.UserForestItemListener;
@@ -33,6 +34,7 @@ public class ForestFragment extends Fragment {
 		Button btnClose = (Button) rootView.findViewById(R.id.btnSlideUpClose);
 
 		mForest = (ForestView) rootView.findViewById(R.id.forest);
+		mForest.setForest(MyForest.getInstance().getForest());
 		mForest.setSlideUpContainer(mSlideUpContainer);
 		((TextView) rootView.findViewById(R.id.txtDrops)).setText("80");
 

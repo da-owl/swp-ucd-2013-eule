@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.ForestView;
 import com.example.swp_ucd_2013_eule.view.ForestView.UserForestItemListener;
@@ -28,6 +29,8 @@ public class OtherForestActivity extends Activity {
 		setTitle(getIntent().getStringExtra("userName") + "'s forest");
 
 		mForest = (ForestView) findViewById(R.id.forest);
+		// TODO User other's forest
+		mForest.setForest(MyForest.getInstance().getForest());
 
 		// XXX Duplicate code (see MarketCategoryFragment) --> outsource
 		mSlideUpContainer = (SlideUpContainer) findViewById(R.id.forestSlideUp);

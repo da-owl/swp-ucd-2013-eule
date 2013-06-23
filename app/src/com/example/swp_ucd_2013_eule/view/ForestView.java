@@ -38,8 +38,6 @@ public class ForestView extends View {
 	private float mTileSize;
 	private int mCols, mRows;
 
-	private int mLevel = 17;
-	
 	private APIModel<Forest, Forest> mForestAPI;	
 	private APIModel<UserForestItem, Forest> mUserItemAPI;
 	
@@ -254,7 +252,7 @@ public class ForestView extends View {
 
 		// move right
 		int minSquareCols = mCols - 1;
-		int tilesLeft = mLevel - minSquareCols * minSquareCols - 1;
+		int tilesLeft = mForest.getLevel() - minSquareCols * minSquareCols - 1;
 		for (int i = 0; i < mCols; ++i) {
 			moveRight();
 		}
@@ -359,8 +357,8 @@ public class ForestView extends View {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		mCols = (int) Math.ceil(Math.sqrt(mLevel));
-		mRows = (int) Math.ceil(((float) mLevel) / mCols);
+		mCols = (int) Math.ceil(Math.sqrt(mForest.getLevel()));
+		mRows = (int) Math.ceil(((float) mForest.getLevel()) / mCols);
 		int width = (int) (mCols * mTileSize + FOREST_STROKE_WIDTH);
 		int height = (int) (mRows * mTileSize + FOREST_STROKE_WIDTH);
 		setMeasuredDimension(
@@ -461,6 +459,10 @@ public class ForestView extends View {
 
 	public void setSlideUpContainer(SlideUpContainer container) {
 		mSlideUpContainer = container;
+	}
+	
+	public void setForest(Forest forest) {
+		mForest = forest;
 	}
 
 	private class ForestItemWrapper {
