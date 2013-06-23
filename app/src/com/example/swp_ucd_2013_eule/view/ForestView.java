@@ -7,12 +7,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.SystemClock;
 import android.util.AttributeSet;
@@ -20,13 +22,13 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.R;
 import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.model.APIModel;
 import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
-import com.example.swp_ucd_2013_eule.net.APIException;
 
 public class ForestView extends View {
 
@@ -67,6 +69,10 @@ public class ForestView extends View {
 	private float mCurTouchY;
 
 	private UserForestItemListener mForestItemListener;
+
+	private ForestItemWrapper mDraggedItem = null;
+	private Path mDraggedPath;
+	private Paint mDraggedPaint;
 
 	public ForestView(Context context) {
 		super(context);
@@ -339,6 +345,9 @@ public class ForestView extends View {
 			canvas.drawBitmap(item.mItem.getForestItem().getImage(), item.mX,
 					item.mY, null);
 		}
+		if (mDraggedItem != null) {
+			canvas.drawPath(mDraggedPath, mDraggedPaint);
+		}
 
 	}
 
@@ -354,11 +363,12 @@ public class ForestView extends View {
 		updateForestSize();
 	}
 
-	long mLastTouchDown;
+	private long mLastTouchDown;
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// e.g. viewpager should not scroll horizontal
+
 		ViewParent parent = getParent();
 		if (parent != null) {
 			parent.requestDisallowInterceptTouchEvent(true);
@@ -376,11 +386,26 @@ public class ForestView extends View {
 
 		case MotionEvent.ACTION_UP:
 			handled = true;
+			float clickX = event.getX() + getScrollX();
+			float clickY = event.getY() + getScrollY();
 			if (SystemClock.elapsedRealtime() - mLastTouchDown <= 200) {
-				float clickX = event.getX() + getScrollX();
-				float clickY = event.getY() + getScrollY();
-				if (!resolveSliderClick(clickX, clickY)) {
+				if (mDraggedItem != null) {
+					determineTile(mDraggedItem, clickY, clickY);
+					mDraggedItem = null;
+					invalidate();
+				} else if (!resolveSliderClick(clickX, clickY)) {
 					resolveItemClick(clickX, clickY);
+				}
+			} else {
+				resolveItemToDrag(clickX, clickY);
+				if (mDraggedItem != null) {
+					calculateBorder();
+					invalidate();
+					Context context = getContext();
+					CharSequence text = "select drop place!";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
 				}
 			}
 			break;
@@ -401,6 +426,43 @@ public class ForestView extends View {
 		}
 
 		return handled;
+	}
+
+	private void calculateBorder() {
+		if (mDraggedItem != null) {
+			mDraggedPath = new Path();
+			int iw = mDraggedItem.mItem.getForestItem().getImage().getWidth();
+			int ih = mDraggedItem.mItem.getForestItem().getImage().getHeight();
+
+			mDraggedPaint = new Paint();
+			mDraggedPaint.setColor(Color.BLUE);
+			mDraggedPaint.setStyle(Style.STROKE);
+			mDraggedPaint.setStrokeWidth(5);
+
+			RectF rec = new RectF(mDraggedItem.mX - 5, mDraggedItem.mY - 5,
+					mDraggedItem.mX + iw + 5, mDraggedItem.mY + ih + 5);
+			mDraggedPath.addRect(rec, Path.Direction.CW);
+			mDraggedPath.close();
+		}
+
+	}
+
+	private void determineTile(ForestItemWrapper item, float x, float y) {
+		if (!isItemInTile(x, y)) {
+			int tileX = 0, tileY = 0;
+			// TODO: correct calculation of tile
+			// TODO: not outside the forest
+			tileX = (int) Math.floor(x / mTileSize);
+			tileY = (int) Math.floor(y / mTileSize);
+			item.mItem.setTile(tileX, tileY);
+
+			int iw2 = item.mItem.getForestItem().getImage().getWidth() / 2;
+			int ih2 = item.mItem.getForestItem().getImage().getHeight() / 2;
+			item.mX = FOREST_STROKE_WIDTH + (item.mItem.getTileX()) * mTileSize
+					+ item.mItem.getOffsetX() * mTileSize - iw2;
+			item.mY = FOREST_STROKE_WIDTH + (item.mItem.getTileY()) * mTileSize
+					+ item.mItem.getOffsetY() * mTileSize - ih2;
+		}
 	}
 
 	private boolean resolveSliderClick(float x, float y) {
@@ -430,6 +492,23 @@ public class ForestView extends View {
 					mForestItemListener.onForestItemClicked(item.mItem);
 					return;
 				}
+			}
+		}
+	}
+
+	private boolean isItemInTile(float x, float y) {
+		for (ForestItemWrapper item : mForestItems) {
+			if (isItemClicked(item, x, y)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void resolveItemToDrag(float x, float y) {
+		for (ForestItemWrapper item : mForestItems) {
+			if (isItemClicked(item, x, y)) {
+				mDraggedItem = item;
 			}
 		}
 	}
