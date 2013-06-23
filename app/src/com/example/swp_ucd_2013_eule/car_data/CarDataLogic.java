@@ -53,7 +53,7 @@ public class CarDataLogic extends Handler {
 	private volatile boolean mGotDataFromBackend;
 	private int mProgressPointInterval = 100;
 
-	private volatile float mCurPoints = -48;
+	private volatile float mCurPoints = 49;
 
 	// for now static
 	private float mCity = 7.5f;
@@ -425,7 +425,7 @@ public class CarDataLogic extends Handler {
 				int level = forest.getLevel();
 				int lvlPrgPoints = forest.getLevelProgessPoints() + 1;
 				// level up
-				if (lvlPrgPoints >= settings.getPointsToNextLevel(level)
+				if (lvlPrgPoints >= settings.getPointsToNextLevel(level+1)
 						&& level <= 100) {
 
 					// calculate new progresPoints = curPoints -
@@ -448,8 +448,8 @@ public class CarDataLogic extends Handler {
 
 					// calculate new progressPoints = levelNeededpoints -
 					// curPoints
-					lvlPrgPoints = settings.getPointsToNextLevel(--level) - 1;
-					forest.setLevel(level);
+					lvlPrgPoints = settings.getPointsToNextLevel(level) - 1;
+					forest.setLevel(--level);
 				}
 				// update lvlPrgPoints in Forest
 				forest.setLevelProgessPoints(lvlPrgPoints);
