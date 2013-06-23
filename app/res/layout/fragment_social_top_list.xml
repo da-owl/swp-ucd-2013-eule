@@ -1,5 +1,7 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/fragment_social_top_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -8,49 +10,54 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$DummySectionFragment" >
 
+    <LinearLayout 
+        android:orientation="vertical"
+        android:id="@+id/TopViewWorld"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
     <TextView
         android:id="@+id/txt_social_toplist_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:text="@string/fragment_social_toplist_worldlist"
-        android:textColor="@color/actionBarTabBarBackgroundColor" />
+        android:textColor="@color/actionBarTabBarBackgroundColor"
+        android:textSize="14sp" />
 
     <ScrollView
         android:id="@+id/ScrollViewWorld"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/txt_social_toplist_world"
-        android:layout_below="@id/txt_social_toplist_world" >
+        android:layout_height="wrap_content" >
 
         <com.example.swp_ucd_2013_eule.view.SocialList
-            android:id="@+id/social_toplist_world"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical" >
-
-        </com.example.swp_ucd_2013_eule.view.SocialList>
-    </ScrollView>
-
+                android:id="@+id/social_toplist_world"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical" >
+            </com.example.swp_ucd_2013_eule.view.SocialList>
+    </ScrollView> 
+    </LinearLayout>
+<LinearLayout 
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1" >
     <TextView
         android:id="@+id/txt_social_toplist_local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/ScrollViewWorld"
-        android:layout_below="@id/ScrollViewWorld"
+        
         android:layout_marginTop="20dp"
         android:text="@string/fragment_social_toplist_locallist"
-        android:textColor="@color/actionBarTabBarBackgroundColor" />
+        android:textColor="@color/actionBarTabBarBackgroundColor"
+        android:textSize="14sp" />
 
     <ScrollView
         android:id="@+id/ScrollViewLocal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/txt_social_toplist_local"
-        android:layout_below="@id/txt_social_toplist_local" >
+        android:layout_height="wrap_content" >
 
         <com.example.swp_ucd_2013_eule.view.SocialList
             android:id="@+id/social_toplist_local"
@@ -61,5 +68,5 @@
             android:scrollbars="vertical" >
         </com.example.swp_ucd_2013_eule.view.SocialList>
     </ScrollView>
-
-</RelativeLayout>
+</LinearLayout>
+</LinearLayout>

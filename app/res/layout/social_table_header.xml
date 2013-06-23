@@ -2,37 +2,54 @@
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/social_friend_list_header"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:stretchColumns="1" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
-        android:gravity="left"
+        android:layout_column="0"
+        android:gravity="center_vertical|center_horizontal"
+        android:maxWidth="25dp"
+        android:minWidth="25dp"
         android:scrollHorizontally="false"
         android:text="@string/social_table_header_position"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="22sp"
-        android:width="20dp" android:maxWidth="20dp" android:minWidth="20dp"/>
+        android:textSize="18sp"
+        android:width="25dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_column="1"
         android:gravity="center_vertical"
         android:scrollHorizontally="false"
         android:text="@string/social_table_header_name"
         android:textAlignment="viewStart"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imgRanking"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="0.1"
-        android:gravity="right"
+        android:layout_column="2"
+        android:gravity="center|center_horizontal"
         android:scrollHorizontally="false"
         android:src="@drawable/ico_ranking" />
+    
+    <ImageView
+        android:id="@+id/imgForest"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.1"
+        android:layout_column="3"
+        android:gravity="center|center_horizontal"
+        android:scrollHorizontally="false"
+        android:src="@drawable/ico_forest" />
 
 </TableRow>

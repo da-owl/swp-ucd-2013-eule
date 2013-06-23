@@ -1,44 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.swp_ucd_2013_eule.view.SocialRow xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.swp_ucd_2013_eule.view.SocialRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/social_friend_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_background" >
+    android:background="@drawable/list_background" 
+    android:stretchColumns="1">
 
     <TextView
         android:id="@+id/social_friend_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
-        android:gravity="left"
-        android:maxWidth="20dp"
-        android:minWidth="20dp"
+        android:gravity="right"
+        android:paddingRight="5dp"
+        android:maxWidth="30dp"
+        android:minWidth="30dp"
         android:scrollHorizontally="false"
         android:text="#"
+        android:layout_column="0"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="18sp"
-        android:width="20dp" />
+        android:textSize="22sp"
+        android:width="30dp" />
 
     <TextView
         android:id="@+id/social_friend_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:scrollHorizontally="false"
         android:text="Name"
+        android:layout_column="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/social_friend_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
+        android:layout_column="2"
+        android:maxWidth="80dp"
+        android:minWidth="80dp"
+        android:width="80dp"
         android:gravity="right"
         android:scrollHorizontally="false"
         android:text="Level"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="18sp" />
-
+        android:textSize="22sp" />
+    
+    <ImageView
+        android:id="@+id/imgDetail"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.1"
+        android:layout_column="3"
+        android:gravity="right"
+        android:scrollHorizontally="false"
+        android:src="@drawable/ic_action_detail" />
 </com.example.swp_ucd_2013_eule.view.SocialRow>

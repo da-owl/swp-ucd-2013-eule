@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.OtherForestActivity;
+import com.example.swp_ucd_2013_eule.ListActivity;
 import com.example.swp_ucd_2013_eule.R;
 
 public class SocialList extends TableLayout {
@@ -19,6 +20,7 @@ public class SocialList extends TableLayout {
 	private ConcurrentSkipListSet<RowElement> mRows = new ConcurrentSkipListSet<RowElement>();
 	private LayoutInflater mInflater;
 	private Context mContext;
+	private String listName = "";
 
 	public SocialList(Context context) {
 		super(context);
@@ -55,7 +57,7 @@ public class SocialList extends TableLayout {
 			// set Level
 			TextView level = (TextView) friendRow
 					.findViewById(R.id.social_friend_level);
-			level.setText(String.valueOf(elem.mLevel * 5) + " mÂ²");
+			level.setText(String.valueOf(elem.mLevel * 5) + " m²");
 			// set Position
 			int playerPosition = elem.mPosition;
 			TextView position = (TextView) friendRow
@@ -85,6 +87,30 @@ public class SocialList extends TableLayout {
 
 		}
 
+		if (listName != "") {
+			TableRow divider = (TableRow) mInflater.inflate(
+					R.layout.social_row_divider, null);
+			addView(divider);
+			
+			TableRow footer = (TableRow) mInflater.inflate(
+					R.layout.social_table_footer, null);
+			
+			footer.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, ListActivity.class);
+					intent.putExtra("listName", listName); // Optional
+															// parameters
+					mContext.startActivity(intent);
+				}
+			});
+			addView(footer);
+		}
+	}
+
+	public void setlistName(String name) {
+		this.listName = name;
 	}
 
 	public void addRow(int position, String userName, int level) {

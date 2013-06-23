@@ -30,6 +30,7 @@
     <string name="social_table_header_position">#</string>
     <string name="social_table_header_name">Name</string>   
     <string name="social_table_header_level">Wald-Größe</string>
+    <string name="social_table_footer_more">Gesamte Liste ansehen</string>   
     
     <string name="fragment_buy_dialog_buyItem">Buy</string>
     <string name="forest_item_slide_up_buy">Kaufen</string>

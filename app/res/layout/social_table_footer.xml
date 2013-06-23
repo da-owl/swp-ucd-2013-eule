@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/social_friend_list_footer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:stretchColumns="1">
+       
+    <ImageView
+        android:id="@+id/imgRankingL"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="right|center_horizontal"
+        android:scrollHorizontally="false"
+        android:src="@drawable/ico_ranking" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:scrollHorizontally="false"
+        android:text="@string/social_table_footer_more"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="18sp" />
+    
+    <ImageView
+        android:id="@+id/imgRankingR"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="left|center_horizontal"
+        android:scrollHorizontally="false"
+        android:src="@drawable/ico_ranking" />
+
+</TableRow>
