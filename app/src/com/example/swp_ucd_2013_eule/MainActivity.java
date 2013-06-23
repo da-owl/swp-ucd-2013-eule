@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.car_data.CarData;
 import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
+import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
@@ -82,7 +83,8 @@ public class MainActivity extends FragmentActivity implements
 			mInit= true;
 			CarData.getInstance();
 			startEXLAPListener(builder.toString());
-			CarDataLogic.getInstance();
+			CarDataLogic.getInstance().setContextUserID(MainActivity.this,1);
+			MyForest.getInstance();
 		}
 	}
 

@@ -4,11 +4,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.swp_ucd_2013_eule.model.APIModel;
+import com.example.swp_ucd_2013_eule.model.DrivingStatistics;
+import com.example.swp_ucd_2013_eule.net.APIException;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+/**
+ * 
+ * @author Marc
+ * 
+ *         CarDataLogic retrieves data from the CarData listener and calculates
+ *         points according to the driving style. Therefore it can assign bad
+ *         and good Points which will influence the amount of m² an user has.
+ * 
+ */
 public class CarDataLogic extends Handler {
 
 	private static CarDataLogic CarDataLogicInstance = null;
@@ -30,6 +44,11 @@ public class CarDataLogic extends Handler {
 	private float mMaxAcc = 0;
 	private float mMaxBreak = 0;
 	private int[] mAccExceeding = { 0, 0, 0 };
+	private DrivingStatistics mStatistics;
+	private APIModel<DrivingStatistics, DrivingStatistics> mAPI;
+	private Context mCtx;
+	private int mUserID;
+	private boolean mGotDataFromBackend;
 
 	// for now static
 	private float mCity = 7.5f;
@@ -42,14 +61,48 @@ public class CarDataLogic extends Handler {
 	private float m20percent = 0.4f;
 
 	private CarDataLogic() {
-		CarData instance = CarData.getInstance();
+		CarData carDataListener = CarData.getInstance();
 
-		instance.subscribeHandler(this, "InstantaneousValuePerMilage");
-		instance.subscribeHandler(this, "EngineSpeed");
-		instance.subscribeHandler(this, "CurrentGear");
+		carDataListener.subscribeHandler(this, "InstantaneousValuePerMilage");
+		carDataListener.subscribeHandler(this, "EngineSpeed");
+		carDataListener.subscribeHandler(this, "CurrentGear");
 		// instance.subscribeHandler(this, "RecommendedGear");
-		instance.subscribeHandler(this, "VehicleSpeed");
-		instance.subscribeHandler(this, "LongitudinalAcceleration");
+		carDataListener.subscribeHandler(this, "VehicleSpeed");
+		carDataListener.subscribeHandler(this, "LongitudinalAcceleration");
+
+	}
+
+	public void setContextUserID(Context ctx, int userID) {
+		mCtx = ctx;
+		mUserID = userID;
+		if (!getDataFromBackend()) {
+			mStatistics = new DrivingStatistics(mUserID, mInterval);
+		}
+	}
+
+	private synchronized boolean getDataFromBackend() {
+		/**
+		 * init the API and retrieve statistics
+		 */
+		try {
+			mAPI = new APIModel<DrivingStatistics, DrivingStatistics>(
+					DrivingStatistics.class, mCtx);
+			DrivingStatistics stat = (DrivingStatistics) mAPI
+					.get(new DrivingStatistics(mUserID));
+			if (mStatistics == null) {
+				mStatistics = new DrivingStatistics(mUserID, mInterval);
+			}
+			mStatistics
+					.setProgressPoints(stat.getProgressPoints() + mCurPoints);
+			mGotDataFromBackend = true;
+			return true;
+		} catch (APIException e) {
+			Log.e("CarDataLogic",
+					" failed to get data from backend: " + e.getMessage());
+		}catch(NullPointerException e){
+			Log.e("CarDataLogic","NullPointer in Backend!");
+		}
+		return false;
 	}
 
 	public static CarDataLogic getInstance() {
@@ -235,6 +288,9 @@ public class CarDataLogic extends Handler {
 
 		@Override
 		public void run() {
+			if (!mGotDataFromBackend) {
+				getDataFromBackend();
+			}
 			// calculate average consumption and speed
 			for (int i = 0; i < mInterval; i++) {
 				mSpeed += mSpeedList.get(i);
@@ -253,6 +309,7 @@ public class CarDataLogic extends Handler {
 			// according to the driving conditions determine if the consumption
 			// was above or below car average
 			float delta = mReferenceConsumption - mConsumption;
+			mStatistics.setConsumption(mConsumption);
 			float percent = Math.abs(delta) / mReferenceConsumption;
 			float factor = m20percent;
 			if (percent < 0.05f) {
@@ -310,7 +367,7 @@ public class CarDataLogic extends Handler {
 					msg.sendToTarget();
 				}
 			}
-
+			mStatistics.setProgressPoints(mCurPoints);
 			Log.d("CarDataLogic", "CurPoints: " + mCurPoints
 					* mPointsScaleFactor);
 

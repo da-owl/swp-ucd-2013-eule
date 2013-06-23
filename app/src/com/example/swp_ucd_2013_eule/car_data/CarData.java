@@ -114,7 +114,7 @@ public class CarData implements DataListener {
 			public void run() {
 				ConnectionConfiguration config = new ConnectionConfiguration(
 						address);
-				config.setConnectTimeout(500);
+				config.setConnectTimeout(1000);
 				mEC = new ExlapClient(config);
 				mEC.addDataListener(mEXLAPListener);
 
@@ -134,7 +134,7 @@ public class CarData implements DataListener {
 							// TODO: abbruch Bedingung (4 mal versuchen oder
 							// so??)
 							try {
-								Thread.sleep(500);
+								Thread.sleep(5000);
 							} catch (InterruptedException e) {
 							}
 						}
@@ -146,7 +146,7 @@ public class CarData implements DataListener {
 					} else {
 						Log.i("CarData.ConectionWatcher", "connected");
 						try {
-							Thread.sleep(500);
+							Thread.sleep(5000);
 						} catch (InterruptedException e) {
 						}
 					}

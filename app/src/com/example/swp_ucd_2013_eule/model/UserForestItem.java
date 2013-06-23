@@ -3,6 +3,7 @@ package com.example.swp_ucd_2013_eule.model;
 import com.example.swp_ucd_2013_eule.data.ForestItem;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * The ForestItems of the current user.
@@ -25,10 +26,10 @@ public class UserForestItem extends Model {
 
 	public static UserForestItem[] getExamples(Context ctx) {
 		if (examples != null) {
-			System.out.println("existing");
+			Log.d("UserForestItem","item already exists");
 			return examples;
 		}
-		System.out.println("create");
+		Log.d("UserForestItem","creating item");
 
 		examples = new UserForestItem[6];
 		ForestItem[] availableItems = ForestItem.getExamples(ctx);
