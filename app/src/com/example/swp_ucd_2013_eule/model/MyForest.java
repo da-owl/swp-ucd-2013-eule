@@ -2,24 +2,21 @@ package com.example.swp_ucd_2013_eule.model;
 
 public class MyForest {
 
-	private static MyForest mInstance = null;
+	private static MyForest INSTANCE = new MyForest();
 	private Forest mForest;
-	
-	private MyForest(){
+
+	private MyForest() {
 		mForest = new Forest();
 		mForest.setLevel(17);
 		mForest.setPoints(80);
 	}
-	
-	public static MyForest getInstance(){
-		if(mInstance==null){
-			mInstance = new MyForest();
-		}
-		return mInstance;
+
+	public static MyForest getInstance() {
+		return INSTANCE;
 	}
-	
-	public Forest getForest(){
+
+	public Forest getForest() {
 		return mForest;
 	}
-	
+
 }
