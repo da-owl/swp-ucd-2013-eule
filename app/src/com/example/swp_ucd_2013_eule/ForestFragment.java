@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.ForestView;
@@ -28,15 +29,18 @@ public class ForestFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_forest, container,
 				false);
 
+		Forest forest = MyForest.getInstance().getForest();
+
 		// XXX Duplicate code (see MarketCategoryFragment) --> outsource
 		mSlideUpContainer = (SlideUpContainer) rootView
 				.findViewById(R.id.forestSlideUp);
 		Button btnClose = (Button) rootView.findViewById(R.id.btnSlideUpClose);
 
 		mForest = (ForestView) rootView.findViewById(R.id.forest);
-		mForest.setForest(MyForest.getInstance().getForest());
+		mForest.setForest(forest);
 		mForest.setSlideUpContainer(mSlideUpContainer);
-		((TextView) rootView.findViewById(R.id.txtDrops)).setText("80");
+		((TextView) rootView.findViewById(R.id.txtDrops)).setText(forest
+				.getPoints().toString());
 
 		mForest.setForestItemListener(new UserForestItemListener() {
 			@Override
@@ -62,8 +66,8 @@ public class ForestFragment extends Fragment {
 			}
 		});
 
-		((TextView) rootView.findViewById(R.id.txtForestSize))
-				.setText("85 m²");
+		((TextView) rootView.findViewById(R.id.txtForestSize)).setText(forest
+				.getLevel() * 5 + " m²");
 
 		return rootView;
 	}

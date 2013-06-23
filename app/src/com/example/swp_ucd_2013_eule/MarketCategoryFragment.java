@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.view.Level;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
@@ -22,6 +24,7 @@ public abstract class MarketCategoryFragment extends Fragment {
 	private SlideUpContainer mSlideUpContainer;
 	private MarketForestItemAdapter mAdapter;
 	private ForestItem mCurItem;
+	protected Forest mForest;
 
 	public abstract MarketForestItemAdapter getMarketForestItemAdapter(
 			Context ctx);
@@ -29,6 +32,8 @@ public abstract class MarketCategoryFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
+		mForest = MyForest.getInstance().getForest();
 
 		View rootView = inflater.inflate(R.layout.fragment_market_grid,
 				container, false);
@@ -38,9 +43,9 @@ public abstract class MarketCategoryFragment extends Fragment {
 		gridView.setAdapter(mAdapter);
 
 		((TextView) rootView.findViewById(R.id.txtPointNumberHeader))
-				.setText("80");
-		((TextView) rootView.findViewById(R.id.txtWoodHeader))
-		.setText("85 m²");
+				.setText(mForest.getPoints().toString());
+		((TextView) rootView.findViewById(R.id.txtWoodHeader)).setText(mForest
+				.getLevel() * 5 + " m²");
 
 		// XXX Duplicate code (see ForestFragment) --> outsource
 		mSlideUpContainer = (SlideUpContainer) rootView

@@ -10,21 +10,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.model.Forest;
 
 public class MarketForestItemAdapter extends BaseAdapter {
 	private Context mContext;
+	private Forest mForest;
 	private ForestItem[] mItems;
 
-	public static MarketForestItemAdapter getExampleClothesAdapter(Context ctx) {
-		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx);
+	public static MarketForestItemAdapter getExampleClothesAdapter(Context ctx,
+			Forest forest) {
+		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
+				forest);
 		ForestItem[] items = ForestItem.getExamples(ctx);
 		adapter.mItems = new ForestItem[] { items[6], items[6], items[6],
 				items[6], items[6] };
 		return adapter;
 	}
 
-	public static MarketForestItemAdapter getExampleAnimalsAdapter(Context ctx) {
-		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx);
+	public static MarketForestItemAdapter getExampleAnimalsAdapter(Context ctx,
+			Forest forest) {
+		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
+				forest);
 		ForestItem[] items = ForestItem.getExamples(ctx);
 		adapter.mItems = new ForestItem[] { items[5], items[5], items[5],
 				items[5], items[5], items[5], items[5], items[5], items[5],
@@ -32,16 +38,19 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		return adapter;
 	}
 
-	public static MarketForestItemAdapter getExamplePlantsAdapter(Context ctx) {
-		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx);
+	public static MarketForestItemAdapter getExamplePlantsAdapter(Context ctx,
+			Forest forest) {
+		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
+				forest);
 		ForestItem[] items = ForestItem.getExamples(ctx);
 		adapter.mItems = new ForestItem[] { items[0], items[1], items[2],
 				items[4], items[0], items[1], items[2], items[4] };
 		return adapter;
 	}
 
-	public MarketForestItemAdapter(Context ctx) {
+	public MarketForestItemAdapter(Context ctx, Forest forest) {
 		mContext = ctx;
+		mForest = forest;
 	}
 
 	@Override
@@ -69,12 +78,12 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			v = li.inflate(R.layout.fragment_market_item, null);
 			TextView tv = (TextView) v.findViewById(R.id.icon_text);
 			tv.setText(item.getPrice() + " Tropfen");
-			if (item.getPrice() > 80) {
+			if (item.getPrice() > mForest.getPoints()) {
 				tv.setTextColor(Color.RED);
 			}
 			tv = (TextView) v.findViewById(R.id.icon_text2);
 			tv.setText((item.getLevel() * 5) + " m²");
-			if (item.getLevel() > 17) {
+			if (item.getLevel() > mForest.getLevel()) {
 				tv.setTextColor(Color.RED);
 			}
 			ImageView iv = (ImageView) v.findViewById(R.id.icon_image);

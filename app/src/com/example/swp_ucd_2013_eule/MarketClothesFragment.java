@@ -6,7 +6,7 @@ public class MarketClothesFragment extends MarketCategoryFragment {
 
 	@Override
 	public MarketForestItemAdapter getMarketForestItemAdapter(Context ctx) {
-		return MarketForestItemAdapter.getExampleClothesAdapter(ctx);
+		return MarketForestItemAdapter.getExampleClothesAdapter(ctx, mForest);
 	}
 
 }

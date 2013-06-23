@@ -29,18 +29,18 @@ import com.example.swp_ucd_2013_eule.model.UserForestItem;
 import com.example.swp_ucd_2013_eule.net.APIException;
 
 public class ForestView extends View {
-	
+
 	private static final Integer FOREST_ID = 1;
-	
+
 	private static final float FOREST_ROUNDED_CORNER = 50;
 	private static final float FOREST_STROKE_WIDTH = 2;
 
 	private float mTileSize;
 	private int mCols, mRows;
 
-	private APIModel<Forest, Forest> mForestAPI;	
+	private APIModel<Forest, Forest> mForestAPI;
 	private APIModel<UserForestItem, Forest> mUserItemAPI;
-	
+
 	private Forest mForest;
 
 	private Path mForestPath;
@@ -69,52 +69,39 @@ public class ForestView extends View {
 	private UserForestItemListener mForestItemListener;
 
 	public ForestView(Context context) {
-		super(context);		
+		super(context);
 		initForest();
-		
 
 		/**
 		 * init the API and retrieve a forest
 		 * 
-		try {
-			mForestAPI = new APIModel<Forest, Forest>(Forest.class, context);
-			mUserItemAPI = new APIModel<UserForestItem, Forest>(UserForestItem.class, context);
-			mForest = mForestAPI.get(new Forest(FOREST_ID));
-			mLevel = mForest.getLevel();
-			System.out.println("APITest - init() level " + mForest.getLevel());
-		} catch (APIException e) {
-			// TODO: display error message
-		}	
-		*/
-		
+		 * try { mForestAPI = new APIModel<Forest, Forest>(Forest.class,
+		 * context); mUserItemAPI = new APIModel<UserForestItem,
+		 * Forest>(UserForestItem.class, context); mForest = mForestAPI.get(new
+		 * Forest(FOREST_ID)); mLevel = mForest.getLevel();
+		 * System.out.println("APITest - init() level " + mForest.getLevel()); }
+		 * catch (APIException e) { // TODO: display error message }
+		 */
+
 		/**
 		 * try to add useritem, save it and create relation in the database
 		 * 
-		try {
-			UserForestItem item = new UserForestItem(null);
-			
-			if(mForest.addItem(item)){
-				// oder: mForest.addItem(item, 1, 1);
-				mUserItemAPI.save(item);
-				mUserItemAPI.addToParent(item, mForest, "userforestitems");
-			}		
-		} catch (APIException e) {
-			// TODO: display error message
-		}
-		
-		
-		/**
-		 * retrieve and set UserForestItems
+		 * try { UserForestItem item = new UserForestItem(null);
 		 * 
-		try {
-			ListUserForestItem> items = mUserItemAPI.getAllByParent(mForest, new UserForestItem(null), "userforestitems");
-			mForest.setUserforestitems(items);
-		} catch (APIException e) {
-			// TODO: display error message
-		}
-		*/
-		
-		
+		 * if(mForest.addItem(item)){ // oder: mForest.addItem(item, 1, 1);
+		 * mUserItemAPI.save(item); mUserItemAPI.addToParent(item, mForest,
+		 * "userforestitems"); } } catch (APIException e) { // TODO: display
+		 * error message }
+		 * 
+		 * 
+		 * /** retrieve and set UserForestItems
+		 * 
+		 * try { ListUserForestItem> items =
+		 * mUserItemAPI.getAllByParent(mForest, new UserForestItem(null),
+		 * "userforestitems"); mForest.setUserforestitems(items); } catch
+		 * (APIException e) { // TODO: display error message }
+		 */
+
 	}
 
 	public ForestView(Context context, AttributeSet attrs) {
@@ -252,7 +239,7 @@ public class ForestView extends View {
 
 		// move right
 		int minSquareCols = mCols - 1;
-		int tilesLeft = mForest.getLevel() - minSquareCols * minSquareCols - 1;
+		int tilesLeft = getLevel() - minSquareCols * minSquareCols - 1;
 		for (int i = 0; i < mCols; ++i) {
 			moveRight();
 		}
@@ -315,11 +302,11 @@ public class ForestView extends View {
 	public void placeItemsInForest() {
 		if (!mInitComplet) {
 			UserForestItem[] items = UserForestItem.getExamples(getContext());
-			
+
 			/**
-			mForest.getItems();
-			*/
-			
+			 * mForest.getItems();
+			 */
+
 			mForestItems.clear();
 
 			float x, y;
@@ -357,8 +344,8 @@ public class ForestView extends View {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		mCols = (int) Math.ceil(Math.sqrt(mForest.getLevel()));
-		mRows = (int) Math.ceil(((float) mForest.getLevel()) / mCols);
+		mCols = (int) Math.ceil(Math.sqrt(getLevel()));
+		mRows = (int) Math.ceil(((float) getLevel()) / mCols);
 		int width = (int) (mCols * mTileSize + FOREST_STROKE_WIDTH);
 		int height = (int) (mRows * mTileSize + FOREST_STROKE_WIDTH);
 		setMeasuredDimension(
@@ -460,9 +447,16 @@ public class ForestView extends View {
 	public void setSlideUpContainer(SlideUpContainer container) {
 		mSlideUpContainer = container;
 	}
-	
+
 	public void setForest(Forest forest) {
 		mForest = forest;
+	}
+
+	private int getLevel() {
+		if (mForest != null) {
+			return mForest.getLevel();
+		}
+		return 1;
 	}
 
 	private class ForestItemWrapper {
