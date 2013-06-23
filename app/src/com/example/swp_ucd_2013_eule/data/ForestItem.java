@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.example.swp_ucd_2013_eule.R;
+import com.example.swp_ucd_2013_eule.model.UserForestItem;
 
 public class ForestItem {
 	private Bitmap mImage;

@@ -18,25 +18,39 @@ class Item(models.Model):
     category = models.ForeignKey(ItemCategory, related_name='+')
     allowed_category = models.ForeignKey(ItemCategory, related_name='+')
 
+class UserForestItem(models.Model):
+    item = models.ForeignKey(Item)
+    tileX = models.IntegerField()
+    tileY = models.IntegerField()
+    offsetX = models.DecimalField(max_digits=2, decimal_places=1)
+    offsetY = models.DecimalField(max_digits=2, decimal_places=1)
+
 class Stat(models.Model):
     timestamp = models.DateTimeField(auto_now=True)
     level = models.IntegerField()
     points = models.IntegerField()
 
+class Trip(models.Model):
+    start = models.DateTimeField(auto_now=True)
+    end = models.DateTimeField(auto_now=True)
+    km = models.IntegerField()
+    fuel = models.DecimalField(max_digits=4, decimal_places=2)
+    points = models.IntegerField()
+
 class Forest(models.Model):
-    forest_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     level = models.IntegerField()
     points = models.IntegerField()
     # parent = models.ForeignKey('self', blank=True, related_name="friends")
     friends = models.ManyToManyField('Forest', blank=True)
-    items = models.ManyToManyField(Item, blank=True)
+    userforestitems = models.ManyToManyField(UserForestItem, blank=True)
     stats = models.ManyToManyField(Stat, blank=True)
+    trips = models.ManyToManyField(Trip, blank=True)
 
     class Meta:
         ordering = ["points"]
 
     def __str__(self):
-        return 'forest_id:' + str(self.forest_id) + ',level:' + str(self.level)
+        return 'id:' + str(self.id) + ',level:' + str(self.level)
 
 

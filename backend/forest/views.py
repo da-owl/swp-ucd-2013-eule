@@ -1,7 +1,7 @@
 # Create your views here.    
 from rest_framework import viewsets
 
-from core.serializers import ForestSerializer, ItemSerializer, StatSerializer
+from core.serializers import ForestSerializer, ItemSerializer, StatSerializer, UserForestItemSerializer
 from core.models import Forest, Item, Stat
 from core.filters import ForestFilter
 from core.helpers import json_response
@@ -37,8 +37,8 @@ class ForestFriendsViewSet(CRUDManyToManyView):
         this_pk = self.kwargs.get('pk', None)
         friend_pk = self.kwargs.get('field_pk', None)
 
-        this = Forest.objects.get(forest_id=this_pk)
-        friend = Forest.objects.get(forest_id=friend_pk)
+        this = Forest.objects.get(id=this_pk)
+        friend = Forest.objects.get(id=friend_pk)
 
         this.friends.add(friend)
         friend.friends.add(this)
@@ -51,8 +51,8 @@ class ForestFriendsViewSet(CRUDManyToManyView):
         this_pk = self.kwargs.get('pk', None)
         friend_pk = self.kwargs.get('field_pk', None)
 
-        this = Forest.objects.get(forest_id=this_pk)
-        friend = Forest.objects.get(forest_id=friend_pk)
+        this = Forest.objects.get(id=this_pk)
+        friend = Forest.objects.get(id=friend_pk)
 
         this.friends.remove(friend)
         friend.friends.remove(this)
@@ -60,16 +60,16 @@ class ForestFriendsViewSet(CRUDManyToManyView):
         return json_response(None, 200, 'Friend sucessfully removed.')
 
 
-class ForestItemViewSet(CRUDManyToManyView):
+class UserForestItemViewSet(CRUDManyToManyView):
     model = Forest
-    field_name = 'items'
-    serializer_class = ItemSerializer
+    field_name = 'userforestitems'
+    serializer_class = UserForestItemSerializer
 
     def put(self, request, *args, **kwargs):
         forest_pk = self.kwargs.get('pk', None)
         item_pk = self.kwargs.get('field_pk', None)
 
-        forest = Forest.objects.get(forest_id=forest_pk)
+        forest = Forest.objects.get(id=forest_pk)
         item = Item.objects.get(id=item_pk)
 
         forest.items.add(item)
@@ -81,7 +81,7 @@ class ForestItemViewSet(CRUDManyToManyView):
         forest_pk = self.kwargs.get('pk', None)
         item_pk = self.kwargs.get('field_pk', None)
 
-        forest = Forest.objects.get(forest_id=forest_pk)
+        forest = Forest.objects.get(id=forest_pk)
         item = Item.objects.get(id=item_pk)
 
         forest.items.remove(item)

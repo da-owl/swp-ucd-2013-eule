@@ -125,7 +125,7 @@ public class ApiClient {
 	public Response post(Context ctx, String apiEndpoint, JSONObject json)
 			throws ClientProtocolException, IOException {
 		URI uri = getEndpointUri(apiEndpoint);
-		return createHttpJsonClient().post(ctx, uri, json);
+		return createHttpJsonClient().put(ctx, uri, json);
 	}
 
 	private HttpJsonClient createHttpJsonClient() {
@@ -142,7 +142,7 @@ public class ApiClient {
 		if (mAuthToken == null || mAuthToken.isEmpty()) {
 			return new Header[] {};
 		}
-		return new Header[] { new BasicHeader("Authorization", "Token "
-				+ mAuthToken) };
+		return new Header[] { new BasicHeader("Authorization", "Token "	+ mAuthToken), 
+							new BasicHeader("Content-Type", "application/json")};
 	}
 }

@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
-import com.example.swp_ucd_2013_eule.data.UserForestItem;
-import com.example.swp_ucd_2013_eule.view.Forest;
-import com.example.swp_ucd_2013_eule.view.Forest.UserForestItemListener;
+import com.example.swp_ucd_2013_eule.model.UserForestItem;
+import com.example.swp_ucd_2013_eule.view.ForestView;
+import com.example.swp_ucd_2013_eule.view.ForestView.UserForestItemListener;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
 public class ForestFragment extends Fragment {
-	private Forest mForest;
+	private ForestView mForest;
 	private SlideUpContainer mSlideUpContainer;
 	private ForestItem mCurItem;
 
@@ -32,7 +32,7 @@ public class ForestFragment extends Fragment {
 				.findViewById(R.id.forestSlideUp);
 		Button btnClose = (Button) rootView.findViewById(R.id.btnSlideUpClose);
 
-		mForest = (Forest) rootView.findViewById(R.id.forest);
+		mForest = (ForestView) rootView.findViewById(R.id.forest);
 		mForest.setSlideUpContainer(mSlideUpContainer);
 		((TextView) rootView.findViewById(R.id.txtDrops)).setText("80");
 

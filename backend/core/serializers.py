@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from core.models import Forest, Item, Stat
+from core.models import Forest, Item, Stat, UserForestItem
 from rest_framework import serializers
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -36,6 +36,11 @@ class ForestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Forest
-        fields = ('forest_id', 'user', 'level', 'points')
+        fields = ('id', 'user', 'level', 'points')
         # depth = 1
         ordering = ['points']
+
+class UserForestItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserForestItem
+        fields = ('id', 'tileX', 'tileY', 'offsetX', 'offsetY')
