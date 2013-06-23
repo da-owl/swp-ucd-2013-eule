@@ -39,7 +39,8 @@ public abstract class MarketCategoryFragment extends Fragment {
 
 		((TextView) rootView.findViewById(R.id.txtPointNumberHeader))
 				.setText("80");
-		((Level) rootView.findViewById(R.id.level)).setLevel(17);
+		((TextView) rootView.findViewById(R.id.txtWoodHeader))
+		.setText("85 m²");
 
 		// XXX Duplicate code (see ForestFragment) --> outsource
 		mSlideUpContainer = (SlideUpContainer) rootView

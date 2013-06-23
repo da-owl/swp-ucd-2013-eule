@@ -4,15 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity$DummySectionFragment" >
-    
-    <com.example.swp_ucd_2013_eule.view.Level
-            android:id="@+id/level"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="90dp"
-            android:layout_marginTop="20dp" />
  
      
       <ImageView
@@ -30,6 +21,26 @@
             android:layout_height="100dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="45dp"
+            android:layout_marginTop="20dp"
+            android:text="50"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp" />
+      
+      <ImageView
+          android:id="@+id/imgWoodHeader"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:layout_marginLeft="70dp"
+          android:layout_marginTop="20dp"
+          android:src="@drawable/ico_forest_size" />
+
+      
+      <TextView
+            android:id="@+id/txtWoodHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="100dp"
             android:layout_marginTop="20dp"
             android:text="50"
             android:textAppearance="?android:attr/textAppearanceMedium"
