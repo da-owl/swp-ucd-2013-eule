@@ -6,12 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.example.swp_ucd_2013_eule.R;
+import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 
 public class ForestItem {
-	private Bitmap mImage;
-	private int mImageWidth;
-	private int mImageHeight;
+
 	private String mName;
 	private String mDescription;
 	private int mPrice;
@@ -19,6 +18,7 @@ public class ForestItem {
 	private int mAmount;
 	private int mLevel;
 	private boolean mMoveable = false;
+	private int mImageId;
 
 	private static ForestItem[] examples;
 
@@ -26,22 +26,18 @@ public class ForestItem {
 		STANDARD, SPECIAL
 	};
 
-	public static ForestItem[] getExamples(Context ctx) {
+	public static ForestItem[] getExamples() {
 		if (examples != null) {
 			return examples;
 		}
-		Resources r = ctx.getResources();
-		Bitmap imgTree = BitmapFactory.decodeResource(r, R.drawable.item_tree);
-		Bitmap imgFir = BitmapFactory.decodeResource(r, R.drawable.item_fir);
-		Bitmap imgFrog = BitmapFactory
-				.decodeResource(r, R.drawable.item_gordan);
-		Bitmap imgBush = BitmapFactory.decodeResource(r, R.drawable.item_bush);
-		Bitmap imgPlants = BitmapFactory.decodeResource(r,
-				R.drawable.item_plants);
-		Bitmap imgAnimals = BitmapFactory.decodeResource(r,
-				R.drawable.item_animals);
-		Bitmap imgClothes = BitmapFactory.decodeResource(r,
-				R.drawable.item_clothes);
+
+		int imgTree = R.drawable.item_tree;
+		int imgFir = R.drawable.item_fir;
+		int imgFrog =  R.drawable.item_gordan;
+		int imgBush = R.drawable.item_bush;
+		int imgPlants = R.drawable.item_plants;
+		int imgAnimals = R.drawable.item_animals;
+		int imgClothes = R.drawable.item_clothes;
 
 		ForestItem fir = new ForestItem(
 				ForestItemType.STANDARD,
@@ -97,36 +93,35 @@ public class ForestItem {
 				dress };
 
 		// call once, to update amounts
-		UserForestItem.getExamples(ctx);
+		UserForestItem.getExamples();
 
 		return examples;
 	}
 
-	public ForestItem(ForestItemType type, Bitmap bitmap, String name,
+	public ForestItem(ForestItemType type, int imageID, String name,
 			String description) {
 		mType = type;
-		setImage(bitmap);
+		mImageId = imageID;
 		setName(name);
 		setDescription(description);
 	}
 
-	public ForestItem(ForestItemType type, Bitmap bitmap, String name,
+	public ForestItem(ForestItemType type, int imageID, String name,
 			String description, boolean moveable) {
 		mType = type;
-		setImage(bitmap);
+		mImageId = imageID;
 		setName(name);
 		setDescription(description);
 		mMoveable = moveable;
 	}
 
-	public Bitmap getImage() {
-		return mImage;
+	public Bitmap getImage(Context ctx) {
+		Resources r = ctx.getResources();
+		return BitmapFactory.decodeResource(r, mImageId);
 	}
 
-	public void setImage(Bitmap image) {
-		this.mImage = image;
-		this.mImageHeight = image.getHeight();
-		this.mImageWidth = image.getWidth();
+	public void setImage(int imageID) {
+		mImageId = imageID;
 	}
 
 	public String getName() {
@@ -161,14 +156,6 @@ public class ForestItem {
 		return mType == ForestItemType.SPECIAL;
 	}
 
-	public int getImageHeight() {
-		return mImageHeight;
-	}
-
-	public int getImageWidth() {
-		return mImageWidth;
-	}
-
 	public int getAmount() {
 		return mAmount;
 	}
@@ -179,6 +166,17 @@ public class ForestItem {
 
 	public void incAmount() {
 		this.mAmount++;
+	}
+	
+	public void buy(){
+		incAmount();
+		
+		int points = MyForest.getInstance().getForest().getPoints() - mPrice;
+		MyForest.getInstance().getForest().setPoints(points);
+		UserForestItem item = new UserForestItem(this.clone());
+		item.setTile(-1, -1);
+		item.setOffset(0.5f, 0.5f);
+		MyForest.getInstance().addBoughtItem(item);
 	}
 
 	public int getLevel() {
@@ -192,5 +190,14 @@ public class ForestItem {
 	public boolean isMoveable() {
 		return mMoveable;
 	}
+	
+	public ForestItem clone(){
+		ForestItem item = new ForestItem(mType,mImageId,mName,mDescription,isMoveable());
+		item.setPrice(mPrice);
+		item.setLevel(mLevel);
+		item.setAmount(mAmount);
+		return item;
+	}
+	
 
 }

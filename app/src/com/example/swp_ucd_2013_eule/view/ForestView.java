@@ -1,6 +1,7 @@
 package com.example.swp_ucd_2013_eule.view;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
@@ -21,20 +22,23 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.R;
 import com.example.swp_ucd_2013_eule.data.ForestItem;
-import com.example.swp_ucd_2013_eule.model.APIModel;
 import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.MyForest;
+import com.example.swp_ucd_2013_eule.model.OnItemBoughtListener;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 
-public class ForestView extends View {
+public class ForestView extends View implements OnItemBoughtListener{
 
-	private static final Integer FOREST_ID = 1;
+	//private static final Integer FOREST_ID = 1;
 
 	private static final float FOREST_ROUNDED_CORNER = 50;
 	private static final float FOREST_STROKE_WIDTH = 2;
@@ -42,8 +46,8 @@ public class ForestView extends View {
 	private float mTileSize;
 	private int mCols, mRows;
 
-	private APIModel<Forest, Forest> mForestAPI;
-	private APIModel<UserForestItem, Forest> mUserItemAPI;
+	//private APIModel<Forest, Forest> mForestAPI;
+	//private APIModel<UserForestItem, Forest> mUserItemAPI;
 
 	private Forest mForest;
 
@@ -314,8 +318,8 @@ public class ForestView extends View {
 
 	public void placeItemsInForest() {
 		if (!mInitComplet) {
-			UserForestItem[] items = UserForestItem.getExamples(getContext());
-
+			List<UserForestItem> items = MyForest.getInstance().getForest().getUserforestitems();
+			MyForest.getInstance().addOnItemBoughtListener(this);
 			/**
 			 * mForest.getItems();
 			 */
@@ -324,8 +328,9 @@ public class ForestView extends View {
 
 			float x, y;
 			for (UserForestItem item : items) {
-				int iw2 = item.getForestItem().getImage().getWidth() / 2;
-				int ih2 = item.getForestItem().getImage().getHeight() / 2;
+				
+				int iw2 = item.getForestItem().getImage(getContext()).getWidth() / 2;
+				int ih2 = item.getForestItem().getImage(getContext()).getHeight() / 2;
 				x = FOREST_STROKE_WIDTH + (item.getTileX()) * mTileSize
 						+ item.getOffsetX() * mTileSize - iw2;
 				y = FOREST_STROKE_WIDTH + (item.getTileY()) * mTileSize
@@ -337,6 +342,7 @@ public class ForestView extends View {
 		}
 
 	}
+	
 
 	public void setForestItemListener(UserForestItemListener forestItemListener) {
 		this.mForestItemListener = forestItemListener;
@@ -349,7 +355,7 @@ public class ForestView extends View {
 		canvas.drawPath(mForestPath, mForestPaintBorder);
 		placeItemsInForest();
 		for (ForestItemWrapper item : mForestItems) {
-			canvas.drawBitmap(item.mItem.getForestItem().getImage(), item.mX,
+			canvas.drawBitmap(item.mItem.getForestItem().getImage(getContext()), item.mX,
 					item.mY, null);
 		}
 		if (mDraggedItem != null) {
@@ -480,8 +486,8 @@ public class ForestView extends View {
 	private void calculateBorder() {
 		if (mDraggedItem != null) {
 			mDraggedPath = new Path();
-			int iw = mDraggedItem.mItem.getForestItem().getImage().getWidth();
-			int ih = mDraggedItem.mItem.getForestItem().getImage().getHeight();
+			int iw = mDraggedItem.mItem.getForestItem().getImage(getContext()).getWidth();
+			int ih = mDraggedItem.mItem.getForestItem().getImage(getContext()).getHeight();
 
 			mDraggedPaint = new Paint();
 			mDraggedPaint.setColor(Color.BLUE);
@@ -503,8 +509,8 @@ public class ForestView extends View {
 			tileY = (int) Math.floor(y / mTileSize);
 			item.mItem.setTile(tileX, tileY);
 
-			int iw2 = item.mItem.getForestItem().getImage().getWidth() / 2;
-			int ih2 = item.mItem.getForestItem().getImage().getHeight() / 2;
+			int iw2 = item.mItem.getForestItem().getImage(getContext()).getWidth() / 2;
+			int ih2 = item.mItem.getForestItem().getImage(getContext()).getHeight() / 2;
 			item.mX = FOREST_STROKE_WIDTH + (item.mItem.getTileX()) * mTileSize
 					+ item.mItem.getOffsetX() * mTileSize - iw2;
 			item.mY = FOREST_STROKE_WIDTH + (item.mItem.getTileY()) * mTileSize
@@ -562,8 +568,8 @@ public class ForestView extends View {
 
 	private boolean isItemClicked(ForestItemWrapper i, float x, float y) {
 		ForestItem item = i.mItem.getForestItem();
-		return x >= i.mX && x <= i.mX + item.getImageWidth() && y >= i.mY
-				&& y <= i.mY + item.getImageHeight();
+		return x >= i.mX && x <= i.mX + item.getImage(getContext()).getWidth() && y >= i.mY
+				&& y <= i.mY + item.getImage(getContext()).getHeight();
 	}
 
 	public interface UserForestItemListener {
@@ -604,8 +610,8 @@ public class ForestView extends View {
 				float xRand = ((float) r.nextInt(6) + 2) / 10f;
 				float yRand = ((float) r.nextInt(6) + 2) / 10f;
 
-				int iw2 = item.mItem.getForestItem().getImage().getWidth() / 2;
-				int ih2 = item.mItem.getForestItem().getImage().getHeight() / 2;
+				int iw2 = item.mItem.getForestItem().getImage(getContext()).getWidth() / 2;
+				int ih2 = item.mItem.getForestItem().getImage(getContext()).getHeight() / 2;
 				item.mX = FOREST_STROKE_WIDTH + (item.mItem.getTileX())
 						* mTileSize + xRand * mTileSize - iw2;
 
@@ -615,6 +621,19 @@ public class ForestView extends View {
 				invalidate();
 			}
 		}
+	}
+
+	@Override
+	public void onNewItemBought(UserForestItem item) {
+		int iw2 = item.getForestItem().getImage(getContext()).getWidth() / 2;
+		int ih2 = item.getForestItem().getImage(getContext()).getHeight() / 2;
+		float x = FOREST_STROKE_WIDTH + (item.getTileX()) * mTileSize
+				+ item.getOffsetX() * mTileSize - iw2;
+		float y = FOREST_STROKE_WIDTH + (item.getTileY()) * mTileSize
+				+ item.getOffsetY() * mTileSize - ih2;
+		mForestItems.add(new ForestItemWrapper(item, x, y));
+		invalidate();
+		
 	}
 
 }

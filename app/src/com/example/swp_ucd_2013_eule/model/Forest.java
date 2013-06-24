@@ -1,6 +1,7 @@
 package com.example.swp_ucd_2013_eule.model;
 
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class Forest extends Model {
 	
 	private Float PointProgress; //added!!! @ Erik
 	
-	private List<UserForestItem> useritems;
+	private LinkedList<UserForestItem> useritems = new LinkedList<UserForestItem>();
 	
 	private List<Forest> friends;
 	
@@ -68,8 +69,10 @@ public class Forest extends Model {
 		return this.useritems;
 	}
 	
-	public void setUserforestitems(List<UserForestItem> useritems) {
-		this.useritems = useritems;
+	public void setUserforestitems(UserForestItem[] useritems) {
+		for(UserForestItem item : useritems){
+			this.useritems.add(item);
+		}
 	}
 
 	public boolean addItem(UserForestItem item) {

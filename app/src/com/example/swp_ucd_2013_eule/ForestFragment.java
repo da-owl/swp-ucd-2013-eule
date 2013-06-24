@@ -68,7 +68,7 @@ public class ForestFragment extends Fragment {
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mCurItem.incAmount();
+				mCurItem.buy();
 				updateCurrentItemView();
 			}
 		});
@@ -117,7 +117,7 @@ public class ForestFragment extends Fragment {
 		// set Picture
 		ImageView pic = (ImageView) mSlideUpContainer
 				.findViewById(R.id.imgItem);
-		pic.setImageBitmap(mCurItem.getImage());
+		pic.setImageBitmap(mCurItem.getImage(getActivity()));
 		// set amount
 		TextView amount = (TextView) mSlideUpContainer
 				.findViewById(R.id.txt_amount);

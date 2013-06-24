@@ -21,7 +21,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		ForestItem[] items = ForestItem.getExamples(ctx);
+		ForestItem[] items = ForestItem.getExamples();
 		adapter.mItems = new ForestItem[] { items[6], items[6], items[6],
 				items[6], items[6] };
 		return adapter;
@@ -31,7 +31,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		ForestItem[] items = ForestItem.getExamples(ctx);
+		ForestItem[] items = ForestItem.getExamples();
 		adapter.mItems = new ForestItem[] { items[5], items[5], items[5],
 				items[5], items[5], items[5], items[5], items[5], items[5],
 				items[5], items[5], items[5], items[5] };
@@ -42,7 +42,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		ForestItem[] items = ForestItem.getExamples(ctx);
+		ForestItem[] items = ForestItem.getExamples();
 		adapter.mItems = new ForestItem[] { items[0], items[1], items[2],
 				items[4], items[0], items[1], items[2], items[4] };
 		return adapter;
@@ -87,7 +87,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 				tv.setTextColor(Color.RED);
 			}
 			ImageView iv = (ImageView) v.findViewById(R.id.icon_image);
-			iv.setImageBitmap(item.getImage());
+			iv.setImageBitmap(item.getImage(mContext));
 
 		} else {
 			v = convertView;
