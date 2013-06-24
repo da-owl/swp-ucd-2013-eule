@@ -40,6 +40,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btnSlideUpClose"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/imgItem"
         android:paddingLeft="10dp"
         android:text="Spezialgegenstand! \n BLALBALBALBALBA\n BLALBALBALBALBA" />
