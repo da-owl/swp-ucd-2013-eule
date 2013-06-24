@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
+import com.example.swp_ucd_2013_eule.car_data.CarData;
 import com.example.swp_ucd_2013_eule.car_data.CarDataLogic;
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.model.Forest;
@@ -45,6 +46,7 @@ public class DrivePointsFragment extends Fragment {
 		button.setOnCheckedChangeListener( new OnCheckedChangeListener() {
 	        @Override
 	        public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked) {
+	            CarData.getInstance().setRecordTrip(isChecked);
 	            CarDataLogic.getInstance().setTripStartStop(isChecked);
 	        }
 	    }) ;

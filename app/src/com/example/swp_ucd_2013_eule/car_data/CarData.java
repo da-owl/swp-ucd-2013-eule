@@ -33,6 +33,7 @@ public class CarData implements DataListener {
 	private volatile Thread mConnectionWatcher;
 	private volatile boolean mRun = false;
 	private static CarData INSTANCE = new CarData();
+	private boolean mRecordTrip = false;
 
 	private CarData() {
 
@@ -40,6 +41,10 @@ public class CarData implements DataListener {
 
 	public static CarData getInstance() {
 		return INSTANCE;
+	}
+
+	public void setRecordTrip(boolean state) {
+		mRecordTrip = state;
 	}
 
 	/**
@@ -69,7 +74,7 @@ public class CarData implements DataListener {
 			String value = data[3].substring(data[3].indexOf("=") + 1,
 					data[3].indexOf("]")).trim();
 			Log.d("CarData", "Data key: " + key + ", value: " + value);
-			if (!value.equals("null")) {
+			if (!value.equals("N.A.")) {
 				List<Handler> handlers = mDataListeners.get(key);
 				if (handlers != null) {
 					Log.d("CarData", "notifying handlers");
@@ -82,7 +87,7 @@ public class CarData implements DataListener {
 					}
 				}
 			} else {
-				Log.d("CarData", "null received, key: " + key);
+				Log.d("CarData", "value N.A. received" + key);
 			}
 		}
 
@@ -115,33 +120,39 @@ public class CarData implements DataListener {
 				mEC = new ExlapClient(config);
 				mEC.addDataListener(mEXLAPListener);
 
-				Log.i("CarData.ConectionWatcher", "started");
+				Log.i("CarData.ConnectionWatcher", "started");
+				Log.i("CarData.ConnectionWatcher", address);
 				while (mRun) {
-					Log.d("CarData.ConectionWatcher", "checking status");
+					Log.d("CarData.ConnectionWatcher", "checking status");
 					// check if the EXLAP-Client is connected
-					if (!mEC.isConnected()) {
-						Log.i("CarData.ConectionWatcher", "not connected");
-						// logging?
+					if (!mEC.isConnected() && mRecordTrip) {
+						Log.i("CarData.ConnectionWatcher", "not connected");
 						// as long as there is no connection try to reconnect to
 						// the server
-						while (!mEC.isConnected() && mRun) {
-							Log.d("CarData.ConectionWatcher",
-									"trying to connect");
-							mEC.connect();
-							// TODO: abbruch Bedingung (4 mal versuchen oder
-							// so??)
+
+						Log.d("CarData.ConnectionWatcher", "trying to connect");
+						mEC.connect();
+						
+						// if a connection has been made, subscribe the data
+						if (mEC.isConnected()) {
+							Log.d("CarData.ConnectionWatcher", "subscribing");
+							subscribe();
+						} else {
 							try {
 								Thread.sleep(5000);
 							} catch (InterruptedException e) {
 							}
 						}
-						if (mEC.isConnected()) {
-							Log.d("CarData.ConectionWatcher", "subscribing");
-							subscribe();
+					
+					} else if (!mRecordTrip && !mEC.isConnected()) {
+						Log.i("CarData.ConnectionWatcher",
+								"disconnected and no connection needed");
+						try {
+							Thread.sleep(10000);
+						} catch (InterruptedException e) {
 						}
-						// if a connection has been made, subscribe the data
 					} else {
-						Log.i("CarData.ConectionWatcher", "connected");
+						Log.i("CarData.ConnectionWatcher", "connected");
 						try {
 							Thread.sleep(5000);
 						} catch (InterruptedException e) {
