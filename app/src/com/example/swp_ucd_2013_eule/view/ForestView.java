@@ -425,9 +425,11 @@ public class ForestView extends View {
 				float clickX = event.getX() + getScrollX();
 				float clickY = event.getY() + getScrollY();
 				if (mDraggedItem != null) {
-					determineTile(mDraggedItem, clickX, clickY);
-					mDraggedItem = null;
-					invalidate();
+					if (isInForest(clickX, clickY)) {
+						determineTile(mDraggedItem, clickX, clickY);
+						mDraggedItem = null;
+						invalidate();
+					}
 				} else if (!resolveSliderClick(clickX, clickY)) {
 					resolveItemClick(clickX, clickY);
 				}
@@ -451,6 +453,27 @@ public class ForestView extends View {
 		}
 
 		return handled;
+	}
+
+	private boolean isInForest(float x, float y) {
+		if (x < 0 || y < 0) {
+			return false;
+		}
+
+		int tileX = (int) Math.floor(x / mTileSize);
+		int tileY = (int) Math.floor(y / mTileSize);
+
+		int level = Math.max(tileX, tileY);
+		level *= level;
+		level += tileY + 1;
+
+		if (tileX < tileY) {
+			level += (tileY - tileX);
+		}
+
+		//System.out.println("Tile <" + tileX + ";" + tileY + "> is"
+		//		+ (mForest.getLevel() >= level ? "" : " NOT") + " in Forest.");
+		return mForest.getLevel() >= level;
 	}
 
 	private void calculateBorder() {
