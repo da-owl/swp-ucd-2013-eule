@@ -1,6 +1,7 @@
 package com.example.swp_ucd_2013_eule.view;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -381,7 +382,7 @@ public class ForestView extends View {
 					calculateBorder();
 					invalidate();
 					Context context = getContext();
-					CharSequence text = "Select place to drop the item!";
+					CharSequence text = "Neuen Ort für das Item wählen!";
 					int duration = Toast.LENGTH_SHORT;
 					Toast toast = Toast.makeText(context, text, duration);
 					toast.show();
@@ -471,8 +472,8 @@ public class ForestView extends View {
 			level += (tileY - tileX);
 		}
 
-		//System.out.println("Tile <" + tileX + ";" + tileY + "> is"
-		//		+ (mForest.getLevel() >= level ? "" : " NOT") + " in Forest.");
+		// System.out.println("Tile <" + tileX + ";" + tileY + "> is"
+		// + (mForest.getLevel() >= level ? "" : " NOT") + " in Forest.");
 		return mForest.getLevel() >= level;
 	}
 
@@ -594,4 +595,26 @@ public class ForestView extends View {
 			mY = y;
 		}
 	}
+
+	public void animateMoveableItems() {
+
+		for (ForestItemWrapper item : mForestItems) {
+			if (item.mItem.getForestItem().isMoveable()) {
+				Random r = new Random();
+				float xRand = ((float) r.nextInt(6) + 2) / 10f;
+				float yRand = ((float) r.nextInt(6) + 2) / 10f;
+
+				int iw2 = item.mItem.getForestItem().getImage().getWidth() / 2;
+				int ih2 = item.mItem.getForestItem().getImage().getHeight() / 2;
+				item.mX = FOREST_STROKE_WIDTH + (item.mItem.getTileX())
+						* mTileSize + xRand * mTileSize - iw2;
+
+				item.mY = FOREST_STROKE_WIDTH + (item.mItem.getTileY())
+						* mTileSize + yRand * mTileSize - ih2;
+
+				invalidate();
+			}
+		}
+	}
+
 }

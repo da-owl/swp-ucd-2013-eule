@@ -18,6 +18,7 @@ public class ForestItem {
 	private ForestItemType mType;
 	private int mAmount;
 	private int mLevel;
+	private boolean mMoveable = false;
 
 	private static ForestItem[] examples;
 
@@ -65,7 +66,8 @@ public class ForestItem {
 				ForestItemType.SPECIAL,
 				imgFrog,
 				"Gordon der Frosch",
-				"SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn fuer\nherrausragendes Fahren!");
+				"SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn fuer\nherrausragendes Fahren!",
+				true);
 
 		ForestItem flower = new ForestItem(
 				ForestItemType.STANDARD,
@@ -106,6 +108,15 @@ public class ForestItem {
 		setImage(bitmap);
 		setName(name);
 		setDescription(description);
+	}
+
+	public ForestItem(ForestItemType type, Bitmap bitmap, String name,
+			String description, boolean moveable) {
+		mType = type;
+		setImage(bitmap);
+		setName(name);
+		setDescription(description);
+		mMoveable = moveable;
 	}
 
 	public Bitmap getImage() {
@@ -169,13 +180,17 @@ public class ForestItem {
 	public void incAmount() {
 		this.mAmount++;
 	}
-	
+
 	public int getLevel() {
 		return mLevel;
 	}
-	
+
 	public void setLevel(int level) {
 		this.mLevel = level;
+	}
+
+	public boolean isMoveable() {
+		return mMoveable;
 	}
 
 }
