@@ -93,7 +93,7 @@ public class ForestFragment extends Fragment {
 	}
 
 	private boolean isItemObtainable() {
-		if (mCurItem.getPrice() <= 80 & mCurItem.getLevel() < 18) {
+		if (mCurItem.getPrice() <= MyForest.getInstance().getForest().getPoints() & mCurItem.getLevel() < MyForest.getInstance().getForest().getLevel()) {
 			return true;
 		} else
 			return false;
