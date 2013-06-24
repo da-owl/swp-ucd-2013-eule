@@ -16,6 +16,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -74,6 +75,9 @@ public class ForestView extends View {
 	private Path mDraggedPath;
 	private Paint mDraggedPaint;
 
+	private Handler mHandler;
+	private Runnable mDraggedRunnable;
+
 	public ForestView(Context context) {
 		super(context);
 		initForest();
@@ -121,6 +125,8 @@ public class ForestView extends View {
 	}
 
 	private void initForest() {
+		mHandler = new Handler();
+
 		mTileSize = dpToPx(95);
 
 		mForestPaint = new Paint();
@@ -365,6 +371,32 @@ public class ForestView extends View {
 
 	private long mLastTouchDown;
 
+	private void prepareDrag(final float x, final float y) {
+		// will be cancelled if touchUp was too early
+		mDraggedRunnable = new Runnable() {
+			@Override
+			public void run() {
+				resolveItemToDrag(x, y);
+				if (mDraggedItem != null) {
+					calculateBorder();
+					invalidate();
+					Context context = getContext();
+					CharSequence text = "Select place to drop the item!";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+				}
+			}
+		};
+		mHandler.postDelayed(mDraggedRunnable, 500);
+	}
+
+	private void cancelDrag() {
+		if (mDraggedRunnable != null) {
+			mHandler.removeCallbacks(mDraggedRunnable);
+		}
+	}
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// e.g. viewpager should not scroll horizontal
@@ -382,36 +414,29 @@ public class ForestView extends View {
 			mCurTouchX = (int) event.getRawX();
 			mCurTouchY = (int) event.getRawY();
 			mLastTouchDown = SystemClock.elapsedRealtime();
+			prepareDrag(event.getX() + getScrollX(), event.getY()
+					+ getScrollY());
 			break;
 
 		case MotionEvent.ACTION_UP:
 			handled = true;
-			float clickX = event.getX() + getScrollX();
-			float clickY = event.getY() + getScrollY();
+			cancelDrag();
 			if (SystemClock.elapsedRealtime() - mLastTouchDown <= 200) {
+				float clickX = event.getX() + getScrollX();
+				float clickY = event.getY() + getScrollY();
 				if (mDraggedItem != null) {
-					determineTile(mDraggedItem, clickY, clickY);
+					determineTile(mDraggedItem, clickX, clickY);
 					mDraggedItem = null;
 					invalidate();
 				} else if (!resolveSliderClick(clickX, clickY)) {
 					resolveItemClick(clickX, clickY);
-				}
-			} else {
-				resolveItemToDrag(clickX, clickY);
-				if (mDraggedItem != null) {
-					calculateBorder();
-					invalidate();
-					Context context = getContext();
-					CharSequence text = "select drop place!";
-					int duration = Toast.LENGTH_SHORT;
-					Toast toast = Toast.makeText(context, text, duration);
-					toast.show();
 				}
 			}
 			break;
 
 		case MotionEvent.ACTION_MOVE: {
 			handled = true;
+			cancelDrag();
 			float x2 = event.getRawX();
 			float y2 = event.getRawY();
 			scrollBy((int) (mCurTouchX - x2), (int) (mCurTouchY - y2));
@@ -450,8 +475,6 @@ public class ForestView extends View {
 	private void determineTile(ForestItemWrapper item, float x, float y) {
 		if (!isItemInTile(x, y)) {
 			int tileX = 0, tileY = 0;
-			// TODO: correct calculation of tile
-			// TODO: not outside the forest
 			tileX = (int) Math.floor(x / mTileSize);
 			tileY = (int) Math.floor(y / mTileSize);
 			item.mItem.setTile(tileX, tileY);
