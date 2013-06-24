@@ -437,7 +437,7 @@ public class ForestView extends View implements OnItemBoughtListener{
 						mDraggedItem = null;
 						invalidate();
 					}
-				} else if (!resolveSliderClick(clickX, clickY)) {
+				} else if (!resolveSliderClick(event.getX(), event.getY())) {
 					resolveItemClick(clickX, clickY);
 				}
 			}
