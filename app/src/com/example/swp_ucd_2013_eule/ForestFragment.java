@@ -1,5 +1,6 @@
 package com.example.swp_ucd_2013_eule;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -58,18 +59,24 @@ public class ForestFragment extends Fragment {
 		});
 
 		Button btnBuy = (Button) rootView.findViewById(R.id.btnBuyItem);
-		btnBuy.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mCurItem.incAmount();
-				updateCurrentItemView();
-			}
-		});
-
+			btnBuy.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mCurItem.incAmount();
+					updateCurrentItemView();
+				}
+			});
 		((TextView) rootView.findViewById(R.id.txtForestSize)).setText(forest
 				.getLevel() * 5 + " m²");
 
 		return rootView;
+	}
+
+	private boolean isItemObtainable() {
+		if(mCurItem.getPrice() <= 80 & mCurItem.getLevel() < 18){
+			return true;
+		}else
+			return false;
 	}
 
 	@Override
@@ -105,7 +112,7 @@ public class ForestFragment extends Fragment {
 		TextView reqFrst = (TextView) mSlideUpContainer
 				.findViewById(R.id.txt_requirements_level);
 		reqFrst.setText(reqSz.toString());
-		if (mCurItem.isSpecialItem()) {
+		if (mCurItem.isSpecialItem()|| !isItemObtainable()) {
 			mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
 					View.INVISIBLE);
 		} else {
