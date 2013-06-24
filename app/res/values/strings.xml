@@ -54,5 +54,6 @@
     <string name="txt_setting_port_summary">Standard: 28500</string>
     <string name="txt_setting_send_report">Absturzberichte senden</string>
     <string name="txt_setting_send_report_summary">Hilft den Entwicklern</string>
+    <string name="slideup_requirements">Anforderungen:</string>
 
 </resources>

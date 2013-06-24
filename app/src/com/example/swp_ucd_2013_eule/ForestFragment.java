@@ -95,6 +95,16 @@ public class ForestFragment extends Fragment {
 		TextView amount = (TextView) mSlideUpContainer
 				.findViewById(R.id.txt_amount);
 		amount.setText("Anzahl: " + mCurItem.getAmount());
+		// set required points
+		TextView reqPnts = (TextView) mSlideUpContainer
+				.findViewById(R.id.txt_requirements_points);
+		Integer pnts = mCurItem.getPrice();
+		reqPnts.setText(pnts.toString());
+		//set required forest size
+		Integer reqSz = mCurItem.getLevel() * 5;
+		TextView reqFrst = (TextView) mSlideUpContainer
+				.findViewById(R.id.txt_requirements_level);
+		reqFrst.setText(reqSz.toString());
 		if (mCurItem.isSpecialItem()) {
 			mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
 					View.INVISIBLE);

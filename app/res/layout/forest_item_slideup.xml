@@ -54,6 +54,52 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="Anzahl im Besitz: 1" />
+    
+    <TextView
+        android:id="@+id/txt_requirements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="120dp"
+        android:layout_marginBottom="90dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/slideup_requirements" />
+    
+     <TextView
+        android:id="@+id/txt_requirements_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="145dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="48dp"
+        android:text="50 pnts" />
+     
+     <ImageView
+          android:id="@+id/imgPointsSlideup"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="140dp"
+          android:src="@drawable/ico_waterdrops" />
+     
+      <TextView
+        android:id="@+id/txt_requirements_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="90dp"
+        android:layout_marginLeft="48dp"
+        android:text="lvl 50" />
+      
+      <ImageView
+          android:id="@+id/imgWoodsizeSlideup"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="175dp"
+          android:src="@drawable/ico_forest_size" />
+    
 
     <Button
         android:id="@+id/btnBuyItem"

@@ -65,8 +65,10 @@ public abstract class MarketCategoryFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				mCurItem = (ForestItem) mAdapter.getItem(position);
-				updateCurrentItemView();
-				mSlideUpContainer.slideOpen();
+				if (isObtainable(position)) {
+					updateCurrentItemView();
+					mSlideUpContainer.slideOpen();
+				}
 			}
 		});
 
@@ -100,6 +102,27 @@ public abstract class MarketCategoryFragment extends Fragment {
 		TextView amount = (TextView) mSlideUpContainer
 				.findViewById(R.id.txt_amount);
 		amount.setText("Anzahl: " + mCurItem.getAmount());
+		// set required points
+				TextView reqPnts = (TextView) mSlideUpContainer
+						.findViewById(R.id.txt_requirements_points);
+				Integer pnts = mCurItem.getPrice();
+				reqPnts.setText(pnts.toString());
+				//set required forest size
+				Integer reqSz = mCurItem.getLevel() * 5;
+				TextView reqFrst = (TextView) mSlideUpContainer
+						.findViewById(R.id.txt_requirements_level);
+				reqFrst.setText(reqSz.toString());
+	}
+	
+	public boolean isObtainable(int position){
+		if (mAdapter.getItem(position).getPrice() < 80
+				& mAdapter.getItem(position).getLevel() < 18) {
+			mCurItem = (ForestItem) mAdapter.getItem(position);
+			return true;
+
+		} else {
+			return false;
+		}
 	}
 
 }
