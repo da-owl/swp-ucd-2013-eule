@@ -134,11 +134,15 @@ public class ForestView extends View implements OnItemBoughtListener {
 	}
 
 	private void initForest() {
-		mHandler = new Handler() {
-			public void handleMessage(Message msg) {
+		mHandler = new Handler(new Handler.Callback() {
+			@Override
+			public boolean handleMessage(Message msg) {
 				animateMoveableItems();
+				return true;
 			}
-		};
+
+		});
+
 		mTimer = new Timer();
 		mTimer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
@@ -643,6 +647,11 @@ public class ForestView extends View implements OnItemBoughtListener {
 	public void setOnClickNotHandledListener(
 			OnClickNotHandledListener forestFragment) {
 		mOnClickNotHandledListener = forestFragment;
+	}
+
+	@Override
+	public void onDetachedFromWindow() {
+		mTimer.cancel();
 	}
 
 }
