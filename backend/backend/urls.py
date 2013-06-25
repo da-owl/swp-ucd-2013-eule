@@ -6,7 +6,7 @@ from rest_framework import viewsets, routers
 
 from core.views import index, register, hello
 from core.views import UserViewSet
-from forest.views import ForestViewSet, ForestFriendsViewSet, UserForestItemViewSet, ItemViewSet, ForestStatViewSet
+from forest.views import ForestViewSet, ForestFriendsViewSet, ForestUserForestItemViewSet, ItemViewSet, StatisticViewSet, ForestStatisticViewSet, UserForestItemViewSet
 
 admin.autodiscover()
 
@@ -15,7 +15,8 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'forests', ForestViewSet)
 router.register(r'items', ItemViewSet)
-
+router.register(r'statistics', StatisticViewSet)
+router.register(r'userforestitems', UserForestItemViewSet)
 
 urlpatterns = patterns('',
     # """
@@ -46,9 +47,9 @@ urlpatterns = patterns('',
     
     url(r'^forests/(?P<pk>[0-9]+)/friends/((?P<field_pk>[0-9]+)/)?$', ForestFriendsViewSet.as_view()),
     
-    url(r'^forests/(?P<pk>[0-9]+)/userforestitems/((?P<field_pk>[0-9]+)/)?$', UserForestItemViewSet.as_view()),
+    url(r'^forests/(?P<pk>[0-9]+)/userforestitems/((?P<field_pk>[0-9]+)/)?$', ForestUserForestItemViewSet.as_view()),
 
-    url(r'^forests/(?P<pk>[0-9]+)/stats/((?P<field_pk>[0-9]+)/)?$', ForestStatViewSet.as_view()),
+    url(r'^forests/(?P<pk>[0-9]+)/statistics/((?P<field_pk>[0-9]+)/)?$', ForestStatisticViewSet.as_view()),
     
 )
 

@@ -17,13 +17,15 @@ public class Forest extends Model {
 	
 	private Integer level;
 	
-	private Integer LevelProgessPoints; // added!!! @ Erik
+	private Integer levelProgessPoints;
 	
-	private Float PointProgress; //added!!! @ Erik
+	private Float pointProgress;
 	
-	private LinkedList<UserForestItem> useritems = new LinkedList<UserForestItem>();
+	private List<UserForestItem> userforestitems = new LinkedList<UserForestItem>();
 	
 	private List<Forest> friends;
+	
+	private List<Statistic> statistics = new LinkedList<Statistic>();
 	
 	public Forest() {
 		
@@ -66,19 +68,23 @@ public class Forest extends Model {
 	}
 
 	public List<UserForestItem> getUserforestitems() {
-		return this.useritems;
+		return this.userforestitems;
 	}
 	
 	public void setUserforestitems(UserForestItem[] useritems) {
 		for(UserForestItem item : useritems){
-			this.useritems.add(item);
+			this.userforestitems.add(item);
 		}
+	}
+	
+	public void setUserforestitems(List<UserForestItem> useritems) {
+		this.userforestitems = new LinkedList<UserForestItem>(useritems);
 	}
 
 	public boolean addItem(UserForestItem item) {
 		// check if their categories match
 		if(canAdd(item)){			
-			return this.useritems.add(item);
+			return this.userforestitems.add(item);
 		}
 		return false;
 	}
@@ -86,7 +92,7 @@ public class Forest extends Model {
 	public boolean addItem(UserForestItem item, int x, int y) {
 		// check if their categories match
 		if(canAdd(item)){			
-			return this.useritems.add(item);
+			return this.userforestitems.add(item);
 		}
 		return false;
 	}
@@ -99,25 +105,37 @@ public class Forest extends Model {
 		this.friends = friends;
 	}
 
+	public List<Statistic> getStatistics() {
+		return statistics;
+	}
+
+	public void setStatistics(List<Statistic> statistics) {
+		this.statistics = statistics;
+	}
+
 	private boolean canAdd(UserForestItem item){
 		// TODO: to be implemented (check geometrics. maybe code is already there ... somewhere ... :)
 		return true;		
 	}
 
 	public Integer getLevelProgessPoints() {
-		return LevelProgessPoints;
+		return levelProgessPoints;
 	}
 
 	public void setLevelProgessPoints(Integer levelProgessPoints) {
-		LevelProgessPoints = levelProgessPoints;
+		this.levelProgessPoints = levelProgessPoints;
 	}
 
 	public Float getPointProgress() {
-		return PointProgress;
+		return pointProgress;
 	}
 
 	public void setPointProgress(Float pointProgress) {
-		PointProgress = pointProgress;
+		this.pointProgress = pointProgress;
+	}
+	
+	public void setPointProgress(Double pointProgress) {
+		this.pointProgress = new Float(pointProgress.floatValue());
 	}
 	
 }

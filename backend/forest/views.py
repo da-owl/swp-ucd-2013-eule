@@ -1,8 +1,8 @@
 # Create your views here.    
 from rest_framework import viewsets
 
-from core.serializers import ForestSerializer, ItemSerializer, StatSerializer, UserForestItemSerializer
-from core.models import Forest, Item, Stat
+from core.serializers import ForestSerializer, ItemSerializer, StatisticSerializer, UserForestItemSerializer
+from core.models import Forest, Item, Statistic, UserForestItem
 from core.filters import ForestFilter
 from core.helpers import json_response
 from core.crudmanytomanyview import CRUDManyToManyView
@@ -15,10 +15,10 @@ class ForestViewSet(viewsets.ModelViewSet):
     serializer_class = ForestSerializer
     filter_class = ForestFilter
 
-    def pre_save(self, obj):
-        stat = Stat(level=obj.level, points=obj.points)
-        stat.save()
-        obj.stats.add(stat)
+    # def pre_save(self, obj):
+    #     stat = Stat(level=obj.level, points=obj.points)
+    #     stat.save()
+    #     obj.stats.add(stat)
 
 class ItemViewSet(viewsets.ModelViewSet):
     """
@@ -27,6 +27,13 @@ class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
+class StatisticViewSet(viewsets.ModelViewSet):
+    queryset = Statistic.objects.all()
+    serializer_class = StatisticSerializer
+
+class UserForestItemViewSet(viewsets.ModelViewSet):
+    queryset = UserForestItem.objects.all()
+    serializer_class = UserForestItemSerializer
 
 class ForestFriendsViewSet(CRUDManyToManyView):
     model = Forest
@@ -60,7 +67,7 @@ class ForestFriendsViewSet(CRUDManyToManyView):
         return json_response(None, 200, 'Friend sucessfully removed.')
 
 
-class UserForestItemViewSet(CRUDManyToManyView):
+class ForestUserForestItemViewSet(CRUDManyToManyView):
     model = Forest
     field_name = 'userforestitems'
     serializer_class = UserForestItemSerializer
@@ -70,9 +77,9 @@ class UserForestItemViewSet(CRUDManyToManyView):
         item_pk = self.kwargs.get('field_pk', None)
 
         forest = Forest.objects.get(id=forest_pk)
-        item = Item.objects.get(id=item_pk)
+        item = UserForestItem.objects.get(id=item_pk)
 
-        forest.items.add(item)
+        forest.userforestitems.add(item)
         forest = forest.save()
 
         return json_response(None, 201, 'Item sucessfully added.')
@@ -88,9 +95,32 @@ class UserForestItemViewSet(CRUDManyToManyView):
         forest = forest.save()
 
         return json_response(None, 200, 'Item sucessfully removed.')
-
-class ForestStatViewSet(CRUDManyToManyView):
-    model = Forest
-    field_name = 'stats'
-    serializer_class = StatSerializer
     
+class ForestStatisticViewSet(CRUDManyToManyView):
+    model = Forest
+    field_name = 'statistics'
+    serializer_class = StatisticSerializer
+
+    def put(self, request, *args, **kwargs):
+        forest_pk = self.kwargs.get('pk', None)
+        item_pk = self.kwargs.get('field_pk', None)
+
+        forest = Forest.objects.get(id=forest_pk)
+        item = Statistic.objects.get(id=item_pk)
+
+        forest.statistics.add(item)
+        forest = forest.save()
+
+        return json_response(None, 201, 'Statistic sucessfully added.')
+
+    def delete(self, request, *args, **kwargs):
+        forest_pk = self.kwargs.get('pk', None)
+        item_pk = self.kwargs.get('field_pk', None)
+
+        forest = Forest.objects.get(id=forest_pk)
+        item = Statistic.objects.get(id=item_pk)
+
+        forest.statistics.remove(item)
+        forest = forest.save()
+
+        return json_response(None, 200, 'Statistic sucessfully removed.')

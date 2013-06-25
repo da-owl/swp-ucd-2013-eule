@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.model.APIModel;
-import com.example.swp_ucd_2013_eule.model.DrivingStatistics;
 import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
+import com.example.swp_ucd_2013_eule.model.Statistic;
 import com.example.swp_ucd_2013_eule.net.APIException;
 
 import android.content.Context;
@@ -46,8 +46,8 @@ public class CarDataLogic extends Handler {
 	private float mMaxAcc = 0;
 	private float mMaxBreak = 0;
 	private int[] mAccExceeding = { 0, 0, 0 };
-	private DrivingStatistics mStatistics;
-	private APIModel<DrivingStatistics, DrivingStatistics> mAPI;
+	private Statistic mStatistics;
+	private APIModel<Statistic, Statistic> mAPI;
 	private int mUserID;
 	private int mProgressPointInterval = 100;
 	private boolean mRecordTrip = false;
@@ -79,7 +79,7 @@ public class CarDataLogic extends Handler {
 
 	public void setUserID(int userID) {
 		mUserID = userID;
-		mStatistics = new DrivingStatistics(mUserID);
+		mStatistics = new Statistic(mUserID);
 	}
 
 	public void setTripStartStop(boolean state) {

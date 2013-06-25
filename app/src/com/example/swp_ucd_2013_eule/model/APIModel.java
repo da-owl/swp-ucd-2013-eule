@@ -3,7 +3,7 @@ package com.example.swp_ucd_2013_eule.model;
 import java.io.IOException;
 import java.util.List;
 
-import android.content.Context;
+import android.util.Log;
 
 import com.example.swp_ucd_2013_eule.net.APIException;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
@@ -16,14 +16,9 @@ public class APIModel<T extends Model, P extends Model> {
 	
 	private ApiClient api;
 	
-	private Context ctx;
-	
-	public APIModel(Class<T> type, Context ctx) {
+	public APIModel(Class<T> type) {
 		this.type = type;
 		this.api = ApiClient.getInstance();
-		this.api.setServer("10.0.2.2:8080");
-		this.api.setAuthToken("c515f179da3f768d6802709fbd98aa5c8e60d9a1");
-		this.ctx = ctx;
 	}
 	
 	/**
@@ -33,7 +28,7 @@ public class APIModel<T extends Model, P extends Model> {
 	public T get(T model) throws APIException {
 		try {
 			Serializer<T> serializer = new Serializer<T>();
-			Response response = api.get(ctx, this.buildEndpoint(model, model.getId()));
+			Response response = api.get(this.buildEndpoint(model, model.getId()));
 			return serializer.deserialize(model, response);
 		} catch (IOException e) {
 			throw new APIException();
@@ -47,7 +42,7 @@ public class APIModel<T extends Model, P extends Model> {
 	public T get(T model, Integer id) throws APIException {
 		try {
 			Serializer<T> serializer = new Serializer<T>();
-			Response response = api.get(ctx, this.buildEndpoint(model, id));
+			Response response = api.get(this.buildEndpoint(model, id));
 			return serializer.deserialize(model, response);
 		} catch (IOException e) {
 			throw new APIException();
@@ -61,7 +56,15 @@ public class APIModel<T extends Model, P extends Model> {
 	public T save(T model) throws APIException {
 		try {
 			Serializer<T> serializer = new Serializer<T>();
-			Response response = api.post(ctx, this.buildEndpoint(model), serializer.serialize(model));
+			
+			Response response;
+			if(model.getId() == null || model.getId() < 1) {
+				response = api.post(this.buildEndpoint(), serializer.serialize(model));
+			}else{
+				response = api.put(this.buildEndpoint(model), serializer.serialize(model));
+			}
+			
+			//Response response = api.post(this.buildEndpoint(model), serializer.serialize(model));
 			return serializer.deserialize(model, response);
 		} catch (Exception e) {
 			throw new APIException(e.getMessage());
@@ -75,7 +78,7 @@ public class APIModel<T extends Model, P extends Model> {
 	public T addToParent(T model, P parent, String relation) throws APIException {
 		try {
 			Serializer<T> serializer = new Serializer<T>();
-			Response response = api.post(ctx, this.buildEndpoint(model, parent, relation), serializer.serialize(model));
+			Response response = api.put(this.buildEndpoint(model, parent, relation), serializer.serialize(model));
 			return serializer.deserialize(model, response);
 		} catch (Exception e) {
 			throw new APIException(e.getMessage());
@@ -94,8 +97,14 @@ public class APIModel<T extends Model, P extends Model> {
 	 * get all
 	 * GET http://server/[model]/
 	 */
-	public List<T> getAll() throws APIException {
-		return null;
+	public List<T> getAll(T model) throws APIException {
+		try {
+			Serializer<T> serializer = new Serializer<T>();
+			Response response = api.get(this.buildEndpoint());
+			return serializer.deserializeList(model, response);
+		} catch (Exception e) {
+			throw new APIException(e.getMessage());
+		}
 	}
 	
 	/**
@@ -105,12 +114,16 @@ public class APIModel<T extends Model, P extends Model> {
 	public List<T> getAllByParent(P parent, T skeleton, String relation) throws APIException {
 		try {
 			Serializer<T> serializer = new Serializer<T>();
-			Response response = api.get(ctx, this.buildEndpoint(null, parent, relation));
+			Response response = api.get(this.buildEndpoint(null, parent, relation));
 			
 			return serializer.deserializeList(skeleton, response, relation);
 		} catch (Exception e) {
 			throw new APIException(e.getMessage());
 		}
+	}
+	
+	private String buildEndpoint() {
+		return "/" + this.type.getSimpleName().toLowerCase() + "s" + "/";
 	}
 	
 	private String buildEndpoint(T model){

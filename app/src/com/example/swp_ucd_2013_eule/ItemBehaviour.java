@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.Item;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.ForestView;
@@ -25,7 +25,7 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 	private View mRootView;
 	private ForestView mForestView;
 	private SlideUpContainer mSlideUpContainer;
-	private ForestItem mCurItem;
+	private Item mCurItem;
 
 	public ItemBehaviour(View rootView) {
 		mRootView = rootView;
@@ -134,7 +134,7 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 		}
 	}
 
-	public void showItem(ForestItem item) {
+	public void showItem(Item item) {
 		mCurItem = item;
 		updateSlideUpItemView();
 		mSlideUpContainer.slideOpen();

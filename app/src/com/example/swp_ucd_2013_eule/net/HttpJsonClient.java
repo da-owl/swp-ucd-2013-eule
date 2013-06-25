@@ -8,6 +8,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
@@ -68,10 +69,30 @@ public class HttpJsonClient {
 	 * @throws IOException
 	 */
 	public Response put(Context ctx, URI uri, JSONObject json)
-			throws ClientProtocolException, IOException {
+			throws ClientProtocolException, IOException {		
 		HttpPut putReq = new HttpPut();
 		putReq.setEntity(new StringEntity(json.toString()));
 		return request(ctx, putReq, uri);
+	}
+	
+	/**
+	 * Send a HTTP-PUT-request to the specified uri containing the json-object
+	 * as HTTP-payload.
+	 * 
+	 * @param ctx
+	 * @param uri
+	 * @param json
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public Response post(Context ctx, URI uri, JSONObject json)
+			throws ClientProtocolException, IOException {
+//		HttpPut putReq = new HttpPut();
+		
+		HttpPost postReq = new HttpPost();
+		postReq.setEntity(new StringEntity(json.toString()));
+		return request(ctx, postReq, uri);
 	}
 
 	/**
@@ -111,7 +132,7 @@ public class HttpJsonClient {
 		try {
 			res = client.execute(req);
 		} catch (Exception e) {
-			System.out.println("APIClient - Execute failed: " + e.getMessage());
+			System.out.println("APIClient - Execute failed: " + e);
 		}
 		
 		

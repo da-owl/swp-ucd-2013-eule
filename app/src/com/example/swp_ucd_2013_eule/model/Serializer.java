@@ -2,12 +2,15 @@ package com.example.swp_ucd_2013_eule.model;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 import com.example.swp_ucd_2013_eule.net.APIException;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
@@ -68,16 +71,55 @@ public class Serializer<T extends Model> {
 	 * @param list
 	 * @return
 	 */
+	public List<T> deserializeList(T skeleton, Response response) throws APIException {
+		List<T> models = new ArrayList<T>();
+		JSONObject json = response.getJsonResponse();
+		System.out.println("SERIALIZER - deserializeList(skeleton, response) " + json.toString());
+		try {		
+			for(int i = 0; i < json.getJSONArray("results").length(); i++) {
+				T instance = (T)Class.forName(skeleton.getClass().getName()).newInstance();
+				models.add(deserialize(instance, json.getJSONArray("results").getJSONObject(i)));
+			}
+		} catch (JSONException e) {
+			throw new APIException(e.getMessage());
+		} catch (IllegalAccessException e) {
+			Log.e("SERIALIZER", e + ":" + e.getMessage());
+			throw new APIException(e.getMessage());
+		} catch (InstantiationException e) {
+			Log.e("SERIALIZER", e + ":" + e.getMessage());
+			throw new APIException(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			Log.e("SERIALIZER", e + ":" + e.getMessage());
+			throw new APIException(e.getMessage());
+		}
+		return models;
+	}
+	
+	/**
+	 * deserialize list fields through calling the api
+	 * @param list
+	 * @return
+	 */
 	public List<T> deserializeList(T skeleton, Response response, String relation) throws APIException {
 		List<T> children = new ArrayList<T>();
 		JSONObject json = response.getJsonResponse();
 		System.out.println("SERIALIZER - deserializeList(skeleton, response, relation) " + json.toString());
 		try {			
 			for(int i = 0; i < json.getJSONArray("results").length(); i++) {
-				children.add(deserialize(skeleton, json.getJSONArray("results").getJSONObject(i)));
+				T instance = (T)Class.forName(skeleton.getClass().getName()).newInstance();
+				children.add(deserialize(instance, json.getJSONArray("results").getJSONObject(i)));
 			}
 			this.invokeSet(skeleton, relation, children);
 		} catch (JSONException e) {
+			throw new APIException(e.getMessage());
+		} catch (IllegalAccessException e) {
+			Log.e("SERIALIZER", e + ":" + e.getMessage());
+			throw new APIException(e.getMessage());
+		} catch (InstantiationException e) {
+			Log.e("SERIALIZER", e + ":" + e.getMessage());
+			throw new APIException(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			Log.e("SERIALIZER", e + ":" + e.getMessage());
 			throw new APIException(e.getMessage());
 		}			
 		return children;
@@ -125,7 +167,7 @@ public class Serializer<T extends Model> {
 		try {
 			String name = property.substring(0, 1).toUpperCase();
 			name += property.substring(1);
-			System.out.println("SERIALIZER - trying to invoke method " + "get" + name);
+//			System.out.println("SERIALIZER - trying to invoke method " + "get" + name + " on " + model.getClass().getSimpleName());
 			return model.getClass().getMethod("get" + name).invoke(model);
 		} catch (NoSuchMethodException e) {
 			System.out.println(e.getClass() + ": " + e.getMessage());
@@ -147,10 +189,18 @@ public class Serializer<T extends Model> {
 		try {
 			String name = property.substring(0, 1).toUpperCase();
 			name += property.substring(1);
-			System.out.println("SERIALIZER - trying to invoke method " + "set" + name + " with value: " + value);
+//			System.out.println("SERIALIZER - trying to invoke method " + "set" + name + " with value: " + value + " on " + model.getClass().getSimpleName());
 			
 			if(value != null){
-				model.getClass().getMethod("set" + name, value.getClass()).invoke(model, value);
+				if(value instanceof Double){
+					try {
+						value = (Double)value;
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+				Method method = model.getClass().getMethod("set" + name, value.getClass());
+				method.invoke(model, value);				
 			}			
 		} catch (NoSuchMethodException e) {
 			System.out.println(e.getClass() + ": " + e.getMessage());
@@ -178,10 +228,10 @@ public class Serializer<T extends Model> {
 				names.add(field.getName());
 			}
 		}
-		for (String string : names) {
-			System.out.println("SERIALIZER - getSimplePropertyNames() Found property " + string + " in "
-					+ model.getClass().getSimpleName());
-		}
+//		for (String string : names) {
+//			System.out.println("SERIALIZER - getSimplePropertyNames() Found property " + string + " in "
+//					+ model.getClass().getSimpleName());
+//		}
 		return names;
 	}
 	
@@ -202,10 +252,10 @@ public class Serializer<T extends Model> {
 				names.add(field.getName());
 			}
 		}
-		for (String string : names) {
-			System.out.println("SERIALIZER - getListPropertyNames() Found property " + string + " in "
-					+ model.getClass().getSimpleName());
-		}
+//		for (String string : names) {
+//			System.out.println("SERIALIZER - getListPropertyNames() Found property " + string + " in "
+//					+ model.getClass().getSimpleName());
+//		}
 		return names;
 	}
 

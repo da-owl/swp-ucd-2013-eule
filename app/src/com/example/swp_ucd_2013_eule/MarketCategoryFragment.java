@@ -11,8 +11,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.Item;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 
 public abstract class MarketCategoryFragment extends Fragment {
@@ -45,7 +45,7 @@ public abstract class MarketCategoryFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				ForestItem item = (ForestItem) mAdapter.getItem(position);
+				Item item = (Item) mAdapter.getItem(position);
 				mItemBehav.showItem(item);
 			}
 		});

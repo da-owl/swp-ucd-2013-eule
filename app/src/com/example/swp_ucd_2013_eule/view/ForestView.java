@@ -31,8 +31,8 @@ import android.view.ViewParent;
 import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.R;
-import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.Item;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.OnItemBoughtListener;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
@@ -576,7 +576,7 @@ public class ForestView extends View implements OnItemBoughtListener {
 	}
 
 	private boolean isItemClicked(ForestItemWrapper i, float x, float y) {
-		ForestItem item = i.mItem.getForestItem();
+		Item item = i.mItem.getForestItem();
 		return x >= i.mX && x <= i.mX + item.getImage(getContext()).getWidth()
 				&& y >= i.mY
 				&& y <= i.mY + item.getImage(getContext()).getHeight();

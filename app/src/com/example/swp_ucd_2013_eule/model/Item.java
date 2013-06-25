@@ -1,0 +1,187 @@
+package com.example.swp_ucd_2013_eule.model;
+
+import java.util.List;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.example.swp_ucd_2013_eule.R;
+import com.example.swp_ucd_2013_eule.model.MyForest;
+
+public class Item extends Model {
+
+	public static String ITEM_TYPE_STANDARD = "standard";
+	public static String ITEM_TYPE_SPECIAL = "special";
+	
+	private String name;
+	private String description;
+	private String type;
+	private Integer price;
+	private Integer amount;
+	private Integer level;
+	private boolean mMoveable = false;
+	private Integer imageId;
+
+//	public enum ForestItemType {
+//		STANDARD, SPECIAL
+//	};
+	
+	public Item() {
+		
+	}
+
+	public Item(String type, int imageID, String name,
+			String description) {
+		this.type = type;
+		imageId = imageID;
+		setName(name);
+		setDescription(description);
+	}
+
+	public Item(String type, int imageID, String name,
+			String description, boolean moveable) {
+		this.type = type;
+		imageId = imageID;
+		setName(name);
+		setDescription(description);
+		mMoveable = moveable;
+	}
+	
+	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Integer getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(Integer imageId) {
+		this.imageId = imageId;
+	}
+
+	public Bitmap getImage(Context ctx) {
+		Resources r = ctx.getResources();
+		return BitmapFactory.decodeResource(r, dbToResource(imageId));
+	}
+
+	public void setImage(int imageID) {
+		imageId = imageID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public boolean isStandardItem() {
+		return type == ITEM_TYPE_STANDARD;
+	}
+
+	public boolean isSpecialItem() {
+		return type == ITEM_TYPE_SPECIAL;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
+	public void incAmount() {
+		this.amount++;
+	}
+	
+	public void buy(List<Item> marketItems){
+		incAmount();
+		
+		int points = MyForest.getInstance().getForest().getPoints() - price;
+		MyForest.getInstance().getForest().setPoints(points);
+		UserForestItem item = new UserForestItem(this.clone(), marketItems);
+		item.setTile(-1, -1);
+		item.setOffset(0.5f, 0.5f);
+		MyForest.getInstance().addBoughtItem(item);
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public boolean isMoveable() {
+		return mMoveable;
+	}
+	
+	public Item clone(){
+		Item item = new Item(type, imageId, name, description, isMoveable());
+		item.setPrice(price);
+		item.setLevel(level);
+		item.setAmount(amount);
+		return item;
+	}
+	
+	private static int dbToResource(int dbValue) {
+		/** 
+		int imgTree = R.drawable.item_tree;
+		int imgFir = R.drawable.item_fir;
+		int imgFrog =  R.drawable.item_gordan;
+		int imgBush = R.drawable.item_bush;
+		int imgPlants = R.drawable.item_plants;
+		int imgAnimals = R.drawable.item_animals;
+		int imgClothes = R.drawable.item_clothes;
+		 */
+		
+		switch (dbValue) {
+			case(1): return R.drawable.item_fir;
+			case(2): return R.drawable.item_tree;
+			case(3): return R.drawable.item_gordan;
+			case(4): return R.drawable.item_bush;
+			case(5): return R.drawable.item_plants;
+			case(6): return R.drawable.item_animals;
+			case(7): return R.drawable.item_clothes;
+			default: return R.drawable.item_tree;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Item [name=" + name + ", description=" + description
+				+ ", type=" + type + ", price=" + price + ", amount=" + amount
+				+ ", level=" + level + ", imageId=" + imageId + "]";
+	}
+	
+	
+	
+
+}

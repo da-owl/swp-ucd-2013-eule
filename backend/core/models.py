@@ -1,51 +1,40 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-class ItemCategory(models.Model):
-    name = models.CharField(max_length=50)
-
-class ItemType(models.Model):
-    name = models.CharField(max_length=50)
-
 class Item(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
-    image = models.CharField(max_length=200)
-    costs = models.IntegerField()
-    min_level = models.IntegerField()
-    item_type = models.ForeignKey(ItemType)
-    category = models.ForeignKey(ItemCategory, related_name='+')
-    allowed_category = models.ForeignKey(ItemCategory, related_name='+')
+    price = models.IntegerField()
+    level = models.IntegerField()
+    amount = models.IntegerField()
+    type = models.CharField(max_length=30)
+    category = models.CharField(max_length=30)
+    imageId = models.IntegerField()
 
 class UserForestItem(models.Model):
     item = models.ForeignKey(Item)
     tileX = models.IntegerField()
     tileY = models.IntegerField()
-    offsetX = models.DecimalField(max_digits=2, decimal_places=1)
-    offsetY = models.DecimalField(max_digits=2, decimal_places=1)
+    offsetX = models.FloatField()
+    offsetY = models.FloatField()
 
-class Stat(models.Model):
+class Statistic(models.Model):
     timestamp = models.DateTimeField(auto_now=True)
-    level = models.IntegerField()
-    points = models.IntegerField()
-
-class Trip(models.Model):
-    start = models.DateTimeField(auto_now=True)
-    end = models.DateTimeField(auto_now=True)
-    km = models.IntegerField()
-    fuel = models.DecimalField(max_digits=4, decimal_places=2)
-    points = models.IntegerField()
+    gainedPoints = models.IntegerField()
+    dataInterval = models.IntegerField()
+    consumptions = models.TextField()
+    tripConsumption = models.FloatField()
 
 class Forest(models.Model):
     user = models.ForeignKey(User)
     level = models.IntegerField()
     points = models.IntegerField()
     # parent = models.ForeignKey('self', blank=True, related_name="friends")
+    levelProgessPoints = models.IntegerField()
+    pointProgress = models.FloatField()
     friends = models.ManyToManyField('Forest', blank=True)
     userforestitems = models.ManyToManyField(UserForestItem, blank=True)
-    stats = models.ManyToManyField(Stat, blank=True)
-    trips = models.ManyToManyField(Trip, blank=True)
+    statistics = models.ManyToManyField(Statistic, blank=True)
 
     class Meta:
         ordering = ["points"]

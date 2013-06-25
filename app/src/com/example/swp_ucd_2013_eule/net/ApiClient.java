@@ -60,6 +60,9 @@ public class ApiClient {
 
 	private String mServer;
 	private String mAuthToken;
+	
+	private Context mCtx;
+	
 
 	/**
 	 * Singleton-constructor
@@ -95,38 +98,60 @@ public class ApiClient {
 	public void setAuthToken(String token) {
 		mAuthToken = token;
 	}
+	
+	public void setContext(Context ctx) {
+		mCtx = ctx;
+	}
 
 	/**
 	 * Send a HTTP-GET-request to the specified API-endpoint.
 	 * 
-	 * @param ctx
+	 * @param mCtx
 	 * @param apiEndpoint
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public Response get(Context ctx, String apiEndpoint)
+	public Response get(String apiEndpoint)
 			throws ClientProtocolException, IOException {
 		URI uri = getEndpointUri(apiEndpoint);
-		return createHttpJsonClient().get(ctx, uri);
+		return createHttpJsonClient().get(mCtx, uri);
 	}
 
 	/**
-	 * Send a HTTP-POST-request to the specified API-endpoint containing the
+	 * Send a HTTP-PUT-request to the specified API-endpoint containing the
 	 * json-object as HTTP-payload.
 	 * 
-	 * @param ctx
+	 * @param mCtx
 	 * @param apiEndpoint
 	 * @param json
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public Response post(Context ctx, String apiEndpoint, JSONObject json)
+	public Response put(String apiEndpoint, JSONObject json)
 			throws ClientProtocolException, IOException {
 		URI uri = getEndpointUri(apiEndpoint);
-		return createHttpJsonClient().put(ctx, uri, json);
+		return createHttpJsonClient().put(mCtx, uri, json);
 	}
+	
+	/**
+	 * Send a HTTP-POST-request to the specified API-endpoint containing the
+	 * json-object as HTTP-payload.
+	 * 
+	 * @param mCtx
+	 * @param apiEndpoint
+	 * @param json
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public Response post(String apiEndpoint, JSONObject json)
+			throws ClientProtocolException, IOException {
+		URI uri = getEndpointUri(apiEndpoint);
+		return createHttpJsonClient().post(mCtx, uri, json);
+	}
+	
 
 	private HttpJsonClient createHttpJsonClient() {
 		HttpJsonClient c = new HttpJsonClient();

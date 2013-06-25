@@ -1,6 +1,5 @@
 package com.example.swp_ucd_2013_eule;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,12 +48,11 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
-	Menu mMenu; 
+	Menu mMenu;
 	int mActiveActionTab = R.id.DrivingView;
 	Map<Integer, FragmentStatePagerAdapter> mActionTabMapping = new HashMap<Integer, FragmentStatePagerAdapter>();
 	private boolean mInit;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,18 +67,37 @@ public class MainActivity extends FragmentActivity implements
 		addActionTabMapping(new ForestPagerAdapter(R.id.ForestView, fm));
 		addActionTabMapping(new SocialPagerAdapter(R.id.SocialView, fm));
 		addActionTabMapping(new MarketPagerAdapter(R.id.MarketView, fm));
-		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
 		StringBuilder builder = new StringBuilder();
 		builder.append("socket://"
 				+ prefs.getString("prefIpAdress", "192.168.0.40"));
-		builder.append(":"+prefs.getString("prefPort", "28500"));
-		
-		//register for changes in your PreferenceActivity's onResume() method and unregister in the onPause() ?!
+		builder.append(":" + prefs.getString("prefPort", "28500"));
+
+		// register for changes in your PreferenceActivity's onResume() method
+		// and unregister in the onPause() ?!
 		prefs.registerOnSharedPreferenceChangeListener(this);
-		
-		if(!mInit){
-			mInit= true;
+
+		if (!mInit) {
+			mInit = true;
+
+			// MainThread!!! Network operation heavily discouraged...
+			// VERY UGLY WORKAROUND
+//			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+//					.permitAll().build();
+//			StrictMode.setThreadPolicy(policy);
+
+			ApiClient.getInstance().setServer("10.0.2.2:8080");
+			ApiClient.getInstance().setAuthToken(
+					"c515f179da3f768d6802709fbd98aa5c8e60d9a1");
+
+			ApiClient.getInstance().setContext(MainActivity.this);
+
+			Log.d("API-Init", MainActivity.this.toString());
+			System.out.println("MainActivity API-Init"
+					+ MainActivity.this.toString());
+
 			CarData.getInstance();
 			startEXLAPListener(builder.toString());
 			CarDataLogic.getInstance().setUserID(1);
@@ -100,8 +117,8 @@ public class MainActivity extends FragmentActivity implements
 		data.add("CurrentGear");
 		CarData.getInstance().startService(settings, data);
 	}
-	
-	private void stopEXLAPListener(){
+
+	private void stopEXLAPListener() {
 		try {
 			CarData.getInstance().endListener();
 		} catch (IllegalArgumentException e) {
@@ -125,7 +142,6 @@ public class MainActivity extends FragmentActivity implements
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		final ActionBar actionBar = getActionBar();
-		
 
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -238,36 +254,36 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	private void testCommunication() {
 		// API-endpoint to send the request to
-		String apiEndpoint = "/hello";
-
-		new AsyncTask<String, Void, String>() {
-			@Override
-			protected String doInBackground(String... apiEndpoint) {
-				Response r = null;
-				try {
-					ApiClient c = ApiClient.getInstance();
-					// required only once!
-					c.setServer("10.0.2.2:8080");
-					c.setAuthToken("4208b520528611010299d5135d46c7c3c6979a5b");
-					// GET-request to the specified API-endpoint
-					r = c.get(MainActivity.this, apiEndpoint[0]);
-				} catch (Exception e) {
-					return e.getLocalizedMessage();
-				}
-				if (!r.wasConnectionAvailable()) {
-					return "No connection available!";
-				} else {
-					// instead you may use r.getJsonResponse() !
-					String body = r.getResponseBody();
-					return body == null ? "NULL" : body.toString();
-				}
-			}
-
-			protected void onPostExecute(String result) {
-				Toast.makeText(MainActivity.this, "Result: " + result,
-						Toast.LENGTH_LONG).show();
-			}
-		}.execute(apiEndpoint);
+//		String apiEndpoint = "/hello";
+//
+//		new AsyncTask<String, Void, String>() {
+//			@Override
+//			protected String doInBackground(String... apiEndpoint) {
+//				Response r = null;
+//				try {
+//					ApiClient c = ApiClient.getInstance();
+//					// required only once!
+//					c.setServer("10.0.2.2:8080");
+//					c.setAuthToken("4208b520528611010299d5135d46c7c3c6979a5b");
+//					// GET-request to the specified API-endpoint
+//					r = c.get(MainActivity.this, apiEndpoint[0]);
+//				} catch (Exception e) {
+//					return e.getLocalizedMessage();
+//				}
+//				if (!r.wasConnectionAvailable()) {
+//					return "No connection available!";
+//				} else {
+//					// instead you may use r.getJsonResponse() !
+//					String body = r.getResponseBody();
+//					return body == null ? "NULL" : body.toString();
+//				}
+//			}
+//
+//			protected void onPostExecute(String result) {
+//				Toast.makeText(MainActivity.this, "Result: " + result,
+//						Toast.LENGTH_LONG).show();
+//			}
+//		}.execute(apiEndpoint);
 	}
 
 	/**
@@ -422,19 +438,19 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-		if(key.equals("prefIpAdress")||key.equals("prefPort")){
+		if (key.equals("prefIpAdress") || key.equals("prefPort")) {
 			StringBuilder builder = new StringBuilder();
 			builder.append("socket://"
 					+ prefs.getString("prefIpAdress", "192.168.0.40"));
-			builder.append(":"+prefs.getString("prefPort", "28500"));
+			builder.append(":" + prefs.getString("prefPort", "28500"));
 			try {
 				CarData.getInstance().endListener();
 				startEXLAPListener(builder.toString());
 			} catch (Exception e) {
-				Log.e("CarData Listener",e.getMessage());
+				Log.e("CarData Listener", e.getMessage());
 			}
-			
+
 		}
-		
+
 	}
 }

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from core.models import Forest, Item, Stat, UserForestItem
+from core.models import Forest, Item, Statistic, UserForestItem
 from rest_framework import serializers
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -10,12 +10,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'price', 'level', 'amount', 'type', 'category', 'imageId')
 
-class StatSerializer(serializers.ModelSerializer):
+class StatisticSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stat
-        fields = ('id', 'level', 'points')
+        model = Statistic
+        fields = ('id', 'gainedPoints', 'dataInterval', 'consumptions', 'tripConsumption')
         ordering = ['timestamp']
 
 
@@ -36,11 +36,12 @@ class ForestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Forest
-        fields = ('id', 'user', 'level', 'points')
+        fields = ('id', 'user', 'level', 'points', 'levelProgessPoints', 'pointProgress')
         # depth = 1
         ordering = ['points']
 
 class UserForestItemSerializer(serializers.ModelSerializer):
+    item = serializers.PrimaryKeyRelatedField()
     class Meta:
         model = UserForestItem
-        fields = ('id', 'tileX', 'tileY', 'offsetX', 'offsetY')
+        fields = ('id', 'tileX', 'tileY', 'offsetX', 'offsetY', 'item')

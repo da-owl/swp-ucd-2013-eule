@@ -1,5 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -9,21 +11,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.swp_ucd_2013_eule.data.ForestItem;
+import com.example.swp_ucd_2013_eule.model.MyMarket;
 import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.Item;
 
 public class MarketForestItemAdapter extends BaseAdapter {
 	private Context mContext;
 	private Forest mForest;
-	private ForestItem[] mItems;
+	private Item[] mItems;
 
 	public static MarketForestItemAdapter getExampleClothesAdapter(Context ctx,
 			Forest forest) {
+		
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		ForestItem[] items = ForestItem.getExamples();
-		adapter.mItems = new ForestItem[] { items[6], items[6], items[6],
-				items[6], items[6] };
+		List<Item> items = MyMarket.getInstance().getItems();
+		//Item[] items = Item.getExamples();
+		adapter.mItems = new Item[] { items.get(7) };
 		return adapter;
 	}
 
@@ -31,10 +35,10 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		ForestItem[] items = ForestItem.getExamples();
-		adapter.mItems = new ForestItem[] { items[5], items[5], items[5],
-				items[5], items[5], items[5], items[5], items[5], items[5],
-				items[5], items[5], items[5], items[5] };
+		
+		List<Item> items = MyMarket.getInstance().getItems();		
+		adapter.mItems = new Item[] { items.get(6) };
+		
 		return adapter;
 	}
 
@@ -42,9 +46,10 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		ForestItem[] items = ForestItem.getExamples();
-		adapter.mItems = new ForestItem[] { items[0], items[1], items[2],
-				items[4], items[0], items[1], items[2], items[4] };
+		
+		List<Item> items = MyMarket.getInstance().getItems();
+		adapter.mItems = new Item[] { items.get(1), items.get(2), items.get(4), items.get(5) };
+		
 		return adapter;
 	}
 
@@ -59,7 +64,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public ForestItem getItem(int position) {
+	public Item getItem(int position) {
 		return mItems[position];
 	}
 
@@ -72,7 +77,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v;
 		if (convertView == null) {
-			ForestItem item = mItems[position];
+			Item item = mItems[position];
 
 			LayoutInflater li = LayoutInflater.from(mContext);
 			v = li.inflate(R.layout.fragment_market_item, null);
