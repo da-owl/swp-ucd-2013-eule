@@ -25,6 +25,14 @@ public class MyForest {
 		return mForest;
 	}
 
+	public boolean isObtainable(ForestItem item) {
+		if (item.getPrice() < mForest.getPoints()
+				& item.getLevel() < mForest.getLevel()) {
+			return true;
+		}
+		return false;
+	}
+
 	public void buyItem(ForestItem item) {
 
 		item.incAmount();
