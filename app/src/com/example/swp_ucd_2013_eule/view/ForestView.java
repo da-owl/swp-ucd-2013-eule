@@ -3,6 +3,8 @@ package com.example.swp_ucd_2013_eule.view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,6 +21,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -78,6 +81,7 @@ public class ForestView extends View implements OnItemBoughtListener {
 	private Paint mDraggedPaint;
 
 	private Handler mHandler;
+	private Timer mTimer;
 	private Runnable mDraggedRunnable;
 
 	private OnClickNotHandledListener mOnClickNotHandledListener;
@@ -121,6 +125,7 @@ public class ForestView extends View implements OnItemBoughtListener {
 	public ForestView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initForest();
+
 	}
 
 	private int dpToPx(int value) {
@@ -129,7 +134,18 @@ public class ForestView extends View implements OnItemBoughtListener {
 	}
 
 	private void initForest() {
-		mHandler = new Handler();
+		mHandler = new Handler() {
+			public void handleMessage(Message msg) {
+				animateMoveableItems();
+			}
+		};
+		mTimer = new Timer();
+		mTimer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				Message msg = mHandler.obtainMessage();
+				msg.sendToTarget();
+			}
+		}, 0, 2000);
 
 		mTileSize = dpToPx(95);
 
