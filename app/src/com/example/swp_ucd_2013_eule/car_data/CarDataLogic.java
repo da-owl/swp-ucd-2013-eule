@@ -48,7 +48,6 @@ public class CarDataLogic extends Handler {
 	private int[] mAccExceeding = { 0, 0, 0 };
 	private DrivingStatistics mStatistics;
 	private APIModel<DrivingStatistics, DrivingStatistics> mAPI;
-	private Context mCtx;
 	private int mUserID;
 	private int mProgressPointInterval = 100;
 	private boolean mRecordTrip = false;
@@ -78,8 +77,7 @@ public class CarDataLogic extends Handler {
 				/ mPointsScaleFactor;
 	}
 
-	public void setContextUserID(Context ctx, int userID) {
-		mCtx = ctx;
+	public void setUserID(int userID) {
 		mUserID = userID;
 		mStatistics = new DrivingStatistics(mUserID);
 	}

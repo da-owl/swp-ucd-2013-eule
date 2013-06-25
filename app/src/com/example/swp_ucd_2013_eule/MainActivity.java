@@ -83,7 +83,7 @@ public class MainActivity extends FragmentActivity implements
 			mInit= true;
 			CarData.getInstance();
 			startEXLAPListener(builder.toString());
-			CarDataLogic.getInstance().setContextUserID(MainActivity.this,1);
+			CarDataLogic.getInstance().setUserID(1);
 		}
 	}
 
