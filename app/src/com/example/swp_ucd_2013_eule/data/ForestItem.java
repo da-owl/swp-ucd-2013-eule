@@ -33,7 +33,7 @@ public class ForestItem {
 
 		int imgTree = R.drawable.item_tree;
 		int imgFir = R.drawable.item_fir;
-		int imgFrog =  R.drawable.item_gordan;
+		int imgFrog = R.drawable.item_gordan;
 		int imgBush = R.drawable.item_bush;
 		int imgPlants = R.drawable.item_plants;
 		int imgAnimals = R.drawable.item_animals;
@@ -167,17 +167,6 @@ public class ForestItem {
 	public void incAmount() {
 		this.mAmount++;
 	}
-	
-	public void buy(){
-		incAmount();
-		
-		int points = MyForest.getInstance().getForest().getPoints() - mPrice;
-		MyForest.getInstance().getForest().setPoints(points);
-		UserForestItem item = new UserForestItem(this.clone());
-		item.setTile(-1, -1);
-		item.setOffset(0.5f, 0.5f);
-		MyForest.getInstance().addBoughtItem(item);
-	}
 
 	public int getLevel() {
 		return mLevel;
@@ -190,14 +179,5 @@ public class ForestItem {
 	public boolean isMoveable() {
 		return mMoveable;
 	}
-	
-	public ForestItem clone(){
-		ForestItem item = new ForestItem(mType,mImageId,mName,mDescription,isMoveable());
-		item.setPrice(mPrice);
-		item.setLevel(mLevel);
-		item.setAmount(mAmount);
-		return item;
-	}
-	
 
 }

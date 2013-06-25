@@ -25,24 +25,25 @@ public class MyForest {
 		return mForest;
 	}
 
-	public void addBoughtItem(UserForestItem item) {
-		ForestItem itemBought = item.getForestItem();
-		for(UserForestItem uItem : mForest.getUserforestitems()){
-			ForestItem itemInList = uItem.getForestItem();
-			if(itemInList.getName().equals(itemBought.getName())){
-				itemInList.setAmount(itemBought.getAmount());
-			}
+	public void buyItem(ForestItem item) {
+
+		item.incAmount();
+
+		int points = mForest.getPoints() - item.getPrice();
+		mForest.setPoints(points);
+		UserForestItem uItem = new UserForestItem(item);
+		uItem.setTile(-1, -1);
+		uItem.setOffset(0.5f, 0.5f);
+
+		mForest.addItem(uItem);
+		if (mListener != null) {
+			mListener.onNewItemBought(uItem);
 		}
-		mForest.addItem(item);
-		if(mListener!=null){
-			mListener.onNewItemBought(item);
-		}
-		
+
 	}
-	
-	public void addOnItemBoughtListener(OnItemBoughtListener listener){
+
+	public void addOnItemBoughtListener(OnItemBoughtListener listener) {
 		mListener = listener;
 	}
-	
 
 }

@@ -68,7 +68,7 @@ public class ForestFragment extends Fragment {
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mCurItem.buy();
+				MyForest.getInstance().buyItem(mCurItem);
 				updateCurrentItemView();
 			}
 		});
@@ -93,7 +93,10 @@ public class ForestFragment extends Fragment {
 	}
 
 	private boolean isItemObtainable() {
-		if (mCurItem.getPrice() <= MyForest.getInstance().getForest().getPoints() & mCurItem.getLevel() < MyForest.getInstance().getForest().getLevel()) {
+		if (mCurItem.getPrice() <= MyForest.getInstance().getForest()
+				.getPoints()
+				& mCurItem.getLevel() < MyForest.getInstance().getForest()
+						.getLevel()) {
 			return true;
 		} else
 			return false;

@@ -57,7 +57,7 @@ public class OtherForestActivity extends Activity {
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mCurItem.buy();
+				MyForest.getInstance().buyItem(mCurItem);
 				updateCurrentItemView();
 			}
 		});

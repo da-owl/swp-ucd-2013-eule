@@ -65,8 +65,8 @@ public abstract class MarketCategoryFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				mCurItem = (ForestItem) mAdapter.getItem(position);
-					updateCurrentItemView();
-					mSlideUpContainer.slideOpen();
+				updateCurrentItemView();
+				mSlideUpContainer.slideOpen();
 			}
 		});
 
@@ -74,7 +74,7 @@ public abstract class MarketCategoryFragment extends Fragment {
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mCurItem.buy();
+				MyForest.getInstance().buyItem(mCurItem);
 				updateCurrentItemView();
 			}
 		});
@@ -101,27 +101,29 @@ public abstract class MarketCategoryFragment extends Fragment {
 				.findViewById(R.id.txt_amount);
 		amount.setText("Anzahl: " + mCurItem.getAmount());
 		// set required points
-				TextView reqPnts = (TextView) mSlideUpContainer
-						.findViewById(R.id.txt_requirements_points);
-				Integer pnts = mCurItem.getPrice();
-				reqPnts.setText(pnts.toString());
-				//set required forest size
-				Integer reqSz = mCurItem.getLevel() * 5;
-				TextView reqFrst = (TextView) mSlideUpContainer
-						.findViewById(R.id.txt_requirements_level);
-				reqFrst.setText(reqSz.toString());
-				if (mCurItem.isSpecialItem()|| !isObtainable(mCurItem)) {
-					mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
-							View.INVISIBLE);
-				} else {
-					mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
-							View.VISIBLE);
-				}
+		TextView reqPnts = (TextView) mSlideUpContainer
+				.findViewById(R.id.txt_requirements_points);
+		Integer pnts = mCurItem.getPrice();
+		reqPnts.setText(pnts.toString());
+		// set required forest size
+		Integer reqSz = mCurItem.getLevel() * 5;
+		TextView reqFrst = (TextView) mSlideUpContainer
+				.findViewById(R.id.txt_requirements_level);
+		reqFrst.setText(reqSz.toString());
+		if (mCurItem.isSpecialItem() || !isObtainable(mCurItem)) {
+			mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
+					View.INVISIBLE);
+		} else {
+			mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
+					View.VISIBLE);
+		}
 	}
-	
-	public boolean isObtainable(ForestItem mCurItem){
-		if (mCurItem.getPrice() < MyForest.getInstance().getForest().getPoints()
-				& mCurItem.getLevel() < MyForest.getInstance().getForest().getLevel()) {
+
+	public boolean isObtainable(ForestItem mCurItem) {
+		if (mCurItem.getPrice() < MyForest.getInstance().getForest()
+				.getPoints()
+				& mCurItem.getLevel() < MyForest.getInstance().getForest()
+						.getLevel()) {
 			return true;
 
 		} else {
