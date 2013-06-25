@@ -7,6 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.swp_ucd_2013_eule.data.ForestItem;
 import com.example.swp_ucd_2013_eule.model.MyForest;
@@ -20,6 +21,7 @@ public class OtherForestActivity extends Activity {
 
 	private SlideUpContainer mSlideUpContainer;
 	private ForestItem mCurItem;
+	private SlideUpContainerFiller mFiller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,33 +34,30 @@ public class OtherForestActivity extends Activity {
 		// TODO User other's forest
 		mForest.setForest(MyForest.getInstance().getForest());
 
-		// XXX Duplicate code (see MarketCategoryFragment) --> outsource
-		mSlideUpContainer = (SlideUpContainer) findViewById(R.id.forestSlideUp);
+		mFiller = new SlideUpContainerFiller(getWindow().getDecorView().getRootView());
+		mSlideUpContainer = mFiller.createSlideUp();
 		mForest.setSlideUpContainer(mSlideUpContainer);
-		Button btnClose = (Button) findViewById(R.id.btnSlideUpClose);
-
+	
 		mForest.setForestItemListener(new UserForestItemListener() {
 			@Override
 			public void onForestItemClicked(UserForestItem item) {
 				mCurItem = item.getForestItem();
-				updateCurrentItemView();
+				mFiller.updateCurrentItemView(mCurItem, OtherForestActivity.this);
 				mSlideUpContainer.slideOpen();
 			}
 		});
 
-		btnClose.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mSlideUpContainer.slideClose();
-			}
-		});
 
 		Button btnBuy = (Button) findViewById(R.id.btnBuyItem);
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				MyForest.getInstance().buyItem(mCurItem);
-				updateCurrentItemView();
+				mFiller.updateCurrentItemView(mCurItem, OtherForestActivity.this);
+				Toast conf = Toast.makeText(OtherForestActivity.this,
+						"One " + mCurItem.getName() + " has been bought",
+						Toast.LENGTH_SHORT);
+				conf.show();
 			}
 		});
 
@@ -68,30 +67,4 @@ public class OtherForestActivity extends Activity {
 
 	}
 
-	// XXX Duplicate code (see MarketCategoryFragment) --> outsource
-	private void updateCurrentItemView() {
-		// set label
-		TextView name = (TextView) mSlideUpContainer
-				.findViewById(R.id.txt_label);
-		name.setText("Detailansicht " + mCurItem.getName());
-		// set description
-		TextView des = (TextView) mSlideUpContainer
-				.findViewById(R.id.txt_details);
-		des.setText(mCurItem.getDescription());
-		// set Picture
-		ImageView pic = (ImageView) mSlideUpContainer
-				.findViewById(R.id.imgItem);
-		pic.setImageBitmap(mCurItem.getImage(this));
-		// set amount
-		TextView amount = (TextView) mSlideUpContainer
-				.findViewById(R.id.txt_amount);
-		amount.setText("Anzahl: " + mCurItem.getAmount());
-		if (mCurItem.isSpecialItem()) {
-			mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
-					View.INVISIBLE);
-		} else {
-			mSlideUpContainer.findViewById(R.id.btnBuyItem).setVisibility(
-					View.VISIBLE);
-		}
-	}
 }
