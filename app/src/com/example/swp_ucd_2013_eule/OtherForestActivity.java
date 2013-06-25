@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,9 +13,11 @@ import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.ForestView;
 import com.example.swp_ucd_2013_eule.view.ForestView.UserForestItemListener;
+import com.example.swp_ucd_2013_eule.view.OnClickNotHandledListener;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
-public class OtherForestActivity extends Activity {
+public class OtherForestActivity extends Activity implements
+		OnClickNotHandledListener {
 	private ForestView mForest;
 
 	private SlideUpContainer mSlideUpContainer;
@@ -34,28 +35,29 @@ public class OtherForestActivity extends Activity {
 		// TODO User other's forest
 		mForest.setForest(MyForest.getInstance().getForest());
 
-		mFiller = new SlideUpContainerFiller(getWindow().getDecorView().getRootView());
+		mFiller = new SlideUpContainerFiller(getWindow().getDecorView()
+				.getRootView());
 		mSlideUpContainer = mFiller.createSlideUp();
-		mForest.setSlideUpContainer(mSlideUpContainer);
-	
+		mForest.setOnClickNotHandledListener(this);
 		mForest.setForestItemListener(new UserForestItemListener() {
 			@Override
 			public void onForestItemClicked(UserForestItem item) {
 				mCurItem = item.getForestItem();
-				mFiller.updateCurrentItemView(mCurItem, OtherForestActivity.this);
+				mFiller.updateCurrentItemView(mCurItem,
+						OtherForestActivity.this);
 				mSlideUpContainer.slideOpen();
 			}
 		});
-
 
 		Button btnBuy = (Button) findViewById(R.id.btnBuyItem);
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				MyForest.getInstance().buyItem(mCurItem);
-				mFiller.updateCurrentItemView(mCurItem, OtherForestActivity.this);
-				Toast conf = Toast.makeText(OtherForestActivity.this,
-						"One " + mCurItem.getName() + " has been bought",
+				mFiller.updateCurrentItemView(mCurItem,
+						OtherForestActivity.this);
+				Toast conf = Toast.makeText(OtherForestActivity.this, "One "
+						+ mCurItem.getName() + " has been bought",
 						Toast.LENGTH_SHORT);
 				conf.show();
 			}
@@ -64,6 +66,12 @@ public class OtherForestActivity extends Activity {
 		((TextView) findViewById(R.id.txtDrops)).setText("80");
 
 		((TextView) findViewById(R.id.txtForestSize)).setText("85 m²");
+
+	}
+
+	@Override
+	public void clickNotHandled() {
+		mSlideUpContainer.slideClose();
 
 	}
 

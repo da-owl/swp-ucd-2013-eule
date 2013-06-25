@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +21,11 @@ import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 import com.example.swp_ucd_2013_eule.view.ForestView;
 import com.example.swp_ucd_2013_eule.view.ForestView.UserForestItemListener;
+import com.example.swp_ucd_2013_eule.view.OnClickNotHandledListener;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
-public class ForestFragment extends Fragment {
+public class ForestFragment extends Fragment implements
+		OnClickNotHandledListener {
 	private ForestView mForest;
 	private SlideUpContainer mSlideUpContainer;
 	private ForestItem mCurItem;
@@ -45,7 +46,7 @@ public class ForestFragment extends Fragment {
 
 		mForest = (ForestView) rootView.findViewById(R.id.forest);
 		mForest.setForest(forest);
-		mForest.setSlideUpContainer(mSlideUpContainer);
+		mForest.setOnClickNotHandledListener(this);
 		((TextView) rootView.findViewById(R.id.txtDrops)).setText(forest
 				.getPoints().toString());
 
@@ -58,7 +59,6 @@ public class ForestFragment extends Fragment {
 			}
 		});
 
-		
 		Button btnBuy = (Button) rootView.findViewById(R.id.btnBuyItem);
 		btnBuy.setOnClickListener(new OnClickListener() {
 			@Override
@@ -94,6 +94,12 @@ public class ForestFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
+	}
+
+	@Override
+	public void clickNotHandled() {
+		mSlideUpContainer.slideClose();
+
 	}
 
 }
