@@ -23,7 +23,10 @@ public class MyForest {
 		mStatAPI = new APIModel<Statistic, Forest>(Statistic.class);
 		
 		try {
-			mForest = new Forest(FOREST_ID);
+			mForest = new Forest(1);
+			
+			
+			Log.d("MyForest", mForest.toString());
 			mForest = mForestAPI.get(mForest);
 			
 			List<UserForestItem> items = mUserItemAPI.getAllByParent(mForest, new UserForestItem(), "userforestitems");

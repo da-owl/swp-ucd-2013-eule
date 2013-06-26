@@ -137,5 +137,16 @@ public class Forest extends Model {
 	public void setPointProgress(Double pointProgress) {
 		this.pointProgress = new Float(pointProgress.floatValue());
 	}
+
+	@Override
+	public String toString() {
+		return "Forest [id=" + id + "user=" + user + ", points=" + points + ", level="
+				+ level + ", levelProgessPoints=" + levelProgessPoints
+				+ ", pointProgress=" + pointProgress + ", userforestitems="
+				+ userforestitems + ", friends=" + friends + ", statistics="
+				+ statistics + "]";
+	}
+	
+	
 	
 }
