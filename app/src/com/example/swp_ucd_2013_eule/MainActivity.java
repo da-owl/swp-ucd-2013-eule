@@ -382,12 +382,15 @@ public class MainActivity extends FragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			return new ForestFragment();
+			if(position==0){
+				return new ForestFragment();
+			}
+			return new ChartFragment();
 		}
 
 		@Override
 		public int getCount() {
-			return 1;
+			return 2;
 		}
 
 		@Override

@@ -2,4 +2,6 @@
 <resources>
     <color name="actionBarTabBarBackgroundColor">#4178dc</color>
     <color name="slideUpContainerBackgroundColor">#3d5a8e</color>
+    <color name="btnChartSelected">#4178dc</color>
+    <color name="btnChartUnselected">#ffffff</color>
 </resources>
