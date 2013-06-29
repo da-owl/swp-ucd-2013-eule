@@ -77,6 +77,7 @@ public class ForestView extends View implements OnItemBoughtListener {
 	private UserForestItemListener mForestItemListener;
 
 	private ForestItemWrapper mDraggedItem = null;
+	private ForestItemWrapper mIconMoveStarted = null;
 	private Path mDraggedPath;
 	private Paint mDraggedPaint;
 
@@ -442,8 +443,11 @@ public class ForestView extends View implements OnItemBoughtListener {
 			mCurTouchX = (int) event.getRawX();
 			mCurTouchY = (int) event.getRawY();
 			mLastTouchDown = SystemClock.elapsedRealtime();
+			mIconMoveStarted = resolveItemAt(event.getX() + getScrollX(),
+					event.getY() + getScrollY());
 			prepareDrag(event.getX() + getScrollX(), event.getY()
 					+ getScrollY());
+
 			break;
 
 		case MotionEvent.ACTION_UP:
@@ -468,12 +472,17 @@ public class ForestView extends View implements OnItemBoughtListener {
 
 		case MotionEvent.ACTION_MOVE: {
 			handled = true;
-			cancelDrag();
 			float x2 = event.getRawX();
 			float y2 = event.getRawY();
-			scrollBy((int) (mCurTouchX - x2), (int) (mCurTouchY - y2));
-			mCurTouchX = x2;
-			mCurTouchY = y2;
+			ForestItemWrapper curItem = resolveItemAt(event.getX()
+					+ getScrollX(), event.getY() + getScrollY());
+			if (curItem == null || mIconMoveStarted == null
+					|| curItem != mIconMoveStarted) {
+				cancelDrag();
+				scrollBy((int) (mCurTouchX - x2), (int) (mCurTouchY - y2));
+				mCurTouchX = x2;
+				mCurTouchY = y2;
+			}
 			break;
 		}
 
@@ -572,6 +581,15 @@ public class ForestView extends View implements OnItemBoughtListener {
 				mDraggedItem = item;
 			}
 		}
+	}
+
+	private ForestItemWrapper resolveItemAt(float x, float y) {
+		for (ForestItemWrapper item : mForestItems) {
+			if (isItemClicked(item, x, y)) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	private boolean isItemClicked(ForestItemWrapper i, float x, float y) {
