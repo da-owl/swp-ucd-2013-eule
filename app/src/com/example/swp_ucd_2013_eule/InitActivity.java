@@ -58,9 +58,9 @@ public class InitActivity extends Activity {
 					Toast toast = Toast.makeText(context, text,
 							Toast.LENGTH_LONG);
 					toast.show();
-					finish();
 				}
 
+				finish();
 			}
 		}.execute(null, null);
 	}
