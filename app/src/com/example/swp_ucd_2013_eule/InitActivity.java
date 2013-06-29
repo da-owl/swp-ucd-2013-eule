@@ -1,5 +1,7 @@
 package com.example.swp_ucd_2013_eule;
 
+import java.io.Closeable;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +58,7 @@ public class InitActivity extends Activity {
 					Toast toast = Toast.makeText(context, text,
 							Toast.LENGTH_LONG);
 					toast.show();
+					finish();
 				}
 
 			}
