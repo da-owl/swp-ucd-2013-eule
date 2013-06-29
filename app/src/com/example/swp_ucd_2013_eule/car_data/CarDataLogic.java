@@ -33,7 +33,7 @@ public class CarDataLogic extends Handler {
 	private ArrayList<Float> mCurrentSpeed = new ArrayList<Float>();
 	private volatile boolean mFastAcceleration = false;
 	private volatile boolean mHardBreaking = false;
-	private int mInterval = 150;
+	private int mInterval = 75;
 	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
 	private float mPointsScaleFactor = 2;
 	private float mCurrentRPM = 0;
@@ -366,9 +366,9 @@ public class CarDataLogic extends Handler {
 		private void calcShift() {
 			// calculate bad shift penalty and good shift bonus
 			if (mGShifts < 0) {
-				mCurPoints += (mGShifts * 0.1);
+				mCurPoints += (mGShifts * 0.5);
 			} else {
-				mCurPoints += (mGShifts * 0.2);
+				mCurPoints += (mGShifts * 0.4);
 			}
 
 		}
@@ -377,7 +377,7 @@ public class CarDataLogic extends Handler {
 			// calculate acceleration and breaking penalty/bonus
 			int interval = mAcc[0] + mAcc[1] + mAcc[2];
 			// fast acc
-			mCurPoints -= ((float) mAcc[0] / interval) * 3;
+			mCurPoints -= ((float) mAcc[0] / interval) * 6;
 			// hard breaking
 			mCurPoints -= ((float) mAcc[1] / interval) * 2;
 			// acc in range

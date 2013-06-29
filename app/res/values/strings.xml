@@ -52,5 +52,8 @@
     <string name="title_activity_init">InitActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="initializing">Initialisiere&#8230;</string>
+    <string name="init_Address">IP des Backends</string>
+    <string name="init_Port">Port des Backends</string>
+    <string name="init_Button">Verbinde</string>
 
 </resources>

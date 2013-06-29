@@ -35,20 +35,21 @@ public class MyForest {
 		mStatAPI = new APIModel<Statistic, Forest>(Statistic.class);
 
 		try {
+			MyMarket.getInstance().loadMarket();
 			List<Item> items = MyMarket.getInstance().getItems();
-			
+
 			Forest forest = new Forest(SettingsWrapper.getInstance()
 					.getCurrentForestId());
 			mForest = mForestAPI.get(forest);
 
-			List<UserForestItem> userItems = mUserItemAPI.getAllByParent(mForest,
-					new UserForestItem(), "userforestitems");
-			
+			List<UserForestItem> userItems = mUserItemAPI.getAllByParent(
+					mForest, new UserForestItem(), "userforestitems");
+
 			// TODO workaround. Should be done by api/serializier???
 			for (UserForestItem ui : userItems) {
 				ui.setMartketItems(items);
 			}
-			
+
 			List<Statistic> stats = mStatAPI.getAllByParent(mForest,
 					new Statistic(), "statistics");
 
