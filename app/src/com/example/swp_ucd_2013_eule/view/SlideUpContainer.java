@@ -1,12 +1,12 @@
 package com.example.swp_ucd_2013_eule.view;
 
-import com.example.swp_ucd_2013_eule.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
+
+import com.example.swp_ucd_2013_eule.R;
 
 public class SlideUpContainer extends RelativeLayout {
 	private Animation mShowAnimation;
@@ -46,7 +46,9 @@ public class SlideUpContainer extends RelativeLayout {
 	}
 
 	public void slideClose() {
-		startAnimation(mCloseAnimation);
-		setVisibility(android.view.View.INVISIBLE);
+		if (getVisibility() == android.view.View.VISIBLE) {
+			startAnimation(mCloseAnimation);
+			setVisibility(android.view.View.INVISIBLE);
+		}
 	}
 }

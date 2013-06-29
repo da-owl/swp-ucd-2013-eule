@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.model.APIModel;
 import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.Statistic;
-import com.example.swp_ucd_2013_eule.net.APIException;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 
 /**
  * 
@@ -83,8 +81,8 @@ public class CarDataLogic extends Handler {
 	}
 
 	public void setTripStartStop(boolean state) {
-		if(mRecordTrip && !state){
-			//TODO: save statistics!
+		if (mRecordTrip && !state) {
+			// TODO: save statistics!
 		}
 		mRecordTrip = state;
 	}
@@ -446,6 +444,16 @@ public class CarDataLogic extends Handler {
 
 			}
 
+		}
+
+	}
+
+	public boolean unSubscribeHandler(Handler handler, String key) {
+		List<Handler> handlerList = mDataListeners.get(key);
+		if (handlerList != null) {
+			return handlerList.remove(handler);
+		} else {
+			return false;
 		}
 
 	}

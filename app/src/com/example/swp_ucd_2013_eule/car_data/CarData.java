@@ -132,7 +132,7 @@ public class CarData implements DataListener {
 
 						Log.d("CarData.ConnectionWatcher", "trying to connect");
 						mEC.connect();
-						
+
 						// if a connection has been made, subscribe the data
 						if (mEC.isConnected()) {
 							Log.d("CarData.ConnectionWatcher", "subscribing");
@@ -143,7 +143,7 @@ public class CarData implements DataListener {
 							} catch (InterruptedException e) {
 							}
 						}
-					
+
 					} else if (!mRecordTrip && !mEC.isConnected()) {
 						Log.i("CarData.ConnectionWatcher",
 								"disconnected and no connection needed");
@@ -244,6 +244,15 @@ public class CarData implements DataListener {
 		mDataListeners.put(identifier, list);
 		return true;
 
+	}
+
+	public boolean unSubscribeHandler(Handler handler, String key) {
+		List<Handler> handlerList = mDataListeners.get(key);
+		if (handlerList != null) {
+			return handlerList.remove(handler);
+		} else {
+			return false;
+		}
 	}
 
 }

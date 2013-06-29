@@ -173,6 +173,17 @@ public class DriveTechFragment extends Fragment {
 
 	@Override
 	public void onDestroyView() {
+		boolean ret;
+		ret = CarData.getInstance().unSubscribeHandler(mHandler,
+				"InstantaneousValuePerMilage");
+		Log.d("DTF UnsubscribeHandler", "" + ret);
+		ret = CarData.getInstance().unSubscribeHandler(mHandler, "EngineSpeed");
+		Log.d("DTF UnsubscribeHandler", "" + ret);
+		ret = CarData.getInstance().unSubscribeHandler(mHandler, "CurrentGear");
+		Log.d("DTF UnsubscribeHandler", "" + ret);
+		ret = CarData.getInstance().unSubscribeHandler(mHandler,
+				"LongitudinalAcceleration");
+		Log.d("DTF UnsubscribeHandler", "" + ret);
 		super.onDestroyView();
 	}
 
