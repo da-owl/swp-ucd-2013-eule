@@ -7,8 +7,9 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,16 +18,30 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.swp_ucd_2013_eule.MainActivity"
-            android:label="@string/app_name" android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.swp_ucd_2013_eule.OtherForestActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.swp_ucd_2013_eule.SettingsActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.swp_ucd_2013_eule.ListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.swp_ucd_2013_eule.InitActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name="com.example.swp_ucd_2013_eule.OtherForestActivity" android:screenOrientation="portrait"/>
-        <activity android:label="@string/app_name" android:name="com.example.swp_ucd_2013_eule.SettingsActivity" android:screenOrientation="portrait"/>
-        <activity android:label="@string/app_name" android:name="com.example.swp_ucd_2013_eule.ListActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

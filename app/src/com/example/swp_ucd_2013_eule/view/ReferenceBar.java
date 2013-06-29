@@ -73,8 +73,6 @@ public class ReferenceBar extends View {
 
 		mBadPaint = new Paint();
 		mBadPaint.setAntiAlias(true);
-
-		// TODO required? updateGradients();
 	}
 
 	private void updateGradients() {

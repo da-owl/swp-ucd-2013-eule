@@ -348,7 +348,6 @@ public class ForestView extends View implements OnItemBoughtListener {
 
 			float x, y;
 			for (UserForestItem item : items) {
-
 				int iw2 = item.getForestItem().getImage(getContext())
 						.getWidth() / 2;
 				int ih2 = item.getForestItem().getImage(getContext())

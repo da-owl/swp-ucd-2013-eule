@@ -9,7 +9,6 @@
     <string name="action_comm_test">Teste Kommunikation</string>
     <string name="action_settings">Einstellungen</string>
     <string name="exit_app">Beenden</string>
-    
     <string name="fragment_drive_title_section1">Punkte-Fortschritt</string>
     <string name="fragment_drive_title_section2">Fahr-Empfehlung</string>
     <string name="fragment_forest_title_section1">Mein Wald</string>
@@ -19,26 +18,21 @@
     <string name="fragment_market_title_section1">Pflanzen</string>
     <string name="fragment_market_title_section2">Tiere</string>
     <string name="fragment_market_title_section3">Kleidung</string>
-    
     <string name="fragment_drive_Level">Waldgröße:</string>
     <string name="fragment_forest_points">Tropfen</string>
     <string name="fragment_forest_Level">Größe</string>
     <string name="drive_fuel_consumption">Verbrauch:</string>
-    
     <string name="fragment_social_toplist_worldlist">Top 5 Weltweit</string>
     <string name="fragment_social_toplist_locallist">Top 5 in Berlin</string>
-    
     <string name="social_table_header_position">#</string>
-    <string name="social_table_header_name">Name</string>   
+    <string name="social_table_header_name">Name</string>
     <string name="social_table_header_level">Wald-Größe</string>
-    <string name="social_table_footer_more">Gesamte Liste ansehen</string>   
-    
+    <string name="social_table_footer_more">Gesamte Liste ansehen</string>
     <string name="fragment_buy_dialog_buyItem">Buy</string>
     <string name="forest_item_slide_up_buy">Kaufen</string>
-    
-	<string name="txt_setting_profile">Profil</string>
-	<string name="txt_setting_bt">Bluetooth</string>
-	<string name="txt_setting_dev">Entwickler Optionen</string>
+    <string name="txt_setting_profile">Profil</string>
+    <string name="txt_setting_bt">Bluetooth</string>
+    <string name="txt_setting_dev">Entwickler Optionen</string>
     <string name="txt_setting_other">Anderes</string>
     <string name="txt_setting_user_name">Benutzername</string>
     <string name="txt_setting_user_name_summary">Geben Sie sich einen Name</string>
@@ -55,5 +49,8 @@
     <string name="txt_setting_send_report">Absturzberichte senden</string>
     <string name="txt_setting_send_report_summary">Hilft den Entwicklern</string>
     <string name="slideup_requirements">Anforderungen:</string>
+    <string name="title_activity_init">InitActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="initializing">Initialisiere&#8230;</string>
 
 </resources>

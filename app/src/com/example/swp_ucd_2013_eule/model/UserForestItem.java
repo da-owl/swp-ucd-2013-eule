@@ -26,8 +26,12 @@ public class UserForestItem extends Model {
 	}
 
 	public UserForestItem(Item item, List<Item> marketItems) {
-		this.availableItems.addAll(marketItems);
+		setMartketItems(marketItems);
 		this.item = item.getId();
+	}
+	
+	public void setMartketItems(List<Item> marketItems) {
+		this.availableItems.addAll(marketItems);
 	}
 
 //	public static UserForestItem[] getExamples() {

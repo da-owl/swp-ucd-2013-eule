@@ -97,9 +97,7 @@ public class DrivePointsFragment extends Fragment {
 
 					mLevelBar.setMax(barMax);
 					mLevelBar.setValue(curLvlPrgPoints);
-
 				}
-
 			}
 		};
 
