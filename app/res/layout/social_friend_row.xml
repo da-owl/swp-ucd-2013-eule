@@ -58,5 +58,5 @@
         android:layout_column="3"
         android:gravity="right"
         android:scrollHorizontally="false"
-        android:src="@drawable/ic_action_detail_80" />
+        android:src="@drawable/ic_action_detail_f" />
 </com.example.swp_ucd_2013_eule.view.SocialRow>
