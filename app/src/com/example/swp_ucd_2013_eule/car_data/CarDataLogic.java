@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
-import com.example.swp_ucd_2013_eule.model.APIModel;
-import com.example.swp_ucd_2013_eule.model.Forest;
-import com.example.swp_ucd_2013_eule.model.MyForest;
-import com.example.swp_ucd_2013_eule.model.Statistic;
-import com.example.swp_ucd_2013_eule.net.APIException;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
+import com.example.swp_ucd_2013_eule.model.APIModel;
+import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.Statistic;
 
 /**
  * 
@@ -36,7 +33,7 @@ public class CarDataLogic extends Handler {
 	private ArrayList<Float> mCurrentSpeed = new ArrayList<Float>();
 	private volatile boolean mFastAcceleration = false;
 	private volatile boolean mHardBreaking = false;
-	private int mInterval = 150;
+	private int mInterval = 75;
 	private HashMap<String, List<Handler>> mDataListeners = new HashMap<String, List<Handler>>();
 	private float mPointsScaleFactor = 2;
 	private float mCurrentRPM = 0;
@@ -48,7 +45,6 @@ public class CarDataLogic extends Handler {
 	private int[] mAccExceeding = { 0, 0, 0 };
 	private Statistic mStatistics;
 	private APIModel<Statistic, Statistic> mAPI;
-	private int mUserID;
 	private int mProgressPointInterval = 100;
 	private boolean mRecordTrip = false;
 
@@ -63,6 +59,8 @@ public class CarDataLogic extends Handler {
 	private float m15percent = 0.3f;
 	private float m20percent = 0.4f;
 
+	private Forest mForest;
+
 	private CarDataLogic() {
 		CarData carDataListener = CarData.getInstance();
 
@@ -72,19 +70,17 @@ public class CarDataLogic extends Handler {
 		// instance.subscribeHandler(this, "RecommendedGear");
 		carDataListener.subscribeHandler(this, "VehicleSpeed");
 		carDataListener.subscribeHandler(this, "LongitudinalAcceleration");
-
-		mCurPoints = MyForest.getInstance().getForest().getPointProgress()
-				/ mPointsScaleFactor;
 	}
 
-	public void setUserID(int userID) {
-		mUserID = userID;
-		mStatistics = new Statistic(mUserID);
+	public void setForest(Forest forest) {
+		mForest = forest;
+		mStatistics = new Statistic(mForest.getId());
+		mCurPoints = mForest.getPointProgress() / mPointsScaleFactor;
 	}
 
 	public void setTripStartStop(boolean state) {
-		if(mRecordTrip && !state){
-			//TODO: save statistics!
+		if (mRecordTrip && !state) {
+			// TODO: save statistics!
 		}
 		mRecordTrip = state;
 	}
@@ -308,7 +304,7 @@ public class CarDataLogic extends Handler {
 					msg.sendToTarget();
 				}
 			}
-			MyForest.getInstance().getForest().setPointProgress(curPoints);
+			mForest.setPointProgress(curPoints);
 			Log.d("CarDataLogic", "CurPoints: " + curPoints);
 
 		}
@@ -370,9 +366,9 @@ public class CarDataLogic extends Handler {
 		private void calcShift() {
 			// calculate bad shift penalty and good shift bonus
 			if (mGShifts < 0) {
-				mCurPoints += (mGShifts * 0.1);
+				mCurPoints += (mGShifts * 0.5);
 			} else {
-				mCurPoints += (mGShifts * 0.2);
+				mCurPoints += (mGShifts * 0.4);
 			}
 
 		}
@@ -381,7 +377,7 @@ public class CarDataLogic extends Handler {
 			// calculate acceleration and breaking penalty/bonus
 			int interval = mAcc[0] + mAcc[1] + mAcc[2];
 			// fast acc
-			mCurPoints -= ((float) mAcc[0] / interval) * 3;
+			mCurPoints -= ((float) mAcc[0] / interval) * 6;
 			// hard breaking
 			mCurPoints -= ((float) mAcc[1] / interval) * 2;
 			// acc in range
@@ -392,16 +388,15 @@ public class CarDataLogic extends Handler {
 		}
 
 		private void checkLevel() {
-			Forest forest = MyForest.getInstance().getForest();
 			SettingsWrapper settings = SettingsWrapper.getInstance();
 			boolean viewChanged = false;
 			if (mCurPoints * mPointsScaleFactor > mProgressPointInterval) {
 				viewChanged = true;
-				forest.setPoints(forest.getPoints() + 5);
+				mForest.setPoints(mForest.getPoints() + 5);
 				mCurPoints = mCurPoints * mPointsScaleFactor
 						- mProgressPointInterval;
-				int level = forest.getLevel();
-				int lvlPrgPoints = forest.getLevelProgessPoints() + 1;
+				int level = mForest.getLevel();
+				int lvlPrgPoints = mForest.getLevelProgessPoints() + 1;
 				// level up
 				if (lvlPrgPoints >= settings.getPointsToNextLevel(level + 1)
 						&& level <= 100) {
@@ -410,27 +405,27 @@ public class CarDataLogic extends Handler {
 					// levelNeededPoints
 					lvlPrgPoints = 0;
 					// increment level in Forest
-					forest.setLevel(++level);
+					mForest.setLevel(++level);
 				}
 				// update lvlPrgPoints in Forest
-				forest.setLevelProgessPoints(lvlPrgPoints);
+				mForest.setLevelProgessPoints(lvlPrgPoints);
 
 			} else if (mCurPoints * mPointsScaleFactor < -mProgressPointInterval) {
 				viewChanged = true;
 				mCurPoints = mCurPoints * mPointsScaleFactor
 						+ mProgressPointInterval;
-				int level = forest.getLevel();
-				int lvlPrgPoints = forest.getLevelProgessPoints() - 1;
+				int level = mForest.getLevel();
+				int lvlPrgPoints = mForest.getLevelProgessPoints() - 1;
 				// level down
 				if (lvlPrgPoints < 0 && level > 1) {
 					mStatistics.removeGainedPoint();
 					// calculate new progressPoints = levelNeededpoints -
 					// curPoints
 					lvlPrgPoints = settings.getPointsToNextLevel(level) - 1;
-					forest.setLevel(--level);
+					mForest.setLevel(--level);
 				}
 				// update lvlPrgPoints in Forest
-				forest.setLevelProgessPoints(lvlPrgPoints);
+				mForest.setLevelProgessPoints(lvlPrgPoints);
 			}
 			if (viewChanged) {
 				List<Handler> handlers = mDataListeners.get("viewChanged");
@@ -446,6 +441,16 @@ public class CarDataLogic extends Handler {
 
 			}
 
+		}
+
+	}
+
+	public boolean unSubscribeHandler(Handler handler, String key) {
+		List<Handler> handlerList = mDataListeners.get(key);
+		if (handlerList != null) {
+			return handlerList.remove(handler);
+		} else {
+			return false;
 		}
 
 	}

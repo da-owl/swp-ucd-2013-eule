@@ -1,5 +1,11 @@
 package com.example.swp_ucd_2013_eule.data;
 
+/**
+ * TODO: Load Settings from DB.
+ * 
+ * @author Erik, MKay
+ *
+ */
 public class SettingsWrapper {
 	
 	private static SettingsWrapper INSTANCE = new SettingsWrapper();
@@ -23,6 +29,10 @@ public class SettingsWrapper {
 			return levels[level];
 		}
 		return 0;
+	}
+	
+	public int getCurrentForestId() {
+		return 1; // TODO replace hardcoded forest id
 	}
 
 }

@@ -129,12 +129,11 @@ public class HttpJsonClient {
 		client.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(
 				RETRY_COUNT, false));
 		HttpResponse res = null;
-		try {
+		//try {
 			res = client.execute(req);
-		} catch (Exception e) {
-			System.out.println("APIClient - Execute failed: " + e);
-		}
-		
+		//} catch (Exception e) {
+		//	System.out.println("APIClient - Execute failed: " + e);
+		//}
 		
 		HttpEntity entity = res.getEntity();
 		String body = entity == null ? null : EntityUtils.toString(entity);

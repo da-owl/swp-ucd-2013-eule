@@ -22,12 +22,12 @@ public class MarketForestItemAdapter extends BaseAdapter {
 
 	public static MarketForestItemAdapter getExampleClothesAdapter(Context ctx,
 			Forest forest) {
-		
+
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
 		List<Item> items = MyMarket.getInstance().getItems();
-		//Item[] items = Item.getExamples();
-		adapter.mItems = new Item[] { items.get(7) };
+		// TODO remove harcoded indices-usage
+		adapter.mItems = new Item[] { items.get(6) };
 		return adapter;
 	}
 
@@ -35,10 +35,11 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		
-		List<Item> items = MyMarket.getInstance().getItems();		
-		adapter.mItems = new Item[] { items.get(6) };
-		
+
+		List<Item> items = MyMarket.getInstance().getItems();
+		// TODO remove harcoded indices-usage
+		adapter.mItems = new Item[] { items.get(5) };
+
 		return adapter;
 	}
 
@@ -46,10 +47,12 @@ public class MarketForestItemAdapter extends BaseAdapter {
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		
+
 		List<Item> items = MyMarket.getInstance().getItems();
-		adapter.mItems = new Item[] { items.get(1), items.get(2), items.get(4), items.get(5) };
-		
+		// TODO remove harcoded indices-usage
+		adapter.mItems = new Item[] { items.get(0), items.get(1), items.get(3),
+				items.get(4) };
+
 		return adapter;
 	}
 
