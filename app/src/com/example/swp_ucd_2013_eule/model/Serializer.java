@@ -167,7 +167,7 @@ public class Serializer<T extends Model> {
 		try {
 			String name = property.substring(0, 1).toUpperCase();
 			name += property.substring(1);
-//			System.out.println("SERIALIZER - trying to invoke method " + "get" + name + " on " + model.getClass().getSimpleName());
+			System.out.println("SERIALIZER - trying to invoke method " + "get" + name + " on " + model.getClass().getSimpleName());
 			return model.getClass().getMethod("get" + name).invoke(model);
 		} catch (NoSuchMethodException e) {
 			System.out.println(e.getClass() + ": " + e.getMessage());
@@ -189,7 +189,7 @@ public class Serializer<T extends Model> {
 		try {
 			String name = property.substring(0, 1).toUpperCase();
 			name += property.substring(1);
-//			System.out.println("SERIALIZER - trying to invoke method " + "set" + name + " with value: " + value + " on " + model.getClass().getSimpleName());
+			System.out.println("SERIALIZER - trying to invoke method " + "set" + name + " with value: " + value + " (" + value.getClass().getSimpleName() + ")" + " on " + model.getClass().getSimpleName());
 			
 			if(value != null){
 				if(value instanceof Double){
@@ -198,7 +198,7 @@ public class Serializer<T extends Model> {
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
-				}
+				}				
 				Method method = model.getClass().getMethod("set" + name, value.getClass());
 				method.invoke(model, value);				
 			}			

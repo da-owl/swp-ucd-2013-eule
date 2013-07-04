@@ -7,6 +7,7 @@ class Item(models.Model):
     price = models.IntegerField()
     level = models.IntegerField()
     amount = models.IntegerField()
+    moveable = models.BooleanField(default=False)
     type = models.CharField(max_length=30)
     category = models.CharField(max_length=30)
     imageId = models.IntegerField()

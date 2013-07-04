@@ -11,14 +11,19 @@ public class Item extends Model {
 
 	public static String ITEM_TYPE_STANDARD = "standard";
 	public static String ITEM_TYPE_SPECIAL = "special";
+	
+	public static String ITEM_CATEGORY_ANIMALS = "animals";	
+	public static String ITEM_CATEGORY_PLANTS = "plants";
+	public static String ITEM_CATEGORY_CLOTHES = "clothes";
 
 	private String name;
 	private String description;
 	private String type;
 	private Integer price;
+	private String category;
 	private Integer amount;
 	private Integer level;
-	private boolean mMoveable = false;
+	private Boolean moveable;
 	private Integer imageId;
 
 	// public enum ForestItemType {
@@ -42,7 +47,7 @@ public class Item extends Model {
 		imageId = imageID;
 		setName(name);
 		setDescription(description);
-		mMoveable = moveable;
+		this.moveable = moveable;
 	}
 
 	public String getType() {
@@ -123,7 +128,23 @@ public class Item extends Model {
 	}
 
 	public boolean isMoveable() {
-		return mMoveable;
+		return moveable;
+	}
+	
+	public Boolean getMoveable() {
+		return moveable;
+	}
+
+	public void setMoveable(Boolean moveable) {
+		this.moveable = moveable;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	private static int dbToResource(int dbValue) {

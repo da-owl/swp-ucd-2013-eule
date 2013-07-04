@@ -10,13 +10,13 @@ insert into core_itemcategory (name) values ('Animals');
 insert into core_itemcategory (name) values ('Clothes');
 insert into core_itemcategory (name) values ('Others');
 
-insert into core_item (name, description, price, level, amount, type, category, imageId) values ('Fichte', 'Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 85 m² erreicht haben.', 100, 17, 0, "standard", "plants", 1);
-insert into core_item (name, description, price, level, amount, type, category, imageId) values ('Laubbaum', 'Dies ist ein Laubbaum.\nEs ist ein Startgegenstand.', 15, 1, 0, "standard", "plants", 2);
-insert into core_item (name, description, price, level, amount, type, category, imageId) values ('Gordon der Frosch', 'SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn fuer\nherrausragendes Fahren!', 0, 0, 0, "special", "animals", 3);
-insert into core_item (name, description, price, level, amount, type, category, imageId) values ('Busch', 'Dies ist ein Busch.\nEr ist ein Startgegenstand.', 95, 1, 0, "standard", "plants", 4);
-insert into core_item (name, description, price, level, amount, type, category, imageId) values ('Blume', 'Dies ist eine Tuple.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.', 20, 26, 0, "standard", "plants", 5);
-insert into core_item (name, description, price, level, amount, type, category, imageId) values ('Vogel', 'Dies ist ein Vogel.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.', 20, 26, 0, "standard", "animals", 6);
-insert into core_item (name, description, price, level, amount, type, category, imageId) values ('Kleid', 'Dies ist ein Kleid.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.', 35, 26, 0, "standard", "clothes", 7);
+insert into core_item (name, description, price, level, amount, moveable, type, category, imageId) values ('Fichte', 'Dies ist eine Fichte.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 85 m² erreicht haben.', 100, 17, 0, 0, "standard", "plants", 1);
+insert into core_item (name, description, price, level, amount, moveable, type, category, imageId) values ('Laubbaum', 'Dies ist ein Laubbaum.\nEs ist ein Startgegenstand.', 15, 1, 0, 0, "standard", "plants", 2);
+insert into core_item (name, description, price, level, amount, moveable, type, category, imageId) values ('Gordon der Frosch', 'SPEZIALGEGENSTAND!\nDieser Gegenstand\nist nicht zu kaufen!\nMan erlangt ihn fuer\nherrausragendes Fahren!', 0, 0, 0, 1, "special", "animals", 3);
+insert into core_item (name, description, price, level, amount, moveable, type, category, imageId) values ('Busch', 'Dies ist ein Busch.\nEr ist ein Startgegenstand.', 95, 1, 0, 0, "standard", "plants", 4);
+insert into core_item (name, description, price, level, amount, moveable, type, category, imageId) values ('Blume', 'Dies ist eine Tuple.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.', 20, 26, 0, 0, "standard", "plants", 5);
+insert into core_item (name, description, price, level, amount, moveable, type, category, imageId) values ('Vogel', 'Dies ist ein Vogel.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.', 20, 26, 0, 0, "standard", "animals", 6);
+insert into core_item (name, description, price, level, amount, moveable, type, category, imageId) values ('Kleid', 'Dies ist ein Kleid.\nZum Erlangen\nmuss man mindestens\neine Waldgröße von 130 m² erreicht haben.', 35, 26, 0, 0, "standard", "clothes", 7);
 
 insert into core_forest (user_id, level, points, levelProgessPoints, pointProgress) values (1, 17, 80, 89, 90.0);
 insert into core_forest (user_id, level, points, levelProgessPoints, pointProgress) values (2, 17, 80, 89, 90.1);

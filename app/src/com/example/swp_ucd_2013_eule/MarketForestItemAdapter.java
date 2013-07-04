@@ -1,5 +1,6 @@
 package com.example.swp_ucd_2013_eule;
 
+import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
@@ -18,16 +19,14 @@ import com.example.swp_ucd_2013_eule.model.Item;
 public class MarketForestItemAdapter extends BaseAdapter {
 	private Context mContext;
 	private Forest mForest;
-	private Item[] mItems;
+	private List<Item> mItems;
 
 	public static MarketForestItemAdapter getExampleClothesAdapter(Context ctx,
 			Forest forest) {
 
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		List<Item> items = MyMarket.getInstance().getItems();
-		// TODO remove harcoded indices-usage
-		adapter.mItems = new Item[] { items.get(6) };
+		adapter.mItems = MyMarket.getInstance().getItems(Item.ITEM_CATEGORY_CLOTHES);
 		return adapter;
 	}
 
@@ -36,9 +35,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
 
-		List<Item> items = MyMarket.getInstance().getItems();
-		// TODO remove harcoded indices-usage
-		adapter.mItems = new Item[] { items.get(5) };
+		adapter.mItems = MyMarket.getInstance().getItems(Item.ITEM_CATEGORY_ANIMALS);
 
 		return adapter;
 	}
@@ -48,10 +45,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
 
-		List<Item> items = MyMarket.getInstance().getItems();
-		// TODO remove harcoded indices-usage
-		adapter.mItems = new Item[] { items.get(0), items.get(1), items.get(3),
-				items.get(4) };
+		adapter.mItems = MyMarket.getInstance().getItems(Item.ITEM_CATEGORY_PLANTS);
 
 		return adapter;
 	}
@@ -63,12 +57,12 @@ public class MarketForestItemAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return mItems.length;
+		return mItems.size();
 	}
 
 	@Override
 	public Item getItem(int position) {
-		return mItems[position];
+		return mItems.get(position);
 	}
 
 	@Override
@@ -80,7 +74,7 @@ public class MarketForestItemAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v;
 		if (convertView == null) {
-			Item item = mItems[position];
+			Item item = mItems.get(position);
 
 			LayoutInflater li = LayoutInflater.from(mContext);
 			v = li.inflate(R.layout.fragment_market_item, null);

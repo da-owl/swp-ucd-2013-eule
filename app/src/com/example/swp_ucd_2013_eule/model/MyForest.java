@@ -16,12 +16,15 @@ public class MyForest {
 	private APIModel<Forest, Forest> mForestAPI;
 	private APIModel<UserForestItem, Forest> mUserItemAPI;
 	private APIModel<Statistic, Forest> mStatAPI;
+	
+	public final static Integer FOREST_ID = 1;
 
 	private MyForest() {
 		// mForest.setLevel(17);
 		// mForest.setPoints(80);
 		// mForest.setLevelProgessPoints(89);
 		// mForest.setPointProgress(90f);
+		
 	}
 
 	public static MyForest getInstance() {
@@ -33,7 +36,6 @@ public class MyForest {
 		mUserItemAPI = new APIModel<UserForestItem, Forest>(
 				UserForestItem.class);
 		mStatAPI = new APIModel<Statistic, Forest>(Statistic.class);
-
 		try {
 			MyMarket.getInstance().loadMarket();
 			List<Item> items = MyMarket.getInstance().getItems();
@@ -120,7 +122,7 @@ public class MyForest {
 			mStatAPI.addToParent(stat, mForest, "statistics");
 			return true;
 		} catch (APIException e) {
-			Log.e("MyUser", "API failure. Could not add statistic!");
+			Log.e("MyForest", "API failure. Could not add statistic!");
 			return false;
 		}
 
@@ -132,10 +134,20 @@ public class MyForest {
 			mUserItemAPI.addToParent(item, mForest, "userforestitems");
 			return true;
 		} catch (APIException e) {
-			Log.e("MyUser", "API failure. Could not add useritem!");
+			Log.e("MyForest", "API failure. Could not add useritem!");
 			return false;
 		}
 
+	}
+	
+	public boolean updateUserForestItemPosition(UserForestItem item) {
+		try {
+			mUserItemAPI.save(item);
+			return true;
+		} catch (APIException e) {
+			Log.e("MyForest", "API failure. Could not update useritem position!");
+			return false;
+		}
 	}
 
 }

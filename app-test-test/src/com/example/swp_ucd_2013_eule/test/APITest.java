@@ -6,11 +6,11 @@ import android.test.AndroidTestCase;
 
 public class APITest extends AndroidTestCase {
 	
-	public static Integer DEFAULT_STATISTIC_COUNT = 4;
+	public static Integer DEFAULT_STATISTIC_COUNT = 10;
 	
 	public final Integer DEFAULT_FRIEND_COUNT = 3;
 	
-	public final Integer DEFAULT_USER_FOREST_ITEM_COUNT = 6;
+	public final Integer DEFAULT_USER_FOREST_ITEM_COUNT = 10;
 	
 	@Override
 	protected void setUp() throws Exception {

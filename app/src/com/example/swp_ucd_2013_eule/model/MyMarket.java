@@ -38,5 +38,15 @@ public class MyMarket {
 	public List<Item> getItems() {
 		return items;
 	}
+	
+	public List<Item> getItems(String category) {
+		List<Item> result = new LinkedList<Item>();
+		for (Item item : items) {
+			if (item.getCategory().equals(category)) {
+				result.add(item);
+			}
+		}
+		return result;
+	}
 
 }

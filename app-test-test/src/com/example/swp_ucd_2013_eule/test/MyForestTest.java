@@ -31,6 +31,7 @@ public class MyForestTest extends APITest {
 //	}
 	
 	public void testMyForestAddStatistic(){
+		MyForest.getInstance().loadForest();
 		Statistic stat = new Statistic();
 		
 		stat.setConsumption(3.4f);
