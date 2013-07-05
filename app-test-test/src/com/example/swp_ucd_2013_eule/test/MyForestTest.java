@@ -30,7 +30,7 @@ public class MyForestTest extends APITest {
 //		assertEquals(4, forest.getStatistics().size());
 //	}
 	
-	public void testMyForestAddStatistic(){
+	public void testAddStatistic(){
 		MyForest.getInstance().loadForest();
 		Statistic stat = new Statistic();
 		
@@ -45,12 +45,13 @@ public class MyForestTest extends APITest {
 		stat.setConsumption(9.4f);
 		stat.setGainedPoints(23);
 		
-		boolean state = MyForest.getInstance().addStatistic(stat);
+		MyForest.getInstance().addStatistic(stat);
 		
-		assertTrue(state);
+		assertTrue(true);
 	}
 	
-	public void testMyForestAddUserForestItem(){
+	public void testAddUserForestItem(){
+		MyMarket.getInstance().loadMarket();
 		Item item = MyMarket.getInstance().getItems().get(1);
 		UserForestItem userItem = new UserForestItem(item, MyMarket.getInstance().getItems());
 		
@@ -59,9 +60,22 @@ public class MyForestTest extends APITest {
 		
 		// assertNotNull(userItem.getForestItem());
 		
-		boolean state = MyForest.getInstance().addUserItem(userItem);
-		assertTrue(state);
+		MyForest.getInstance().addUserItem(userItem);
+		assertTrue(true);
 		
+	}
+	
+	public void testUpdateUserForestItemPosition() {
+		MyForest.getInstance().loadForest();
+		MyMarket.getInstance().loadMarket();
+		UserForestItem userItem = MyForest.getInstance().getForest().getUserforestitems().get(1);
+		
+		userItem.setTile(3, 0);
+		userItem.setOffset(0.3f, 0.3f);
+		
+		MyForest.getInstance().updateUserForestItemPosition(userItem);
+		
+		assertTrue(true);
 	}
 
 }

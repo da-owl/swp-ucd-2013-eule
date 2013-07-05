@@ -2,10 +2,20 @@ package com.example.swp_ucd_2013_eule.model;
 
 import java.util.List;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
+import com.example.swp_ucd_2013_eule.InitActivity;
+import com.example.swp_ucd_2013_eule.MainActivity;
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.net.APIException;
+
+import de.exlap.ConnectionConfiguration;
+import de.exlap.ExlapClient;
 
 public class MyForest {
 
@@ -116,38 +126,102 @@ public class MyForest {
 
 	}
 
-	public boolean addStatistic(Statistic stat) {
-		try {
-			mStatAPI.save(stat);
-			mStatAPI.addToParent(stat, mForest, "statistics");
-			return true;
-		} catch (APIException e) {
-			Log.e("MyForest", "API failure. Could not add statistic!");
-			return false;
-		}
+	public void addStatistic(Statistic stat) {
+		new AsyncTask<Statistic, Void, Boolean>() {
+
+			@Override
+			protected Boolean doInBackground(Statistic... stats) {
+				try {
+					mStatAPI.save(stats[0]);
+					mStatAPI.addToParent(stats[0], mForest, "statistics");
+					return true;
+				} catch (APIException e) {
+					Log.e("MyForest", "API failure. Could not add statistic!");
+					return false;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean success) {
+				super.onPostExecute(success);
+
+				if (!success) {
+//					CharSequence text = "Failed to save UserForestItem!";
+//					Context context = getApplicationContext();
+//					Toast toast = Toast.makeText(context, text,
+//							Toast.LENGTH_LONG);
+//					toast.show();
+					Log.e("MyForest", "Failed to add Statistic!");
+				}
+				//finish();
+			}
+		}.execute(stat);
 
 	}
 
-	public boolean addUserItem(UserForestItem item) {
-		try {
-			mUserItemAPI.save(item);
-			mUserItemAPI.addToParent(item, mForest, "userforestitems");
-			return true;
-		} catch (APIException e) {
-			Log.e("MyForest", "API failure. Could not add useritem!");
-			return false;
-		}
+	public void addUserItem(UserForestItem item) {
+		new AsyncTask<UserForestItem, Void, Boolean>() {
+
+			@Override
+			protected Boolean doInBackground(UserForestItem... items) {
+				try {
+					mUserItemAPI.save(items[0]);
+					mUserItemAPI.addToParent(items[0], mForest, "userforestitems");
+					return true;
+				} catch (APIException e) {
+					Log.e("MyForest", "API failure. Could not add useritem!");
+					return false;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean success) {
+				super.onPostExecute(success);
+
+				if (!success) {
+//					CharSequence text = "Failed to save UserForestItem!";
+//					Context context = getApplicationContext();
+//					Toast toast = Toast.makeText(context, text,
+//							Toast.LENGTH_LONG);
+//					toast.show();
+					Log.e("MyForest", "Failed to add UserForestItem!");
+				}
+				//finish();
+			}
+		}.execute(item);
 
 	}
 	
-	public boolean updateUserForestItemPosition(UserForestItem item) {
-		try {
-			mUserItemAPI.save(item);
-			return true;
-		} catch (APIException e) {
-			Log.e("MyForest", "API failure. Could not update useritem position!");
-			return false;
-		}
+	public void updateUserForestItemPosition(UserForestItem item) {
+		new AsyncTask<UserForestItem, Void, Boolean>() {
+
+			@Override
+			protected Boolean doInBackground(UserForestItem... items) {
+				try {
+					mUserItemAPI.save(items[0]);
+					return true;
+				} catch (APIException e) {
+					Log.e("MyForest", "API failure. Could not update useritem position!");
+					return false;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean success) {
+				super.onPostExecute(success);
+
+				if (!success) {
+//					CharSequence text = "Failed to save UserForestItem!";
+//					Context context = getApplicationContext();
+//					Toast toast = Toast.makeText(context, text,
+//							Toast.LENGTH_LONG);
+//					toast.show();
+					Log.e("MyForest", "Failed to save UserForestItem!");
+				}
+				//finish();
+			}
+		}.execute(item);
 	}
+
 
 }
