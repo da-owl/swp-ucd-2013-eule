@@ -85,7 +85,7 @@ public class ForestView extends View implements OnItemBoughtListener {
 	private Timer mTimer;
 	private Runnable mDraggedRunnable;
 
-	private OnClickNotHandledListener mOnClickNotHandledListener;
+	private volatile OnClickNotHandledListener mOnClickNotHandledListener;
 
 	public ForestView(Context context) {
 		super(context);

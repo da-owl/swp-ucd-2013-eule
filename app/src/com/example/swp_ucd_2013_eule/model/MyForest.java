@@ -2,31 +2,22 @@ package com.example.swp_ucd_2013_eule.model;
 
 import java.util.List;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.swp_ucd_2013_eule.InitActivity;
-import com.example.swp_ucd_2013_eule.MainActivity;
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.net.APIException;
-
-import de.exlap.ConnectionConfiguration;
-import de.exlap.ExlapClient;
 
 public class MyForest {
 
 	private static MyForest INSTANCE = new MyForest();
 	private Forest mForest;
-	private OnItemBoughtListener mListener;
+	private volatile OnItemBoughtListener mListener;
 
 	private APIModel<Forest, Forest> mForestAPI;
 	private APIModel<UserForestItem, Forest> mUserItemAPI;
 	private APIModel<Statistic, Forest> mStatAPI;
-	
+
 	public final static Integer FOREST_ID = 1;
 
 	private MyForest() {
@@ -34,7 +25,7 @@ public class MyForest {
 		// mForest.setPoints(80);
 		// mForest.setLevelProgessPoints(89);
 		// mForest.setPointProgress(90f);
-		
+
 	}
 
 	public static MyForest getInstance() {
@@ -47,8 +38,6 @@ public class MyForest {
 				UserForestItem.class);
 		mStatAPI = new APIModel<Statistic, Forest>(Statistic.class);
 		try {
-			MyMarket.getInstance().loadMarket();
-			List<Item> items = MyMarket.getInstance().getItems();
 
 			Forest forest = new Forest(SettingsWrapper.getInstance()
 					.getCurrentForestId());
@@ -57,16 +46,12 @@ public class MyForest {
 			List<UserForestItem> userItems = mUserItemAPI.getAllByParent(
 					mForest, new UserForestItem(), "userforestitems");
 
-			// TODO workaround. Should be done by api/serializier???
-			for (UserForestItem ui : userItems) {
-				ui.setMartketItems(items);
-			}
-
 			List<Statistic> stats = mStatAPI.getAllByParent(mForest,
 					new Statistic(), "statistics");
 
 			mForest.setUserforestitems(userItems);
 			mForest.setStatistics(stats);
+			MyMarket.getInstance(); // call is important for initialization!
 		} catch (APIException e) {
 			Log.e("MyUser", "API failure. Failed to load forest!");
 		}
@@ -92,22 +77,23 @@ public class MyForest {
 
 			int points = mForest.getPoints() - item.getPrice();
 			mForest.setPoints(points);
-			UserForestItem uItem = new UserForestItem(item, MyMarket
-					.getInstance().getItems());
+			UserForestItem uItem = new UserForestItem(item);
 			uItem.setTile(-1, -1);
 			uItem.setOffset(0.5f, 0.5f);
 
 			mForest.addItem(uItem);
 
-			mUserItemAPI.save(uItem);
-			mUserItemAPI.addToParent(uItem, mForest, "userforestitems");
 
 			if (mListener != null) {
 				mListener.onNewItemBought(uItem);
 			}
 
+			mUserItemAPI.save(uItem);
+			mUserItemAPI.addToParent(uItem, mForest, "userforestitems");
+
 			return true;
 		} catch (APIException e) {
+			Log.e("MyForest APIExcpetion","");
 			return false;
 		}
 	}
@@ -146,14 +132,14 @@ public class MyForest {
 				super.onPostExecute(success);
 
 				if (!success) {
-//					CharSequence text = "Failed to save UserForestItem!";
-//					Context context = getApplicationContext();
-//					Toast toast = Toast.makeText(context, text,
-//							Toast.LENGTH_LONG);
-//					toast.show();
+					// CharSequence text = "Failed to save UserForestItem!";
+					// Context context = getApplicationContext();
+					// Toast toast = Toast.makeText(context, text,
+					// Toast.LENGTH_LONG);
+					// toast.show();
 					Log.e("MyForest", "Failed to add Statistic!");
 				}
-				//finish();
+				// finish();
 			}
 		}.execute(stat);
 
@@ -166,7 +152,8 @@ public class MyForest {
 			protected Boolean doInBackground(UserForestItem... items) {
 				try {
 					mUserItemAPI.save(items[0]);
-					mUserItemAPI.addToParent(items[0], mForest, "userforestitems");
+					mUserItemAPI.addToParent(items[0], mForest,
+							"userforestitems");
 					return true;
 				} catch (APIException e) {
 					Log.e("MyForest", "API failure. Could not add useritem!");
@@ -179,19 +166,19 @@ public class MyForest {
 				super.onPostExecute(success);
 
 				if (!success) {
-//					CharSequence text = "Failed to save UserForestItem!";
-//					Context context = getApplicationContext();
-//					Toast toast = Toast.makeText(context, text,
-//							Toast.LENGTH_LONG);
-//					toast.show();
+					// CharSequence text = "Failed to save UserForestItem!";
+					// Context context = getApplicationContext();
+					// Toast toast = Toast.makeText(context, text,
+					// Toast.LENGTH_LONG);
+					// toast.show();
 					Log.e("MyForest", "Failed to add UserForestItem!");
 				}
-				//finish();
+				// finish();
 			}
 		}.execute(item);
 
 	}
-	
+
 	public void updateUserForestItemPosition(UserForestItem item) {
 		new AsyncTask<UserForestItem, Void, Boolean>() {
 
@@ -201,7 +188,8 @@ public class MyForest {
 					mUserItemAPI.save(items[0]);
 					return true;
 				} catch (APIException e) {
-					Log.e("MyForest", "API failure. Could not update useritem position!");
+					Log.e("MyForest",
+							"API failure. Could not update useritem position!");
 					return false;
 				}
 			}
@@ -211,17 +199,16 @@ public class MyForest {
 				super.onPostExecute(success);
 
 				if (!success) {
-//					CharSequence text = "Failed to save UserForestItem!";
-//					Context context = getApplicationContext();
-//					Toast toast = Toast.makeText(context, text,
-//							Toast.LENGTH_LONG);
-//					toast.show();
+					// CharSequence text = "Failed to save UserForestItem!";
+					// Context context = getApplicationContext();
+					// Toast toast = Toast.makeText(context, text,
+					// Toast.LENGTH_LONG);
+					// toast.show();
 					Log.e("MyForest", "Failed to save UserForestItem!");
 				}
-				//finish();
+				// finish();
 			}
 		}.execute(item);
 	}
-
 
 }

@@ -7,8 +7,6 @@ import java.util.Map;
 
 import android.util.Log;
 
-import com.example.swp_ucd_2013_eule.model.APIModel;
-import com.example.swp_ucd_2013_eule.model.Item;
 import com.example.swp_ucd_2013_eule.net.APIException;
 
 public class MyMarket {
@@ -18,28 +16,26 @@ public class MyMarket {
 	private APIModel<Item, Item> mItemAPI;
 
 	private List<Item> items = new LinkedList<Item>();
-	
+
 	private Map<Integer, Item> itemMap = new HashMap<Integer, Item>();
 
 	private MyMarket() {
-
-	}
-
-	public void loadMarket() {		
-		mItemAPI = new APIModel<Item, Item>(Item.class);	
+		mItemAPI = new APIModel<Item, Item>(Item.class);
 		try {
-			MyForest.getInstance().loadForest();
-			List<UserForestItem> userItems = MyForest.getInstance().getForest().getUserforestitems();
-			
+			List<UserForestItem> userItems = MyForest.getInstance().getForest()
+					.getUserforestitems();
+
 			items = mItemAPI.getAll(new Item());
-			
-			// TODO: dirty, very dirty and very slow "solution" or better hack			
+
+			// TODO: dirty, very dirty and very slow "solution" or better hack (erik)
+			// is [is only executed once on start up (marc)]
 			for (Item item : items) {
 				itemMap.put(item.getId(), item);
 			}
-			
+
 			for (UserForestItem userForestItem : userItems) {
-				itemMap.get(userForestItem.getItem()).incAmount();
+				int x = userForestItem.getItem();
+				itemMap.get(x).incAmount();
 			}
 		} catch (APIException e) {
 			Log.e("MyMarket",
@@ -51,10 +47,6 @@ public class MyMarket {
 		return INSTANCE;
 	}
 
-	public List<Item> getItems() {
-		return items;
-	}
-	
 	public List<Item> getItems(String category) {
 		List<Item> result = new LinkedList<Item>();
 		for (Item item : items) {
@@ -63,6 +55,10 @@ public class MyMarket {
 			}
 		}
 		return result;
+	}
+
+	public Item getItem(int itemID) {
+		return itemMap.get(itemID);
 	}
 
 }
