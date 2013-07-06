@@ -11,8 +11,8 @@ public class Item extends Model {
 
 	public static String ITEM_TYPE_STANDARD = "standard";
 	public static String ITEM_TYPE_SPECIAL = "special";
-	
-	public static String ITEM_CATEGORY_ANIMALS = "animals";	
+
+	public static String ITEM_CATEGORY_ANIMALS = "animals";
 	public static String ITEM_CATEGORY_PLANTS = "plants";
 	public static String ITEM_CATEGORY_CLOTHES = "clothes";
 
@@ -130,7 +130,7 @@ public class Item extends Model {
 	public boolean isMoveable() {
 		return moveable;
 	}
-	
+
 	public Boolean getMoveable() {
 		return moveable;
 	}

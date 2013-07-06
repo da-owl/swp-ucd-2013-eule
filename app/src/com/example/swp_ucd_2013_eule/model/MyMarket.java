@@ -27,7 +27,8 @@ public class MyMarket {
 
 			items = mItemAPI.getAll(new Item());
 
-			// TODO: dirty, very dirty and very slow "solution" or better hack (erik)
+			// TODO: dirty, very dirty and very slow "solution" or better hack
+			// (erik)
 			// is [is only executed once on start up (marc)]
 			for (Item item : items) {
 				itemMap.put(item.getId(), item);

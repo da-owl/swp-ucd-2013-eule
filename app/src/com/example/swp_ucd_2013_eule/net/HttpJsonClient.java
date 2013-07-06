@@ -69,12 +69,12 @@ public class HttpJsonClient {
 	 * @throws IOException
 	 */
 	public Response put(Context ctx, URI uri, JSONObject json)
-			throws ClientProtocolException, IOException {		
+			throws ClientProtocolException, IOException {
 		HttpPut putReq = new HttpPut();
 		putReq.setEntity(new StringEntity(json.toString()));
 		return request(ctx, putReq, uri);
 	}
-	
+
 	/**
 	 * Send a HTTP-PUT-request to the specified uri containing the json-object
 	 * as HTTP-payload.
@@ -88,8 +88,8 @@ public class HttpJsonClient {
 	 */
 	public Response post(Context ctx, URI uri, JSONObject json)
 			throws ClientProtocolException, IOException {
-//		HttpPut putReq = new HttpPut();
-		
+		// HttpPut putReq = new HttpPut();
+
 		HttpPost postReq = new HttpPost();
 		postReq.setEntity(new StringEntity(json.toString()));
 		return request(ctx, postReq, uri);
@@ -107,41 +107,41 @@ public class HttpJsonClient {
 	 */
 	private Response request(Context ctx, HttpRequestBase req, URI uri)
 			throws ClientProtocolException, IOException {
-		
+
 		// check connection availability
 		ConnectivityManager cm = (ConnectivityManager) ctx
-				.getSystemService(Context.CONNECTIVITY_SERVICE);		
-		
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
 		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 		if (networkInfo == null || !networkInfo.isConnected()) {
 			System.out.println("APIClient - No connection available!");
 			return new Response(); // no connection available
 		}
-		
-		
+
 		req.setURI(uri);
 		if (mHeaders != null) {
 			req.setHeaders(mHeaders);
 		}
-		System.out.println("APIClient - Request " + req.getMethod() + " " + req.getURI());
-		
+		System.out.println("APIClient - Request " + req.getMethod() + " "
+				+ req.getURI());
+
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(
 				RETRY_COUNT, false));
 		HttpResponse res = null;
-		//try {
-			res = client.execute(req);
-		//} catch (Exception e) {
-		//	System.out.println("APIClient - Execute failed: " + e);
-		//}
-		
+		// try {
+		res = client.execute(req);
+		// } catch (Exception e) {
+		// System.out.println("APIClient - Execute failed: " + e);
+		// }
+
 		HttpEntity entity = res.getEntity();
 		String body = entity == null ? null : EntityUtils.toString(entity);
-		System.out.println("APIClient - Response from " + req.getMethod() + " " + req.getURI() + ": " + body);
-		
+		System.out.println("APIClient - Response from " + req.getMethod() + " "
+				+ req.getURI() + ": " + body);
+
 		return new Response(res, body);
 	}
-	
 
 	/**
 	 * Holds the results of a request.

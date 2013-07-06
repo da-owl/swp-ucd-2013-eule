@@ -1,6 +1,5 @@
 package com.example.swp_ucd_2013_eule;
 
-import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
@@ -12,9 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.swp_ucd_2013_eule.model.MyMarket;
 import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.Item;
+import com.example.swp_ucd_2013_eule.model.MyMarket;
 
 public class MarketForestItemAdapter extends BaseAdapter {
 	private Context mContext;
@@ -26,7 +25,8 @@ public class MarketForestItemAdapter extends BaseAdapter {
 
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
-		adapter.mItems = MyMarket.getInstance().getItems(Item.ITEM_CATEGORY_CLOTHES);
+		adapter.mItems = MyMarket.getInstance().getItems(
+				Item.ITEM_CATEGORY_CLOTHES);
 		return adapter;
 	}
 
@@ -35,7 +35,8 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
 
-		adapter.mItems = MyMarket.getInstance().getItems(Item.ITEM_CATEGORY_ANIMALS);
+		adapter.mItems = MyMarket.getInstance().getItems(
+				Item.ITEM_CATEGORY_ANIMALS);
 
 		return adapter;
 	}
@@ -45,7 +46,8 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
 				forest);
 
-		adapter.mItems = MyMarket.getInstance().getItems(Item.ITEM_CATEGORY_PLANTS);
+		adapter.mItems = MyMarket.getInstance().getItems(
+				Item.ITEM_CATEGORY_PLANTS);
 
 		return adapter;
 	}

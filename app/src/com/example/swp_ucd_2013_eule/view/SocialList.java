@@ -11,8 +11,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.swp_ucd_2013_eule.OtherForestActivity;
 import com.example.swp_ucd_2013_eule.ListActivity;
+import com.example.swp_ucd_2013_eule.OtherForestActivity;
 import com.example.swp_ucd_2013_eule.R;
 
 public class SocialList extends TableLayout {
@@ -91,10 +91,10 @@ public class SocialList extends TableLayout {
 			TableRow divider = (TableRow) mInflater.inflate(
 					R.layout.social_row_divider, null);
 			addView(divider);
-			
+
 			TableRow footer = (TableRow) mInflater.inflate(
 					R.layout.social_table_footer, null);
-			
+
 			footer.setOnClickListener(new OnClickListener() {
 
 				@Override

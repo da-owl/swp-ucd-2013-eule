@@ -60,9 +60,8 @@ public class ApiClient {
 
 	private String mServer;
 	private String mAuthToken;
-	
+
 	private Context mCtx;
-	
 
 	/**
 	 * Singleton-constructor
@@ -98,7 +97,7 @@ public class ApiClient {
 	public void setAuthToken(String token) {
 		mAuthToken = token;
 	}
-	
+
 	public void setContext(Context ctx) {
 		mCtx = ctx;
 	}
@@ -112,8 +111,8 @@ public class ApiClient {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public Response get(String apiEndpoint)
-			throws ClientProtocolException, IOException {
+	public Response get(String apiEndpoint) throws ClientProtocolException,
+			IOException {
 		URI uri = getEndpointUri(apiEndpoint);
 		return createHttpJsonClient().get(mCtx, uri);
 	}
@@ -134,7 +133,7 @@ public class ApiClient {
 		URI uri = getEndpointUri(apiEndpoint);
 		return createHttpJsonClient().put(mCtx, uri, json);
 	}
-	
+
 	/**
 	 * Send a HTTP-POST-request to the specified API-endpoint containing the
 	 * json-object as HTTP-payload.
@@ -151,7 +150,6 @@ public class ApiClient {
 		URI uri = getEndpointUri(apiEndpoint);
 		return createHttpJsonClient().post(mCtx, uri, json);
 	}
-	
 
 	private HttpJsonClient createHttpJsonClient() {
 		HttpJsonClient c = new HttpJsonClient();
@@ -167,7 +165,8 @@ public class ApiClient {
 		if (mAuthToken == null || mAuthToken.isEmpty()) {
 			return new Header[] {};
 		}
-		return new Header[] { new BasicHeader("Authorization", "Token "	+ mAuthToken), 
-							new BasicHeader("Content-Type", "application/json")};
+		return new Header[] {
+				new BasicHeader("Authorization", "Token " + mAuthToken),
+				new BasicHeader("Content-Type", "application/json") };
 	}
 }

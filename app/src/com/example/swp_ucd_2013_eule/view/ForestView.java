@@ -551,6 +551,7 @@ public class ForestView extends View implements OnItemBoughtListener {
 					+ item.mItem.getOffsetX() * mTileSize - iw2;
 			item.mY = FOREST_STROKE_WIDTH + (item.mItem.getTileY()) * mTileSize
 					+ item.mItem.getOffsetY() * mTileSize - ih2;
+			MyForest.getInstance().updateUserForestItemPosition(item.mItem);
 		}
 	}
 

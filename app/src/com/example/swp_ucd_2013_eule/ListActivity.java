@@ -17,7 +17,7 @@ public class ListActivity extends Activity {
 		setTitle(getIntent().getStringExtra("listName") + "-Bestenliste");
 
 		mList = (SocialList) findViewById(R.id.social_ListFriends);
-		
+
 		mList.addRow(1, "Marc", 5);
 		mList.addRow(2, "Manu", 4);
 		mList.addRow(3, "Erik", 4);

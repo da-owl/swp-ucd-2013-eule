@@ -65,18 +65,16 @@ public class InitActivity extends Activity {
 						if (success) {
 							Intent intent = new Intent(InitActivity.this,
 									MainActivity.class);
-							startActivity(intent);
+							startActivityForResult(intent, 1);
 						} else {
-							mBar.setVisibility(View.INVISIBLE);
-							mInit.setVisibility(View.INVISIBLE);
 							CharSequence text = "Failed to login!";
 							Context context = getApplicationContext();
 							Toast toast = Toast.makeText(context, text,
 									Toast.LENGTH_LONG);
-							toast.show(); 
+							toast.show();
 						}
-
-						//finish();
+						mBar.setVisibility(View.INVISIBLE);
+						mInit.setVisibility(View.INVISIBLE);
 					}
 				}.execute(null, null);
 			}
@@ -85,7 +83,8 @@ public class InitActivity extends Activity {
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		finish();
 	}
+
 }

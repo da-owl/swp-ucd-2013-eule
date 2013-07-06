@@ -21,11 +21,6 @@ public class MyForest {
 	public final static Integer FOREST_ID = 1;
 
 	private MyForest() {
-		// mForest.setLevel(17);
-		// mForest.setPoints(80);
-		// mForest.setLevelProgessPoints(89);
-		// mForest.setPointProgress(90f);
-
 	}
 
 	public static MyForest getInstance() {
@@ -72,30 +67,27 @@ public class MyForest {
 	}
 
 	public boolean buyItem(Item item) {
-		try {
-			item.incAmount();
 
-			int points = mForest.getPoints() - item.getPrice();
-			mForest.setPoints(points);
-			UserForestItem uItem = new UserForestItem(item);
-			uItem.setTile(-1, -1);
-			uItem.setOffset(0.5f, 0.5f);
+		item.incAmount();
 
-			mForest.addItem(uItem);
+		int points = mForest.getPoints() - item.getPrice();
+		mForest.setPoints(points);
+		UserForestItem uItem = new UserForestItem(item);
+		uItem.setTile(-1, -1);
+		uItem.setOffset(0.5f, 0.5f);
 
+		mForest.addItem(uItem);
 
-			if (mListener != null) {
-				mListener.onNewItemBought(uItem);
-			}
-
-			mUserItemAPI.save(uItem);
-			mUserItemAPI.addToParent(uItem, mForest, "userforestitems");
-
-			return true;
-		} catch (APIException e) {
-			Log.e("MyForest APIExcpetion","");
-			return false;
+		if (mListener != null) {
+			mListener.onNewItemBought(uItem);
 		}
+
+		// mUserItemAPI.save(uItem);
+		// mUserItemAPI.addToParent(uItem, mForest, "userforestitems");
+		addUserItem(uItem);
+
+		return true;
+
 	}
 
 	public void addOnItemBoughtListener(OnItemBoughtListener listener) {

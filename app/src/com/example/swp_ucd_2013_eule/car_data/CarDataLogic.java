@@ -12,6 +12,7 @@ import android.util.Log;
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.model.APIModel;
 import com.example.swp_ucd_2013_eule.model.Forest;
+import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.Statistic;
 
 /**
@@ -74,13 +75,16 @@ public class CarDataLogic extends Handler {
 
 	public void setForest(Forest forest) {
 		mForest = forest;
-		mStatistics = new Statistic(mForest.getId());
+		// mStatistics = new Statistic(mForest.getId());
 		mCurPoints = mForest.getPointProgress() / mPointsScaleFactor;
 	}
 
 	public void setTripStartStop(boolean state) {
 		if (mRecordTrip && !state) {
-			// TODO: save statistics!
+			mStatistics.calculateTripConsumption();
+			MyForest.getInstance().addStatistic(mStatistics);
+		} else if (!mRecordTrip && state) {
+			mStatistics = new Statistic(mForest.getId());
 		}
 		mRecordTrip = state;
 	}

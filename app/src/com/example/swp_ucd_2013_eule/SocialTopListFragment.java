@@ -1,12 +1,12 @@
 package com.example.swp_ucd_2013_eule;
 
-import com.example.swp_ucd_2013_eule.view.SocialList;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.swp_ucd_2013_eule.view.SocialList;
 
 public class SocialTopListFragment extends Fragment {
 
@@ -30,7 +30,7 @@ public class SocialTopListFragment extends Fragment {
 
 		mLocalList = (SocialList) rootView
 				.findViewById(R.id.social_toplist_local);
-		
+
 		mLocalList.addRow(1, "Marc", 5);
 		mLocalList.addRow(2, "Manu", 4);
 		mLocalList.addRow(3, "Erik", 4);

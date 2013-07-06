@@ -139,7 +139,7 @@ public class CarData implements DataListener {
 							subscribe();
 						} else {
 							try {
-								Thread.sleep(5000);
+								Thread.sleep(1000);
 							} catch (InterruptedException e) {
 							}
 						}

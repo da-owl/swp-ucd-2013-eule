@@ -1,8 +1,6 @@
 package com.example.swp_ucd_2013_eule.model;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 
@@ -11,19 +9,18 @@ import java.util.List;
  */
 public class Statistic extends Model {
 
-
 	private Integer gainedPoints = 0;
 
 	private LinkedList<Float> consumptions = new LinkedList<Float>();
 
 	private Integer dataInterval;
 
-	private Float tripConsumption;
-	
-	public Statistic(){
-		
+	private Float tripConsumption = 0f;
+
+	public Statistic() {
+
 	}
-	
+
 	public Statistic(Integer id) {
 		this.id = id;
 	}
@@ -37,26 +34,18 @@ public class Statistic extends Model {
 		dataInterval = interval;
 	}
 
-
 	public void addGainedPoint() {
 		gainedPoints++;
 	}
-	
-	public void removeGainedPoint(){
+
+	public void removeGainedPoint() {
 		gainedPoints--;
 	}
 
 	public Integer getGainedPoints() {
 		return gainedPoints;
 	}
-	
-	public void setConsumptions(String consList) {
-		List<String> cons = Arrays.asList(consList.split(","));
-		for (String string : cons) {
-			consumptions.add(Float.valueOf(string));
-		}
-	}
-	
+
 	public String getConsumptions() {
 		String ret = "";
 		for (Float value : this.consumptions) {
@@ -67,7 +56,7 @@ public class Statistic extends Model {
 
 	public void setConsumption(Float consumption) {
 		consumptions.add(consumption);
-	}	
+	}
 
 	public Float getTripConsumption() {
 		return tripConsumption;
@@ -76,12 +65,6 @@ public class Statistic extends Model {
 	public void setTripConsumption(Float tripConsumption) {
 		this.tripConsumption = tripConsumption;
 	}
-	
-	public void setTripConsumption(Double tripConsumption) {
-		this.tripConsumption = new Float(tripConsumption.floatValue());
-	}
-	
-	
 
 	public Integer getDataInterval() {
 		return dataInterval;
@@ -91,13 +74,14 @@ public class Statistic extends Model {
 		this.gainedPoints = gainedPoints;
 	}
 
-	public Float calculateTripConsumption() {
+	public void calculateTripConsumption() {
 		int values = consumptions.size();
-		for (Float f : consumptions) {
-			tripConsumption += f;
+		if (values > 0) {
+			for (Float f : consumptions) {
+				tripConsumption += f;
+			}
+			tripConsumption /= values;
 		}
-		tripConsumption /= values;
-		return tripConsumption;
 	}
 
 	@Override
@@ -106,7 +90,5 @@ public class Statistic extends Model {
 				+ consumptions + ", dataInterval=" + dataInterval
 				+ ", tripConsumption=" + tripConsumption + "]";
 	}
-	
-	
 
 }
