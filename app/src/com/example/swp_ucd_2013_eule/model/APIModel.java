@@ -25,7 +25,7 @@ public class APIModel<T extends Model, P extends Model> {
 	 */
 	public T get(T model) throws APIException {
 		try {
-			Log.e("APIModel get(model) id:", model.getId().toString());
+			Log.d("APIModel get(model) id:", model.getId().toString());
 			Serializer<T> serializer = new Serializer<T>();
 			Response response = api
 					.get(this.buildEndpoint(model, model.getId()));
