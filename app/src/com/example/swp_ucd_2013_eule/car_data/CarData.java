@@ -148,18 +148,18 @@ public class CarData implements DataListener {
 						Log.i("CarData.ConnectionWatcher",
 								"disconnected and no connection needed");
 						try {
-							Thread.sleep(10000);
+							Thread.sleep(1000);
 						} catch (InterruptedException e) {
 						}
 					} else {
 						Log.i("CarData.ConnectionWatcher", "connected");
 						try {
-							Thread.sleep(5000);
+							Thread.sleep(1000);
 						} catch (InterruptedException e) {
 						}
 					}
 
-				}
+				}// while end
 			}
 		});
 		// start the thread
@@ -205,7 +205,7 @@ public class CarData implements DataListener {
 	 */
 	public void endListener() throws IllegalArgumentException, IOException,
 			ExlapException {
-		Log.d("CarData", "terminating listener");
+		Log.d("CarData", "ending listener");
 		mRun = false;
 		try {
 			mConnectionWatcher.join();
@@ -213,6 +213,7 @@ public class CarData implements DataListener {
 		} catch (InterruptedException e) {
 			Log.w("CarData", "coudln't end ConectionWatcher: " + e.getMessage());
 		}
+		Log.d("CarData", "ConnectionWatcher terminated");
 		try {
 			unsubscribe();
 		} catch (Exception e) {
@@ -220,7 +221,9 @@ public class CarData implements DataListener {
 					"failed to unsubscribe ConnectionWatcher: "
 							+ e.getMessage());
 		}
+		Log.d("CarData", "listener unsubscribed");
 		mEC.shutdown();
+		Log.d("CarData", "listener shutdown");
 		mConnectionWatcher = null;
 		Log.d("CarData", "listener terminated");
 	}
