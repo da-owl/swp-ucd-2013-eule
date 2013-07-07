@@ -100,11 +100,11 @@ public class Item extends Model {
 	}
 
 	public boolean isStandardItem() {
-		return type == ITEM_TYPE_STANDARD;
+		return type.equals(ITEM_TYPE_STANDARD);
 	}
 
 	public boolean isSpecialItem() {
-		return type == ITEM_TYPE_SPECIAL;
+		return type.equals(ITEM_TYPE_SPECIAL);
 	}
 
 	public Integer getAmount() {

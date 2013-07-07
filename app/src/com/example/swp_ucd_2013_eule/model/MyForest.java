@@ -59,8 +59,8 @@ public class MyForest {
 	}
 
 	public boolean isObtainable(Item item) {
-		if (item.getPrice() <= mForest.getPoints()
-				& item.getLevel() <= mForest.getLevel()) {
+		if (item.isStandardItem() && item.getPrice() <= mForest.getPoints()
+				&& item.getLevel() <= mForest.getLevel()) {
 			return true;
 		}
 		return false;
@@ -94,7 +94,7 @@ public class MyForest {
 		mListener = listener;
 	}
 
-	public void saveForest() {				
+	public void saveForest() {
 		new AsyncTask<Void, Void, Boolean>() {
 
 			@Override
