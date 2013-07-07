@@ -85,6 +85,7 @@ public class CarDataLogic extends Handler {
 			MyForest.getInstance().addStatistic(mStatistics);
 		} else if (!mRecordTrip && state) {
 			mStatistics = new Statistic(mForest.getId());
+			mStatistics.setDataInterval(mInterval);
 		}
 		mRecordTrip = state;
 	}
