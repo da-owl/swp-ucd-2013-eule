@@ -94,13 +94,35 @@ public class MyForest {
 		mListener = listener;
 	}
 
-	public boolean saveForest() {
-		try {
-			mForestAPI.save(mForest);
-			return true;
-		} catch (APIException e) {
-			return false;
-		}
+	public void saveForest() {				
+		new AsyncTask<Void, Void, Boolean>() {
+
+			@Override
+			protected Boolean doInBackground(Void... voids) {
+				try {
+					Log.d("MyForest", "Trying to save THE forest...");
+					mForestAPI.save(mForest);
+					return true;
+				} catch (APIException e) {
+					return false;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean success) {
+				super.onPostExecute(success);
+
+				if (!success) {
+					// CharSequence text = "Failed to save UserForestItem!";
+					// Context context = getApplicationContext();
+					// Toast toast = Toast.makeText(context, text,
+					// Toast.LENGTH_LONG);
+					// toast.show();
+					Log.e("MyForest", "Failed to save THE Forest!");
+				}
+				// finish();
+			}
+		}.execute(null, null);
 
 	}
 
