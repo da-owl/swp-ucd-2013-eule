@@ -40,10 +40,10 @@
     <string name="txt_setting_pair">Pairing</string>
     <string name="txt_setting_pair_summary">Pairing verhalten</string>
     <string name="txt_setting_enable_dev">Sie sind Entwickler</string>
-    <string name="txt_setting_enable_dev_summary">Änderungen erfordern Neustart</string>
-    <string name="txt_setting_ipadress">IP-Adresse</string>
-    <string name="txt_setting_ipadress_summary">IP-Adresse des Clients</string>
-    <string name="txt_setting_port">Port</string>
+    <string name="txt_setting_enable_dev_summary">Sie wissen was Sie tun...</string>
+    <string name="txt_setting_ipadress">Exlap-Proxy IP-Adresse</string>
+    <string name="txt_setting_ipadress_summary">IP-Adresse des Exlap-Proxy</string>
+    <string name="txt_setting_port">Exlap-Proxy Port</string>
     <string name="txt_setting_port_summary">Standard: 28500</string>
     <string name="txt_setting_send_report">Absturzberichte senden</string>
     <string name="txt_setting_send_report_summary">Hilft den Entwicklern</string>
