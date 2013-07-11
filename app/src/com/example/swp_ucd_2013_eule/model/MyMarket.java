@@ -37,7 +37,8 @@ public class MyMarket {
 			for (UserForestItem userForestItem : userItems) {
 				int x = userForestItem.getItem();
 				itemMap.get(x).incAmount();
-				Log.d("MyMarket", "Incremented amount of item with ID " + x + ". New amount is " + itemMap.get(x).getAmount());
+				Log.d("MyMarket", "Incremented amount of item with ID " + x
+						+ ". New amount is " + itemMap.get(x).getAmount());
 			}
 		} catch (APIException e) {
 			Log.e("MyMarket",
@@ -52,7 +53,7 @@ public class MyMarket {
 	public List<Item> getItems(String category) {
 		List<Item> result = new LinkedList<Item>();
 		for (Item item : items) {
-			if (item.getCategory().equals(category)) {
+			if (item.getCategory().equals(category) && item.isStandardItem()) {
 				result.add(item);
 			}
 		}
