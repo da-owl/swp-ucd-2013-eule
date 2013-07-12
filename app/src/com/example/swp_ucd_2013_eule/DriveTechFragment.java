@@ -88,7 +88,7 @@ public class DriveTechFragment extends Fragment {
 						Log.w("DriveTechFragment", "Gear: " + e.getMessage());
 					}
 					if (oldGear < mGear) {
-						if (1600 < mRPM && mRPM < 2000) {
+						if (1400 < mRPM && mRPM < 2000) {
 							mGearIndicator.gearShift(true);
 						} else {
 							mGearIndicator.gearShift(false);

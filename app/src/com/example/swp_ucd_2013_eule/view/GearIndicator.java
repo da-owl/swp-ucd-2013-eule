@@ -53,7 +53,7 @@ public class GearIndicator extends View {
 
 	private int mGear = 0;
 	private float mRPM = 0;
-	private float mReferenceValue1 = 1600;
+	private float mReferenceValue1 = 1400;
 	private float mReferenceValue2 = 2000;
 	private float mRPMMax = 6700;
 

@@ -148,7 +148,7 @@ public class CarDataLogic extends Handler {
 					Log.w("CarDataLogic", "Gear: " + e.getMessage());
 				}
 				if (oldGear < mCurGear) {
-					if (1600 < mCurrentRPM && mCurrentRPM < 2000) {
+					if (1400 < mCurrentRPM && mCurrentRPM < 2000) {
 						mGoodShifts++;
 					} else {
 						mGoodShifts--;
