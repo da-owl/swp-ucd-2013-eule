@@ -23,6 +23,13 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+/**
+ * The GearIndicator shows the current gear, current rpm and the optimal
+ * gear-shift-rpm range. Moreover it signals a good or bad gear shift.
+ * 
+ * @author MKay
+ * 
+ */
 public class GearIndicator extends View {
 	private float mGearRoundedCorner;
 
@@ -76,6 +83,12 @@ public class GearIndicator extends View {
 				value, getResources().getDisplayMetrics());
 	}
 
+	/**
+	 * Converts dp to px.
+	 * 
+	 * @param value
+	 * @return the value in px
+	 */
 	private void initGearIndicator() {
 		mBorderPaint = new Paint();
 		mBorderPaint.setAntiAlias(true);
@@ -121,6 +134,10 @@ public class GearIndicator extends View {
 		mGearShiftPaint.setAlpha(0);
 	}
 
+	/**
+	 * Recalculate the dimensions and positions for the circles and borders to
+	 * draw.
+	 */
 	private void updateDimensions() {
 		float contentSize = mSize - 4 * mBorderPaint.getStrokeWidth();
 		float unit = contentSize / 11;
@@ -206,12 +223,24 @@ public class GearIndicator extends View {
 		updateColors(glossyHeight, glossyTop);
 	}
 
+	/**
+	 * Converts a rpm-value to an angle,
+	 * 
+	 * @param rpm
+	 * @return
+	 */
 	private double getAngleByRPM(float rpm) {
 		rpm = rpm / 1000;
 		double angle = (Math.log10(rpm + 1) / mRPMMaxLog) * 360;
 		return angle;
 	}
 
+	/**
+	 * Update the color-positions for the gradients.
+	 * 
+	 * @param glossyHeight
+	 * @param glossyTop
+	 */
 	private void updateColors(float glossyHeight, float glossyTop) {
 		Shader bgShader = new RadialGradient(mSize / 2, mSize, mSize / 3 * 2,
 				0xFF8e8e8e, 0xFFd6d6d6, TileMode.CLAMP);
@@ -275,6 +304,9 @@ public class GearIndicator extends View {
 		invalidate();
 	}
 
+	/**
+	 * The animation used to indicate a good/bad gear shift.
+	 */
 	private Runnable mGearShiftAnimator = new Runnable() {
 
 		@Override
@@ -292,6 +324,12 @@ public class GearIndicator extends View {
 
 	};
 
+	/**
+	 * Start the gear-shift animation.
+	 * 
+	 * @param good
+	 *            True, if gear-shift was good, otherwise false.
+	 */
 	public void gearShift(boolean good) {
 		if (good) {
 			mGearShiftPaint.setColor(0x84c719);

@@ -12,6 +12,10 @@ import android.widget.ToggleButton;
 
 import com.example.swp_ucd_2013_eule.view.Chart;
 
+/**
+ * ChartFragment is used to show charts for fuel consumption and drop balance.
+ * 
+ */
 public class ChartFragment extends Fragment {
 
 	private Chart mChart;

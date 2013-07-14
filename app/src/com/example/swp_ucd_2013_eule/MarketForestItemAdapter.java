@@ -15,11 +15,23 @@ import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.Item;
 import com.example.swp_ucd_2013_eule.model.MyMarket;
 
+/**
+ * This is the Adapter-class used to store items for various
+ * MarketCategoryFragments.
+ * 
+ */
 public class MarketForestItemAdapter extends BaseAdapter {
 	private Context mContext;
 	private Forest mForest;
 	private List<Item> mItems;
 
+	/**
+	 * Returns the example-Adapter for the MarketClothesFragment.
+	 * 
+	 * @param ctx
+	 * @param forest
+	 * @return
+	 */
 	public static MarketForestItemAdapter getExampleClothesAdapter(Context ctx,
 			Forest forest) {
 
@@ -30,6 +42,13 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		return adapter;
 	}
 
+	/**
+	 * Returns the example-Adapter for the MarketAnimalsFragment.
+	 * 
+	 * @param ctx
+	 * @param forest
+	 * @return
+	 */
 	public static MarketForestItemAdapter getExampleAnimalsAdapter(Context ctx,
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
@@ -41,6 +60,13 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		return adapter;
 	}
 
+	/**
+	 * Returns the example-Adapter for the MarketPlantsFragment.
+	 * 
+	 * @param ctx
+	 * @param forest
+	 * @return
+	 */
 	public static MarketForestItemAdapter getExamplePlantsAdapter(Context ctx,
 			Forest forest) {
 		MarketForestItemAdapter adapter = new MarketForestItemAdapter(ctx,
@@ -52,6 +78,12 @@ public class MarketForestItemAdapter extends BaseAdapter {
 		return adapter;
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param ctx
+	 * @param forest
+	 */
 	public MarketForestItemAdapter(Context ctx, Forest forest) {
 		mContext = ctx;
 		mForest = forest;

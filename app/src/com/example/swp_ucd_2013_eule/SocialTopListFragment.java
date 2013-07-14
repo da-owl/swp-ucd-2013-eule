@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swp_ucd_2013_eule.view.SocialList;
+
 /**
- * SocialTopListFragment initializes a view containing two SocialLists.
- * The first one contains the five best player in the world and the second one
- * the five best inside a local range. 
- *
+ * SocialTopListFragment initializes a view containing two SocialLists. The
+ * first one contains the five best player in the world and the second one the
+ * five best inside the user's local area.
+ * 
  */
 public class SocialTopListFragment extends Fragment {
 

@@ -14,6 +14,10 @@ import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.view.View;
 
+/**
+ * Shows a chart.
+ *
+ */
 public class Chart extends View {
 
 	private static final int ROUNDED_CORNER = 20;

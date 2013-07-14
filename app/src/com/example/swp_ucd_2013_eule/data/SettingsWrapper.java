@@ -1,6 +1,8 @@
 package com.example.swp_ucd_2013_eule.data;
 
 /**
+ * The SettingsWrapper encapsulate app-specific settings.
+ * 
  * TODO: Load Settings from DB.
  * 
  * @author Erik, MKay

@@ -16,6 +16,13 @@ import android.view.View;
 
 import com.example.swp_ucd_2013_eule.R;
 
+/**
+ * The BenchmarkBar shows a (horizontal or vertical) ProgressBar with an
+ * optional Reference value.
+ * 
+ * @author MKay
+ * 
+ */
 public class BenchmarkBar extends View {
 	private boolean mVertical = true;
 	private int mWeight = 40;
@@ -62,6 +69,12 @@ public class BenchmarkBar extends View {
 		initBenchmarkBar();
 	}
 
+	/**
+	 * Converts dp to px.
+	 * 
+	 * @param value
+	 * @return the value in px
+	 */
 	private int dpToPx(int value) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 				value, getResources().getDisplayMetrics());
@@ -85,6 +98,9 @@ public class BenchmarkBar extends View {
 		invalidate();
 	}
 
+	/**
+	 * Initializes the BenchmarkBar. That is creating paints.
+	 */
 	private void initBenchmarkBar() {
 		mBorderPaint = new Paint();
 		mBorderPaint.setAntiAlias(true);
@@ -108,6 +124,9 @@ public class BenchmarkBar extends View {
 		updateColors();
 	}
 
+	/**
+	 * Update the color-positions of the gradients.
+	 */
 	private void updateColors() {
 		float gsx1 = 0, gsy1 = 0, gsx2 = 0, gsy2 = 0;
 		float bsx1 = 0, bsy1 = 0, bsx2 = 0, bsy2 = 0;
@@ -135,6 +154,10 @@ public class BenchmarkBar extends View {
 		mBadPaint.setShader(badShader);
 	}
 
+	/**
+	 * Recalculate the dimensions and positions for the boxes and borders to
+	 * draw.
+	 */
 	private void updateDimensions() {
 		Rect barDimensions = getBarDimensions();
 		float strokeWidth = mBorderPaint.getStrokeWidth(), hStrokeWidth = strokeWidth / 2;
@@ -269,6 +292,11 @@ public class BenchmarkBar extends View {
 
 	}
 
+	/**
+	 * Returns the calculated dimensions for the BenchmarkBar.
+	 * 
+	 * @return
+	 */
 	private Rect getBarDimensions() {
 		int barWidth = Math.min(mWeight, mVertical ? mWidth : mHeight);
 
@@ -298,6 +326,14 @@ public class BenchmarkBar extends View {
 		setMeasuredDimension(mWidth, mHeight);
 	}
 
+	/**
+	 * Measure the width.
+	 * 
+	 * Called inside onMeasure.
+	 * 
+	 * @param measureSpec
+	 * @return
+	 */
 	private int measureWidth(int measureSpec) {
 		int result = 0;
 		int specMode = MeasureSpec.getMode(measureSpec);
@@ -323,6 +359,14 @@ public class BenchmarkBar extends View {
 		return result;
 	}
 
+	/**
+	 * Measure the height.
+	 * 
+	 * Called inside onMeasure.
+	 * 
+	 * @param measureSpec
+	 * @return
+	 */
 	private int measureHeight(int measureSpec) {
 		int result = 0;
 		int specMode = MeasureSpec.getMode(measureSpec);

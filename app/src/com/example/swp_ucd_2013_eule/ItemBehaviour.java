@@ -16,6 +16,20 @@ import com.example.swp_ucd_2013_eule.view.ForestView.UserForestItemListener;
 import com.example.swp_ucd_2013_eule.view.OnClickNotHandledListener;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
+/**
+ * The ItemBehaviour class encapsulates item-specific behaviour that is used in
+ * multiple views like OtherForestActivity, ForestFragment and
+ * MarketCategoryFragment.
+ * 
+ * For the main part it provides the functionality to open/close a
+ * SlideUpContainer which shows the item details, a buy button and a box-close
+ * button.
+ * 
+ * A Forest(View) can be attached to automatically open that SlideUpContainer if
+ * an item in the ForestView is clicked. Moreover TextViews for drops and forest
+ * size can be attached to adjust it's text values after an item was bought.
+ * 
+ */
 public class ItemBehaviour implements OnClickNotHandledListener {
 
 	private Forest mForest;
@@ -27,6 +41,11 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 	private SlideUpContainer mSlideUpContainer;
 	private Item mCurItem;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param rootView
+	 */
 	public ItemBehaviour(View rootView) {
 		mRootView = rootView;
 
@@ -37,17 +56,39 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 		createBuyButton();
 	}
 
+	/**
+	 * Attach a Forest-object.
+	 * 
+	 * Its drops/forest size values are used to show in TextViews which may be
+	 * attached using attachPointTextViews. Moreover the Forest-object is used
+	 * by attachForestView to show that forest.
+	 * 
+	 * @param forest
+	 */
 	public void attachForest(Forest forest) {
 		mForest = forest;
 		updatePoints();
 	}
 
+	/**
+	 * Set the TextViews which are used to show the drops/forest size values of
+	 * the attached Forest-object.
+	 * 
+	 * @param txtDrops
+	 * @param txtForestSize
+	 */
 	public void attachPointTextViews(TextView txtDrops, TextView txtForestSize) {
 		mTxtDrops = txtDrops;
 		mTxtForestSize = txtForestSize;
 		updatePoints();
 	}
 
+	/**
+	 * Attach the ForestView R.id.forest of the root view so that it shows the
+	 * attached Forest-object. Moreover setup onClick-Listeners for the Items
+	 * inside the forest so that the SlideUpContainer will open if an item is
+	 * clicked.
+	 */
 	public void attachForestView() {
 		mForestView = (ForestView) mRootView.findViewById(R.id.forest);
 		mForestView.setOnClickNotHandledListener(this);
@@ -60,6 +101,9 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 		mForestView.setForest(mForest);
 	}
 
+	/**
+	 * Setup the behaviour of the buy-button.
+	 */
 	private void createBuyButton() {
 		Button btnBuy = (Button) mRootView.findViewById(R.id.btnBuyItem);
 		btnBuy.setOnClickListener(new OnClickListener() {
@@ -76,6 +120,9 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 		});
 	}
 
+	/**
+	 * Setup the behaviour of the close-button.
+	 */
 	private void createCloseButton() {
 		Button btnClose = (Button) mRootView.findViewById(R.id.btnSlideUpClose);
 
@@ -87,6 +134,10 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 		});
 	}
 
+	/**
+	 * Update the TextViews inside the SlideUpContainer to show the current
+	 * item's values.
+	 */
 	private void updateSlideUpItemView() {
 		// set label
 		TextView name = (TextView) mSlideUpContainer
@@ -124,6 +175,10 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 		}
 	}
 
+	/**
+	 * Update the attached TextViews (if available) to show the current forest's
+	 * drops and forest size.
+	 */
 	private void updatePoints() {
 		if (mTxtDrops != null) {
 			mTxtDrops.setText(mForest.getPoints().toString());
@@ -134,12 +189,22 @@ public class ItemBehaviour implements OnClickNotHandledListener {
 		}
 	}
 
+	/**
+	 * Setup the SlideUpContainer to show the specified item-data and the open
+	 * the container.
+	 * 
+	 * @param item
+	 */
 	public void showItem(Item item) {
 		mCurItem = item;
 		updateSlideUpItemView();
 		mSlideUpContainer.slideOpen();
 	}
 
+	/**
+	 * If a click was not handled by the ForestView, then this method is called.
+	 * This method closes the SlideUpContainer.
+	 */
 	@Override
 	public void clickNotHandled() {
 		mSlideUpContainer.slideClose();

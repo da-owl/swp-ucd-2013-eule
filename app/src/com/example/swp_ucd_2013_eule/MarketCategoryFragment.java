@@ -15,12 +15,24 @@ import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.Item;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 
+/**
+ * MarketCategoryFragment is the base class for fragments showing items of one
+ * category inside the market.
+ * 
+ */
 public abstract class MarketCategoryFragment extends Fragment {
 	protected Forest mForest;
 
 	private MarketForestItemAdapter mAdapter;
 	private ItemBehaviour mItemBehav;
 
+	/**
+	 * Returns the MarketForestItemAdapter that contains the items which will be
+	 * shown in this fragment.
+	 * 
+	 * @param ctx
+	 * @return
+	 */
 	public abstract MarketForestItemAdapter getMarketForestItemAdapter(
 			Context ctx);
 

@@ -8,10 +8,12 @@ import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.view.OnClickNotHandledListener;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
+
 /**
- * OtherForestActivity is started when a user clicked on a name in the top/friend list.
- * It starts a new full screen activity containing the view of the other users forest.
- *
+ * OtherForestActivity shows the forest of another user (for example a friend).
+ * 
+ * It is started when a user clicked on a name in the top/friend list.
+ * 
  */
 public class OtherForestActivity extends Activity implements
 		OnClickNotHandledListener {

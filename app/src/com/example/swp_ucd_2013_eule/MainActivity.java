@@ -92,8 +92,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * provides the CarData class all information necessary to connect to the
-	 * ExlapProxy and to subscribe the car data we need.
+	 * Provides the CarData class with all information necessary to connect to
+	 * the ExlapProxy and to subscribe the car data we need.
 	 * 
 	 * @param settings
 	 *            contains the IP address and port of the ExlapProxy
@@ -113,8 +113,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * signals the CarData class to stop the thread which keeps the connection
-	 * alive and to unsubscribe the from Proxy.
+	 * Signals the CarData class to stop the thread which keeps the connection
+	 * alive and to unsubscribe from Proxy.
 	 */
 	private void stopEXLAPListener() {
 		try {
@@ -129,7 +129,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * adds an PagerAdapter to Map in which it is mapped to its id.
+	 * Add a PagerAdapter to the internal map (indexed by its adapter id).
 	 * 
 	 * @param adapter
 	 *            to be added to the map
@@ -139,8 +139,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * is called if the user want to change to another Fragment. changes the
-	 * view and refreshes the ActionBar to highlight the actual selected page.
+	 * Is called if the user wants to change to another Fragment. It changes the
+	 * view and updates the ActionBar to highlight the current selected page.
 	 * 
 	 * @param Adapter
 	 *            is the new view to be shown to the user

@@ -23,7 +23,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * 
+ * This class can be used to make HTTP-requests containing JSON-objects as
+ * payload.
  * 
  * @author MKay
  * 

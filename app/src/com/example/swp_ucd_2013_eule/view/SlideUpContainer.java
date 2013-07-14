@@ -8,6 +8,14 @@ import android.widget.RelativeLayout;
 
 import com.example.swp_ucd_2013_eule.R;
 
+/**
+ * A SlideUpContainer is a box that is initially hidden at the parent's view
+ * bottom. It can slide up to show some content to the user and slide down to
+ * disappear again.
+ * 
+ * @author MKay
+ * 
+ */
 public class SlideUpContainer extends RelativeLayout {
 	private Animation mShowAnimation;
 	private Animation mCloseAnimation;
@@ -22,6 +30,9 @@ public class SlideUpContainer extends RelativeLayout {
 		init();
 	}
 
+	/**
+	 * Initializes the view.
+	 */
 	private void init() {
 		setVisibility(INVISIBLE);
 		mShowAnimation = AnimationUtils.loadAnimation(getContext(),
@@ -38,6 +49,9 @@ public class SlideUpContainer extends RelativeLayout {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 
+	/**
+	 * Show/Open the box.
+	 */
 	public void slideOpen() {
 		if (getVisibility() != android.view.View.VISIBLE) {
 			startAnimation(mShowAnimation);
@@ -45,6 +59,9 @@ public class SlideUpContainer extends RelativeLayout {
 		}
 	}
 
+	/**
+	 * Hide/Close the box.
+	 */
 	public void slideClose() {
 		if (getVisibility() == android.view.View.VISIBLE) {
 			startAnimation(mCloseAnimation);

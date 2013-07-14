@@ -37,6 +37,10 @@ import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.model.OnItemBoughtListener;
 import com.example.swp_ucd_2013_eule.model.UserForestItem;
 
+/**
+ * The ForestView shows a forest (using tiles) incl. items.
+ * 
+ */
 public class ForestView extends View implements OnItemBoughtListener {
 
 	// private static final Integer FOREST_ID = 1;
@@ -129,11 +133,20 @@ public class ForestView extends View implements OnItemBoughtListener {
 
 	}
 
+	/**
+	 * Converts dp to px.
+	 * 
+	 * @param value
+	 * @return the value in px
+	 */
 	private int dpToPx(int value) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 				value, getResources().getDisplayMetrics());
 	}
 
+	/**
+	 * Initialize the view, for example paints.
+	 */
 	private void initForest() {
 		mHandler = new Handler(new Handler.Callback() {
 			@Override
@@ -217,6 +230,14 @@ public class ForestView extends View implements OnItemBoughtListener {
 		}
 	}
 
+	/**
+	 * Used by moveXYZ() to draw a distorted line (for a better forest-look)
+	 * inside the forest path.
+	 * 
+	 * @param distorts
+	 * @param targetX
+	 * @param targetY
+	 */
 	private void applyDistort(float[][] distorts, float targetX, float targetY) {
 		float oldX = mCurX, oldY = mCurY;
 
@@ -231,6 +252,9 @@ public class ForestView extends View implements OnItemBoughtListener {
 		mForestPath.lineTo(mCurX, mCurY);
 	}
 
+	/**
+	 * Move one tile to the right inside the forest path.
+	 */
 	private void moveRight() {
 		float targetX = mCurX + mTileSize, targetY = mCurY;
 		float[][] distorts = mDistortTop[mCurDistortTop];
@@ -238,6 +262,9 @@ public class ForestView extends View implements OnItemBoughtListener {
 		mCurDistortTop = ++mCurDistortTop % mDistortTop.length;
 	}
 
+	/**
+	 * Move one tile to the left inside the forest path.
+	 */
 	private void moveLeft() {
 		float targetX = mCurX - mTileSize, targetY = mCurY;
 		float[][] distorts = mDistortBottom[mCurDistortBottom];
@@ -246,6 +273,9 @@ public class ForestView extends View implements OnItemBoughtListener {
 				: --mCurDistortBottom;
 	}
 
+	/**
+	 * Move one tile down inside the forest path.
+	 */
 	private void moveRightDown() {
 		float targetX = mCurX, targetY = mCurY + mTileSize;
 		float[][] distorts = mDistortRight[mCurDistortRight];
@@ -253,6 +283,9 @@ public class ForestView extends View implements OnItemBoughtListener {
 		mCurDistortRight = ++mCurDistortRight % mDistortRight.length;
 	}
 
+	/**
+	 * Move one tile up inside the forest path.
+	 */
 	private void moveLeftUp() {
 		float targetX = mCurX, targetY = mCurY - mTileSize;
 		float[][] distorts = mDistortLeft[mCurDistortLeft];
@@ -261,6 +294,11 @@ public class ForestView extends View implements OnItemBoughtListener {
 				: --mCurDistortLeft;
 	}
 
+	/**
+	 * Update the forest dimensions and rebuild the forest-path.
+	 * 
+	 * This method is called by onMeasure.
+	 */
 	private void updateForestSize() {
 		mForestPath = new Path();
 		mCurDistortTop = 0;
@@ -336,6 +374,9 @@ public class ForestView extends View implements OnItemBoughtListener {
 		mForestPath.close();
 	}
 
+	/**
+	 * Place the forest's items in the appropriate tile inside the forest.
+	 */
 	public void placeItemsInForest() {
 		if (!mInitComplet) {
 			List<UserForestItem> items = MyForest.getInstance().getForest()
@@ -400,6 +441,17 @@ public class ForestView extends View implements OnItemBoughtListener {
 
 	private long mLastTouchDown;
 
+	/**
+	 * Prepare for item-dragging.
+	 * 
+	 * This means that the tapped (and held) item will be marked after 500ms if
+	 * cancelDrag() is not called within that time.
+	 * 
+	 * @param x
+	 *            The tapped x-coordinate.
+	 * @param y
+	 *            The tapped y-coordinate.
+	 */
 	private void prepareDrag(final float x, final float y) {
 		// will be cancelled if touchUp was too early
 		mDraggedRunnable = new Runnable() {
@@ -420,6 +472,9 @@ public class ForestView extends View implements OnItemBoughtListener {
 		mHandler.postDelayed(mDraggedRunnable, 500);
 	}
 
+	/**
+	 * Cancel any drag-operation if available (see prepareDrag).
+	 */
 	private void cancelDrag() {
 		if (mDraggedRunnable != null) {
 			mHandler.removeCallbacks(mDraggedRunnable);
@@ -494,6 +549,14 @@ public class ForestView extends View implements OnItemBoughtListener {
 		return handled;
 	}
 
+	/**
+	 * Returns true if the point specified by the x- and y-coordinate lies
+	 * inside the forest.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private boolean isInForest(float x, float y) {
 		if (x < 0 || y < 0) {
 			return false;
@@ -515,6 +578,10 @@ public class ForestView extends View implements OnItemBoughtListener {
 		return mForest.getLevel() >= level;
 	}
 
+	/**
+	 * Calculate the border for the item-mark which indicates that this item is
+	 * ready to be positioned.
+	 */
 	private void calculateBorder() {
 		if (mDraggedItem != null) {
 			mDraggedPath = new Path();
@@ -536,6 +603,14 @@ public class ForestView extends View implements OnItemBoughtListener {
 
 	}
 
+	/**
+	 * Position the item inside the tile at the x/y-coordinates if that tile
+	 * contains no other item.
+	 * 
+	 * @param item
+	 * @param x
+	 * @param y
+	 */
 	private void determineTile(ForestItemWrapper item, float x, float y) {
 		if (!isItemInTile(x, y)) {
 			int tileX = 0, tileY = 0;
@@ -555,6 +630,13 @@ public class ForestView extends View implements OnItemBoughtListener {
 		}
 	}
 
+	/**
+	 * Resolve a click on x/y-coordinates to a item click.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private boolean resolveItemClick(float x, float y) {
 		for (ForestItemWrapper item : mForestItems) {
 			if (isItemClicked(item, x, y)) {
@@ -567,23 +649,39 @@ public class ForestView extends View implements OnItemBoughtListener {
 		return false;
 	}
 
+	/**
+	 * Returns true if the tile at the x/y-coordinates contains an item.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private boolean isItemInTile(float x, float y) {
-		for (ForestItemWrapper item : mForestItems) {
-			if (isItemClicked(item, x, y)) {
-				return true;
-			}
-		}
-		return false;
+		ForestItemWrapper item = resolveItemAt(x, y);
+		return item != null;
 	}
 
+	/**
+	 * Check whether an item was dragged. If so mDraggedItem will contain the
+	 * dragged item.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	private void resolveItemToDrag(float x, float y) {
-		for (ForestItemWrapper item : mForestItems) {
-			if (isItemClicked(item, x, y)) {
-				mDraggedItem = item;
-			}
+		ForestItemWrapper item = resolveItemAt(x, y);
+		if (item != null) {
+			mDraggedItem = item;
 		}
 	}
 
+	/**
+	 * Get the item at the x/y-coordinates if available.
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private ForestItemWrapper resolveItemAt(float x, float y) {
 		for (ForestItemWrapper item : mForestItems) {
 			if (isItemClicked(item, x, y)) {
@@ -593,6 +691,17 @@ public class ForestView extends View implements OnItemBoughtListener {
 		return null;
 	}
 
+	/**
+	 * Returns true if the item was clicked.
+	 * 
+	 * @param i
+	 *            The item
+	 * @param x
+	 *            The clicked x-coordinate
+	 * @param y
+	 *            The clicked y-coordinate
+	 * @return
+	 */
 	private boolean isItemClicked(ForestItemWrapper i, float x, float y) {
 		Item item = i.mItem.getForestItem();
 		return x >= i.mX && x <= i.mX + item.getImage(getContext()).getWidth()
@@ -600,6 +709,10 @@ public class ForestView extends View implements OnItemBoughtListener {
 				&& y <= i.mY + item.getImage(getContext()).getHeight();
 	}
 
+	/**
+	 * The Listener for clicks on ForestItems.
+	 * 
+	 */
 	public interface UserForestItemListener {
 		public void onForestItemClicked(UserForestItem item);
 	}
@@ -615,6 +728,11 @@ public class ForestView extends View implements OnItemBoughtListener {
 		return 1;
 	}
 
+	/**
+	 * A wrapper that holds a UserForestItem and the position inside the
+	 * ForestView.
+	 * 
+	 */
 	private class ForestItemWrapper {
 		public UserForestItem mItem;
 		public float mX, mY;
@@ -626,6 +744,9 @@ public class ForestView extends View implements OnItemBoughtListener {
 		}
 	}
 
+	/**
+	 * Reposition the moveable items and then repaint.
+	 */
 	public void animateMoveableItems() {
 
 		for (ForestItemWrapper item : mForestItems) {

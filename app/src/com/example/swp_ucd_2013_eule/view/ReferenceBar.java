@@ -15,6 +15,15 @@ import android.view.View;
 
 import com.example.swp_ucd_2013_eule.R;
 
+/**
+ * The ReferenceBar shows a (horizontal or vertical) bar with the starting point
+ * in the middle of the bar. On positive values the bar-content will grow to the
+ * right (or top) and on negative values the bar-content will grow to the left
+ * (or bottom).
+ * 
+ * @author MKay
+ * 
+ */
 public class ReferenceBar extends View {
 	private boolean mVertical = true;
 	private int mWeight;
@@ -56,11 +65,20 @@ public class ReferenceBar extends View {
 		initBar();
 	}
 
+	/**
+	 * Converts dp to px.
+	 * 
+	 * @param value
+	 * @return the value in px
+	 */
 	private int dpToPx(int value) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 				value, getResources().getDisplayMetrics());
 	}
 
+	/**
+	 * Initializes the ReferenceBar. That is creating paints.
+	 */
 	private void initBar() {
 		mBorderPaint = new Paint();
 		mBorderPaint.setAntiAlias(true);
@@ -75,6 +93,9 @@ public class ReferenceBar extends View {
 		mBadPaint.setAntiAlias(true);
 	}
 
+	/**
+	 * Update the color-positions of the gradients.
+	 */
 	private void updateGradients() {
 		float strokeWidth = mBorderPaint.getStrokeWidth();
 		float gsx1 = 0, gsy1 = 0, gsx2 = 0, gsy2 = 0;
@@ -107,6 +128,9 @@ public class ReferenceBar extends View {
 		mBadPaint.setShader(badShader);
 	}
 
+	/**
+	 * Update the dimensions of the content based on the available space.
+	 */
 	private void updateContentDimensions() {
 		int availWidth = getMeasuredWidth(), availHeight = getMeasuredHeight();
 
@@ -128,6 +152,9 @@ public class ReferenceBar extends View {
 		mContentDimensions = new Rect(left, top, right, bottom);
 	}
 
+	/**
+	 * Update the dimensions of the boxes that will be drawn.
+	 */
 	private void updateBarFillDimensions() {
 		float strokeWidth = mBorderPaint.getStrokeWidth();
 		if (mVertical) {
@@ -182,6 +209,11 @@ public class ReferenceBar extends View {
 		}
 	}
 
+	/**
+	 * Update all dimensions and gradients.
+	 * 
+	 * For example this method is called by onMeasure.
+	 */
 	private void updateDimensions() {
 		updateContentDimensions();
 		float strokeWidth = mBorderPaint.getStrokeWidth(), hStrokeWidth = strokeWidth / 2;
@@ -204,6 +236,14 @@ public class ReferenceBar extends View {
 		updateDimensions();
 	}
 
+	/**
+	 * Measure the width.
+	 * 
+	 * Called inside onMeasure.
+	 * 
+	 * @param measureSpec
+	 * @return
+	 */
 	private int measureWidth(int measureSpec) {
 		int result = 0;
 		int specMode = MeasureSpec.getMode(measureSpec);
@@ -228,6 +268,14 @@ public class ReferenceBar extends View {
 		return result;
 	}
 
+	/**
+	 * Measure the height.
+	 * 
+	 * Called inside onMeasure.
+	 * 
+	 * @param measureSpec
+	 * @return
+	 */
 	private int measureHeight(int measureSpec) {
 		int result = 0;
 		int specMode = MeasureSpec.getMode(measureSpec);

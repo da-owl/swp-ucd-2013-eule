@@ -15,10 +15,13 @@ import android.widget.Toast;
 import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
+
 /**
- * InitActivity is used as the start of our APP which establishes a connection to our back-end
- * and only on success lets the user pass to the MainActivty. 
- *
+ * InitActivity is the entry point of the APP which prepares the connection to
+ * the back-end (e.g. auth token) and then tries to connect (and login) to load
+ * the user's forest for the first time. If the login was successfully and the
+ * forest was loaded, then the user is redirected to the MainActivity.
+ * 
  */
 public class InitActivity extends Activity {
 	private EditText mAddress;
@@ -50,6 +53,10 @@ public class InitActivity extends Activity {
 						mAddress.getText().toString() + ":"
 								+ mPort.getText().toString());
 
+				/*
+				 * Try to load the forest (incl. login) and redirect the user to
+				 * MainActivity on success.
+				 */
 				new AsyncTask<Void, Void, Boolean>() {
 
 					@Override

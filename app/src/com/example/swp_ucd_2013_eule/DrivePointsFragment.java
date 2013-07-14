@@ -23,11 +23,12 @@ import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.view.BenchmarkBar;
 import com.example.swp_ucd_2013_eule.view.ReferenceBar;
+
 /**
  * DrivePointsFragment initiates the view containing information about the
- * actual progress of the user to the next level and how ecological his/her
- * driving is right now.
- *
+ * actual progress of the user to the next level (forest size) and how
+ * ecological his/her driving is right now.
+ * 
  */
 public class DrivePointsFragment extends Fragment {
 	private BenchmarkBar mLevelBar;
@@ -84,7 +85,7 @@ public class DrivePointsFragment extends Fragment {
 		mRefBar.setValue(mPointProgress);
 
 		mHandler = new Handler() {
-			
+
 			public void handleMessage(Message msg) {
 				Bundle data = msg.getData();
 				if (data.containsKey("pointProgress")) {

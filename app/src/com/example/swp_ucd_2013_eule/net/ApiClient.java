@@ -13,6 +13,8 @@ import android.content.Context;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
 /**
+ * ApiClient is used to communicate with an API endpoint.
+ * 
  * Example for making a POST-request from an Activity (in this case
  * MainActivity):
  * 
@@ -98,6 +100,11 @@ public class ApiClient {
 		mAuthToken = token;
 	}
 
+	/**
+	 * Set the Context which is needed inside the HttpJsonClient.
+	 * 
+	 * @param ctx
+	 */
 	public void setContext(Context ctx) {
 		mCtx = ctx;
 	}
@@ -151,16 +158,33 @@ public class ApiClient {
 		return createHttpJsonClient().post(mCtx, uri, json);
 	}
 
+	/**
+	 * Create a HttpJsonClient which can be used to send requests to the API
+	 * endpoint.
+	 * 
+	 * @return the created client
+	 */
 	private HttpJsonClient createHttpJsonClient() {
 		HttpJsonClient c = new HttpJsonClient();
 		c.setHeaders(generateHeaders());
 		return c;
 	}
 
+	/**
+	 * Create the URI for the API endpoint.
+	 * 
+	 * @param endpoint
+	 * @return
+	 */
 	private URI getEndpointUri(String endpoint) {
 		return URI.create("http://" + mServer + endpoint);
 	}
 
+	/**
+	 * Generate HTTP headers which will be sent in an API request.
+	 * 
+	 * @return
+	 */
 	private Header[] generateHeaders() {
 		if (mAuthToken == null || mAuthToken.isEmpty()) {
 			return new Header[] {};

@@ -165,11 +165,13 @@ public class DriveTechFragment extends Fragment {
 	}
 
 	/**
-	 * adds an onClickListener to a view to provide an info text containing
-	 * helpful information for the user about the clicked data visualizer.
+	 * Add an onClickListener to a view (e.g. GearIndicator) that shows the
+	 * specified text in an information box.
 	 * 
-	 * @param view to add the listener to
-	 * @param text which should be displayed on click
+	 * @param view
+	 *            to add the listener to
+	 * @param text
+	 *            which should be displayed on click
 	 */
 	private void setupClickableInfo(View view, final String text) {
 		view.setOnClickListener(new OnClickListener() {
@@ -181,9 +183,13 @@ public class DriveTechFragment extends Fragment {
 	}
 
 	/**
-	 * is called when the the user clicked on a data visualizer. it opens a SlideUpContainer
-	 * containing the text to displayed
-	 * @param text which should be display on click
+	 * Opens the information box containing the specified text.
+	 * 
+	 * For example this method is called when the user clicked on a data
+	 * visualizer (e.g. GearIndicator).
+	 * 
+	 * @param text
+	 *            which should be display on click
 	 */
 	private void showInfo(String text) {
 		mInfoText.setText(text);

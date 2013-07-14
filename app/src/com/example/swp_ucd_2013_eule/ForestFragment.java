@@ -9,12 +9,11 @@ import android.widget.TextView;
 
 import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
-import com.example.swp_ucd_2013_eule.view.ForestView;
 
 /**
- * ForestFragment creates a view containing the ForestView class which is responsible
- * for drawing the forest.
- *
+ * ForestFragment creates a view containing the ForestView which is responsible
+ * for drawing the user's own forest.
+ * 
  */
 public class ForestFragment extends Fragment {
 
@@ -32,10 +31,6 @@ public class ForestFragment extends Fragment {
 				(TextView) rootView.findViewById(R.id.txtDrops),
 				(TextView) rootView.findViewById(R.id.txtForestSize));
 		itemBehav.attachForestView();
-
-		// TODO move animation to ForestView (and timer is not stopped ...)
-		final ForestView forestView = (ForestView) rootView
-				.findViewById(R.id.forest);
 
 		return rootView;
 	}
