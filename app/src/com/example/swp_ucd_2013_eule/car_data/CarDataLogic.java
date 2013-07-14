@@ -19,9 +19,10 @@ import com.example.swp_ucd_2013_eule.model.Statistic;
  * 
  * @author Marc
  * 
- *         CarDataLogic retrieves data from the CarData listener and calculates
+ *         CarDataLogic retrieves car data from the CarData class and calculates
  *         points according to the driving style. Therefore it can assign bad
  *         and good Points which will influence the amount of m² an user has.
+ *         This class is implemented as a singleton.
  * 
  */
 public class CarDataLogic extends Handler {
@@ -62,6 +63,10 @@ public class CarDataLogic extends Handler {
 
 	private Forest mForest;
 
+	/**
+	 * Private constructor is necessary to make the class a singleton. Adds this
+	 * class to the list of subscribers at the CarData class.
+	 */
 	private CarDataLogic() {
 		CarData carDataListener = CarData.getInstance();
 
@@ -90,10 +95,15 @@ public class CarDataLogic extends Handler {
 		mRecordTrip = state;
 	}
 
+	/**
+	 * 
+	 * @return the instance of this class
+	 */
 	public static CarDataLogic getInstance() {
 		return INSTANCE;
 	}
 
+	@Override
 	public void handleMessage(Message msg) {
 		Bundle data = msg.getData();
 		if (mRecordTrip) {
@@ -194,11 +204,16 @@ public class CarDataLogic extends Handler {
 
 	}
 
+	/**
+	 * is called when a gathering interval for data is finished. Points are
+	 * calculated with a set of rules, mostly the exceeding of reference values.
+	 * The calculation itself is handled in a thread.
+	 */
 	private void calculatePoints() {
 		/*
 		 * Bewertung anhand der angegebenen Durchschnittsverbrauchwerte z.b.
 		 * Golf 7 1.4TSI ACT S=5.8 /L=4.2 /A=4.7 6 Gang Schaltgetriebe
-		 * Zeiteinheit definieren: 30 Sekunden ~ 150 Messwerte (alle 200ms)
+		 * Zeiteinheit definieren: 15 Sekunden ~ 150 Messwerte (alle 100ms)
 		 * Durchschnitt des Momentanverbrauchs (ist schon auf l/100km normiert)
 		 * Durchschnitt der Fahrgeschwindigt => Berechnen ob Stadt/Land/Autobahn
 		 * Penaltyflag checken f�r Beschleunigung/Verz�gerung gr��er als GW
@@ -226,6 +241,10 @@ public class CarDataLogic extends Handler {
 
 	}
 
+	/**
+	 * resets all variables used to gathering data in an interval to their
+	 * initial values.
+	 */
 	private void resetVariables() {
 		mGoodShifts = 0;
 		mRPMExceeding = new int[] { 0, 0, 0, 0 };
@@ -237,12 +256,15 @@ public class CarDataLogic extends Handler {
 	}
 
 	/**
+	 * classes which want to be informed about the progress of the user can
+	 * implement the standard Android Handler an subscribe. Possible identifiers
+	 * are: pointProgress
 	 * 
 	 * @param handler
 	 *            which will be notified at a data event
 	 * @param identifier
 	 *            for the data to subscribe
-	 * @return false if the listener is allready known for the given identifier
+	 * @return false if the listener is already known for the given identifier
 	 */
 	public boolean subscribeHandler(Handler handler, String identifier) {
 		List<Handler> list = mDataListeners.get(identifier);
@@ -257,6 +279,11 @@ public class CarDataLogic extends Handler {
 
 	}
 
+	/**
+	 * performs the calculation of the userprogress and notifies subscribers
+	 * about it.
+	 * 
+	 */
 	private class CalculationThread extends Thread {
 		private List<Float> mConsumptions;
 		private List<Float> mSpeedList;
@@ -314,6 +341,11 @@ public class CarDataLogic extends Handler {
 
 		}
 
+		/**
+		 * calculates if the user has used more or less fuel than the
+		 * average(and how much). takes into account if the user has driven in
+		 * the city,countryside or highway.
+		 */
 		private void calcConsumption() {
 			// calculate average consumption and speed
 			for (int i = 0; i < mInterval; i++) {
@@ -354,6 +386,9 @@ public class CarDataLogic extends Handler {
 
 		}
 
+		/**
+		 * calculates how often the user reved above 2000,3000 or 4000 rpm.
+		 */
 		private void calcRPM() {
 			// calculate RPM exceeding penalty or bonus
 			int interval = mRPM[0] + mRPM[1] + mRPM[2] + mRPM[3];
@@ -368,6 +403,9 @@ public class CarDataLogic extends Handler {
 
 		}
 
+		/**
+		 * assesses the quality of shifting
+		 */
 		private void calcShift() {
 			// calculate bad shift penalty and good shift bonus
 			if (mGShifts < 0) {
@@ -378,6 +416,10 @@ public class CarDataLogic extends Handler {
 
 		}
 
+		/**
+		 * counts how often the user has accelerated more than needed for normal
+		 * movement and how oftne he has breaked harder than normaly needed.
+		 */
 		private void calcAcc() {
 			// calculate acceleration and breaking penalty/bonus
 			int interval = mAcc[0] + mAcc[1] + mAcc[2];
@@ -392,6 +434,11 @@ public class CarDataLogic extends Handler {
 
 		}
 
+		/**
+		 * calculates if the user has gained enough points for the next level
+		 * and awards points. These information are also stored in the global
+		 * user data model.
+		 */
 		private void checkLevel() {
 			SettingsWrapper settings = SettingsWrapper.getInstance();
 			boolean viewChanged = false;
@@ -450,6 +497,15 @@ public class CarDataLogic extends Handler {
 
 	}
 
+	/**
+	 * is called to unsubscribe a previously added Handler
+	 * 
+	 * @param handler
+	 *            which was added to the subscribers
+	 * @param identifier
+	 *            for the car data to subscribe
+	 * @return true if the handler was successful removed
+	 */
 	public boolean unSubscribeHandler(Handler handler, String key) {
 		List<Handler> handlerList = mDataListeners.get(key);
 		if (handlerList != null) {

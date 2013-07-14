@@ -19,9 +19,11 @@ import de.exlap.ExlapException;
  * 
  * @author Marc
  * 
- *         CarData provides a listener for the EXLAP-Proxy which stores the
- *         subscribed data in a HashMap. It also auto-reconnect to the given
- *         EXLAP-Proxy address if the connection is lost.
+ *         CarData is a listener for the ExlapProxy. It also serves as a
+ *         proposer to every class which subscribes for a specific car data. The
+ *         connection to the proxy is maintained in a thread which is also
+ *         responsible for a scheduled reconnect attempt if the connection was
+ *         lost. This class is a singleton.
  * 
  */
 public class CarData implements DataListener {
@@ -35,10 +37,17 @@ public class CarData implements DataListener {
 	private static CarData INSTANCE = new CarData();
 	private boolean mRecordTrip = false;
 
+	/**
+	 * private constructor used to make the class a singleton
+	 */
 	private CarData() {
 
 	}
 
+	/**
+	 * 
+	 * @return the instance of the class
+	 */
 	public static CarData getInstance() {
 		return INSTANCE;
 	}
@@ -48,8 +57,9 @@ public class CarData implements DataListener {
 	}
 
 	/**
-	 * Receives and stores the subscribed data it which is a url object wrapped
-	 * into the DataObject.
+	 * is called from the ExlapProxy on new data. Extracts the data from the
+	 * URL-object and sends the gathered information to all registered
+	 * subscribers.
 	 */
 	public void onData(DataObject dataObject) {
 
@@ -57,12 +67,6 @@ public class CarData implements DataListener {
 
 		if (!objectString.contains(", no data elements!")) {
 			Log.d("CarData", "Got data!");
-			/*
-			 * getting the name of the received data int fst =
-			 * objectString.indexOf("url=") + 4; int snd =
-			 * objectString.indexOf("[E"); String dataName =
-			 * objectString.substring(fst, snd).trim();
-			 */
 			// extracting values from the data
 			String[] data = objectString.substring(
 					objectString.indexOf("name=")).split(",");
@@ -95,12 +99,13 @@ public class CarData implements DataListener {
 
 	/**
 	 * starts a Thread which will connect(and reconnect) to the given address
-	 * and subscribe to all data which is provided in the list.
+	 * and subscribe the given car data at the ExlapProxy.
 	 * 
 	 * @param address
 	 *            Server Address "socket://192.168.0.40:28500"
 	 * @param subscribeItems
-	 *            A list of Strings containing the names of data to subscribe
+	 *            A list of Strings containing the identifiers of the car data
+	 *            to subscribe
 	 */
 	public void startService(final String address, List<String> subscribeItems) {
 		mRun = true;
@@ -182,7 +187,7 @@ public class CarData implements DataListener {
 	}
 
 	/**
-	 * unsubscribes all previously subscribed data-identifier
+	 * unsubscribes all previously subscribed data-identifiers
 	 * 
 	 * @throws IllegalArgumentException
 	 * @throws IOException
@@ -197,7 +202,8 @@ public class CarData implements DataListener {
 	}
 
 	/**
-	 * terminates the connection and the connection watcher thread
+	 * terminates the connection to the ExlapProxy and the connection watcher
+	 * thread
 	 * 
 	 * @throws IllegalArgumentException
 	 * @throws IOException
@@ -229,12 +235,16 @@ public class CarData implements DataListener {
 	}
 
 	/**
+	 * every class can subscribe here for car data if it implements a standard
+	 * Android Handler Possible identifiers are: VehicleSpeed, TripOdometer,
+	 * RecommendedGear, Odometer, LongitudinalAcceleration, LateralAcceleration,
+	 * FuelConsumption, EngineSpeed, CurrentGear
 	 * 
 	 * @param handler
 	 *            which will be notified at a data event
 	 * @param identifier
-	 *            for the data to subscribe
-	 * @return false if the listener is allready known for the given identifier
+	 *            for the car data to subscribe
+	 * @return false if the listener is already known for the given identifier
 	 */
 	public boolean subscribeHandler(Handler handler, String identifier) {
 		List<Handler> list = mDataListeners.get(identifier);
@@ -249,8 +259,17 @@ public class CarData implements DataListener {
 
 	}
 
-	public boolean unSubscribeHandler(Handler handler, String key) {
-		List<Handler> handlerList = mDataListeners.get(key);
+	/**
+	 * is called to unsubscribe a previously added Handler
+	 * 
+	 * @param handler
+	 *            which was added to the subscribers
+	 * @param identifier
+	 *            for the car data to subscribe
+	 * @return true if the handler was successful removed
+	 */
+	public boolean unSubscribeHandler(Handler handler, String identifier) {
+		List<Handler> handlerList = mDataListeners.get(identifier);
 		if (handlerList != null) {
 			return handlerList.remove(handler);
 		} else {

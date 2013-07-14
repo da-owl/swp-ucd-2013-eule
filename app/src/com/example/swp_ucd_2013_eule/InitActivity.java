@@ -15,7 +15,11 @@ import android.widget.Toast;
 import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
-
+/**
+ * InitActivity is used as the start of our APP which establishes a connection to our back-end
+ * and only on success lets the user pass to the MainActivty. 
+ *
+ */
 public class InitActivity extends Activity {
 	private EditText mAddress;
 	private EditText mPort;

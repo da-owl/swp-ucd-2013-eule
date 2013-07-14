@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.swp_ucd_2013_eule.view.SocialList;
-
+/**
+ * ListActivity starts a new full screen view of the SocialList class. 
+ *
+ */
 public class ListActivity extends Activity {
 
 	private SocialList mList;

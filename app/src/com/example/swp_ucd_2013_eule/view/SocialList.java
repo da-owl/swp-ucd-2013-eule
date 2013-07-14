@@ -15,6 +15,14 @@ import com.example.swp_ucd_2013_eule.ListActivity;
 import com.example.swp_ucd_2013_eule.OtherForestActivity;
 import com.example.swp_ucd_2013_eule.R;
 
+/**
+ * SocialList is a custom implementation of the TableLayout. It is used to
+ * define a list with dynamically added and removed content according to our
+ * specification. The content is the SoicalRow class.
+ * 
+ * @author Marc
+ * 
+ */
 public class SocialList extends TableLayout {
 
 	private ConcurrentSkipListSet<RowElement> mRows = new ConcurrentSkipListSet<RowElement>();
@@ -38,6 +46,10 @@ public class SocialList extends TableLayout {
 
 	}
 
+	/**
+	 * draws the list elements which were previously added with the addRow()
+	 * method.
+	 */
 	public void drawList() {
 		removeAllViews();
 		TableRow header = (TableRow) mInflater.inflate(
@@ -117,17 +129,19 @@ public class SocialList extends TableLayout {
 		mRows.add(new RowElement(position, userName, level));
 	}
 
-	public void updateUser(String userName, int level, int position) {
-		for (RowElement elem : mRows) {
-			if (elem.mUserName.equals("userName")) {
-				elem.mLevel = level;
-				elem.mPosition = position;
-				return;
-			}
-		}
+	/*
+	 * public void updateUser(String userName, int level, int position) { for
+	 * (RowElement elem : mRows) { if (elem.mUserName.equals("userName")) {
+	 * elem.mLevel = level; elem.mPosition = position; return; } }
+	 * 
+	 * }
+	 */
 
-	}
-
+	/**
+	 * Wrapper class containing all necessary information about a row in the
+	 * list.
+	 * 
+	 */
 	protected class RowElement implements Comparable<RowElement> {
 		protected int mPosition;
 		protected int mLevel;

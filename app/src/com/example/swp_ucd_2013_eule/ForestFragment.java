@@ -11,6 +11,11 @@ import com.example.swp_ucd_2013_eule.model.Forest;
 import com.example.swp_ucd_2013_eule.model.MyForest;
 import com.example.swp_ucd_2013_eule.view.ForestView;
 
+/**
+ * ForestFragment creates a view containing the ForestView class which is responsible
+ * for drawing the forest.
+ *
+ */
 public class ForestFragment extends Fragment {
 
 	@Override

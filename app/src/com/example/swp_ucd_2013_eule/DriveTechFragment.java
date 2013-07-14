@@ -17,6 +17,13 @@ import com.example.swp_ucd_2013_eule.view.GearIndicator;
 import com.example.swp_ucd_2013_eule.view.ReferenceBar;
 import com.example.swp_ucd_2013_eule.view.SlideUpContainer;
 
+/**
+ * DriveTechFragment creates a view which visualize the data from the car in an
+ * appropriate way. The Gear indicator for example contains also a rev counter
+ * which scales logarithmic. There is also a visualization for acceleration,
+ * breaking and the current consumption.
+ * 
+ */
 public class DriveTechFragment extends Fragment {
 	private Handler mHandler;
 
@@ -157,8 +164,15 @@ public class DriveTechFragment extends Fragment {
 		return rootView;
 	}
 
-	private void setupClickableInfo(View v, final String text) {
-		v.setOnClickListener(new OnClickListener() {
+	/**
+	 * adds an onClickListener to a view to provide an info text containing
+	 * helpful information for the user about the clicked data visualizer.
+	 * 
+	 * @param view to add the listener to
+	 * @param text which should be displayed on click
+	 */
+	private void setupClickableInfo(View view, final String text) {
+		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showInfo(text);
@@ -166,6 +180,11 @@ public class DriveTechFragment extends Fragment {
 		});
 	}
 
+	/**
+	 * is called when the the user clicked on a data visualizer. it opens a SlideUpContainer
+	 * containing the text to displayed
+	 * @param text which should be display on click
+	 */
 	private void showInfo(String text) {
 		mInfoText.setText(text);
 		mSlideUp.slideOpen();

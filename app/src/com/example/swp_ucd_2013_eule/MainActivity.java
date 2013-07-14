@@ -29,6 +29,12 @@ import com.example.swp_ucd_2013_eule.model.MyForest;
 
 import de.exlap.ExlapException;
 
+/**
+ * MainActivity provides a FragmentStatePagerAdapter which contains all of our
+ * Fragments. It handles the switch between the Fragments as well as the
+ * settings of the APP.
+ * 
+ */
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener, OnSharedPreferenceChangeListener {
 
@@ -85,6 +91,13 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * provides the CarData class all information necessary to connect to the
+	 * ExlapProxy and to subscribe the car data we need.
+	 * 
+	 * @param settings
+	 *            contains the IP address and port of the ExlapProxy
+	 */
 	private void startEXLAPListener(String settings) {
 		ArrayList<String> data = new ArrayList<String>();
 		data.add("VehicleSpeed");
@@ -99,6 +112,10 @@ public class MainActivity extends FragmentActivity implements
 		CarData.getInstance().startService(settings, data);
 	}
 
+	/**
+	 * signals the CarData class to stop the thread which keeps the connection
+	 * alive and to unsubscribe the from Proxy.
+	 */
 	private void stopEXLAPListener() {
 		try {
 			CarData.getInstance().endListener();
@@ -111,10 +128,23 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * adds an PagerAdapter to Map in which it is mapped to its id.
+	 * 
+	 * @param adapter
+	 *            to be added to the map
+	 */
 	private void addActionTabMapping(PagerAdapter adapter) {
 		mActionTabMapping.put(adapter.getAdapterId(), adapter);
 	}
 
+	/**
+	 * is called if the user want to change to another Fragment. changes the
+	 * view and refreshes the ActionBar to highlight the actual selected page.
+	 * 
+	 * @param Adapter
+	 *            is the new view to be shown to the user
+	 */
 	public void changeFragment(FragmentStatePagerAdapter Adapter) {
 		mSectionsPagerAdapter = Adapter;
 
@@ -188,6 +218,10 @@ public class MainActivity extends FragmentActivity implements
 				.setImageDrawable(ico);
 	}
 
+	/**
+	 * Determines which icon the user has clicked in the ActionBar and handles
+	 * the according change of the view.
+	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
@@ -257,6 +291,14 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * DrivePagerAdapter contains the information which fragments are associated
+	 * with this view and provides this information to the
+	 * FragmentStatePagerAdapter.
+	 * 
+	 * @author MKay
+	 * 
+	 */
 	public class DrivePagerAdapter extends PagerAdapter {
 		public DrivePagerAdapter(int adapterId, FragmentManager fm) {
 			super(adapterId, fm);
@@ -287,6 +329,14 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * SocialPagerAdapter contains the information which fragments are
+	 * associated with this view and provides this information to the
+	 * FragmentStatePagerAdapter.
+	 * 
+	 * @author MKay
+	 * 
+	 */
 	public class SocialPagerAdapter extends PagerAdapter {
 		public SocialPagerAdapter(int adapterId, FragmentManager fm) {
 			super(adapterId, fm);
@@ -317,6 +367,14 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * ForestPagerAdapter contains the information which fragments are
+	 * associated with this view and provides this information to the
+	 * FragmentStatePagerAdapter.
+	 * 
+	 * @author MKay
+	 * 
+	 */
 	public class ForestPagerAdapter extends PagerAdapter {
 		public ForestPagerAdapter(int adapterId, FragmentManager fm) {
 			super(adapterId, fm);
@@ -347,6 +405,14 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * MarketPagerAdapter contains the information which fragments are
+	 * associated with this view and provides this information to the
+	 * FragmentStatePagerAdapter.
+	 * 
+	 * @author MKay
+	 * 
+	 */
 	public class MarketPagerAdapter extends PagerAdapter {
 		public MarketPagerAdapter(int adapterId, FragmentManager fm) {
 			super(adapterId, fm);

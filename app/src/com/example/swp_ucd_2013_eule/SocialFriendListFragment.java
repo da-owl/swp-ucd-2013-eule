@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.swp_ucd_2013_eule.view.SocialList;
-
+/**
+ * SocialFriendListFragment initializes a view containing a SocialList with 
+ * all the friends a user has added in the APP.
+ */
 public class SocialFriendListFragment extends Fragment {
 
 	private SocialList mList;
