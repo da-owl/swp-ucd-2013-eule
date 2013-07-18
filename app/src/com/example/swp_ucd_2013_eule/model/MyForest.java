@@ -8,6 +8,11 @@ import android.util.Log;
 import com.example.swp_ucd_2013_eule.data.SettingsWrapper;
 import com.example.swp_ucd_2013_eule.net.APIException;
 
+/**
+ * Wrapper for the forest object. Every API call will occur in its own thread to avoid GUI blocking.
+ * @author erik
+ *
+ */
 public class MyForest {
 
 	private static MyForest INSTANCE = new MyForest();
@@ -22,11 +27,15 @@ public class MyForest {
 
 	private MyForest() {
 	}
-
+	
 	public static MyForest getInstance() {
 		return INSTANCE;
 	}
-
+	
+	/**
+	 * Initailizes all APIModels and retrieves the users forest including all statistics and items.
+	 * @return
+	 */
 	public Forest loadForest() {
 		mForestAPI = new APIModel<Forest, Forest>(Forest.class);
 		mUserItemAPI = new APIModel<UserForestItem, Forest>(
@@ -53,11 +62,16 @@ public class MyForest {
 
 		return mForest;
 	}
-
+	
 	public Forest getForest() {
 		return mForest;
 	}
-
+	
+	/**
+	 * Checks if a new item is obtainable by checking level and pts.
+	 * @param item
+	 * @return
+	 */
 	public boolean isObtainable(Item item) {
 		if (item.isStandardItem() && item.getPrice() <= mForest.getPoints()
 				&& item.getLevel() <= mForest.getLevel()) {
@@ -65,7 +79,12 @@ public class MyForest {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Adds a selected item to the forest.
+	 * @param item
+	 * @return
+	 */
 	public boolean buyItem(Item item) {
 
 		item.incAmount();
@@ -93,7 +112,10 @@ public class MyForest {
 	public void addOnItemBoughtListener(OnItemBoughtListener listener) {
 		mListener = listener;
 	}
-
+	
+	/**
+	 * Saves the forest by calling the API.
+	 */
 	public void saveForest() {
 		new AsyncTask<Void, Void, Boolean>() {
 
@@ -125,7 +147,11 @@ public class MyForest {
 		}.execute(null, null);
 
 	}
-
+	
+	/**
+	 * Adds a new statisic to the forest and saves it by calling the API.
+	 * @param stat
+	 */
 	public void addStatistic(Statistic stat) {
 		new AsyncTask<Statistic, Void, Boolean>() {
 
@@ -158,7 +184,11 @@ public class MyForest {
 		}.execute(stat);
 
 	}
-
+	
+	/**
+	 * Adds a new userforestitem to the forest and saves it by caling the API.
+	 * @param item
+	 */
 	public void addUserItem(UserForestItem item) {
 		new AsyncTask<UserForestItem, Void, Boolean>() {
 
@@ -192,7 +222,11 @@ public class MyForest {
 		}.execute(item);
 
 	}
-
+	
+	/**
+	 * Updates the position of a UserForestItem by calling the API.
+	 * @param item
+	 */
 	public void updateUserForestItemPosition(UserForestItem item) {
 		new AsyncTask<UserForestItem, Void, Boolean>() {
 

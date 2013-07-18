@@ -7,6 +7,10 @@ import android.graphics.BitmapFactory;
 
 import com.example.swp_ucd_2013_eule.R;
 
+/**
+ * Represents an item.
+ * @author Erik
+ */
 public class Item extends Model {
 
 	public static String ITEM_TYPE_STANDARD = "standard";
@@ -65,7 +69,12 @@ public class Item extends Model {
 	public void setImageId(Integer imageId) {
 		this.imageId = imageId;
 	}
-
+	
+	/**
+	 * Returns the decoded resource to display the item.
+	 * @param ctx
+	 * @return
+	 */
 	public Bitmap getImage(Context ctx) {
 		Resources r = ctx.getResources();
 		return BitmapFactory.decodeResource(r, dbToResource(imageId));
@@ -146,7 +155,12 @@ public class Item extends Model {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
+	
+	/**
+	 * Converts the image_id into the value needed by android to display the icon.
+	 * @param dbValue
+	 * @return
+	 */
 	private static int dbToResource(int dbValue) {
 		/**
 		 * int imgTree = R.drawable.item_tree; int imgFir = R.drawable.item_fir;

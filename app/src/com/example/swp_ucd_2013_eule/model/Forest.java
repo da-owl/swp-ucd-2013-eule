@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 
- * @author Erik
- * 
+ * Represents a forest which each users owns.
+ * @author erik
+ *
  */
 public class Forest extends Model {
 
@@ -109,7 +109,12 @@ public class Forest extends Model {
 	public void setStatistics(List<Statistic> statistics) {
 		this.statistics = statistics;
 	}
-
+	
+	/**
+	 * Checks if an item can be placed in the forest.
+	 * @param item
+	 * @return
+	 */
 	private boolean canAdd(UserForestItem item) {
 		// TODO: to be implemented (check geometrics. maybe code is already
 		// there ... somewhere ... :)

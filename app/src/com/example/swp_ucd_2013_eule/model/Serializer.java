@@ -14,10 +14,16 @@ import android.util.Log;
 import com.example.swp_ucd_2013_eule.net.APIException;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
+/**
+ * Generic serializer. Provides all methods for (de)serializing JSON to models and the other way round.
+ * @author erik
+ *
+ * @param <T>
+ */
 public class Serializer<T extends Model> {
 
 	/**
-	 * serialization of list fields (friends, items, ... ) not necessary nested
+	 * Serialization of list fields (friends, items, ... ) not necessary nested
 	 * objects are serialized using their primary keys
 	 * 
 	 * @param model
@@ -43,7 +49,7 @@ public class Serializer<T extends Model> {
 	}
 
 	/**
-	 * 
+	 * Deserializes JSON and creates the corresponding model object.
 	 * @param skeleton
 	 * @param json
 	 * @return
@@ -103,7 +109,7 @@ public class Serializer<T extends Model> {
 	}
 
 	/**
-	 * deserialize list fields through calling the api
+	 * Deserialize list fields through calling the API
 	 * 
 	 * @param list
 	 * @return
@@ -139,7 +145,7 @@ public class Serializer<T extends Model> {
 	}
 
 	/**
-	 * 
+	 * Deserializes JSON and creates the corresponding object.
 	 * @param model
 	 * @param response
 	 * @return
@@ -176,7 +182,7 @@ public class Serializer<T extends Model> {
 	}
 
 	/**
-	 * 
+	 * Trying to get a properties value for serialization.
 	 * @param model
 	 * @param property
 	 * @return
@@ -199,7 +205,7 @@ public class Serializer<T extends Model> {
 	}
 
 	/**
-	 * 
+	 * Trying to set a properties value for deserialization.
 	 * @param model
 	 * @param property
 	 * @param value
@@ -235,7 +241,7 @@ public class Serializer<T extends Model> {
 	}
 
 	/**
-	 * 
+	 * Searches for all "simple" properties.
 	 * @param model
 	 * @return
 	 */
@@ -260,7 +266,7 @@ public class Serializer<T extends Model> {
 	}
 
 	/**
-	 * 
+	 * Searches for all collections.
 	 * @param model
 	 * @return
 	 */

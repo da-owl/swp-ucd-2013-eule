@@ -9,6 +9,13 @@ import com.example.swp_ucd_2013_eule.net.APIException;
 import com.example.swp_ucd_2013_eule.net.ApiClient;
 import com.example.swp_ucd_2013_eule.net.HttpJsonClient.Response;
 
+/**
+ * Provides CRUD operations for all model classes. If instantiated with a specific type it provides type-safe operations.
+ * @author erik
+ *
+ * @param <T>
+ * @param <P>
+ */
 public class APIModel<T extends Model, P extends Model> {
 
 	private Class<T> type;
@@ -21,7 +28,10 @@ public class APIModel<T extends Model, P extends Model> {
 	}
 
 	/**
-	 * get single model GET http://server/[model]/[id]/
+	 * Get single model GET http://server/[model]/[id]/
+	 * @param model
+	 * @return
+	 * @throws APIException
 	 */
 	public T get(T model) throws APIException {
 		try {
@@ -36,7 +46,11 @@ public class APIModel<T extends Model, P extends Model> {
 	}
 
 	/**
-	 * get single model GET http://server/[model]/[id]/
+	 * Get single model GET http://server/[model]/[id]/
+	 * @param model
+	 * @param id
+	 * @return
+	 * @throws APIException
 	 */
 	public T get(T model, Integer id) throws APIException {
 		try {
@@ -48,8 +62,12 @@ public class APIModel<T extends Model, P extends Model> {
 		}
 	}
 
+
 	/**
-	 * save single model PUT http://server/[model]/[id]/
+	 * Save single model PUT http://server/[model]/[id]/
+	 * @param model
+	 * @return
+	 * @throws APIException
 	 */
 	public T save(T model) throws APIException {
 		try {
@@ -73,7 +91,12 @@ public class APIModel<T extends Model, P extends Model> {
 	}
 
 	/**
-	 * add model to parent model PUT http://server/[parent]/[id]/[model]/[id]/
+	 * Add model to parent model PUT http://server/[parent]/[id]/[model]/[id]/
+	 * @param model
+	 * @param parent
+	 * @param relation
+	 * @return
+	 * @throws APIException
 	 */
 	public T addToParent(T model, P parent, String relation)
 			throws APIException {
@@ -89,15 +112,22 @@ public class APIModel<T extends Model, P extends Model> {
 	}
 
 	/**
-	 * remove model from parent model DELETE
-	 * http://server/[parent]/[id]/[model]/[id]/
+	 * Remove model from parent model DELETE
+	 * http://server/[parent]/[id]/[model]/[id]/ 
+	 * @param model
+	 * @param parent
+	 * @return
+	 * @throws APIException
 	 */
 	public T deleteFromParent(T model, T parent) throws APIException {
 		return null;
 	}
 
 	/**
-	 * get all GET http://server/[model]/
+	 * Get all GET http://server/[model]/
+	 * @param model
+	 * @return
+	 * @throws APIException
 	 */
 	public List<T> getAll(T model) throws APIException {
 		try {
@@ -110,7 +140,12 @@ public class APIModel<T extends Model, P extends Model> {
 	}
 
 	/**
-	 * get by parent model GET http://server/[parent]/[id]/[model]/
+	 * Get by parent model GET http://server/[parent]/[id]/[model]/
+	 * @param parent
+	 * @param skeleton
+	 * @param relation
+	 * @return
+	 * @throws APIException
 	 */
 	public List<T> getAllByParent(P parent, T skeleton, String relation)
 			throws APIException {
@@ -124,26 +159,53 @@ public class APIModel<T extends Model, P extends Model> {
 			throw new APIException(e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * Build endpoint (API-URL) based on class name.
+	 * @return
+	 */
 	private String buildEndpoint() {
 		return "/" + this.type.getSimpleName().toLowerCase() + "s" + "/";
 	}
-
+	
+	/**
+	 * Build endpoint (API-URL) based on class name and ID.
+	 * @param model
+	 * @return
+	 */
 	private String buildEndpoint(T model) {
 		return "/" + this.type.getSimpleName().toLowerCase() + "s" + "/"
 				+ model.getId() + "/";
 	}
-
+	
+	/**
+	 * Build endpoint (API-URL) based on class name and a specific ID.
+	 * @param model
+	 * @return
+	 */
 	private String buildEndpoint(T model, Integer id) {
 		return "/" + this.type.getSimpleName().toLowerCase() + "s" + "/" + id
 				+ "/";
 	}
-
+	
+	/**
+	 * Build endpoint (API-URL) based on class name, its parent and a specific ID.
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	private String buildEndpointForParent(P model, Integer id) {
 		return "/" + model.getClass().getSimpleName().toLowerCase() + "s" + "/"
 				+ id + "/";
 	}
-
+	
+	/**
+	 * Build endpoint (API-URL) based on class name, its parent and the relation (collectin name)
+	 * @param model
+	 * @param parent
+	 * @param relation
+	 * @return
+	 */
 	private String buildEndpoint(T model, P parent, String relation) {
 		if (model == null) {
 			return this.buildEndpointForParent(parent, parent.getId())

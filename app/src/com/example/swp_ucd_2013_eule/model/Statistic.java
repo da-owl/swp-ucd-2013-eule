@@ -3,7 +3,7 @@ package com.example.swp_ucd_2013_eule.model;
 import java.util.LinkedList;
 
 /**
- * 
+ * Statistic class. Used to track all trips and their consumptons.
  * @author Marc
  * 
  */
@@ -45,7 +45,11 @@ public class Statistic extends Model {
 	public Integer getGainedPoints() {
 		return gainedPoints;
 	}
-
+	
+	/**
+	 * Builds a comma-seperated string with all trip consumptions.
+	 * @return
+	 */
 	public String getConsumptions() {
 		String ret = "";
 		for (Float value : this.consumptions) {
@@ -73,7 +77,10 @@ public class Statistic extends Model {
 	public void setGainedPoints(Integer gainedPoints) {
 		this.gainedPoints = gainedPoints;
 	}
-
+	
+	/**
+	 * Calculates the current trip consumptions.
+	 */
 	public void calculateTripConsumption() {
 		int values = consumptions.size();
 		if (values > 0) {

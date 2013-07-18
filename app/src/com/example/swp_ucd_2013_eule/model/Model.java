@@ -1,7 +1,7 @@
 package com.example.swp_ucd_2013_eule.model;
 
 /**
- * 
+ * Superclass of all model classes. Necessary for the generic APIModel.
  * @author Erik
  * 
  */

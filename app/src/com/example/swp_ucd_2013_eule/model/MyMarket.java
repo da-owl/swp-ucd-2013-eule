@@ -9,6 +9,10 @@ import android.util.Log;
 
 import com.example.swp_ucd_2013_eule.net.APIException;
 
+/**
+ * Wrapper for the market API. Provides methods for retrieving items.
+ * @author Erik
+ */
 public class MyMarket {
 
 	private static MyMarket INSTANCE = new MyMarket();
@@ -18,7 +22,10 @@ public class MyMarket {
 	private List<Item> items = new LinkedList<Item>();
 
 	private Map<Integer, Item> itemMap = new HashMap<Integer, Item>();
-
+	
+	/**
+	 * Default constructor. Initializes the corresponding API model and retrieves all items from the backend.
+	 */
 	private MyMarket() {
 		mItemAPI = new APIModel<Item, Item>(Item.class);
 		try {
@@ -45,11 +52,20 @@ public class MyMarket {
 					"Could not retrieve Items! Exception: " + e.getCause());
 		}
 	}
-
+	
+	/**
+	 * Returns the current instance.
+	 * @return
+	 */
 	public static MyMarket getInstance() {
 		return INSTANCE;
 	}
 
+	/**
+	 * Returns all items for a given category.
+	 * @param category
+	 * @return
+	 */
 	public List<Item> getItems(String category) {
 		List<Item> result = new LinkedList<Item>();
 		for (Item item : items) {
@@ -59,7 +75,12 @@ public class MyMarket {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * Returns the item for a given item_id.
+	 * @param itemID
+	 * @return
+	 */
 	public Item getItem(int itemID) {
 		return itemMap.get(itemID);
 	}
