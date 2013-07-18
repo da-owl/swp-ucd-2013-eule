@@ -11,6 +11,7 @@ from forest.views import ForestViewSet, ForestFriendsViewSet, ForestUserForestIt
 admin.autodiscover()
 
 # restful config
+# configure all viewset routes
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'forests', ForestViewSet)
@@ -45,10 +46,12 @@ urlpatterns = patterns('',
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
+    # configure endpoints for nested collections:
+    # list / add / remove friends
     url(r'^forests/(?P<pk>[0-9]+)/friends/((?P<field_pk>[0-9]+)/)?$', ForestFriendsViewSet.as_view()),
-    
+    # list / add / remove userforestitems
     url(r'^forests/(?P<pk>[0-9]+)/userforestitems/((?P<field_pk>[0-9]+)/)?$', ForestUserForestItemViewSet.as_view()),
-
+    # list / add / remove statistics
     url(r'^forests/(?P<pk>[0-9]+)/statistics/((?P<field_pk>[0-9]+)/)?$', ForestStatisticViewSet.as_view()),
     
 )

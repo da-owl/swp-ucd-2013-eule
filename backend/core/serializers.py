@@ -1,37 +1,40 @@
+"""
+Serializers for model classes. Used by the restful-framework.
+_fields_ defines which attributes are serialized.
+"""
 from django.contrib.auth.models import User
 from core.models import Forest, Item, Statistic, UserForestItem
 from rest_framework import serializers
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializes users.
+    """
     class Meta:
         model = User
         fields = ('id', 'url', 'username', 'email', 'groups')
 
 class ItemSerializer(serializers.ModelSerializer):
+    """
+    Serializes items.
+    """
     class Meta:
         model = Item
         fields = ('id', 'name', 'description', 'price', 'level', 'amount', 'moveable', 'type', 'category', 'imageId')
 
 class StatisticSerializer(serializers.ModelSerializer):
+    """
+    Serializes statistics.
+    """
     class Meta:
         model = Statistic
         fields = ('id', 'gainedPoints', 'dataInterval', 'consumptions', 'tripConsumption')
         ordering = ['timestamp']
 
-
-# class ForestFriendSerializer(serializers.ModelSerializer):
-#     items = ItemSerializer()
-#     user = UserSerializer()
-
-#     class Meta:
-#         model = Forest
-#         fields = ('id', 'user', 'level', 'points')
-#         depth = 1
-
 class ForestSerializer(serializers.ModelSerializer):
-    # friends = ForestSerializer()
-    # items = ItemSerializer()
-    # user = UserSerializer()
+    """
+    Serializes forests.
+    """
     user = serializers.PrimaryKeyRelatedField()
 
     class Meta:
@@ -41,6 +44,9 @@ class ForestSerializer(serializers.ModelSerializer):
         ordering = ['points']
 
 class UserForestItemSerializer(serializers.ModelSerializer):
+    """
+    Serializes userforestitems.
+    """
     item = serializers.PrimaryKeyRelatedField()
     class Meta:
         model = UserForestItem

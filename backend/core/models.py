@@ -1,7 +1,13 @@
+"""
+Model classes
+"""
 from django.db import models
 from django.contrib.auth.models import User
 
 class Item(models.Model):
+    """
+    Represents one item (animal, plant, ...)
+    """
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
     price = models.IntegerField()
@@ -13,6 +19,9 @@ class Item(models.Model):
     imageId = models.IntegerField()
 
 class UserForestItem(models.Model):
+    """
+    Represents the items which are placed in the forest. A forest contains multiple userforestitems.
+    """
     item = models.ForeignKey(Item)
     tileX = models.IntegerField()
     tileY = models.IntegerField()
@@ -20,6 +29,9 @@ class UserForestItem(models.Model):
     offsetY = models.FloatField()
 
 class Statistic(models.Model):
+    """
+    Represents a single statistic which is saved after a trip.
+    """
     timestamp = models.DateTimeField(auto_now=True)
     gainedPoints = models.IntegerField()
     dataInterval = models.IntegerField()
@@ -27,6 +39,9 @@ class Statistic(models.Model):
     tripConsumption = models.FloatField()
 
 class Forest(models.Model):
+    """
+    The FOREST. Represents a forest. One user has one forest.
+    """
     user = models.ForeignKey(User)
     level = models.IntegerField()
     points = models.IntegerField()

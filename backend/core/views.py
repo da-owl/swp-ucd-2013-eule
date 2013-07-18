@@ -1,4 +1,6 @@
-# Create your views here.
+"""
+Basic endpoints. Used for registration and login.
+"""
 import json
 import string
 import pprint
@@ -18,13 +20,17 @@ from core.helpers import json_response
 from core.serializers import UserSerializer, ForestSerializer
 from core.models import Forest
 
-
-
 def index(request):
+    """
+    Index
+    """
     return HttpResponse("SWP-UCD Eule API 1.0")
 
 
 def hello(request):
+    """
+    Test for presentation
+    """
     auth = request.META['HTTP_AUTHORIZATION']
     # # if type(auth) == type(''):
     # #     # Work around django test client oddness
@@ -43,16 +49,15 @@ def hello(request):
             else:
                 return json_response(None, 200, 'SWP-UCD Eule API 1.0')
                 
-    
-# """
-# rest-like register using token-authentification
-# json structure defined to match the framework structure
-# expects a json document like this:
-# { "username": "tester9", "password": "test", "email": "tester@test.de" }
-# cross-site request forgery disabled
-# """
 @csrf_exempt
 def register(request):    
+    """
+    rest-like register using token-authentification
+    json structure defined to match the framework structure
+    expects a json document like this:
+    { "username": "tester9", "password": "test", "email": "tester@test.de" }
+    cross-site request forgery disabled
+    """
     try:
         user_json = json.loads(request.body.decode("utf-8"))
         # for simple parameter implementation
@@ -80,30 +85,6 @@ def register(request):
         # return json_response(None, 500, e.args[0])
     return json_response(token, 201, 'Created')
 
-# """
-# rest-like register
-# login no longer required, because credentials are passed in the request
-# """
-# @csrf_exempt
-# def login(request):
-#     username = request.POST['username']
-#     password = request.POST['password']
-#     user = authenticate(username=username, password=password)
-#     if user is not None:
-#         if user.is_active:
-#             auth_login(request, user)
-#             # Redirect to a success page.
-#             return json_response(request, 200, 'Login successful')
-#         else:
-#             # Return a 'disabled account' error message
-#             return json_response(request, 500, 'Account disabled')
-#     else:
-#         # Return an 'invalid login' error message.
-#         return json_response(request, 500, 'Username not found')
-
-# """
-# restful
-# """
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.

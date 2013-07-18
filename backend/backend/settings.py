@@ -116,6 +116,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+# List installed apps / modules
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,8 +131,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'core',
-    'forest',
-    'marketplace'
+    'forest'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -172,7 +172,9 @@ LOGGING = {
 }
 
 # """
-# rest_framework
+# rest_framework configuration
+# activate token-auth
+# set filter backend for REST framework 
 # """
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),

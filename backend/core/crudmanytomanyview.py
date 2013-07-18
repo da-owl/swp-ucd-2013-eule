@@ -29,11 +29,10 @@ from core.helpers import json_response
 
 import sys
 
-
 class CRUDManyToManyView(mixins.ListModelMixin, SingleObjectMixin,
                          generics.GenericAPIView):
     """
-    Generic view that provide CRUD behaviour for ManyToMany fields.
+    Class to handle nested collection requests. This is the superclass of all collection viewsets used in this project.
     """
     model = None
     pk_url_kwarg = 'field_pk'
