@@ -15,8 +15,9 @@ import android.util.FloatMath;
 import android.view.View;
 
 /**
- * Shows a chart.
- *
+ * Shows a chart containing the graphs for earned drops and average consumption
+ * over time.
+ * 
  */
 public class Chart extends View {
 
@@ -43,6 +44,10 @@ public class Chart extends View {
 		initGraph();
 	}
 
+	/**
+	 * Initializes the Chart. Creates paints for the graphs and their
+	 * backgrounds.
+	 */
 	private void initGraph() {
 		mDropsLinePaint = new Paint();
 		mDropsLinePaint.setStyle(Style.STROKE);
@@ -75,7 +80,7 @@ public class Chart extends View {
 		consumptionPaint.setStrokeCap(Cap.ROUND);
 		consumptionPaint.setPathEffect(new CornerPathEffect(ROUNDED_CORNER));
 	}
-
+	
 	public void setDrops(float[] drops) {
 		this.dropsValues = drops;
 		mPathDrops = new Path();
@@ -88,7 +93,7 @@ public class Chart extends View {
 		}
 		invalidate();
 	}
-
+	
 	public void setConsumption(float[] cons) {
 		this.consValues = cons;
 		mPathConsumption = new Path();
@@ -113,6 +118,10 @@ public class Chart extends View {
 		canvas.drawPath(mPathConsumption, consumptionPaint);
 	}
 
+	/**
+	 * Draws the background for each graph corresponding to its dimension.
+	 * 
+	 */
 	private void drawBackground(Canvas canvas, float maxValue, int diff) {
 		int range = getLineDistance(maxValue);
 		if (diff == 0) {
@@ -132,6 +141,10 @@ public class Chart extends View {
 		}
 	}
 
+	/**
+	 * Calculates a range to spread the background-lines equally
+	 * 
+	 */
 	private int getLineDistance(float maxValue) {
 		long distance;
 		int distanceIndex = 0;
@@ -158,6 +171,14 @@ public class Chart extends View {
 		setMeasuredDimension(mWidth, mHeight);
 	}
 
+	/**
+	 * Measure the width.
+	 * 
+	 * Called inside onMeasure.
+	 * 
+	 * @param measureSpec
+	 * @return
+	 */
 	private int measureWidth(int measureSpec) {
 		int result = 0;
 		int specMode = MeasureSpec.getMode(measureSpec);
@@ -172,6 +193,14 @@ public class Chart extends View {
 		return result;
 	}
 
+	/**
+	 * Measure the height.
+	 * 
+	 * Called inside onMeasure.
+	 * 
+	 * @param measureSpec
+	 * @return
+	 */
 	private int measureHeight(int measureSpec) {
 		int result = 0;
 		int specMode = MeasureSpec.getMode(measureSpec);
